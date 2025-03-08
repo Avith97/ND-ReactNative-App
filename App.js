@@ -30,23 +30,23 @@
 // export default App;
 
 
-import React, { useEffect } from "react";
-import { View, Text, AppState, Platform, Vibration, Button, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, AppState, Platform, Vibration, Button, Alert, ActivityIndicator } from "react-native";
 import BackgroundFetch from "react-native-background-fetch";
 import BackgroundTimer from "react-native-background-timer";
 // import HealthConnect,{ initialize, openHealthConnectDataManagement, readRecord, readRecords, requestPermission, SdkAvailabilityStatus } from "react-native-health-connect";
 
-import { 
-  initialize, 
-  getSdkStatus, 
-  requestPermission, 
-  readRecords, 
-  openHealthConnectDataManagement, 
+import {
+  initialize,
+  getSdkStatus,
+  requestPermission,
+  readRecords,
+  openHealthConnectDataManagement,
   openHealthConnectSettings
 } from "react-native-health-connect";
 import HealthScreen from "./Healthconnect";
 // Define a vibration pattern: vibrate for 500ms, pause for 1 second, then vibrate for 500ms again
-const VIBRATION_PATTERN = [500, 1000, 500]; 
+const VIBRATION_PATTERN = [500, 1000, 500];
 
 // Function to start vibration loop when the app is running in the foreground
 const startVibrationLoop = () => {
@@ -87,7 +87,7 @@ const setupBackgroundFetch = async () => {
 // Function to trigger vibration manually when the button is pressed
 // const vibrate = async() => {
 //   Vibration.vibrate(VIBRATION_PATTERN);
- 
+
 //   // await initialize().catch(e=>console.log('errir err--->',e))
 // // openHealthConnectDataManagement()
 
@@ -103,54 +103,54 @@ const setupBackgroundFetch = async () => {
 //             return;
 //         } else {
 
-          
+
 //           const stepsData = await readRecords("Steps", { timeRangeFilter: 'last24Hours' });
 //           console.log('steps data -->',stepsData)
 //         }
 //   } catch (error) {
 //     console.log('health err--->',error)
 //   }
-  
-  
+
+
 // };
 
 
 const vibrate = async () => {
   try {
     Vibration.vibrate(VIBRATION_PATTERN);
-    
-try {
-        const sdkStatus = await getSdkStatus();
-        console.log("Health Connect SDK Status -->", sdkStatus);
 
-        switch (sdkStatus) {
-            case 0:
-                console.log("✅ Health Connect is available!");
-                break;
-            case 1:
-                console.log("⚠️ Health Connect is not installed.");
-                openHealthConnectSettings();
-                return;
-            case 2:
-                console.log("⚠️ Health Connect is not up to date.");
-                openHealthConnectSettings();
-                return;
-            case 3:
-                console.log("🚨 No permission to use Health Connect.");
-                return;
-            case 4:
-                console.log("⚠️ Health Connect not supported on this device.");
-                return;
-            default:
-                console.log("❌ Unknown Health Connect status.");
-                return;
-        }
+    try {
+      const sdkStatus = await getSdkStatus();
+      console.log("Health Connect SDK Status -->", sdkStatus);
 
-        // Initialize Health Connect
-        const initialized = await initialize();
-        console.log("Health Connect Initialized:", initialized);
+      switch (sdkStatus) {
+        case 0:
+          console.log("✅ Health Connect is available!");
+          break;
+        case 1:
+          console.log("⚠️ Health Connect is not installed.");
+          openHealthConnectSettings();
+          return;
+        case 2:
+          console.log("⚠️ Health Connect is not up to date.");
+          openHealthConnectSettings();
+          return;
+        case 3:
+          console.log("🚨 No permission to use Health Connect.");
+          return;
+        case 4:
+          console.log("⚠️ Health Connect not supported on this device.");
+          return;
+        default:
+          console.log("❌ Unknown Health Connect status.");
+          return;
+      }
+
+      // Initialize Health Connect
+      const initialized = await initialize();
+      console.log("Health Connect Initialized:", initialized);
     } catch (error) {
-        console.error("Error checking Health Connect:", error);
+      console.error("Error checking Health Connect:", error);
     }
     // ✅ Check SDK Status
     // const sdkStatus = await getSdkStatus();
@@ -184,7 +184,7 @@ try {
     const stepsData = await readRecords("Steps", {
       timeRangeFilter: { startTime, endTime },
     });
-Alert.alert('msg',JSON.stringify(stepsData))
+    Alert.alert('msg', JSON.stringify(stepsData))
     console.log("Steps Data:", stepsData);
 
   } catch (error) {
@@ -192,11 +192,12 @@ Alert.alert('msg',JSON.stringify(stepsData))
   }
 };
 
-
+// initialize()
 // Main app component
 const App = () => {
+  const [loading, setloading] = useState(false)
   useEffect(() => {
-    initialize()
+    initHealthConnect()
     // setupBackgroundFetch(); // Initialize background fetch when the app loads
 
     // // Listen to app state changes (foreground or background)
@@ -214,11 +215,26 @@ const App = () => {
     // return () => appStateListener.remove();
   }, []);
 
+  const initHealthConnect = () => {
+    setloading(true)
+    initialize()
+    setTimeout(() => {
+      setloading(false)
+    }, 200)
+  }
+
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       {/* <Text>Vibration Service Running</Text>
       <Button title="Vibration" onPress={vibrate} /> */}
-      <HealthScreen/>
+      {loading ?
+        <View style={{ zIndex: 1, position: 'absolute', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <ActivityIndicator size="large" color="red" />
+        </View>
+        : <HealthScreen loading={loading} />
+      }
+
+
     </View>
   );
 };

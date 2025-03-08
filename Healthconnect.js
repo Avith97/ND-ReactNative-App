@@ -1,11 +1,13 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, ScrollView, Alert, ActivityIndicator, FlatList, Clipboard } from 'react-native';
-import { initialize, insertRecords, readRecords, requestPermission, writeRecords } from 'react-native-health-connect';
-'react-native-health-connect';
+import { View, Text, Button, ScrollView, Alert, ActivityIndicator, FlatList, Clipboard, Linking, NativeModules } from 'react-native';
+import HealthConnect, { getGrantedPermissions, initialize, insertRecords, openHealthConnectDataManagement, openHealthConnectSettings, readRecords, requestPermission, SdkAvailabilityStatus, writeRecords } from 'react-native-health-connect';
+import AndroidPermissions from './src/common/functions/permissions';
+import { VictoryAxis, VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
 
 const HealthScreen = () => {
     const [steps, setSteps] = useState(null);
+    const [chartData, setchartData] = useState([])
     const [heartRate, setHeartRate] = useState(null);
     const [sleepData, setSleepData] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -17,22 +19,62 @@ const HealthScreen = () => {
 
     // Request Health Permissions
     const requestHealthPermissions = async () => {
-        // await initialize()
+        await initialize()
         try {
-            // const granted = await requestPermission([
-            //     { accessType: 'read', recordType: 'Steps' },
-            //     { accessType: 'read', recordType: 'HeartRate' },
-            //     { accessType: 'read', recordType: 'SleepSession' },
-            // ]);
             const granted = await requestPermission([
                 { accessType: 'read', recordType: 'Steps' },
                 { accessType: 'read', recordType: 'Weight' },
-                { accessType: 'read', recordType: 'SleepSession' }
+                { accessType: 'read', recordType: 'Height' }
             ])
-            console.log('Permissions granted:', granted);
+
+            const response = await readRecords('Steps', {
+                timeRangeFilter: {
+                    operator: "between",  // Can be "after", "before", or "between"
+                    startTime: moment().startOf('day').subtract(1, 'days').toISOString(), // 7 days ago
+                    // startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
+                    endTime: moment().endOf('day').subtract(1, 'days').toISOString(),
+                    // startTime: new Date().toISOString(), // Current time
+                    // endTime: new Date().toISOString(), // Current time
+                }
+            });
+            const formattedData = response?.records?.map((record, index) => ({
+                x: moment(record.startTime).format('HH:mm'), // Format time as HH:mm
+                y: record.count, // Number of steps
+            }));
+            setchartData(formattedData)
+
+            console.log('steps 11 ===>', response?.records)
+
+            // const granted = await requestPermission([
+            //     { 'accessType': 'read', 'recordType': 'Steps' },
+            // ])
+            // console.log('Permissions granted:', { granted });
         } catch (error) {
             console.error('Permission error:', error);
-            Alert.alert('Error', 'Failed to get health permissions');
+            // const url = "package:com.google.android.apps.healthdata"; // Health Connect package name
+            // Linking.openSettings();
+            // Linking.openURL('androidx.health.connect.action.HEALTH_CONNECT_SETTINGS')
+            // openHealthConnectSettings()
+            const { HealthConnectModule } = NativeModules;
+            // HealthConnectModule.requestPermissions()
+            // HealthConnectModule.openHealthConnectSettings();
+            // HealthConnectModule.openHealthConnectPermissions();
+            // HealthConnectModule.openHealthConnectPage();
+            // HealthConnectModule.requestHealthConnectPermissions();
+
+            // Linking.openURL("android-app://com.google.android.apps.healthdata")
+            // Linking.openURL("android.settings.HEALTH_CONNECT_SETTINGS");
+            //             // Alert.alert(
+            //     'Kindly Allow the Health Connect Permissions',
+            //     [
+            //         { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+            //         { text: 'Allow', onPress: () => { Linking.openSettings() } }
+            //     ]
+            // );
+            // Linking.openURL('android.settings.HEALTH_CONNECT_SETTINGS')
+            // openHealthConnectSettings()
+            // Linking.openSettings()
+            // Alert.alert('Error', 'Failed to get health permissions');
         }
     };
 
@@ -345,6 +387,28 @@ const HealthScreen = () => {
             <Button title="Fetch All Data" onPress={getAllData} />
             <View style={{ marginVertical: 10 }} />
             <Button title="Add 1100 steps" onPress={writeStepsData} />
+            <VictoryChart domainPadding={{ x: 20 }} theme={VictoryTheme.material}>
+                {/* X-axis for time labels */}
+                <VictoryAxis tickFormat={(tick) => tick} />
+
+                {/* Y-axis for step count */}
+                <VictoryAxis dependentAxis />
+
+                {/* Bar chart */}
+                <VictoryBar
+                    data={chartData}
+                    barWidth={3}
+                    // animate={}
+                    style={{
+                        data: {
+                            fill: ({ datum }) => datum.y > 30 ? 'green' : '#3498db', // Conditional color (orange if steps > 500)
+                            stroke: '#000',
+                            colorScheme: 'cyan'
+                            // strokeWidth: 1, // Adds a border
+                        },
+                    }}
+                />
+            </VictoryChart>
             {allData && allData?.steps &&
                 <FlatList
                     // data={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']}
