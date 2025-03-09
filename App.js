@@ -223,16 +223,21 @@ const App = () => {
     }, 200)
   }
 
+  function handleLoading(params) {
+    setloading(params)
+  }
+
   return (
     <View style={{ flex: 1 }}>
       {/* <Text>Vibration Service Running</Text>
       <Button title="Vibration" onPress={vibrate} /> */}
-      {loading ?
+      {loading &&
         <View style={{ zIndex: 1, position: 'absolute', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <ActivityIndicator size="large" color="red" />
         </View>
-        : <HealthScreen loading={loading} />
       }
+      <HealthScreen loading={loading} handleLoading={handleLoading} />
+
 
 
     </View>

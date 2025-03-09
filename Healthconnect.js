@@ -1,21 +1,33 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, ScrollView, Alert, ActivityIndicator, FlatList, Clipboard, Linking, NativeModules } from 'react-native';
+import { View, Text, Button, ScrollView, Alert, ActivityIndicator, FlatList, Clipboard, Linking, NativeModules, Dimensions } from 'react-native';
 import HealthConnect, { getGrantedPermissions, initialize, insertRecords, openHealthConnectDataManagement, openHealthConnectSettings, readRecords, requestPermission, SdkAvailabilityStatus, writeRecords } from 'react-native-health-connect';
 import AndroidPermissions from './src/common/functions/permissions';
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import Icons, { iconType } from './src/assets/icons/Icons';
+import { wp } from './src/common/functions/dimensions';
 
-const HealthScreen = () => {
+
+const HealthScreen = (props) => {
     const [steps, setSteps] = useState(null);
+    const [weight, setWeight] = useState(null);
+    const [height, setHeight] = useState(null);
     const [chartData, setchartData] = useState([])
     const [heartRate, setHeartRate] = useState(null);
     const [sleepData, setSleepData] = useState(null);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [allData, setallData] = useState(null)
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(moment().toDate());
 
     useEffect(() => {
         requestHealthPermissions();
     }, []);
+
+    const setLoading = (val) => {
+        props.handleLoading(val)
+    }
 
     // Request Health Permissions
     const requestHealthPermissions = async () => {
@@ -27,24 +39,46 @@ const HealthScreen = () => {
                 { accessType: 'read', recordType: 'Height' }
             ])
 
-            const response = await readRecords('Steps', {
+            // const Steps = await readRecords('Steps', {
+            //     timeRangeFilter: {
+            //         operator: "between",  // Can be "after", "before", or "between"
+            //         startTime: moment().startOf('day').subtract(1, 'days').toISOString(), // 7 days ago
+            //         // startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
+            //         endTime: moment().endOf('day').subtract(1, 'days').toISOString(),
+            //         // startTime: new Date().toISOString(), // Current time
+            //         // endTime: new Date().toISOString(), // Current time
+            //     }
+            // });
+            // const formattedData = Steps?.records?.map((record, index) => ({
+            //     x: moment(record.startTime).format('HH:mm'), // Format time as HH:mm
+            //     y: record.count, // Number of steps
+            // }));
+            // setchartData(formattedData)
+            await fetchSteps(selectedDate)
+            // console.log('steps 11 ===>', Steps?.records)
+            const Height = await readRecords('Height', {
                 timeRangeFilter: {
-                    operator: "between",  // Can be "after", "before", or "between"
-                    startTime: moment().startOf('day').subtract(1, 'days').toISOString(), // 7 days ago
+                    operator: "before",  // Can be "after", "before", or "between"
+                    // startTime: moment().startOf('day').subtract(1, 'days').toISOString(), // 7 days ago
                     // startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
-                    endTime: moment().endOf('day').subtract(1, 'days').toISOString(),
+                    endTime: moment().endOf('day').toISOString(),
                     // startTime: new Date().toISOString(), // Current time
                     // endTime: new Date().toISOString(), // Current time
                 }
             });
-            const formattedData = response?.records?.map((record, index) => ({
-                x: moment(record.startTime).format('HH:mm'), // Format time as HH:mm
-                y: record.count, // Number of steps
-            }));
-            setchartData(formattedData)
-
-            console.log('steps 11 ===>', response?.records)
-
+            setHeight(Height?.records[0]?.height.inFeet)
+            console.log('height ===>', Height?.records)
+            const Weight = await readRecords('Weight', {
+                timeRangeFilter: {
+                    operator: "before",  // Can be "after", "before", or "between"
+                    // startTime: moment().startOf('day').subtract(1, 'days').toISOString(), // 7 days ago
+                    // startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
+                    endTime: moment().endOf('day').toISOString(),
+                    // startTime: new Date().toISOString(), // Current time
+                    // endTime: new Date().toISOString(), // Current time
+                }
+            });
+            setWeight(Weight?.records[0]?.weight?.inKilograms)
             // const granted = await requestPermission([
             //     { 'accessType': 'read', 'recordType': 'Steps' },
             // ])
@@ -334,6 +368,41 @@ const HealthScreen = () => {
         )
     }
 
+    const fetchSteps = async (date) => {
+        setLoading(true);
+        try {
+            const response = await readRecords('Steps', {
+                timeRangeFilter: {
+                    operator: "between",
+                    startTime: moment(date).startOf('day').toISOString(),
+                    endTime: moment(date).endOf('day').toISOString(),
+                }
+            });
+
+            // Group steps per hour
+            const hourlySteps = {};
+
+            response?.records?.forEach((record) => {
+                const hour = moment(record.startTime).format('HH:00'); // Round to the hour
+                hourlySteps[hour] = (hourlySteps[hour] || 0) + record.count;
+            });
+
+            // Convert grouped data to an array for the chart
+            const formattedData = Object.keys(hourlySteps).map((hour) => ({
+                x: hour,
+                y: hourlySteps[hour],
+            }));
+
+            setchartData(formattedData);
+        } catch (error) {
+            console.error('Error fetching steps:', error);
+            Alert.alert('Error', 'Failed to fetch steps data');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
     const writeStepsData = async (stepsCount) => {
         try {
             const endTime = moment().toDate().toISOString(); // Current time
@@ -366,14 +435,60 @@ const HealthScreen = () => {
         }
     };
 
+    const showDatePicker = () => setDatePickerVisibility(true);
+    const hideDatePicker = () => setDatePickerVisibility(false);
+    const handleConfirm = (date) => {
+        setSelectedDate(date);
+        fetchSteps(date);
+        hideDatePicker();
+    };
+
+    const fetchStepsByDate = async (date) => {
+        setLoading(true);
+        try {
+            const response = await readRecords('Steps', {
+                timeRangeFilter: {
+                    operator: "before",
+                    endTime: moment(date).endOf('day').toISOString(),
+                }
+            });
+
+            // Group steps by date
+            const stepsByDate = response?.records?.reduce((acc, record) => {
+                const recordDate = moment(record.startTime).format('DD-MM-YYYY'); // Extract date
+                if (!acc[recordDate]) {
+                    acc[recordDate] = 0;
+                }
+                acc[recordDate] += record.count; // Sum steps for that date
+                return acc;
+            }, {});
+
+            // Convert grouped data into an array sorted by date
+            const formattedData = Object.keys(stepsByDate)
+                .sort((a, b) => moment(b).valueOf() - moment(a).valueOf()) // Sort by latest date first
+                .map((date) => ({
+                    date,
+                    totalSteps: stepsByDate[date],
+                }));
+
+            setSteps(formattedData); // Store in state
+        } catch (error) {
+            console.error('Error fetching steps:', error);
+            Alert.alert('Error', 'Failed to fetch steps data');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
 
     return (
         <ScrollView contentContainerStyle={{ padding: 20, alignItems: 'center' }}>
             <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 10 }}>Health Data</Text>
 
-            {loading ? <ActivityIndicator size="large" color="blue" /> : null}
+            {/* {loading ? <ActivityIndicator size="large" color="blue" /> : null} */}
 
-            <Button title="Fetch Steps" onPress={getSteps} />
+            {/* <Button title="Fetch Steps" onPress={getSteps} />
             <Text style={{ marginVertical: 10, fontSize: 18 }}>Steps: {steps !== null ? steps : 'Press button'}</Text>
 
             <Button title="Fetch Weight" onPress={getHeartRate} />
@@ -383,33 +498,41 @@ const HealthScreen = () => {
             <Text style={{ marginVertical: 10, fontSize: 18, textAlign: 'center' }}>Sleep:
                 {sleepData ? moment(sleepData.startTime).format('DD/MM/YYYY hh:mm:ss A') + '\nTo\n ' + moment(sleepData.endTime).format('DD/MM/YYYY hh:mm:ss A')
                     : 'Press button'}
-            </Text>
-            <Button title="Fetch All Data" onPress={getAllData} />
-            <View style={{ marginVertical: 10 }} />
+            </Text>*/}
+            {/* <Button title="Fetch All Data" onPress={getAllData} />  */}
+            {/* <Button title="Fetch All Data" onPress={fetchStepsByDate} />  */}
+            <View style={{ marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between' }} >
+                <View>
+                    <Text style={{ borderWidth: 0.2, padding: 6 }}>Weight :</Text>
+                    <Text style={{ borderWidth: 0.2, borderTopWidth: 0, padding: 6 }}>Height :</Text>
+                </View>
+                <View>
+                    <Text style={{ borderWidth: 0.2, borderStartWidth: 0, padding: 6 }}>{`${weight} Kg` || 'Not Available'}</Text>
+                    <Text style={{ borderWidth: 0.2, borderStartWidth: 0, borderTopWidth: 0, padding: 6 }}>{`${height} ft` || 'Not Available'}</Text>
+                </View>
+            </View>
             <Button title="Add 1100 steps" onPress={writeStepsData} />
-            <VictoryChart domainPadding={{ x: 20 }} theme={VictoryTheme.material}>
-                {/* X-axis for time labels */}
-                <VictoryAxis tickFormat={(tick) => tick} />
-
-                {/* Y-axis for step count */}
-                <VictoryAxis dependentAxis />
-
-                {/* Bar chart */}
-                <VictoryBar
-                    data={chartData}
-                    barWidth={3}
-                    // animate={}
-                    style={{
-                        data: {
-                            fill: ({ datum }) => datum.y > 30 ? 'green' : '#3498db', // Conditional color (orange if steps > 500)
-                            stroke: '#000',
-                            colorScheme: 'cyan'
-                            // strokeWidth: 1, // Adds a border
-                        },
-                    }}
+            <View style={{ marginVertical: 6 }}>
+                <Text onPress={showDatePicker}
+                    style={{ textAlign: 'center', borderWidth: 0.9, borderColor: 'red', borderRadius: 10, marginVertical: 5, padding: 10, fontSize: 12 }}
+                >
+                    Selected Date: {moment(selectedDate).format('DD/MM/YYYY')}
+                </Text>
+                {/* <Icons type={iconType.fa5} name={'walking'} size={24} /> */}
+                <Button title="Select Date" onPress={showDatePicker} />
+                <DateTimePicker
+                    date={selectedDate}
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    maximumDate={new Date()}
+                    onConfirm={handleConfirm}
+                    onCancel={hideDatePicker}
                 />
-            </VictoryChart>
-            {allData && allData?.steps &&
+            </View>
+
+            <RenderChart chartData={chartData} />
+
+            {/* {allData && allData?.steps &&
                 <FlatList
                     // data={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']}
                     data={allData?.steps}
@@ -417,9 +540,76 @@ const HealthScreen = () => {
                     renderItem={renderSteps}
                     ItemSeparatorComponent={() => <View style={{ marginVertical: 5 }} />}
                 />
+            } */}
+            {chartData &&
+                <FlatList
+                    data={chartData}
+                    keyExtractor={(_, i) => i}
+                    ItemSeparatorComponent={() => <View style={{ marginVertical: 5 }} />}
+                    renderItem={({ item }) => (
+                        <View style={{ flexDirection: 'row', borderRadius: 5, elevation: 4, padding: 10, width: Dimensions.get('screen').width - 90, backgroundColor: '#f3f3f3' }}>
+                            <View style={{ borderRadius: 100, height: wp(10), width: wp(10), marginRight: wp(3), backgroundColor: 'rgba(132, 140, 207,0.3)', justifyContent: 'center', alignItems: 'center' }}>
+                                <Icons type={iconType.fa5} name={'walking'} size={18} />
+                            </View>
+                            <View>
+                                <Text style={{ fontSize: 14, fontWeight: 'bold' }}>{moment(selectedDate).format('ddd DD-MMM-YY  ') + item.x}</Text>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Icons type={iconType.materialCommunity} name={'shoe-sneaker'} size={20} style={{ transform: [{ rotate: '-20deg' }] }} />
+                                    <Text style={{
+                                        marginLeft: wp(1),
+                                        fontSize: 13, color: 'gray', textAlignVertical: 'center',
+
+                                    }}>
+                                        {item.y}
+                                    </Text>
+                                </View>
+
+                            </View>
+                        </View>
+                    )}
+                    contentContainerStyle={{
+                        paddingHorizontal: 15
+                    }}
+                    style={{
+                        flex: 1,
+                        // backgroundColor: 'green',
+                        paddingVertical: 5,
+                        paddingBottom: 13
+                    }}
+                />
             }
+
         </ScrollView>
     );
 };
 
 export default HealthScreen;
+
+const RenderChart = ({ chartData }) => {
+    return (
+        <VictoryChart domainPadding={{ x: 20 }} theme={VictoryTheme.material} >
+            {/* X-axis for time labels */}
+            <VictoryAxis tickFormat={(tick) => tick} />
+
+            {/* Y-axis for step count */}
+            <VictoryAxis dependentAxis />
+
+            {/* Bar chart */}
+            <VictoryBar
+                // animate={{ easing: 'linear' }}
+                animate={{ duration: 1000, }}
+                data={chartData}
+                barWidth={3}
+                // animate={}
+                style={{
+                    data: {
+                        fill: ({ datum }) => datum.y > 100 ? '#3498db' : datum.y > 30 ? 'orange' : 'red',
+                        stroke: '#000',
+                        colorScheme: 'cyan'
+                        // strokeWidth: 1, // Adds a border
+                    },
+                }}
+            />
+        </VictoryChart>
+    )
+}
