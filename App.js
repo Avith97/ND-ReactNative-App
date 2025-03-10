@@ -34,7 +34,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, AppState, Platform, Vibration, Button, Alert, ActivityIndicator } from "react-native";
 import BackgroundFetch from "react-native-background-fetch";
 import BackgroundTimer from "react-native-background-timer";
-// import HealthConnect,{ initialize, openHealthConnectDataManagement, readRecord, readRecords, requestPermission, SdkAvailabilityStatus } from "react-native-health-connect";
+// import HealthConnect, { initialize, openHealthConnectDataManagement, readRecord, readRecords, requestPermission, SdkAvailabilityStatus } from "react-native-health-connect";
 
 import {
   initialize,
@@ -217,7 +217,7 @@ const App = () => {
 
   const initHealthConnect = () => {
     setloading(true)
-    initialize()
+    // initialize()
     setTimeout(() => {
       setloading(false)
     }, 200)

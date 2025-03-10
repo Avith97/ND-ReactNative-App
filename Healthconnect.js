@@ -1,8 +1,7 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, ScrollView, Alert, ActivityIndicator, FlatList, Clipboard, Linking, NativeModules, Dimensions } from 'react-native';
-import HealthConnect, { getGrantedPermissions, initialize, insertRecords, openHealthConnectDataManagement, openHealthConnectSettings, readRecords, requestPermission, SdkAvailabilityStatus, writeRecords } from 'react-native-health-connect';
-import AndroidPermissions from './src/common/functions/permissions';
+import { View, Text, Button, ScrollView, Alert, FlatList, Clipboard, Dimensions, Platform } from 'react-native';
+import { initialize, insertRecords, readRecords, requestPermission } from 'react-native-health-connect';
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Icons, { iconType } from './src/assets/icons/Icons';
@@ -31,6 +30,9 @@ const HealthScreen = (props) => {
 
     // Request Health Permissions
     const requestHealthPermissions = async () => {
+        if (Platform.OS === 'ios') {
+            return
+        }
         await initialize()
         try {
             const granted = await requestPermission([
@@ -89,7 +91,7 @@ const HealthScreen = (props) => {
             // Linking.openSettings();
             // Linking.openURL('androidx.health.connect.action.HEALTH_CONNECT_SETTINGS')
             // openHealthConnectSettings()
-            const { HealthConnectModule } = NativeModules;
+            // const { HealthConnectModule } = NativeModules;
             // HealthConnectModule.requestPermissions()
             // HealthConnectModule.openHealthConnectSettings();
             // HealthConnectModule.openHealthConnectPermissions();
@@ -369,6 +371,9 @@ const HealthScreen = (props) => {
     }
 
     const fetchSteps = async (date) => {
+        if (Platform.OS === 'ios') {
+            return
+        }
         setLoading(true);
         try {
             const response = await readRecords('Steps', {
@@ -404,6 +409,9 @@ const HealthScreen = (props) => {
 
 
     const writeStepsData = async (stepsCount) => {
+        if (Platform.OS === 'ios') {
+            return
+        }
         try {
             const endTime = moment().toDate().toISOString(); // Current time
             const startTime = moment().subtract(30, 'seconds').toDate().toISOString(); // 30 min ago
