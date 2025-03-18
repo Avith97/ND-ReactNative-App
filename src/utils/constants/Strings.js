@@ -3,6 +3,8 @@ export default {
 
     },
     NAVIGATION: {
-        login: 'login'
+        login: 'login',
+        signup: 'signup',
+        otp: 'otp'
     }
 }
