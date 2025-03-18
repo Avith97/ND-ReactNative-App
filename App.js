@@ -45,6 +45,8 @@ import {
   openHealthConnectSettings
 } from "react-native-health-connect";
 import HealthScreen from "./Healthconnect";
+import ErrorBoundary from "./src/common/components/errorboundary/ErrorBoundary";
+import Navigator from "./src/routes";
 // Define a vibration pattern: vibrate for 500ms, pause for 1 second, then vibrate for 500ms again
 const VIBRATION_PATTERN = [500, 1000, 500];
 
@@ -228,6 +230,8 @@ const App = () => {
   }
 
   return (
+    <ErrorBoundary>
+      <Navigator />
     <View style={{ flex: 1 }}>
       {/* <Text>Vibration Service Running</Text>
       <Button title="Vibration" onPress={vibrate} /> */}
@@ -240,7 +244,8 @@ const App = () => {
 
 
 
-    </View>
+      </View>
+    </ErrorBoundary>
   );
 };
 

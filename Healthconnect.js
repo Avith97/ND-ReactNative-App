@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, ScrollView, Alert, FlatList, Clipboard, Dimensions, Platform } from 'react-native';
-import { initialize, insertRecords, readRecords, requestPermission } from 'react-native-health-connect';
+import { aggregateGroupByDuration, aggregateRecord, initialize, insertRecords, readRecords, requestPermission } from 'react-native-health-connect';
 import { VictoryAxis, VictoryBar, VictoryChart, VictoryTheme } from 'victory-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Icons, { iconType } from './src/assets/icons/Icons';
@@ -10,6 +10,7 @@ import { wp } from './src/common/functions/dimensions';
 
 const HealthScreen = (props) => {
     const [steps, setSteps] = useState(null);
+    const [t_steps, setT_Steps] = useState(null);
     const [weight, setWeight] = useState(null);
     const [height, setHeight] = useState(null);
     const [chartData, setchartData] = useState([])
@@ -384,6 +385,20 @@ const HealthScreen = (props) => {
                 }
             });
 
+            const agv = await aggregateRecord({
+                recordType: 'Steps',
+                timeRangeFilter: {
+                    operator: 'between',
+                    startTime: moment(date).startOf('day').toISOString(),
+                    endTime: moment(date).endOf('day').toISOString(),
+                },
+                timeRangeSlicer: {
+                    duration: 'DAYS',
+                    length: 1,
+                },
+            })
+            setT_Steps(agv)
+            console.log('step resp -->', JSON.stringify(agv))
             // Group steps per hour
             const hourlySteps = {};
 
@@ -537,7 +552,11 @@ const HealthScreen = (props) => {
                     onCancel={hideDatePicker}
                 />
             </View>
-
+            <Text
+                style={{ textAlign: 'center', borderWidth: 0.5, borderColor: 'green', borderRadius: 10, marginVertical: 5, padding: 10, fontSize: 12 }}
+            >
+                Total Steps: {t_steps?.COUNT_TOTAL || "Not Available"}
+            </Text>
             <RenderChart chartData={chartData} />
 
             {/* {allData && allData?.steps &&

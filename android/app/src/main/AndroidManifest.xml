@@ -28,7 +28,11 @@
     <!-- Add WRITE permissions if needed -->
     <uses-permission android:name="android.permission.health.WRITE_HEART_RATE" />
     <uses-permission android:name="android.permission.health.WRITE_CALORIES" />
-    
+
+     <!-- Background sync -->
+    <uses-permission android:name="android.permission.health.READ_HEALTH_DATA_IN_BACKGROUND" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
     <!-- Queries Section for Health Connect -->
     <queries>
         <package android:name="com.google.android.apps.healthdata" />

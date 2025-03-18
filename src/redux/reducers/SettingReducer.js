@@ -1,0 +1,21 @@
+import { api } from '../../services/axios/Api'
+import actions from '../action_types/actions'
+
+const initialState = {
+  environment: !__DEV__ ? 'LIVE' : 'UAT',
+  isLoading: false
+}
+
+export default (state = initialState, { type, payload }) => {
+  switch (type) {
+    case actions.HANDLE_SYNC:
+      return { ...state, isLoading: payload }
+
+    case actions.SET_ENVIRONMENT:
+      // api.refreshInstance()
+      return { ...state, environment: payload }
+
+    default:
+      return state
+  }
+}
