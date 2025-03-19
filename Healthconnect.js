@@ -26,7 +26,8 @@ const HealthScreen = (props) => {
     }, []);
 
     const setLoading = (val) => {
-        props.handleLoading(val)
+        props?.handleLoading &&
+            props?.handleLoading(val)
     }
 
     // Request Health Permissions

@@ -232,9 +232,8 @@ const App = () => {
   return (
     <ErrorBoundary>
       <Navigator />
-    <View style={{ flex: 1 }}>
-      {/* <Text>Vibration Service Running</Text>
-      <Button title="Vibration" onPress={vibrate} /> */}
+      {/* <View style={{ flex: 1 }}>
+
       {loading &&
         <View style={{ zIndex: 1, position: 'absolute', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <ActivityIndicator size="large" color="red" />
@@ -244,7 +243,7 @@ const App = () => {
 
 
 
-      </View>
+    </View> */}
     </ErrorBoundary>
   );
 };

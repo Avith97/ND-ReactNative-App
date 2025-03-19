@@ -3,6 +3,7 @@ export default {
 
     },
     NAVIGATION: {
+        health: 'sample',
         login: 'login',
         signup: 'signup',
         otp: 'otp'
