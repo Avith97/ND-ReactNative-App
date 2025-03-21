@@ -37,6 +37,7 @@ export default {
   SnackBarSuccess: '#28afb0',
   SnackBarWarn: '#F3740E',
   SnackBarErr: '#E31837',
+  SnackBarInfo: '#666666',
   grayBg: '#f5f5f5',
   darkGray: '#e6e6e6',
   greenBtn: '#62b144',
@@ -57,8 +58,7 @@ export default {
   dashIcon: '#e1f4e2',
   progressBar: '#3c1491',
   progressBar_background: '#dccbf8',
-  SnackBarSuccess: '#28afb0',
-  SnackBarWarn: '#F3740E',
-  SnackBarErr: '#E31837',
-  dashIcon: '#e1f4e2'
+  dashIcon: '#e1f4e2',
+  background_transperant_dark: 'rgba(0,0,0,0.5)',
+
 }
