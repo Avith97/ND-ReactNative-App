@@ -7,6 +7,7 @@ import Strings from '../../utils/constants/Strings';
 import OtpScreen from '../../screens/otp/OtpScreen';
 import SignUpScreen from '../../screens/signup/SignUpScreen';
 import HealthScreen from '../../../Healthconnect';
+import DashboardCharts from '../../screens/ChartsScreens/DashboardCharts';
 
 const Stack = createDrawerNavigator();
 // const Stack = createStackNavigator();
@@ -18,6 +19,8 @@ const AuthStack = (props) => {
             <Stack.Screen name={Strings.NAVIGATION.otp} component={OtpScreen} />
             <Stack.Screen name={Strings.NAVIGATION.signup} component={SignUpScreen} />
             <Stack.Screen name={Strings.NAVIGATION.health} component={HealthScreen} />
+            <Stack.Screen name={Strings.NAVIGATION.dashboard} component={DashboardCharts} />
+            
         </Stack.Navigator>
     )
 }

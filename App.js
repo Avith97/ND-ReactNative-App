@@ -232,7 +232,7 @@ const App = () => {
   return (
     <ErrorBoundary>
       <Navigator />
-    <View style={{ flex: 1 }}>
+    {/* <View style={{ flex: 1 }}> */}
       {/* <Text>Vibration Service Running</Text>
       <Button title="Vibration" onPress={vibrate} /> */}
       {loading &&
@@ -240,11 +240,11 @@ const App = () => {
           <ActivityIndicator size="large" color="red" />
         </View>
       }
-      <HealthScreen loading={loading} handleLoading={handleLoading} />
+      {/* <HealthScreen loading={loading} handleLoading={handleLoading} /> */}
 
 
 
-      </View>
+      {/* </View> */}
     </ErrorBoundary>
   );
 };

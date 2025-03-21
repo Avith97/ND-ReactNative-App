@@ -13,13 +13,16 @@ const BarChart = ({
     xAxisLabel = '',
     yAxisLabel = '',
     showLegend = true,
-    showDataLabels = true
+    showDataLabels = true,
+    legendPosition = 'bottom',
 }) => {
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
     const isMultiple = Array.isArray(yKeys) && yKeys.length > 1;
+    console.log(data);
+    
 
-    const parsedData = data.map(item => {
+    const parsedData = data || []?.map(item => {
         let parsedItem = { ...item };
         yKeys.forEach(key => {
             parsedItem[key] = parseFloat(item[key]);
@@ -36,13 +39,13 @@ const BarChart = ({
                 height={chartHeight || screenHeight / 2}
             >
                 {showLegend && isMultiple && (
-                    <VictoryLegend
-                        x={50}
-                        y={10}
-                        orientation="horizontal"
-                        gutter={20}
-                        data={yKeys.map((key, index) => ({ name: key, symbol: { fill: colorScale[index % colorScale.length] } }))}
-                    />
+                      <VictoryLegend
+                      x={legendPosition === 'top' ? 50 : 190}
+                      y={legendPosition === 'top' ? 10 : chartHeight - 20}
+                      orientation={legendPosition === 'top' ? 'horizontal' : 'horizontal'}
+                      gutter={20}
+                      data={yKeys.map((key, index) => ({ name: key, symbol: { fill: colorScale[index % colorScale.length] } }))}
+                  />
                 )}
 
                 <VictoryAxis

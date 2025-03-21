@@ -6,6 +6,7 @@ export default {
         health: 'sample',
         login: 'login',
         signup: 'signup',
-        otp: 'otp'
+        otp: 'otp',
+        dashboard:"dashboard"
     }
 }
