@@ -1,12 +1,39 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import OtpUI from './OtpUI'
 
-const OtpScreen = () => {
+const OtpScreen = (props) => {
+    const [state, setstate] = useState({
+        pin: ''
+    })
+
+    const [err, seterr] = useState({
+        pinErr: false
+    })
+
+    function handleChange(params, value) {
+        // console.log('handleChange-->', params, value)
+        setstate({
+            ...state,
+            [params]: value
+        })
+    }
+
+    async function handleSubmit(params, val) {
+        seterr({
+            pinErr: true
+        })
+        console.log('submit', params, val)
+    }
     return (
-        <View>
-            <Text>OtpScreen</Text>
-            <OtpUI />
+        <View style={{ flex: 1 }}>
+            <OtpUI
+                {...props}
+                {...state}
+                {...err}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+            />
         </View>
     )
 }

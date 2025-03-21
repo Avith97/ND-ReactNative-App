@@ -3,7 +3,10 @@ export default {
 
     },
     NAVIGATION: {
+        auth: 'auth',
+        app: 'app',
         health: 'sample',
+        splash: 'splash',
         login: 'login',
         signup: 'signup',
         otp: 'otp',
