@@ -36,6 +36,7 @@
     <!-- Queries Section for Health Connect -->
     <queries>
         <package android:name="com.google.android.apps.healthdata" />
+        <package android:name="com.google.android.apps.fitness" />
     </queries>
 
     <application
@@ -54,6 +55,8 @@
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"
             android:exported="true">
+           
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -61,6 +64,23 @@
             <intent-filter>
                 <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
             </intent-filter>
+             <!-- deep linking  -->
+
+             <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- <data android:scheme="https" android:host="api.whatsapp.com" android:pathPrefix="/send" /> -->
+                <data android:scheme="https" android:host="events.necessarydevil.com" android:pathPrefix="/open" />
+            </intent-filter>
+
+            <!-- <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="events.necessarydevil" />
+            </intent-filter> -->
+            
         </activity>
 
         <!-- Activity to Show Permissions Rationale -->

@@ -1,10 +1,11 @@
 import axios from 'axios'
 import { store } from '../../redux/store'
-import { BASE_URL } from '../../utils/constants/urls'
 import Snackbar from 'react-native-snackbar'
 import Fonts from '../../utils/constants/Fonts'
 import Colors from '../../utils/constants/Colors'
 import { handleSync } from '../../redux/actions/loading'
+import Strings from '../../utils/constants/Strings'
+import { BASE_URL } from '../../utils/constants/Urls'
 
 const api = {
     //normal request
@@ -33,7 +34,6 @@ const api = {
             baseURL: BASE_URL[store.getState().settings.environment],
             headers: {
                 Authorization: `Bearer ${token}`,
-
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             }
@@ -42,10 +42,10 @@ const api = {
 
     _redirectToLogin: _params => {
 
-        // global.navigation.reset({
-        //   index: 0,
-        //   routes: [{ name: 'login' }]
-        // })
+        global.navigation.reset({
+            index: 0,
+            routes: [{ name: Strings.NAVIGATION.auth }]
+        })
         global.ToastShort('Your session is expired. Please login again.')
     },
 
@@ -242,4 +242,4 @@ const api = {
     }
 }
 
-export { api }
+export { api as services }

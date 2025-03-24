@@ -15,7 +15,7 @@ const OtpUI = (props) => {
         <View style={{ flex: 1 }}>
             <CustomImageBackground>
                 {/* <Text>Login UI</Text> */}
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.1)', width: wp(100) }}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0)', width: wp(100) }}>
                     <View style={{
                         width: wp(45),
                         height: hp(18),
@@ -40,7 +40,9 @@ const OtpUI = (props) => {
                             pinErr={props.pinErr}
                         />
                     </View>
-                    <View style={{ top: -hp(8) }}>
+
+                    <View style={{ top: -hp(5) }}>
+                        <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>Resend OTP</Text>
                         <CustomButton
                             title={'Submit'}
                             name={'submit'}

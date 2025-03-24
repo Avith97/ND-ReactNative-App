@@ -1,4 +1,4 @@
-package com.healthconnectapp
+package com.events.necessarydevilapp
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule

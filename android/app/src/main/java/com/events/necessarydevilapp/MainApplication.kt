@@ -1,4 +1,4 @@
-package com.healthconnectapp
+package com.events.necessarydevilapp
 
 import android.app.Application
 import com.facebook.react.PackageList
@@ -11,7 +11,7 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.soloader.OpenSourceMergedSoMapping
 import com.facebook.soloader.SoLoader
-import com.healthconnectapp.HealthConnectModule // Import the package
+import com.events.necessarydevilapp.HealthConnectModule // Import the package
 
 class MainApplication : Application(), ReactApplication {
 

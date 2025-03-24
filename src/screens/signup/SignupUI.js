@@ -33,26 +33,55 @@ const SignupUI = (props) => {
                             onChangeText={props?.handleChange}
                             inputProps={{
                                 // flex: 1,
+                                editable: props.showOtp ? false : true,
                                 value: props.userId,
                                 placeholder: 'Email or Mobile',
                             }}
                         />
                     </View>
                     <View style={{ top: -hp(8) }}>
-                        <CustomButton
-                            title={'Check'}
-                            name={'signup'}
-                            onPress={props?.handleSubmit}
-                            // isLoading={store.getState().settings.isLoading}
-                            btnStyles={styles.btnStyles}
-                            btnTitleStyles={{
-                                ...styles.textStyle,
-                                ...styles.btnTextStyle
-                            }}
-                        />
+                        {!props.showOtp &&
+                            <CustomButton
+                                title={'Check'}
+                                name={'signup'}
+                                onPress={props?.handleSubmit}
+                                // isLoading={store.getState().settings.isLoading}
+                                btnStyles={styles.btnStyles}
+                                btnTitleStyles={{
+                                    ...styles.textStyle,
+                                    ...styles.btnTextStyle
+                                }}
+                            />
+                        }
+                        {props.showOtp &&
+                            <CustomButton
+                                title={'Change'}
+                                name={'change'}
+                                onPress={props?.handleChange}
+                                // isLoading={store.getState().settings.isLoading}
+                                btnStyles={styles.btnStyles}
+                                btnTitleStyles={{
+                                    ...styles.textStyle,
+                                    ...styles.btnTextStyle
+                                }}
+                            />
+                        }
+                        {props.showOtp &&
+                            <CustomButton
+                                title={'Send OTP'}
+                                name={'otp'}
+                                onPress={props?.handleSubmit}
+                                // isLoading={store.getState().settings.isLoading}
+                                btnStyles={styles.btnStyles}
+                                btnTitleStyles={{
+                                    ...styles.textStyle,
+                                    ...styles.btnTextStyle
+                                }}
+                            />
+                        }
                     </View>
                 </View>
-                <View style={{ bottom: hp(1), position: 'absolute' }}>
+                {/* <View style={{ bottom: hp(1), position: 'absolute' }}>
                     <CustomButton
                         title={'otp'}
                         name={'otp'}
@@ -64,7 +93,7 @@ const SignupUI = (props) => {
                             ...styles.btnTextStyle
                         }}
                     />
-                </View>
+                </View> */}
             </CustomImageBackground>
 
         </View>

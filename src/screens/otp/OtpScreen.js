@@ -1,8 +1,11 @@
 import { View, Text } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OtpUI from './OtpUI'
+import { useRoute } from '@react-navigation/native'
+import { appsnackbar } from '../../common/functions/snackbar_actions'
 
 const OtpScreen = (props) => {
+    const route = useRoute()
     const [state, setstate] = useState({
         pin: ''
     })
@@ -10,6 +13,12 @@ const OtpScreen = (props) => {
     const [err, seterr] = useState({
         pinErr: false
     })
+
+    useEffect(() => {
+        let msg = route.params.message
+        appsnackbar.showSuccessMsg(msg)
+    }, [])
+
 
     function handleChange(params, value) {
         // console.log('handleChange-->', params, value)

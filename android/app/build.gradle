@@ -78,9 +78,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.healthconnectapp"
+    namespace "com.events.necessarydevilapp"
     defaultConfig {
-        applicationId "com.healthconnectapp"
+        applicationId "com.events.necessarydevilapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
