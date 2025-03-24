@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Linking } from 'react-native'
 import React, { useState } from 'react'
 import LoginUI from './LoginUI'
 import Snackbar from 'react-native-snackbar'
@@ -40,7 +40,15 @@ const LoginScreen = (props) => {
 
     async function handleSubmit(params) {
         if (params === 'signup') {
-            props.navigation.navigate(Strings.NAVIGATION.signup)
+            const packageName = 'com.google.android.apps.fitness'; // Google Fit package name
+            const intentUri = `intent://#Intent;package=${packageName};end`;
+            // Linking.openURL(`market://details?id=${packageName}`)
+
+            Linking.openURL('https://fit.google.com/')
+                // Linking.openURL(intentUri)
+                .catch(err => console.error('An error occurred', err))
+
+            // props.navigation.navigate(Strings.NAVIGATION.signup)
             return
         }
         let isValid = validate()
