@@ -1,4 +1,4 @@
-package com.healthconnectapp
+package com.events.necessarydevilapp
 
 import android.os.Bundle
 import android.webkit.WebResourceRequest
