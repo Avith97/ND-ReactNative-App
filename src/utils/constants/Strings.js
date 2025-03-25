@@ -9,6 +9,7 @@ export default {
         splash: 'splash',
         login: 'login',
         signup: 'signup',
+        register: 'register',
         otp: 'otp'
     }
 }
