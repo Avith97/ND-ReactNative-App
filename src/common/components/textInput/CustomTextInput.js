@@ -20,12 +20,14 @@ const CustomTextInput = (props) => {
         onBlur={() => setfocused(false)}
         onChangeText={text => props?.onChangeText(props.name, text)}
         placeholderTextColor={Colors.gray}
-        style={{
-          ...style.textInputStyle,
-          borderWidth: focused ? 2 : 0.7,
-          borderColor: focused ? Colors.color3 : 'grey',
-          ...props?.inputStyle
-        }}
+        style={[
+          style.textInputStyle,
+          focused && {
+            borderWidth: 2,
+            borderColor: Colors.color3,
+          },
+          { ...props?.inputStyle }
+        ]}
         {...props?.inputProps}
       />
     </>
