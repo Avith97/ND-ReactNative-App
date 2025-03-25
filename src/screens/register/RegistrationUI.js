@@ -15,7 +15,6 @@ const RegistrationUI = (props) => {
             <CustomImageBackground>
                 <View style={{ flex: 1, width: wp(95), justifyContent: 'center' }}>
                     <View style={{ alignItems: "center" }}>
-                        {/* <Text style={{ textAlign: 'center' }}>Profile Pic -avatar</Text> */}
                         <Avatar
                             rounded
                             size={'xlarge'}
@@ -31,13 +30,13 @@ const RegistrationUI = (props) => {
                         </Avatar>
                     </View>
                     <View style={{ marginVertical: hp(1.5), }}>
-                        <CustomTextInput label="Email" mandatory />
+                        <CustomTextInput label="Email" mandatory onChangeText={props.handleChange} />
                     </View>
                     <View style={{ marginVertical: hp(1.5), }}>
-                        <CustomTextInput label="First name" mandatory />
+                        <CustomTextInput label="First name" mandatory onChangeText={props.handleChange} />
                     </View>
                     <View style={{ marginVertical: hp(1.5), }}>
-                        <CustomTextInput label="Last name" mandatory />
+                        <CustomTextInput label="Last name" mandatory onChangeText={props.handleChange} />
                     </View>
                     <View style={{ marginVertical: hp(1.5), }}>
                         <CustomDropdown
@@ -66,7 +65,7 @@ const RegistrationUI = (props) => {
                         </View>
                         <View style={{ width: wp(62), marginLeft: wp(5), marginTop: hp(2.5) }}>
                             <CustomTextInput
-                                onChangeText={text => { console.log(text) }}
+                                onChangeText={props.handleChange}
                                 inputProps={{
                                     keyboardType: 'numeric',
                                     maxLength: 10,
@@ -78,15 +77,15 @@ const RegistrationUI = (props) => {
                         <CustomDateTimePicker />
                     </View>
                     <View>
-                        <CustomTextInput label="Postal(Zip/Pincode)" mandatory />
+                        <CustomTextInput label="Postal(Zip/Pincode)" mandatory onChangeText={props.handleChange} />
                     </View>
                     <View style={{
                         flexDirection: 'row',
                         justifyContent: 'space-around',
                         marginTop: hp(5),
                     }}>
-                        <CustomButton title={'Submit'} />
-                        <CustomButton title={'Cancel'} />
+                        <CustomButton title={'Submit'} onPress={props.handleSubmit} />
+                        <CustomButton title={'Cancel'} onPress={props.handleSubmit} />
                     </View>
                 </View>
             </CustomImageBackground >
