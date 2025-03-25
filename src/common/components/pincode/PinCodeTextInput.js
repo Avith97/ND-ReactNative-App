@@ -37,6 +37,8 @@ const PinCodeTextInput = (props) => {
                 onTextChange={(text) => {
                     console.log('new pin -->', text)
                     setpin(text)
+                    props.handleChange &&
+                        props.handleChange(props.name, text)
                 }}
                 onFulfill={(pin) => {
                     console.log('submit pin -->', pin)

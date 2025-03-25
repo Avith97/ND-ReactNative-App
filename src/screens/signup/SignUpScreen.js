@@ -65,6 +65,7 @@ const SignUpScreen = (props) => {
                 if (resp.data.success.code === '200') {
                     // appsnackbar.showSuccessMsg(resp?.data?.success?.verbose)
                     props.navigation.navigate(Strings.NAVIGATION.otp, {
+                        userId: state.userId,
                         message: resp?.data?.success?.verbose
                     })
                 }

@@ -37,7 +37,7 @@ const OtpUI = (props) => {
                             codeLength={6}
                             handleChange={props.handleChange}
                             onPinSubmit={props?.handleSubmit}
-                            pinErr={props.pinErr}
+                            pinErr={props.otpErr}
                         />
                     </View>
 
