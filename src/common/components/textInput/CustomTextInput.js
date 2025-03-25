@@ -1,11 +1,12 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 // import ViewPropTypes from 'deprecated-react-native-prop-types';
-import React from 'react'
+import React, { useState } from 'react'
 import Colors from '../../../utils/constants/Colors'
 import { hp, wp } from '../../functions/dimensions'
 
 
 const CustomTextInput = (props) => {
+  const [focused, setfocused] = useState(false)
   return (
     <>
       {props.label &&
@@ -15,9 +16,16 @@ const CustomTextInput = (props) => {
         </Text>
       }
       <TextInput
+        onFocus={() => setfocused(true)}
+        onBlur={() => setfocused(false)}
         onChangeText={text => props?.onChangeText(props.name, text)}
         placeholderTextColor={Colors.gray}
-        style={{ ...style.textInputStyle, ...props?.inputStyle }}
+        style={{
+          ...style.textInputStyle,
+          borderWidth: focused ? 2 : 0.7,
+          borderColor: focused ? Colors.color3 : 'grey',
+          ...props?.inputStyle
+        }}
         {...props?.inputProps}
       />
     </>
