@@ -24,6 +24,8 @@ const SignupUI = (props) => {
                             source={{ uri: 'https://events.necessarydevil.com/Org_logo/Interface.png' }}
                             style={{ width: '100%', height: '100%' }}
                             resizeMode='contain'
+                            progressiveRenderingEnabled
+                            // loadingIndicatorSource={require('../../assets/images/loading.gif')}
                         />
                     </View>
                     <View style={{ top: -hp(10) }}>

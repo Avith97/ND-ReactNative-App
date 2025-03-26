@@ -6,6 +6,7 @@ import LoginScreen from '../../screens/login/LoginScreen';
 import Strings from '../../utils/constants/Strings';
 import OtpScreen from '../../screens/otp/OtpScreen';
 import SignUpScreen from '../../screens/signup/SignUpScreen';
+import RegistrationScreen from '../../screens/register/RegistrationScreen';
 
 
 import DashboardCharts from '../../screens/ChartsScreens/DashboardCharts';
@@ -15,7 +16,7 @@ const Stack = createStackNavigator();
 
 const AuthStack = (props) => {
     return (
-        <Stack.Navigator initialRouteName={Strings.NAVIGATION.login}
+        <Stack.Navigator initialRouteName={Strings.NAVIGATION.register}
             screenOptions={
                 {
                     headerShown: false,
@@ -26,6 +27,7 @@ const AuthStack = (props) => {
             <Stack.Screen name={Strings.NAVIGATION.login} component={LoginScreen} />
             <Stack.Screen name={Strings.NAVIGATION.otp} component={OtpScreen} />
             <Stack.Screen name={Strings.NAVIGATION.signup} component={SignUpScreen} />
+            <Stack.Screen name={Strings.NAVIGATION.register} component={RegistrationScreen} />
 
             <Stack.Screen name={Strings.NAVIGATION.dashboard} component={DashboardCharts} />
             

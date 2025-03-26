@@ -12,7 +12,10 @@ const Navigator = (props) => {
     const Stack = createStackNavigator();
 
     return (
-        <NavigationContainer ref={(r) => { global.navigation = r }}>
+        <NavigationContainer
+            ref={(r) => { global.navigation = r }}
+            linking={[]}
+        >
             <Stack.Navigator initialRouteName={Strings.NAVIGATION.splash}
                 screenOptions={
                     {

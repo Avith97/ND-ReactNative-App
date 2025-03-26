@@ -9,7 +9,7 @@ export default {
         splash: 'splash',
         login: 'login',
         signup: 'signup',
-        otp: 'otp',
-        dashboard:"dashboard"
+        register: 'register',
+        otp: 'otp'
     }
 }

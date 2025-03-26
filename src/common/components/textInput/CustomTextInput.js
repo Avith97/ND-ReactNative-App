@@ -1,26 +1,48 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native'
-import React from 'react'
+// import ViewPropTypes from 'deprecated-react-native-prop-types';
+import React, { useState } from 'react'
 import Colors from '../../../utils/constants/Colors'
-import { wp } from '../../functions/dimensions'
+import { hp, wp } from '../../functions/dimensions'
 
 
-const CustomTextInput = props => {
+const CustomTextInput = (props) => {
+  const [focused, setfocused] = useState(false)
   return (
-    <TextInput
-      style={{ ...customInputStyle.textInputStyle, ...props?.inputStyle }}
-      onChangeText={text => props?.onChangeText(props.name, text)}
-      placeholderTextColor={Colors.gray}
-      {...props?.inputProps}
-    />
+    <>
+      {props.label &&
+        <Text style={{ ...style.label, ...props?.labelStyle }}>
+          {props?.label}
+          {props?.mandatory && <Text style={{ color: 'red' }}> *</Text>}
+        </Text>
+      }
+      <TextInput
+        onFocus={() => setfocused(true)}
+        onBlur={() => setfocused(false)}
+        onChangeText={text => props?.onChangeText(props.name, text)}
+        placeholderTextColor={Colors.gray}
+        style={[
+          style.textInputStyle,
+          focused && {
+            borderWidth: 2,
+            borderColor: Colors.color3,
+          },
+          { ...props?.inputStyle }
+        ]}
+        {...props?.inputProps}
+      />
+    </>
   )
 }
 
 export default CustomTextInput
 
-const customInputStyle = StyleSheet.create({
+const style = StyleSheet.create({
+  label: {},
   textInputStyle: {
+    paddingVertical: hp(1),
     paddingHorizontal: wp(3),
-    borderWidth: 1,
+    borderWidth: 0.7,
+    // elevation: 9,
     borderColor: 'grey',
     borderRadius: 10,
     backgroundColor: 'white'

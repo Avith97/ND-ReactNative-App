@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
-    "clear": "cd android && gradlew clean && cd ../",
+    "clear": "cd android && ./gradlew clean && cd ../",
     "test": "jest",
     "postinstall": "patch-package"
   },
@@ -31,6 +31,7 @@
     "react-native-background-fetch": "^4.2.7",
     "react-native-background-timer": "^2.4.1",
     "react-native-crypto-js": "^1.0.0",
+    "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "^2.24.0",
     "react-native-health-connect": "^3.3.2",
     "react-native-modal-datetime-picker": "^18.0.0",
