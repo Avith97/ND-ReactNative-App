@@ -46,7 +46,8 @@ const Dropdown = (props) => {
         placeholderTextColor,
         style,
         disabled,
-        title
+        title,
+        name
         // ...props
     } = props
 
@@ -68,7 +69,7 @@ const Dropdown = (props) => {
     const handleSelect = (item, index) => {
         setSelectedItem(item);
         setIsVisible(false);
-        onChangeText?.(valueExtractor(item), index, data);
+        onChangeText?.(name, valueExtractor(item), index, data);
     };
 
     const renderItem = ({ item, index }) => {
@@ -304,6 +305,7 @@ Dropdown.defaultProps = {
 };
 
 Dropdown.propTypes = {
+    name: PropTypes.string.isRequired,
     disabled: PropTypes.bool,
     label: PropTypes.string,
     error: PropTypes.string,
