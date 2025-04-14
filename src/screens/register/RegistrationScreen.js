@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import RegistrationUI from './RegistrationUI'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 
@@ -7,6 +7,11 @@ const RegistrationScreen = (props) => {
     const [state, setstate] = useState({})
     const [options, setoptions] = useState({})
     const [err, seterr] = useState(null)
+
+    useEffect(() => {
+        console.log('state render-->', state)
+    }, [state])
+
 
     function handleChange(params, val) {
         console.log('params', params)

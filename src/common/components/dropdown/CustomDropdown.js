@@ -15,7 +15,8 @@ const CustomDropdown = (props = cd_default_props) => {
             <Dropdown
                 data={props.data}
                 value={props.value}
-                onChangeText={(item) => props.onChangeText(props.name, item)}
+                onChangeText={props.onChangeText}
+                // onChangeText={(_,item) => props.onChangeText(props.name, item)}
                 // labelTextStyle={{ fontSize: 5, paddingLeft: 9, color: 'black', fontSize: 22 }}
                 fontSize={fontSize.normal}
                 labelFontSize={fontSize.s}

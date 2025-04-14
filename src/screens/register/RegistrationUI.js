@@ -30,13 +30,25 @@ const RegistrationUI = (props) => {
                         </Avatar>
                     </View>
                     <View style={{ marginVertical: hp(1.5), }}>
-                        <CustomTextInput label="Email" mandatory onChangeText={props.handleChange} />
+                        <CustomTextInput label="Email"
+                            name={'userId'}
+                            mandatory
+                            onChangeText={props.handleChange}
+                        />
                     </View>
                     <View style={{ marginVertical: hp(1.5), }}>
-                        <CustomTextInput label="First name" mandatory onChangeText={props.handleChange} />
+                        <CustomTextInput label="First name"
+                            name={'firstName'}
+                            mandatory
+                            onChangeText={props.handleChange}
+                        />
                     </View>
                     <View style={{ marginVertical: hp(1.5), }}>
-                        <CustomTextInput label="Last name" mandatory onChangeText={props.handleChange} />
+                        <CustomTextInput label="Last name"
+                            name={'lastName'}
+                            mandatory
+                            onChangeText={props.handleChange}
+                        />
                     </View>
                     <View style={{ marginVertical: hp(1.5), }}>
                         <CustomDropdown
@@ -45,7 +57,7 @@ const RegistrationUI = (props) => {
                             label='Select'
                             mandatory
                             data={[{ gender: 'Male' }, { gender: 'Female' }, { gender: 'Other' }]}
-                            onChangeText={item => { console.log(item) }}
+                            onChangeText={props.handleChange}
                             valueExtractor={item => item.gender}
                             labelExtractor={item => item.gender}
                         />
@@ -58,13 +70,14 @@ const RegistrationUI = (props) => {
                                 label='Select'
                                 mandatory
                                 data={[{ country: 'IND' }, { country: 'GER' }, { country: 'USA' }]}
-                                onChangeText={item => { console.log(item) }}
+                                onChangeText={props.handleChange}
                                 valueExtractor={item => item.country}
                                 labelExtractor={item => item.country}
                             />
                         </View>
                         <View style={{ width: wp(62), marginLeft: wp(5), marginTop: hp(2.5) }}>
                             <CustomTextInput
+                                name={'number'}
                                 onChangeText={props.handleChange}
                                 inputProps={{
                                     keyboardType: 'numeric',
@@ -77,15 +90,19 @@ const RegistrationUI = (props) => {
                         <CustomDateTimePicker />
                     </View>
                     <View>
-                        <CustomTextInput label="Postal(Zip/Pincode)" mandatory onChangeText={props.handleChange} />
+                        <CustomTextInput label="Postal(Zip/Pincode)"
+                            name={'postal_code'}
+                            mandatory
+                            onChangeText={props.handleChange}
+                        />
                     </View>
                     <View style={{
                         flexDirection: 'row',
                         justifyContent: 'space-around',
                         marginTop: hp(5),
                     }}>
-                        <CustomButton title={'Submit'} onPress={props.handleSubmit} />
-                        <CustomButton title={'Cancel'} onPress={props.handleSubmit} />
+                        <CustomButton title={'Submit'} name={'submit'} onPress={props.handleSubmit} />
+                        <CustomButton title={'Cancel'} name={'cancel'} onPress={props.handleSubmit} />
                     </View>
                 </View>
             </CustomImageBackground >
