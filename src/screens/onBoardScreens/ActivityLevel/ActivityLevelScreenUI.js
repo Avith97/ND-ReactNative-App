@@ -8,37 +8,9 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import Strings from '../../utils/constants/Strings';
 
 export default function ActivityLevelScreenUI(props) {
-  const [selectedActivity, setSelectedActivity] = useState(null);
-  const [selectedBelly, setSelectedBelly] = useState(null);
-
-  const activityOptions = [
-    {
-      title: 'Sedentary',
-      description: 'Little to almost no exercise',
-    },
-    {
-      title: 'Slightly Active',
-      description: 'Exercise up to 2 hours in a week',
-    },
-    {
-      title: 'Moderately Active',
-      description: 'Exercise up to 4 hours in a week',
-    },
-    {
-      title: 'Very Active',
-      description: 'Exercise for 4+ hours in a week',
-    },
-  ];
-
-  const handleContinue = () => {
-    console.log('Selected Activity:', selectedActivity);
-    console.log('Selected Belly Condition:', selectedBelly);
-    props.navigation.navigate(Strings.NAVIGATION.bellyCondition);
-  };
-
+  
   return (
     <View style={styles.container}>
       <View style={styles.ContentContainer}>
@@ -48,21 +20,21 @@ export default function ActivityLevelScreenUI(props) {
           This helps us design your workouts to fit your lifestyle
         </Text>
 
-        {activityOptions.map((option, index) => (
+        {props?.activityOptions.map((option, index) => (
           <TouchableOpacity
             key={index}
             style={[
               styles.activityBox,
-              selectedActivity === index && styles.activitySelected,
+              props.selectedActivity?.title === option.title && styles.activitySelected,
             ]}
-            onPress={() => setSelectedActivity(index)}>
+            onPress={() => props.handleChange("selectedActivity" , option)}>
             <Text style={styles.activityTitle}>{option.title}</Text>
             <Text style={styles.activityDesc}>{option.description}</Text>
           </TouchableOpacity>
         ))}
       </View>
 
-      <TouchableOpacity style={styles.continueBtn} onPress={handleContinue}>
+      <TouchableOpacity style={styles.continueBtn} onPress={props.handleSubmit}>
         <Text style={styles.continueText}>Continue</Text>
       </TouchableOpacity>
     </View>

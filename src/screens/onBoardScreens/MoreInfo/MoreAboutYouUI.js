@@ -1,12 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
-import Strings from '../../utils/constants/Strings';
-import CustomTextInput from '../../common/components/textInput/CustomTextInput';
-import Colors from '../../utils/constants/Colors';
-import {fontSize} from '../../utils/constants/Fonts';
-import {hp, wp} from '../../common/functions/dimensions';
-import CustomButton from '../../common/components/buttons/CustomButton';
-import {Images} from '../../utils/constants/Images';
+import CustomTextInput from '../../../common/components/textInput/CustomTextInput';
+import Colors from '../../../utils/constants/Colors';
+import {fontSize} from '../../../utils/constants/Fonts';
+import {hp, wp} from '../../../common/functions/dimensions';
+import {Images} from '../../../utils/constants/Images';
 
 // Centralized static labels
 const LABELS = {
@@ -26,27 +24,6 @@ const LABELS = {
 };
 
 export default function GenderScreenUI(props) {
-  // Logic (State Management)
-  const [gender, setGender] = useState(null);
-  const [state, setState] = useState({
-    age: null,
-    weight: null,
-    height: null,
-    weightUnit: 'KG',
-    heightUnit: 'CM',
-  });
-
-  async function handleChange(params, val) {
-    setState({
-      ...state,
-      [params]: val,
-    });
-  }
-
-  const handleContinue = () => {
-    console.log(state);
-    props.navigation.navigate(Strings.NAVIGATION.activityLevel);
-  };
 
   // UI
   return (
@@ -60,8 +37,8 @@ export default function GenderScreenUI(props) {
           {LABELS.genderOptions.map(g => (
             <TouchableOpacity
               key={g}
-              style={[styles.genderBox, gender === g && styles.genderSelected]}
-              onPress={() => setGender(g)}>
+              style={[styles.genderBox, props?.gender === g && styles.genderSelected]}
+              onPress={() => props?.handleChange("gender" ,g)}>
               <Image
                 source={
                   g === 'Male'
@@ -80,7 +57,7 @@ export default function GenderScreenUI(props) {
           <CustomTextInput
             name={'age'}
             inputStyle={{...styles.textInputStyle}}
-            onChangeText={handleChange}
+            onChangeText={props.handleChange}
             inputProps={{
               // flex: 1,
               value: props.age,
@@ -94,7 +71,7 @@ export default function GenderScreenUI(props) {
           <CustomTextInput
             name={'weight'}
             inputStyle={{...styles.textInputStyle, width: wp(60)}}
-            onChangeText={handleChange}
+            onChangeText={props?.handleChange}
             inputProps={{
               // flex: 1,
               value: props.weight,
@@ -108,9 +85,9 @@ export default function GenderScreenUI(props) {
                 key={unit}
                 style={[
                   styles.unitBtn,
-                  state.weightUnit === unit && styles.unitSelected,
+                  props.weightUnit === unit && styles.unitSelected,
                 ]}
-                onPress={() => handleChange('weightUnit', unit)}>
+                onPress={() => props.handleChange('weightUnit', unit)}>
                 <Text>{unit}</Text>
               </TouchableOpacity>
             ))}
@@ -122,7 +99,7 @@ export default function GenderScreenUI(props) {
           <CustomTextInput
             name={'height'}
             inputStyle={{...styles.textInputStyle, width: wp(60)}}
-            onChangeText={handleChange}
+            onChangeText={props.handleChange}
             inputProps={{
               // flex: 1,
               value: props.height,
@@ -136,9 +113,9 @@ export default function GenderScreenUI(props) {
                 key={unit}
                 style={[
                   styles.unitBtn,
-                  state.heightUnit === unit && styles.unitSelected,
+                  props?.heightUnit === unit && styles.unitSelected,
                 ]}
-                onPress={() => handleChange('heightUnit', unit)}>
+                onPress={() => props.handleChange('heightUnit', unit)}>
                 <Text>{unit}</Text>
               </TouchableOpacity>
             ))}
@@ -146,7 +123,7 @@ export default function GenderScreenUI(props) {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.continueBtn} onPress={handleContinue}>
+      <TouchableOpacity style={styles.continueBtn} onPress={props.handleSubmit}>
         <Text style={styles.continueText}>{LABELS.continueText}</Text>
       </TouchableOpacity>
     </View>

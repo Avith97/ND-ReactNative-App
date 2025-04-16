@@ -1,13 +1,13 @@
 // OnboardingStack.js
 import {createStackNavigator} from '@react-navigation/stack';
-import GenderScreenUI from '../../screens/onBoardScreens/GenderScreenUI';
-import ActivityLevelScreenUI from '../../screens/onBoardScreens/ActivityLevelScreenUI';
 import BellyConditionScreenUI from '../../screens/onBoardScreens/BellyConditionScreenUI';
 import ExerciseTypeScreenUI from '../../screens/onBoardScreens/ExerciseTypeScreenUI';
 import MotivationScreenUI from '../../screens/onBoardScreens/MotivationScreenUI';
 import FinalScreenUI from '../../screens/onBoardScreens/FinalScreenUI';
 import Strings from '../../utils/constants/Strings';
 import OnBoardCustomHeader from '../../screens/onBoardScreens/OnBoardCustomHeader';
+import MoreAboutScreen from '../../screens/onBoardScreens/MoreInfo/MoreAboutScreen';
+import ActivityLevelScreen from '../../screens/onBoardScreens/ActivityLevel/ActivityLevelScreen';
 
 const Stack = createStackNavigator();
 
@@ -44,11 +44,11 @@ export default function OnboardingStack(props) {
       }}>
       <Stack.Screen
         name={Strings.NAVIGATION.gender}
-        component={GenderScreenUI}
+        component={MoreAboutScreen}
       />
       <Stack.Screen
         name={Strings.NAVIGATION.activityLevel}
-        component={ActivityLevelScreenUI}
+        component={ActivityLevelScreen}
       />
       <Stack.Screen
         name={Strings.NAVIGATION.bellyCondition}
