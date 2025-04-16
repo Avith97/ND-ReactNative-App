@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
-import Strings from '../../utils/constants/Strings';
 
 const labels = {
   headings: {
@@ -23,50 +22,31 @@ const labels = {
   buttons: {
     continue: 'Continue',
   },
-  exerciseOptions: [
-    'Strength Training',
-    'Yoga or Pilates',
-    'Cardio (Running, Cycling)',
-    'HIIT (High-intensity interval training)',
-    'Other',
-  ],
+ 
 };
 
 export default function ExerciseTypeScreenUI(props) {
-  // Multi-select: Exercises
-  const [selectedExercises, setSelectedExercises] = useState([]);
-
-  const toggleExercise = item => {
-    if (selectedExercises.includes(item)) {
-      setSelectedExercises(selectedExercises.filter(x => x !== item));
-    } else {
-      setSelectedExercises([...selectedExercises, item]);
-    }
-  };
-
-  const handleContinue = () => {
-    console.log('Exercises:', selectedExercises);
-    props.navigation.navigate(Strings.NAVIGATION.motivation);
-  };
+  
+   
 
   return (
     <View style={styles.container}>
       <View style={styles.ContentContainer}>
         {/* === Screen 1: Exercise Type === */}
         <Text style={styles.heading}>{labels.headings.exerciseType}</Text>
-        {labels.exerciseOptions.map((item, index) => (
+        {props?.exerciseOptions?.map((item, index) => (
           <TouchableOpacity
             key={index}
             style={[
               styles.optionBox,
-              selectedExercises.includes(item) && styles.optionSelected,
+              props.selectedExercises.includes(item) && styles.optionSelected,
             ]}
-            onPress={() => toggleExercise(item)}>
+            onPress={() => props.handleChange("selectedExercises" ,item)}>
             <Text>{item}</Text>
           </TouchableOpacity>
         ))}
       </View>
-      <TouchableOpacity style={styles.continueBtn} onPress={handleContinue}>
+      <TouchableOpacity style={styles.continueBtn} onPress={props.handleSubmit}>
         <Text style={styles.continueText}>{labels.buttons.continue}</Text>
       </TouchableOpacity>
     </View>

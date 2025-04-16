@@ -1,57 +1,33 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import Strings from '../../utils/constants/Strings';
 
 const labels = {
   heading: 'What motivates you to stay active?',
-  options: [
-    'Setting and achieving goals',
-    'Social accountability',
-    'Tracking progress',
-    'Competing with others',
-    'Enjoyment of the activity',
-  ],
   continue: 'Continue',
 };
 
 export default function MotivationScreenUI(props) {
-  const [selected, setSelected] = useState([]);
-
-  const toggleOption = option => {
-    if (selected.includes(option)) {
-      setSelected(selected.filter(item => item !== option));
-    } else {
-      setSelected([...selected, option]);
-    }
-  };
-
-  const handleContinue = () => {
-    console.log('Selected motivations:', selected);
-    // navigation logic here
-    props.navigation.navigate(Strings.NAVIGATION.finalOnboard);
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.ContentContainer}>
         <Text style={styles.heading}>{labels.heading}</Text>
 
-        {labels.options.map((item, index) => (
+        {props?.options.map((item, index) => (
           <TouchableOpacity
             key={index}
             style={styles.optionRow}
-            onPress={() => toggleOption(item)}>
+            onPress={() => props.handleChange('selectedMotivation', item)}>
             <View
               style={[
                 styles.checkbox,
-                selected.includes(item) && styles.checkedBox,
+                props?.selectedMotivation.includes(item) && styles.checkedBox,
               ]}
             />
             <Text style={styles.optionText}>{item}</Text>
           </TouchableOpacity>
         ))}
       </View>
-      <TouchableOpacity style={styles.continueBtn} onPress={handleContinue}>
+      <TouchableOpacity style={styles.continueBtn} onPress={props.handleSubmit}>
         <Text style={styles.continueText}>{labels.continue}</Text>
       </TouchableOpacity>
     </View>

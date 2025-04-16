@@ -1,6 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import ActivityLevelScreenUI from './ActivityLevelScreenUI';
+import Strings from '../../../utils/constants/Strings';
 
 export default function ActivityLevelScreen(props) {
   const [state, setState] = useState({

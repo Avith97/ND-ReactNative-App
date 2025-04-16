@@ -8,15 +8,13 @@ import {
   Image,
 } from 'react-native';
 import React, {useState} from 'react';
-import Strings from '../../utils/constants/Strings';
-import {Images} from '../../utils/constants/Images';
-import { hp, wp } from '../../common/functions/dimensions';
+import { hp, wp } from '../../../common/functions/dimensions';
+
 
 // Define all static labels in a constants object
 const LABELS = {
   heading: 'Choose your belly condition',
   subText: 'Knowing your goals helps us tailor your experience',
-  bellyOptions: [{title:'Belly 1' , ImageUrl:Images.belly1}, {title:'Belly 2' , ImageUrl:Images.belly2}, {title:'Belly 3' , ImageUrl:Images.belly3}, {title:'Belly 4' , ImageUrl:Images.belly4},{title:'Belly 5' , ImageUrl:Images.belly5}],
   continueButton: 'Continue',
   
 };
@@ -24,9 +22,6 @@ const LABELS = {
 export default function BellyConditionScreenUI(props) {
   const [selectedBelly, setSelectedBelly] = useState(null);
 
-  const handleContinue = () => {
-    props.navigation.navigate(Strings.NAVIGATION.exerciseType);
-  };
 
   return (
     <View style={styles.container}>
@@ -36,13 +31,13 @@ export default function BellyConditionScreenUI(props) {
         <Text style={styles.subText}>{LABELS.subText}</Text>
 
         <View style={styles.bellyGrid}>
-          {LABELS.bellyOptions.map((belly, index) => (
+          {props?.bellyOptions.map((belly, index) => (
             <TouchableOpacity
               key={index}
-              onPress={() => setSelectedBelly(belly)}
+              onPress={() => props.handleChange("selectedBelly" ,belly)}
               style={[
                 styles.bellyBox,
-                selectedBelly?.title === belly.title && styles.bellySelected,
+                props.selectedBelly?.title === belly.title && styles.bellySelected,
               ]}>
               <Image
                 source={belly.ImageUrl}
@@ -53,7 +48,7 @@ export default function BellyConditionScreenUI(props) {
           ))}
         </View>
 
-        <TouchableOpacity style={styles.continueBtn} onPress={handleContinue}>
+        <TouchableOpacity style={styles.continueBtn} onPress={props.handleSubmit}>
           <Text style={styles.continueText}>{LABELS.continueButton}</Text>
         </TouchableOpacity>
       </View>
