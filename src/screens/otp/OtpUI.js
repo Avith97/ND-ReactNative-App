@@ -12,25 +12,13 @@ import PinCodeTextInput from '../../common/components/pincode/PinCodeTextInput'
 const OtpUI = (props) => {
 
     return (
-        <View style={{ flex: 1 }}>
-            <CustomImageBackground>
-                {/* <Text>Login UI</Text> */}
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0)', width: wp(100) }}>
-                    <View style={{
-                        width: wp(45),
-                        height: hp(18),
-                        // backgroundColor: 'pink',
-                        marginBottom: hp(2),
-                        top: -hp(22)
-                    }}>
-                        <Image
-                            source={{ uri: 'https://events.necessarydevil.com/Org_logo/Interface.png' }}
-                            style={{ width: '100%', height: '100%' }}
-                            resizeMode='contain'
-                        />
-                    </View>
-                    <View style={{ top: -hp(10) }}>
-                        <Text style={{ marginBottom: hp(1.4) }}>Please Enter your OTP </Text>
+        <View style={styles.container}>
+               <Text style={styles.title}>Enter OTP</Text>
+           
+                
+                   
+                    <View style={{alignItems:"center"}}>
+                        <Text style={{ marginBottom: hp(1.4) }}>Enter OTP for Authentication </Text>
                         <PinCodeTextInput
                             value={props.pin}
                             name={'otp'}
@@ -41,7 +29,7 @@ const OtpUI = (props) => {
                         />
                     </View>
 
-                    <View style={{ top: -hp(5) }}>
+                    <View style={{marginVertical:hp(2)}}>
                         <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>Resend OTP</Text>
                         <CustomButton
                             title={'Submit'}
@@ -54,14 +42,24 @@ const OtpUI = (props) => {
                                 ...styles.btnTextStyle
                             }}
                         />
-                    </View>
+                  
                 </View>
-            </CustomImageBackground>
+           
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        padding:20,
+        backgroundColor:"#fff"
+    },
+    title: {
+        marginBottom: 20,
+        fontSize: fontSize.l,
+        fontWeight: 'bold',
+      },
     textInputStyle: {
         fontSize: fontSize.normal,
         elevation: 5,
@@ -75,7 +73,7 @@ const styles = StyleSheet.create({
         color: 'black'
     },
     btnStyles: {
-        width: wp('57'),
+        width: wp('90'),
         marginVertical: hp(2)
     },
     btnTextStyle: {

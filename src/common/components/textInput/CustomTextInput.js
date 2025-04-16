@@ -3,6 +3,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import Colors from '../../../utils/constants/Colors'
 import { hp, wp } from '../../functions/dimensions'
+import { fontSize } from '../../../utils/constants/Fonts'
 
 
 const CustomTextInput = (props) => {
@@ -37,14 +38,17 @@ const CustomTextInput = (props) => {
 export default CustomTextInput
 
 const style = StyleSheet.create({
-  label: {},
+  label: {
+    fontSize:fontSize.normal,
+    marginBottom:hp(0.5)
+  },
   textInputStyle: {
     paddingVertical: hp(1),
     paddingHorizontal: wp(3),
     borderWidth: 0.7,
     // elevation: 9,
     borderColor: 'grey',
-    borderRadius: 10,
+    borderRadius: 6,
     backgroundColor: 'white'
   }
 })

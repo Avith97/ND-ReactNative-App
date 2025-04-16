@@ -80,16 +80,16 @@ const CustomButton = props => {
 const styles = StyleSheet.create({
   btnStyles: {
     flexDirection: 'row',
-    backgroundColor: Colors.btn,
+    backgroundColor: Colors.appbtn,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: hp('1'),
     // width:wp('70'),
-    height: hp('5'),
+    height: hp('6'),
     borderRadius: 10
   },
   btnTitle: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     fontSize: fontSize.normal,
     fontWeight: '800'

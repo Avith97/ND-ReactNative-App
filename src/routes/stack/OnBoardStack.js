@@ -45,6 +45,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen
         name={Strings.NAVIGATION.gender}
         component={MoreAboutScreen}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name={Strings.NAVIGATION.activityLevel}

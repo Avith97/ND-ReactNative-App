@@ -17,14 +17,14 @@ const LoginUI = (props) => {
                 {/* <Text>Login UI</Text> */}
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <View style={{
-                        width: wp(45),
-                        height: hp(18),
+                        width: wp(35),
+                        height: hp(15),
                         // backgroundColor: 'pink',
                         marginBottom: hp(2),
-                        top: -hp(6)
+                        top: -hp(4)
                     }}>
                         <Image
-                            source={{ uri: 'https://events.necessarydevil.com/Org_logo/Interface.png' }}
+                            source={Images.app_logo}
                             style={{ width: '100%', height: '100%' }}
                             resizeMode='contain'
                         />
@@ -47,10 +47,11 @@ const LoginUI = (props) => {
                             name={'getOtp'}
                             onPress={props?.handleSubmit}
                             // isLoading={store.getState().settings.isLoading}
-                            btnStyles={styles.btnStyles}
+                            btnStyles={styles.loginBtn}
                             btnTitleStyles={{
+                                
                                 ...styles.textStyle,
-                                ...styles.btnTextStyle
+                                ...styles.btnTextStyle,
                             }}
                         />
                         <Text style={{ fontSize: fontSize.s, textAlign: 'center' }}>or</Text>
@@ -122,6 +123,10 @@ const styles = StyleSheet.create({
         fontSize: fontSize.normal,
         fontFamily: Fonts.medium,
         color: 'black'
+    },
+    loginBtn:{
+        width: wp('90'),
+        marginVertical: hp(2)
     },
     btnStyles: {
         width: wp('57'),

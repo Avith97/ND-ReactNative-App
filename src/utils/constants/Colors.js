@@ -61,4 +61,7 @@ export default {
   dashIcon: '#e1f4e2',
   background_transperant_dark: 'rgba(0,0,0,0.5)',
 
+  // colors
+  appbtn:"#BCD64e",
+
 }
