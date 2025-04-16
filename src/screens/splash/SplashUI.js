@@ -1,34 +1,36 @@
-import { View, Text, Image, StatusBar } from 'react-native'
-import React from 'react'
-import { Images } from '../../utils/constants/Images'
-import CustomImageBackground from '../../common/components/background/CustomImageBackground'
-import Colors from '../../utils/constants/Colors'
-import InfiniteProgressBar from '../../common/components/progressbar/InfiniteProgressBar'
-import { hp, wp } from '../../common/functions/dimensions'
+import {View, Text, Image, StyleSheet} from 'react-native';
+import React from 'react';
+import {Images} from '../../utils/constants/Images';
+import Colors from '../../utils/constants/Colors';
+import {hp} from '../../common/functions/dimensions';
+import {fontSize} from '../../utils/constants/Fonts';
 
-const SplashUI = (props) => {
-    return (
-        <>
-            <StatusBar
-                backgroundColor={Colors.background_transperant_dark}
-                networkActivityIndicatorVisible={false}
-                // hidden
-                translucent={true}
-                barStyle="light-content"
-            />
-            <CustomImageBackground
-                source={Images.walking}
-                style={{ backgroundColor: 'rgba(0,0,0,1)' }}
-            >
-                <View style={{
-                    position: 'absolute',
-                    bottom: hp(3),
-                }}>
-                    <InfiniteProgressBar />
-                </View>
-            </CustomImageBackground> 
-        </>
-    )
-}
+const SplashUI = props => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Welcome</Text>
+      <Image source={Images.app_logo} style={styles.SplashLogoImage} />
+    </View>
+  );
+};
 
-export default SplashUI
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+  },
+  text: {
+    fontSize: fontSize.xl,
+    fontWeight: 'bold',
+    marginBottom: hp(0),
+  },
+  SplashLogoImage: {
+    height: 130,
+    width: 130,
+    resizeMode: 'contain',
+  },
+});
+
+export default SplashUI;
