@@ -1,6 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import React from 'react';
-import Strings from '../../utils/constants/Strings';
+import Strings from '../../../utils/constants/Strings';
 
 const labels = {
   continue: 'Continue',
@@ -10,16 +10,14 @@ const labels = {
 };
 
 export default function FinalScreenUI(props) {
-  const handleContinue = () => {
-    props.navigation.navigate(Strings.NAVIGATION.app);
-  };
+  
 
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         {/* Image Section */}
         <Image
-          source={require('../../assets/images/events/Group.png')} // <-- Replace with your image path
+          source={require('../../../assets/images/events/Group.png')} // <-- Replace with your image path
           style={styles.image}
           // resizeMode="contain"
         />
@@ -34,7 +32,7 @@ export default function FinalScreenUI(props) {
       {/* Continue Button */}
       <View style={styles.buttonContainer}>
 
-      <TouchableOpacity style={styles.continueBtn} onPress={handleContinue}>
+      <TouchableOpacity style={styles.continueBtn} onPress={props?.handleSubmit}>
         <Text style={styles.continueText}>{labels.continue}</Text>
       </TouchableOpacity>
       </View>

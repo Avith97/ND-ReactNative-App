@@ -1,6 +1,5 @@
 // OnboardingStack.js
 import {createStackNavigator} from '@react-navigation/stack';
-import FinalScreenUI from '../../screens/onBoardScreens/FinalScreenUI';
 import Strings from '../../utils/constants/Strings';
 import OnBoardCustomHeader from '../../screens/onBoardScreens/OnBoardCustomHeader';
 import MoreAboutScreen from '../../screens/onBoardScreens/moreinfo/MoreAboutScreen';
@@ -8,6 +7,7 @@ import ActivityLevelScreen from '../../screens/onBoardScreens/activitylevel/Acti
 import BellyConditionScreen from '../../screens/onBoardScreens/bellycondition/BellyConditionScreen';
 import ExerciseScreen from '../../screens/onBoardScreens/exercisescreen/ExerciseScreen';
 import MotivationScreen from '../../screens/onBoardScreens/motivation/MotivationScreen';
+import FinalScreen from '../../screens/onBoardScreens/finalscreen/FinalScreen';
 
 const Stack = createStackNavigator();
 
@@ -64,7 +64,7 @@ export default function OnboardingStack(props) {
       />
       <Stack.Screen
         name={Strings.NAVIGATION.finalOnboard}
-        component={FinalScreenUI}
+        component={FinalScreen}
       />
     </Stack.Navigator>
   );
