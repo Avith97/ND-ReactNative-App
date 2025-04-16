@@ -9,14 +9,13 @@ import SignUpScreen from '../../screens/signup/SignUpScreen';
 import RegistrationScreen from '../../screens/register/RegistrationScreen';
 
 
-import DashboardCharts from '../../screens/ChartsScreens/DashboardCharts';
 
 // const Stack = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 const AuthStack = (props) => {
     return (
-        <Stack.Navigator initialRouteName={Strings.NAVIGATION.register}
+        <Stack.Navigator initialRouteName={Strings.NAVIGATION.login}
             screenOptions={
                 {
                     headerShown: false,
@@ -29,7 +28,7 @@ const AuthStack = (props) => {
             <Stack.Screen name={Strings.NAVIGATION.signup} component={SignUpScreen} />
             <Stack.Screen name={Strings.NAVIGATION.register} component={RegistrationScreen} />
 
-            <Stack.Screen name={Strings.NAVIGATION.dashboard} component={DashboardCharts} />
+            {/* <Stack.Screen name={Strings.NAVIGATION.dashboard} component={DashboardCharts} /> */}
             
         </Stack.Navigator>
     )
