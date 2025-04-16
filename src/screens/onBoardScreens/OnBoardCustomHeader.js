@@ -1,26 +1,40 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
-import Icons, { iconType } from '../../assets/icons/Icons';
+import Icons, {iconType} from '../../assets/icons/Icons';
+import NormalProgressBar from '../../common/components/progressbar/NormalProgressBar';
 
-export default function OnBoardCustomHeader({ canGoBack, onBack, onSkip ,hideSkip }) {
+export default function OnBoardCustomHeader({
+  canGoBack,
+  onBack,
+  onSkip,
+  hideSkip,
+  progress,
+}) {
   return (
     <View style={styles.headerContainer}>
       {/* Back Button */}
-      {canGoBack  ? (
+      {canGoBack ? (
         <TouchableOpacity onPress={onBack}>
-          <Icons name="arrow-back-outline" type={iconType.ionicon} size={24} color="#000" />
+          <Icons
+            name="arrow-back-outline"
+            type={iconType.ionicon}
+            size={24}
+            color="#000"
+          />
         </TouchableOpacity>
       ) : (
-        <View style={{ width: 24 }} /> // Empty spacer when back is hidden
+        <View style={{width: 24}} /> // Empty spacer when back is hidden
       )}
 
+      {/* Normal Progress Bar */}
+      <NormalProgressBar progress={progress} />
 
-{!hideSkip ? (
+      {!hideSkip ? (
         <TouchableOpacity onPress={onSkip}>
           <Text style={styles.skipText}>Skip</Text>
         </TouchableOpacity>
       ) : (
-        <View style={{ width: 40 }} /> // empty space for alignment
+        <View style={{width: 40}} /> // empty space for alignment
       )}
     </View>
   );
