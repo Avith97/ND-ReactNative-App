@@ -9,6 +9,7 @@ export default {
     signup: 'signup',
     register: 'register',
     otp: 'otp',
+    create_profile:"createprofile",
 
     // onboarding screens
     onboard: 'onboard',

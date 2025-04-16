@@ -9,13 +9,14 @@ import CustomButton from '../../common/components/buttons/CustomButton'
 import { store } from '../../redux/store'
 import { Images } from '../../utils/constants/Images'
 import { iconType } from '../../assets/icons/Icons'
+import OrContainerUI from '../../common/components/ORContainer/OrContainerUI'
 
 const LoginUI = (props) => {
     return (
         <View style={{ flex: 1 }}>
             <CustomImageBackground>
-                {/* <Text>Login UI</Text> */}
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={{ top: -hp(4), fontSize:fontSize.l, fontWeight:600}}>Join the ND community</Text>
                     <View style={{
                         width: wp(35),
                         height: hp(15),
@@ -54,7 +55,7 @@ const LoginUI = (props) => {
                                 ...styles.btnTextStyle,
                             }}
                         />
-                        <Text style={{ fontSize: fontSize.s, textAlign: 'center' }}>or</Text>
+                       {/* <OrContainerUI /> */}
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: hp(1) }}>
                         <Text style={{ fontSize: fontSize.normal, textAlign: 'center' }}>New User? </Text>
@@ -65,8 +66,8 @@ const LoginUI = (props) => {
                             Sign-Up
                         </Text>
                     </View>
-                    <Text style={{ fontSize: fontSize.s, textAlign: 'center', marginVertical: hp(1) }}>or</Text>
-                    <View>
+                    {/* <Text style={{ fontSize: fontSize.s, textAlign: 'center', marginVertical: hp(1) }}>or</Text> */}
+                    {/* <View>
                         <CustomButton
                             title={'Sign in With Google'}
                             name={'sign_in_google'}
@@ -104,7 +105,7 @@ const LoginUI = (props) => {
                                 color: Colors.red
                             }}
                         />
-                    </View>
+                    </View> */}
                 </View>
             </CustomImageBackground>
         </View>
@@ -135,6 +136,8 @@ const styles = StyleSheet.create({
     btnTextStyle: {
         color: 'white'
     }
+   
+  
 })
 
 export default LoginUI

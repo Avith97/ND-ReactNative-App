@@ -70,7 +70,7 @@ const OtpScreen = (props) => {
             }
             resp = resp?.data?.success
             if (resp && resp?.code === '401') {
-                props.navigation.navigate(Strings.NAVIGATION.register)
+                props.navigation.navigate(Strings.NAVIGATION.create_profile)
                 seterr({ pinErr: resp?.verbose })
                 appsnackbar.showErrMsg(resp?.verbose)
                 setTimeout(() => {
