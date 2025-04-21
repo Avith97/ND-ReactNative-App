@@ -1,31 +1,62 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Strings from '../../utils/constants/Strings';
 import HealthScreen from '../../../Healthconnect';
 import HomeScreen from '../../screens/appscreens/HomeScreen';
 import ProfileScreen from '../../screens/profile/ProfileScreen';
 import BMICardScreen from '../../screens/bmi/BMICardScreen';
 import NotificationSettingScreen from '../../screens/notificationSettingscreen/NotificationSettingScreen';
+import EditProfileScreen from '../../screens/profile/EditProfileScreen';
+import ActivitySyncScreen from '../../screens/profile/ActivitySyncScreen';
 
 const AppStack = props => {
-  const Drawer = createDrawerNavigator();
+  // const Drawer = createDrawerNavigator();
+
+  const Tab = createBottomTabNavigator();
   return (
-    <Drawer.Navigator initialRouteName={Strings.NAVIGATION.bmi}>
-      <Drawer.Screen
-        name={Strings.NAVIGATION.health}
-        component={HealthScreen}
-      />
-      <Drawer.Screen name={Strings.NAVIGATION.home} component={HomeScreen} />
+    <Tab.Navigator initialRouteName={Strings.NAVIGATION.editprofile}>
+      {/* <Tab.Screen name={Strings.NAVIGATION.health} component={HealthScreen} /> */}
+      {/* <Tab.Screen name={Strings.NAVIGATION.home} component={HomeScreen} /> */}
 
-      <Drawer.Screen
-        name={Strings.NAVIGATION.profile}
-        component={ProfileScreen}
+      <Tab.Screen name={Strings.NAVIGATION.profile} component={ProfileScreen} />
+
+      <Tab.Screen name={Strings.NAVIGATION.bmi} component={BMICardScreen} />
+      <Tab.Screen
+        name={Strings.NAVIGATION.notificationsetting}
+        component={NotificationSettingScreen}
+      />
+      <Tab.Screen
+        name={Strings.NAVIGATION.editprofile}
+        component={EditProfileScreen}
       />
 
-      <Drawer.Screen name={Strings.NAVIGATION.bmi} component={BMICardScreen} />
-      <Drawer.Screen name={Strings.NAVIGATION.notificationsetting} component={NotificationSettingScreen} />
-    </Drawer.Navigator>
+<Tab.Screen
+        name={Strings.NAVIGATION.activitysync}
+        component={ActivitySyncScreen}
+      />
+
+
+
+    </Tab.Navigator>
+
+    // <Drawer.Navigator initialRouteName={Strings.NAVIGATION.editprofile}>
+    //   <Drawer.Screen
+    //     name={Strings.NAVIGATION.health}
+    //     component={HealthScreen}
+    //   />
+    //   <Drawer.Screen name={Strings.NAVIGATION.home} component={HomeScreen} />
+
+    //   <Drawer.Screen
+    //     name={Strings.NAVIGATION.profile}
+    //     component={ProfileScreen}
+    //   />
+
+    //   <Drawer.Screen name={Strings.NAVIGATION.bmi} component={BMICardScreen} />
+    //   <Drawer.Screen name={Strings.NAVIGATION.notificationsetting} component={NotificationSettingScreen} />
+    //   <Drawer.Screen name={Strings.NAVIGATION.editprofile} component={EditProfileScreen} />
+    // </Drawer.Navigator>
   );
 };
 

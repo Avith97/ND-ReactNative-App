@@ -24,6 +24,8 @@ export default {
     home:"home",
     profile:"profile",
     bmi:"bmi",
-    notificationsetting:"notificationsetting"
+    notificationsetting:"notificationsetting",
+    editprofile:"editprofile",
+    activitysync:"activitysync"
   },
 };
