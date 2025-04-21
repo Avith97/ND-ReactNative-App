@@ -26,8 +26,8 @@ export default {
 
 export const fontSize = {
     xl: hp('4'),
-    l: hp('3.2'),
-    m: hp('2.5'),
+    l: hp('3'),
+    m: hp('2.1'),
     normal: hp('1.5'),
     s: hp('1.4'),
     xs: hp('1')
