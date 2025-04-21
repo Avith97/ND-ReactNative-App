@@ -22,6 +22,8 @@ export default {
 
     // main screen
     program:"program",
+    dashboard:"dashboard",
+    calender:"calender",
 
     // app screens
     home:"home",
