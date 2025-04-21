@@ -21,6 +21,9 @@ export default {
     finalOnboard: 'finalOnboard',
 
     // app screens
-    home:"home"
+    home:"home",
+    profile:"profile",
+    bmi:"bmi",
+    notificationsetting:"notificationsetting"
   },
 };
