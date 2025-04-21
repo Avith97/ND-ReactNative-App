@@ -4,7 +4,8 @@ import {Images} from '../../utils/constants/Images';
 import {ScrollView} from 'react-native-gesture-handler';
 import ProgramCard from '../../common/components/programcard/ProgramCard';
 import SessionCard from '../../common/components/sessioncard/SessionCard';
-import { fontSize } from '../../utils/constants/Fonts';
+import {fontSize} from '../../utils/constants/Fonts';
+import PieProgressBar from '../../common/components/progressbar/PieProgressBar';
 
 export default function HomeScreen() {
   const programs = [
@@ -42,9 +43,35 @@ export default function HomeScreen() {
     },
   ];
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <View>
       <Text style={styles.title}>Welcome, Lakhan!</Text>
       <Text style={styles.subTitle}>you doing good today!</Text>
+
+      <View style={styles.mainContainer}>
+        <View style={styles.progressContainer}>
+          <Text style={styles.progressTitle}>Your daily{'\n'}progress</Text>
+          <View style={styles.progressCenter}>
+            <PieProgressBar percentage={80} />
+            <Text style={styles.progressSubTitle}>
+              Accumulating daily report
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.progressDataContainer}>
+          <View style={styles.dataItem}>
+          <Text style={{ fontSize: 20, }}>🔥</Text>
+            <Text style={styles.value}>2.000</Text>
+            <Text style={styles.label}>Kcal Burned</Text>
+          </View>
+          <View style={styles.dataItem}>
+          <Text style={{ fontSize: 20, }}>👟</Text>
+            <Text style={styles.value}>10000</Text>
+            <Text style={styles.label}>Steps walk</Text>
+          </View>
+        </View>
+      </View>
 
       <View style={styles.wrapper}>
         <View style={styles.header}>
@@ -71,17 +98,91 @@ export default function HomeScreen() {
         </ScrollView>
       </View>
     </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: "relative",
+    marginVertical: 10
+  },
+
+  progressContainer: {
+    width: 220,
+    height: 280,
+    backgroundColor: '#26281C',
+    borderRadius: 30,
+    padding: 20,
+    zIndex: 2,
+    // position: 'absolute',
+    // left: 0,
+    // top: 10,
+    elevation: 5,
+  },
+
+  progressTitle: {
+    fontSize: fontSize.l,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+  },
+
+  progressSubTitle: {
+    fontSize: fontSize.md,
+    color: '#FFFFFF',
+    marginTop: 10,
+    textAlign: 'center',
+  },
+
+  progressCenter: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  progressDataContainer: {
+    width: 180,
+    gap: 10,
+    position: 'absolute',
+    minHeight: 200,
+    borderRadius: 20,
+    backgroundColor: '#E1FB98',
+    borderColor: '#B2DB03',
+    paddingVertical: 40,
+    paddingLeft: 40,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'column',
+    zIndex: 1,
+    right: 0,
+    bottom: 0
+  },
+
+  dataItem: {
+    alignItems: 'center',
+  },
+
+  value: {
+    fontSize: fontSize.l,
+    color: '#000',
+  },
+
+  label: {
+    fontSize: fontSize.md,
+    color: 'gray',
+  },
+
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor:"#fff"
+    backgroundColor: '#fff',
   },
-  subTitle:{
-    fontSize:fontSize.md
+  subTitle: {
+    fontSize: fontSize.md,
+    color: '#94AE27',
   },
 
   wrapper: {
