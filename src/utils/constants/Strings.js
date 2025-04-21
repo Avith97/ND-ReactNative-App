@@ -19,5 +19,8 @@ export default {
     exerciseType: 'exerciseType',
     motivation: 'motivation',
     finalOnboard: 'finalOnboard',
+
+    // app screens
+    home:"home"
   },
 };

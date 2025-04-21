@@ -17,7 +17,7 @@ const Navigator = (props) => {
             ref={(r) => { global.navigation = r }}
             linking={[]}
         >
-            <Stack.Navigator initialRouteName={Strings.NAVIGATION.splash}
+            <Stack.Navigator initialRouteName={Strings.NAVIGATION.app}
                 screenOptions={
                     {
                         headerShown: false,

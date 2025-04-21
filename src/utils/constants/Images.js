@@ -18,6 +18,9 @@ export const Images = {
   belly5:require(ImgPath + "/onboardImages/Belly/belly5.png"),
 
 
+  runner_bg_image: require(ImgPath + "/runner_bg_img.png")
+
+
 
 
 }
