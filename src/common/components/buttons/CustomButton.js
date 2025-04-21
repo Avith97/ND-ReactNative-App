@@ -80,7 +80,7 @@ const CustomButton = props => {
 const styles = StyleSheet.create({
   btnStyles: {
     flexDirection: 'row',
-    backgroundColor: Colors.appbtn,
+    backgroundColor: Colors.app_primary,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: hp('1'),

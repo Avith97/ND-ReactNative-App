@@ -20,6 +20,9 @@ export default {
     motivation: 'motivation',
     finalOnboard: 'finalOnboard',
 
+    // main screen
+    program:"program",
+
     // app screens
     home:"home",
     profile:"profile",

@@ -10,20 +10,24 @@ import BMICardScreen from '../../screens/bmi/BMICardScreen';
 import NotificationSettingScreen from '../../screens/notificationSettingscreen/NotificationSettingScreen';
 import EditProfileScreen from '../../screens/profile/EditProfileScreen';
 import ActivitySyncScreen from '../../screens/profile/ActivitySyncScreen';
+import ProgramScreen from '../../screens/appscreens/program/ProgramScreen';
 
 const AppStack = props => {
   // const Drawer = createDrawerNavigator();
 
   const Tab = createBottomTabNavigator();
   return (
-    <Tab.Navigator initialRouteName={Strings.NAVIGATION.editprofile}>
+    <Tab.Navigator initialRouteName={Strings.NAVIGATION.home}>
       {/* <Tab.Screen name={Strings.NAVIGATION.health} component={HealthScreen} /> */}
-      {/* <Tab.Screen name={Strings.NAVIGATION.home} component={HomeScreen} /> */}
+      <Tab.Screen name={Strings.NAVIGATION.home} component={HomeScreen} />
+
+      <Tab.Screen name={Strings.NAVIGATION.program} component={ProgramScreen} />
+      
 
       <Tab.Screen name={Strings.NAVIGATION.profile} component={ProfileScreen} />
 
       <Tab.Screen name={Strings.NAVIGATION.bmi} component={BMICardScreen} />
-      <Tab.Screen
+      {/* <Tab.Screen
         name={Strings.NAVIGATION.notificationsetting}
         component={NotificationSettingScreen}
       />
@@ -32,13 +36,10 @@ const AppStack = props => {
         component={EditProfileScreen}
       />
 
-<Tab.Screen
+      <Tab.Screen
         name={Strings.NAVIGATION.activitysync}
         component={ActivitySyncScreen}
-      />
-
-
-
+      /> */}
     </Tab.Navigator>
 
     // <Drawer.Navigator initialRouteName={Strings.NAVIGATION.editprofile}>

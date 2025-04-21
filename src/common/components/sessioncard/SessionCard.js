@@ -2,9 +2,9 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { fontSize } from '../../../utils/constants/Fonts';
 
-const SessionCard = ({ image, title, author, date, description }) => {
+const SessionCard = ({ image, title, author, date, description , minWidth }) => {
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={{...styles.card , width:minWidth}}>
       <Image source={image} style={styles.image} />
       
       <View style={styles.content}>
@@ -18,7 +18,6 @@ const SessionCard = ({ image, title, author, date, description }) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: 250,
     borderRadius: 12,
     backgroundColor: '#fff',
     marginRight: 15,

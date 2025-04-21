@@ -6,11 +6,22 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { fontSize } from '../../../utils/constants/Fonts';
+import {fontSize} from '../../../utils/constants/Fonts';
+import CustomButton from '../buttons/CustomButton';
+import {hp, wp} from '../../functions/dimensions';
+import Colors from '../../../utils/constants/Colors';
 
-const ProgramCard = ({title, duration, calories, image, status}) => {
+const ProgramCard = ({
+  title,
+  duration,
+  calories,
+  image,
+  status,
+  minWidth,
+  ...props
+}) => {
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={{...styles.card, width: minWidth}}>
       <ImageBackground
         source={image}
         style={styles.image}
@@ -19,13 +30,20 @@ const ProgramCard = ({title, duration, calories, image, status}) => {
           <Text style={styles.statusText}>{status}</Text>
         </View>
 
-        
-
         <Text style={styles.title}>{title}</Text>
 
-        <TouchableOpacity style={styles.registerButton}>
-          <Text style={styles.registerText}>Register Now</Text>
-        </TouchableOpacity>
+        <CustomButton
+          title={'Register Here'}
+          name={''}
+          onPress={props?.handleSubmit}
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 5,
+          }}
+          btnTitleStyles={{
+            ...styles.textStyle,
+          }}
+        />
 
         <View style={styles.detailsRow}>
           <Text style={styles.detailText}>⏱ {duration}</Text>
@@ -38,7 +56,6 @@ const ProgramCard = ({title, duration, calories, image, status}) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: 280,
     marginRight: 15,
     borderRadius: 12,
     overflow: 'hidden',
@@ -53,7 +70,7 @@ const styles = StyleSheet.create({
   },
   statusTag: {
     alignSelf: 'flex-end',
-    backgroundColor: '#B5FF6B',
+    backgroundColor: Colors.app_primary,
     paddingVertical: 2,
     paddingHorizontal: 8,
     borderRadius: 10,
@@ -68,26 +85,21 @@ const styles = StyleSheet.create({
     fontSize: fontSize.md,
     fontWeight: 'bold',
   },
-  registerButton: {
-    backgroundColor: '#B5FF6B',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    alignSelf: 'flex-start',
-    borderRadius: 6,
+  btnStyles: {
+    width: wp(4),
+    height: hp(4.5),
+    borderRadius: 8,
   },
-  registerText: {
-    color: '#000',
-    fontWeight: '600',
-    fontSize: fontSize.s,
-  },
+
   detailsRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 5,
+    // justifyContent: 'space-between',
+    // marginTop: 5,
+    gap: 10,
   },
   detailText: {
     color: '#fff',
-     fontSize: fontSize.normal,
+    fontSize: fontSize.normal,
   },
 });
 
