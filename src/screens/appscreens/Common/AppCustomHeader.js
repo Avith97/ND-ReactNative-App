@@ -1,15 +1,23 @@
 import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native'; // ✅ Add this
 import {Images} from '../../../utils/constants/Images';
 import {wp} from '../../../common/functions/dimensions';
 import Icons, {iconType} from '../../../assets/icons/Icons';
+import Strings from '../../../utils/constants/Strings';
 
-export default function AppCustomHeader({onAvatarPress, onNotificationPress}) {
+export default function AppCustomHeader({onNotificationPress}) {
+  const navigation = useNavigation(); // ✅ Access navigation
+
+  const onAvatarPress = () => {
+    navigation.navigate(Strings.NAVIGATION.profile); // ✅ Now works!
+  };
+
   return (
     <View style={styles.headerContainer}>
       {/* Logo */}
       <Image
-        source={Images.app_logo} // Replace with your actual logo
+        source={Images.app_logo}
         style={styles.logo}
         resizeMode="contain"
       />
@@ -54,4 +62,4 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 18,
   },
-});
+}); 

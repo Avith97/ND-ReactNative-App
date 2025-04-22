@@ -14,68 +14,71 @@ import HomeScreen from '../../screens/appscreens/homescreen/HomeScreen';
 import DashboardScreen from '../../screens/appscreens/dashboard/DashboardScreen';
 import CalenderScreen from '../../screens/appscreens/calender/CalenderScreen';
 import AppCustomHeader from '../../screens/appscreens/Common/AppCustomHeader';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const AppStack = props => {
-  // const Drawer = createDrawerNavigator();
-
+const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
   return (
-    <Tab.Navigator initialRouteName={Strings.NAVIGATION.home} screenOptions={({navigation, route}) => {
-            
-      
-            return {
-              header: () => (
-                <AppCustomHeader
-                
-                />
-              ),
-            };
-          }}>
+    <Tab.Navigator
+      initialRouteName={Strings.NAVIGATION.home}
+      screenOptions={({navigation, route}) => {
+        return {
+          header: () => <AppCustomHeader />,
+        };
+      }}>
       {/* <Tab.Screen name={Strings.NAVIGATION.health} component={HealthScreen} /> */}
       <Tab.Screen name={Strings.NAVIGATION.home} component={HomeScreen} />
 
       <Tab.Screen name={Strings.NAVIGATION.program} component={ProgramScreen} />
 
-      <Tab.Screen name={Strings.NAVIGATION.dashboard} component={DashboardScreen} />
+      <Tab.Screen
+        name={Strings.NAVIGATION.dashboard}
+        component={DashboardScreen}
+      />
 
-      <Tab.Screen name={Strings.NAVIGATION.calender} component={CalenderScreen} />
-      
-       
-      
+      <Tab.Screen
+        name={Strings.NAVIGATION.calender}
+        component={CalenderScreen}
+      />
+    </Tab.Navigator>
+  );
+};
 
-      {/* <Tab.Screen name={Strings.NAVIGATION.profile} component={ProfileScreen} /> */}
+const AppStack = props => {
+  // const Drawer = createDrawerNavigator();
 
-      {/* <Tab.Screen name={Strings.NAVIGATION.bmi} component={BMICardScreen} /> */}
-      {/* <Tab.Screen
+  const Stack = createStackNavigator();
+
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name={Strings.NAVIGATION.home} component={TabNavigator} />
+      <Stack.Screen
+        name={Strings.NAVIGATION.profile}
+        component={ProfileScreen}
+      />
+
+      <Stack.Screen name={Strings.NAVIGATION.bmi} component={BMICardScreen} />
+      <Stack.Screen
         name={Strings.NAVIGATION.notificationsetting}
         component={NotificationSettingScreen}
       />
-      <Tab.Screen
+      <Stack.Screen
         name={Strings.NAVIGATION.editprofile}
         component={EditProfileScreen}
       />
 
-      <Tab.Screen
+      <Stack.Screen
         name={Strings.NAVIGATION.activitysync}
         component={ActivitySyncScreen}
-      /> */}
-    </Tab.Navigator>
+      />
+    </Stack.Navigator>
 
-    // <Drawer.Navigator initialRouteName={Strings.NAVIGATION.editprofile}>
+    // <Drawer.Navigator initialRouteName={Strings.NAVIGATION.health}>
     //   <Drawer.Screen
     //     name={Strings.NAVIGATION.health}
     //     component={HealthScreen}
     //   />
-    //   <Drawer.Screen name={Strings.NAVIGATION.home} component={HomeScreen} />
 
-    //   <Drawer.Screen
-    //     name={Strings.NAVIGATION.profile}
-    //     component={ProfileScreen}
-    //   />
-
-    //   <Drawer.Screen name={Strings.NAVIGATION.bmi} component={BMICardScreen} />
-    //   <Drawer.Screen name={Strings.NAVIGATION.notificationsetting} component={NotificationSettingScreen} />
-    //   <Drawer.Screen name={Strings.NAVIGATION.editprofile} component={EditProfileScreen} />
     // </Drawer.Navigator>
   );
 };
