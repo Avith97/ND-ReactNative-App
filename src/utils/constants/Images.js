@@ -24,7 +24,7 @@ export const Images = {
   fitbit:require(ImgPath + "/ConcentImages/fitbit.png"),
   garmin:require(ImgPath + "/ConcentImages/Garmin.png"),
   mapmyrun:require(ImgPath + "/ConcentImages/mapmyrun.png"),
-  // strava:require(ImgPath + "/ConcentImagesr/strava.png"),
+  strava:require(ImgPath + "/ConcentImages/strava.png"),
 
 
 

@@ -3,6 +3,7 @@ import {StyleSheet ,ScrollView} from 'react-native';
 import HomeScreenUI from './HomeScreenUI';
 import { Images } from '../../../utils/constants/Images';
 import { hp } from '../../../common/functions/dimensions';
+import ConsentScreen from '../../consentscreen/ConsentScreen';
 
 export default function HomeScreen() {
   const [options] = useState({
@@ -48,6 +49,7 @@ export default function HomeScreen() {
       contentContainerStyle={{paddingBottom: hp(5)}}
       showsVerticalScrollIndicator={false}>
       <HomeScreenUI {...options} />
+
     </ScrollView>
   );
 }
