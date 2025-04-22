@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
   btnTitle: {
     color: 'black',
     textAlign: 'center',
-    fontSize: fontSize.normal,
-    fontWeight: '800'
+    fontSize: fontSize.md,
+    fontWeight: '700'
   }
 })
 
