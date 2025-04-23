@@ -3,8 +3,9 @@ import React, { useState } from 'react'
 import ProgramScreenUI from './ProgramScreenUI'
 import Colors from '../../../utils/constants/Colors'
 import { Images } from '../../../utils/constants/Images'
+import Strings from '../../../utils/constants/Strings'
 
-export default function ProgramScreen() {
+export default function ProgramScreen(props) {
 
     const [options , setOptions] = useState({
         programs : [
@@ -53,11 +54,14 @@ export default function ProgramScreen() {
           ]
     })
 
+    const handleNavigate =()=>{
+      props.navigation.navigate(Strings.NAVIGATION.eventstarted)
+    }
    
     
   return (
     <View style={styles.container}>
-      <ProgramScreenUI {...options} />
+      <ProgramScreenUI {...options} handleNavigate={handleNavigate} />
     </View>
   )
 }

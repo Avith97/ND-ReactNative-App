@@ -6,13 +6,29 @@ import CustomButton from '../../common/components/buttons/CustomButton';
 import {FlatList} from 'react-native-gesture-handler';
 import {fontSize} from '../../utils/constants/Fonts';
 import {maskNumber} from '../../common/functions/masknumber';
+import Strings from '../../utils/constants/Strings';
 
-export default function ProfileScreenUI() {
+export default function ProfileScreenUI(props) {
   const settingsData = [
-    {id: '1', icon: 'user', label: 'Profile Settings'},
-    {id: '2', icon: 'bell', label: 'Notification Settings'},
+    {
+      id: '1',
+      icon: 'user',
+      label: 'Profile Settings',
+      link: Strings.NAVIGATION.editprofile,
+    },
+    {
+      id: '2',
+      icon: 'bell',
+      label: 'Notification Settings',
+      link: Strings.NAVIGATION.notificationsetting,
+    },
     {id: '3', icon: 'sliders', label: 'General Settings'},
-    {id: '4', icon: 'link', label: 'Activity Sync'},
+    {
+      id: '4',
+      icon: 'link',
+      label: 'Activity Sync',
+      link: Strings.NAVIGATION.activitysync,
+    },
     {id: '5', icon: 'file-text', label: 'Terms & Conditions'},
     {id: '6', icon: 'help-circle', label: 'Support'},
   ];
@@ -28,9 +44,10 @@ export default function ProfileScreenUI() {
           isFirst && styles.firstItem,
           isLast && styles.lastItem,
           !isLast && styles.withBorder,
-        ]}>
+        ]}
+        onPress={() => props.handleNavigate(item.link)}>
         <View style={styles.row}>
-          <Icon name={item.icon} size={20} color="#000" />
+          {/* <Icon name={item.icon} size={20} color="#000" /> */}
           <Text style={styles.label}>{item.label}</Text>
         </View>
         <Icon name="chevron-right" size={20} color="#000" />
@@ -65,10 +82,10 @@ export default function ProfileScreenUI() {
         <Text style={styles.title}>Lakhan Nemane</Text>
         <Text style={styles.numberText}>{maskNumber(9834201623)}</Text>
         <Text style={styles.emailText}>lnemane7@gmail.com</Text>
-        <CustomButton title="Check BMI Score" />
+        <CustomButton title="Check BMI Score" onPress={props?.handleNavigate} />
       </View>
 
-      <View>
+      <View style={{marginTop: hp(2)}}>
         <FlatList
           data={settingsData}
           renderItem={renderItem}
@@ -132,6 +149,6 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     fontSize: fontSize.md,
     color: '#000',
-    fontWeight:600
+    fontWeight: 600,
   },
 });

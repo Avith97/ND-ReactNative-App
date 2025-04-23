@@ -25,6 +25,14 @@ export default {
     dashboard:"dashboard",
     calender:"calender",
 
+
+    // event specific 
+
+    eventdetail:"eventdetail",
+    eventstarted:"eventstarted",
+    eventregister:"eventregister",
+    consent:"consent",
+
     // app screens
     home:"home",
     profile:"profile",

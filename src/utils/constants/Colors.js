@@ -63,6 +63,6 @@ export default {
 
   // colors
   appbtn:"#BCD64e",
-  app_primary:"#AFEA0D"
+  app_primary:"#BCD64E"
 
 }

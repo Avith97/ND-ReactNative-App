@@ -18,6 +18,7 @@ const ProgramCard = ({
   image,
   status,
   minWidth,
+  
   ...props
 }) => {
   return (
@@ -35,7 +36,7 @@ const ProgramCard = ({
         <CustomButton
           title={'Register Here'}
           name={''}
-          onPress={props?.handleSubmit}
+          onPress={props?.handleNavigate}
           btnStyles={{
             ...styles.btnStyles,
             elevation: 5,

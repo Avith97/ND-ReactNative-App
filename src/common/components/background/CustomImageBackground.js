@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
   bgImage: {
     flex: 1,
     // justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
   }
 })

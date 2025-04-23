@@ -15,17 +15,17 @@ import DashboardScreen from '../../screens/appscreens/dashboard/DashboardScreen'
 import CalenderScreen from '../../screens/appscreens/calender/CalenderScreen';
 import AppCustomHeader from '../../screens/appscreens/Common/AppCustomHeader';
 import {createStackNavigator} from '@react-navigation/stack';
+import EventStartedScreen from '../../screens/eventstartedScreen/EventStartedScreen';
+import EventDetailScreen from '../../screens/eventdetailscreen/EventDetailScreen';
+import RegisterEventScreen from '../../screens/registerevent/RegisterEventScreen';
+import ConsentScreen from '../../screens/consentscreen/ConsentScreen';
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
       initialRouteName={Strings.NAVIGATION.home}
-      screenOptions={({navigation, route}) => {
-        return {
-          header: () => <AppCustomHeader />,
-        };
-      }}>
+      screenOptions={{headerShown: false}}>
       {/* <Tab.Screen name={Strings.NAVIGATION.health} component={HealthScreen} /> */}
       <Tab.Screen name={Strings.NAVIGATION.home} component={HomeScreen} />
 
@@ -50,26 +50,79 @@ const AppStack = props => {
   const Stack = createStackNavigator();
 
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator
+      screenOptions={({navigation, route}) => {
+        const customHeaderScreens = [
+          Strings.NAVIGATION.home,
+          Strings.NAVIGATION.eventdetail,
+          Strings.NAVIGATION.eventstarted,
+          Strings.NAVIGATION.eventregister,
+          Strings.NAVIGATION.consent,
+        ];
+    
+        if (customHeaderScreens.includes(route.name)) {
+          return {
+            header: () => <AppCustomHeader />,
+          };
+        }
+    
+        return {
+          headerShown: true, // default header for all other screens
+        };
+      }}>
       <Stack.Screen name={Strings.NAVIGATION.home} component={TabNavigator} />
       <Stack.Screen
         name={Strings.NAVIGATION.profile}
         component={ProfileScreen}
+        options={{title: 'Profile'}}
       />
 
-      <Stack.Screen name={Strings.NAVIGATION.bmi} component={BMICardScreen} />
+      <Stack.Screen
+        name={Strings.NAVIGATION.bmi}
+        component={BMICardScreen}
+        options={{title: 'BMI'}}
+      />
       <Stack.Screen
         name={Strings.NAVIGATION.notificationsetting}
         component={NotificationSettingScreen}
+        options={{title: 'Notification Settings'}}
       />
       <Stack.Screen
         name={Strings.NAVIGATION.editprofile}
         component={EditProfileScreen}
+        options={{title: 'Edit Profile'}}
       />
 
       <Stack.Screen
         name={Strings.NAVIGATION.activitysync}
         component={ActivitySyncScreen}
+        options={{title: 'Activity Sync'}}
+      />
+
+      {/* Event specific screen */}
+
+      <Stack.Screen
+        name={Strings.NAVIGATION.eventstarted}
+        component={EventStartedScreen}
+        options={{title: 'Get started'}}
+      />
+
+      <Stack.Screen
+        name={Strings.NAVIGATION.eventdetail}
+        component={EventDetailScreen}
+        options={{title: 'Event Detail'}}
+      />
+
+      <Stack.Screen
+        name={Strings.NAVIGATION.eventregister}
+        component={RegisterEventScreen}
+        options={{title: 'Register Event'}}
+      />
+
+      <Stack.Screen
+        name={Strings.NAVIGATION.consent}
+        component={ConsentScreen}
+        options={{title: 'Consent'}}
       />
     </Stack.Navigator>
 
