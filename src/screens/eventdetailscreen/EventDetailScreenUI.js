@@ -28,16 +28,21 @@ export default function EventDetailScreenUI(props) {
           Lorem ipsum dolor sit amet, consectetur adipiscing
         </Text>
         <Text style={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
         </Text>
 
         {/* Date Section */}
         <View style={styles.dateRangeContainer}>
-          <Icons name="calendar" type={iconType.feather} size={20} color="black" />
-          <Text style={styles.dateText}> From 26-01-2025  To 30-02-2025</Text>
+          <Icons
+            name="calendar"
+            type={iconType.feather}
+            size={20}
+            color="black"
+          />
+          <Text style={styles.dateText}> From 26-01-2025 To 30-02-2025</Text>
         </View>
 
         {/* Organizer Section */}
@@ -55,13 +60,15 @@ export default function EventDetailScreenUI(props) {
             </Text>
           </View>
         </View>
-
-        
       </ScrollView>
 
       {/* Floating Button */}
       <View style={styles.buttonWrapper}>
-        <CustomButton title={'Register Now'} btnStyles={styles.btnStyle} onPress={props.handleNavigate} />
+        <CustomButton
+          title={'Register Now'}
+          btnStyles={styles.btnStyle}
+          onPress={props.handleNavigate}
+        />
       </View>
     </View>
   );
@@ -71,7 +78,7 @@ const styles = StyleSheet.create({
   bannerImage: {
     width: '100%',
     height: hp(35),
-    opacity:0.6
+    opacity: 0.6,
   },
   badgeContainer: {
     position: 'absolute',
@@ -90,7 +97,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: wp(5),
     paddingBottom: hp(12), // space for floating button
-
   },
   title: {
     fontSize: fontSize.l,
@@ -108,7 +114,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.app_primary,
     padding: hp(1.5),
     borderRadius: 10,
-    width:wp(65)
+    width: wp(65),
   },
   dateText: {
     marginLeft: wp(3),
@@ -134,7 +140,7 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     position: 'absolute',
     bottom: hp(3),
-    right: wp(4),
+    left: wp(30),
   },
   btnStyle: {
     width: wp(40),

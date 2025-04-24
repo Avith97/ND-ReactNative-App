@@ -32,6 +32,7 @@ export default {
     eventstarted:"eventstarted",
     eventregister:"eventregister",
     consent:"consent",
+    leaderboard:'leaderboard',
 
     // app screens
     home:"home",

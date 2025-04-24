@@ -19,6 +19,7 @@ import EventStartedScreen from '../../screens/eventstartedScreen/EventStartedScr
 import EventDetailScreen from '../../screens/eventdetailscreen/EventDetailScreen';
 import RegisterEventScreen from '../../screens/registerevent/RegisterEventScreen';
 import ConsentScreen from '../../screens/consentscreen/ConsentScreen';
+import LeaderBoardScreen from '../../screens/leaderboard/LeaderBoardScreen';
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -58,6 +59,7 @@ const AppStack = props => {
           Strings.NAVIGATION.eventstarted,
           Strings.NAVIGATION.eventregister,
           Strings.NAVIGATION.consent,
+          Strings.NAVIGATION.leaderboard
         ];
     
         if (customHeaderScreens.includes(route.name)) {
@@ -123,6 +125,12 @@ const AppStack = props => {
         name={Strings.NAVIGATION.consent}
         component={ConsentScreen}
         options={{title: 'Consent'}}
+      />
+
+<Stack.Screen
+        name={Strings.NAVIGATION.leaderboard}
+        component={LeaderBoardScreen}
+        options={{title: 'Leaderboard'}}
       />
     </Stack.Navigator>
 

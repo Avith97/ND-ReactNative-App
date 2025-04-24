@@ -3,8 +3,15 @@ import React from 'react';
 import StepsGraph from '../../../common/components/Charts/StepsGraph';
 import CustomButton from '../../../common/components/buttons/CustomButton';
 import { hp, wp } from '../../../common/functions/dimensions';
+import { useNavigation } from '@react-navigation/native';
+import Strings from '../../../utils/constants/Strings';
 
 export default function DashboardScreenUI() {
+ const navigation = useNavigation(); // ✅ Access navigation
+
+  const handleNavigate = () => {
+    navigation.navigate(Strings.NAVIGATION.leaderboard); // ✅ Now works!
+  };
   return (
     <View style={styles.container}>
       <View>
@@ -15,7 +22,7 @@ export default function DashboardScreenUI() {
         <CustomButton
           title={'Leaderboard'}
           name={''}
-          // onPress={props?.handleSubmit}
+          onPress={handleNavigate}
           btnStyles={{
             ...styles.btnStyles,
             elevation: 5,
@@ -28,7 +35,7 @@ export default function DashboardScreenUI() {
         <CustomButton
           title={'Share'}
           name={''}
-          // onPress={props?.handleSubmit}
+          onPress={handleNavigate}
           btnStyles={{
             ...styles.btnStyles,
             elevation: 5,
