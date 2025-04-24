@@ -4,8 +4,17 @@ import HomeScreenUI from './HomeScreenUI';
 import { Images } from '../../../utils/constants/Images';
 import { hp } from '../../../common/functions/dimensions';
 import ConsentScreen from '../../consentscreen/ConsentScreen';
+import Strings from '../../../utils/constants/Strings';
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
+
+  const handleNavigate =()=>{
+    console.log("hello");
+
+    props.navigation.navigate(Strings.NAVIGATION.programdetail)
+
+    
+  }
   const [options] = useState({
     programs: [
       {
@@ -48,7 +57,7 @@ export default function HomeScreen() {
       style={styles.container}
       contentContainerStyle={{paddingBottom: hp(5)}}
       showsVerticalScrollIndicator={false}>
-      <HomeScreenUI {...options} />
+      <HomeScreenUI {...options} handleNavigate={handleNavigate}/>
 
     </ScrollView>
   );

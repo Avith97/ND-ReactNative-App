@@ -40,7 +40,7 @@ export default function HomeScreenUI(props) {
       <Section title="Programs">
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {props.programs.map((item, index) => (
-            <ProgramCard key={index} {...item} minWidth={wp(75)} />
+            <ProgramCard key={index} {...item} minWidth={wp(75)} handleNavigate={props.handleNavigate} />
           ))}
         </ScrollView>
       </Section>

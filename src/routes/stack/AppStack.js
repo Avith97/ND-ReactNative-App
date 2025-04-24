@@ -20,6 +20,8 @@ import EventDetailScreen from '../../screens/eventdetailscreen/EventDetailScreen
 import RegisterEventScreen from '../../screens/registerevent/RegisterEventScreen';
 import ConsentScreen from '../../screens/consentscreen/ConsentScreen';
 import LeaderBoardScreen from '../../screens/leaderboard/LeaderBoardScreen';
+import ProgramDetailScreen from '../../screens/programsdetail/ProgramDetailScreen';
+import SubmitResponseScreen from '../../screens/submitresponse/SubmitResponseScreen';
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -59,15 +61,16 @@ const AppStack = props => {
           Strings.NAVIGATION.eventstarted,
           Strings.NAVIGATION.eventregister,
           Strings.NAVIGATION.consent,
-          Strings.NAVIGATION.leaderboard
+          Strings.NAVIGATION.leaderboard,
+          Strings.NAVIGATION.programdetail,
         ];
-    
+
         if (customHeaderScreens.includes(route.name)) {
           return {
             header: () => <AppCustomHeader />,
           };
         }
-    
+
         return {
           headerShown: true, // default header for all other screens
         };
@@ -127,10 +130,23 @@ const AppStack = props => {
         options={{title: 'Consent'}}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name={Strings.NAVIGATION.leaderboard}
         component={LeaderBoardScreen}
         options={{title: 'Leaderboard'}}
+      />
+
+      {/* program */}
+      <Stack.Screen
+        name={Strings.NAVIGATION.programdetail}
+        component={ProgramDetailScreen}
+        options={{title: 'Program Detail'}}
+      />
+
+      <Stack.Screen
+        name={Strings.NAVIGATION.submitresponse}
+        component={SubmitResponseScreen}
+        options={{title: 'Response '}}
       />
     </Stack.Navigator>
 

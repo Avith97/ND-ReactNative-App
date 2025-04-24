@@ -34,6 +34,11 @@ export default {
     consent:"consent",
     leaderboard:'leaderboard',
 
+
+    // program detail
+    programdetail:"programdetail",
+    submitresponse:"submitresponse",
+
     // app screens
     home:"home",
     profile:"profile",

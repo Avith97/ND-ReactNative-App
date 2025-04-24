@@ -62,7 +62,54 @@ export default {
   background_transperant_dark: 'rgba(0,0,0,0.5)',
 
   // colors
-  appbtn:"#BCD64e",
-  app_primary:"#BCD64E"
+  appbtn: '#BCD64e',
+  app_primary: '#BCD64E',
 
-}
+  // Backgrounds
+  backgroundLight: '#F3FFC1',
+  backgroundMuted: '#F9FAFB',
+  cardBackground: '#E5F9FF',
+  dateBackground: '#ECFCCB',
+  dayBackground:"#FFEDE5",
+  secondary_btn:"#51D7FF",
+
+  // background 
+
+  dangerBackground:"#EF8989",
+
+  // Primary / Action
+  primary: '#BCD64E',
+  primaryDark: '#AFEA0D',
+  registerButton: '#C5F73D',
+
+
+  // Accent / Alert
+  danger: '#F87171',
+  dangerText: '#B91C1C',
+  info: '#1978BC',
+
+  // Text
+  textPrimary: '#111827',
+  textSecondary: '#4B5563',
+  textMuted: '#6B7280',
+  textWhite: '#FFFFFF',
+
+  // Border & Icon
+  border: '#E5E7EB',
+  icon: '#4CAF50',
+
+  // Tags & Status
+  tagNotRegistered: '#F87171',
+  tagRegistered: '#34D399',
+  targetColor:"#0076B8",
+
+
+
+  // shade of gray secondary color
+  gray_01:"#000000",
+  gray_02:"#1C1B1C",
+  gray_03:"#313030",
+  gray_04:"#484646",
+  gray_05:"#605E5E",
+  gray_06:"#797676"
+};

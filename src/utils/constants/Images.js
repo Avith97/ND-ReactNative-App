@@ -28,6 +28,10 @@ export const Images = {
 
 
 
+  program_banner:require(ImgPath + "/program_banner_img.png"),
+  company_logo:require(ImgPath + "/company_logo.png"),
+
+
 
 
 }
