@@ -59,7 +59,7 @@ export default function CalenderScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    // padding: 20,
     backgroundColor: Colors.white,
     paddingBottom: hp(10),
   },

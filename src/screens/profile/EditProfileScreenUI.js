@@ -55,7 +55,7 @@ export default function EditProfileScreenUI(props) {
           // isLoading={store.getState().settings.isLoading}
           btnStyles={{
             ...styles.btnConsentStyles,
-            backgroundColor: Colors.color6,
+            backgroundColor: Colors.dayBackground,
             height: 'auto',
             minWidth: wp('20'),
             borderRadius: 20,
@@ -63,13 +63,13 @@ export default function EditProfileScreenUI(props) {
           btnTitleStyles={{
             ...styles.textStyle,
             marginLeft: wp(1.5),
-            color: '#fff',
+            color: Colors.gray_02,
           }}
           leftIcon={{
             type: iconType.feather,
             name: 'link',
             size: fontSize.md,
-            color: Colors.white,
+            color: Colors.gray_02,
           }}
         />
       </View>

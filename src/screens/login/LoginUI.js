@@ -13,8 +13,9 @@ import OrContainerUI from '../../common/components/ORContainer/OrContainerUI'
 
 const LoginUI = (props) => {
     return (
-        <View style={{ flex: 1 }}>
-            <CustomImageBackground>
+        <View style={{ flex: 1 , backgroundColor:Colors.white }}>
+            {/* <CustomImageBackground> */}
+
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ top: -hp(4), fontSize:fontSize.l, fontWeight:600}}>Join the ND community</Text>
                     <View style={{
@@ -30,7 +31,7 @@ const LoginUI = (props) => {
                             resizeMode='contain'
                         />
                     </View>
-                    <View>
+                    {/* <View>
                         <CustomTextInput
                             name={'userId'}
                             inputStyle={{ ...styles.textInputStyle }}
@@ -56,17 +57,53 @@ const LoginUI = (props) => {
                             }}
                         />
                        {/* <OrContainerUI /> */}
-                    </View>
+                    {/* </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: hp(1) }}>
-                        <Text style={{ fontSize: fontSize.normal, textAlign: 'center' }}>New User? </Text>
+                        <Text style={{ fontSize: fontSize.md, textAlign: 'center' }}>New User? </Text>
                         <Text
                             onPress={() => props.handleSubmit('signup')}
-                            style={{ fontSize: fontSize.normal, color: Colors.color1 }}
+                            style={{ fontSize: fontSize.md, color: Colors.color1 }}
                         >
                             Sign-Up
                         </Text>
                     </View>
-                    {/* <Text style={{ fontSize: fontSize.s, textAlign: 'center', marginVertical: hp(1) }}>or</Text> */}
+                    <Text style={{ fontSize: fontSize.s, textAlign: 'center', marginVertical: hp(1)  }}>OR</Text> */} 
+
+                    <CustomButton
+                            title={'Sign up With Google'}
+                            name={'sign_in_google'}
+                            onPress={props?.handleSubmit}
+                            // isLoading={store.getState().settings.isLoading}
+                            btnStyles={{ ...styles.btnStyles, elevation: 1, backgroundColor: Colors.white, backgroundColor: Colors.white, borderWidth:1, borderColor:`#1D1D1DB2`, borderRadius: 8 }}
+                            btnTitleStyles={{
+                                ...styles.textStyle,
+                                marginLeft: wp(5)
+                            }}
+                            leftImg={{
+                                source: Images.google_logo,
+                                style: {
+                                    height: hp(3),
+                                    width: wp(6),
+                                }
+                            }}
+                        /> 
+                       
+
+                        <OrContainerUI />
+                     
+                         <CustomButton
+                            title={'Sign up with E-mail/ Mob. number '}
+                            name={'sign_in_google'}
+                            onPress={props?.handleSubmit}
+                            // isLoading={store.getState().settings.isLoading}
+                            btnStyles={{ ...styles.btnStyles, elevation: 1, backgroundColor: Colors.white, borderWidth:1, borderColor:`#1D1D1DB2`, borderRadius: 8 }}
+                            btnTitleStyles={{
+                                ...styles.textStyle,
+                                marginLeft: wp(5)
+                            }}
+                           
+                        />
+                 
                     {/* <View>
                         <CustomButton
                             title={'Sign in With Google'}
@@ -107,7 +144,7 @@ const LoginUI = (props) => {
                         />
                     </View> */}
                 </View>
-            </CustomImageBackground>
+            {/* </CustomImageBackground> */}
         </View>
     )
 }
@@ -130,7 +167,7 @@ const styles = StyleSheet.create({
         marginVertical: hp(2)
     },
     btnStyles: {
-        width: wp('57'),
+        width: wp('90'),
         marginVertical: hp(2)
     },
     btnTextStyle: {

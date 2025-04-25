@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     cellStyleFocused: {
         borderWidth: 1.2,
         // borderColor: 'lightseagreen',
-        borderColor: 'rgba(203, 43, 39, 1)',
+        borderColor: Colors.primary,
         backgroundColor: Colors.white
         // backgroundColor: 'rgba(176, 190, 197,0.6)',
         // backgroundColor: 'lightcyan',

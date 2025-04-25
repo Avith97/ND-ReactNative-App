@@ -18,7 +18,7 @@ const OtpUI = (props) => {
                 
                    
                     <View style={{alignItems:"center"}}>
-                        <Text style={{ marginBottom: hp(1.4) }}>Enter OTP for Authentication </Text>
+                        {/* <Text style={{ marginBottom: hp(1.4) }}>Enter OTP for Authentication </Text> */}
                         <PinCodeTextInput
                             value={props.pin}
                             name={'otp'}

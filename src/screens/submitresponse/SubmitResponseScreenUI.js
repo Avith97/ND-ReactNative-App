@@ -90,8 +90,8 @@ export default function SubmitResponseScreenUI() {
         <View style={styles.responseHeader}>
           <Text style={styles.title}>Responses</Text>
           <View style={{flexDirection: 'row', gap: 10}}>
-            <Icons name={'media'} type={iconType.feather} size={20} />
-            <Icons name={'share'} type={iconType.feather} size={20} />
+            <Icons name={'image'} type={iconType.feather} size={20} />
+            <Icons name={'share-2'} type={iconType.feather} size={20} />
           </View>
         </View>
         <View style={styles.daysListContainer}>
@@ -103,8 +103,8 @@ export default function SubmitResponseScreenUI() {
             renderItem={({item}) => (
               <View style={[styles.card, {backgroundColor: item.bgColor}]}>
                 <Text style={styles.title}>{item.day}</Text>
-                <View style={styles.row}>
-                  {/* <MaterialIcons name={item.icon} size={18} color="black" /> */}
+                <View style={{...styles.row , flexDirection:"row" , width:wp(40) , alignItems:"center", gap:5}}>
+                <Icons name={"alert-circle"} type={iconType.feather} size={10} color="black" />
                   <Text style={styles.status}>{item.status}</Text>
                 </View>
                 <TouchableOpacity

@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {hp, wp} from '../../../common/functions/dimensions';
-import { fontSize } from '../../../utils/constants/Fonts';
+import {fontSize} from '../../../utils/constants/Fonts';
+import CalendarComponent from '../../../common/components/datepicker/CalenderComponent';
 
 export default function CalenderScreenUI({challengeData}) {
   const renderItem = ({item}) => (
@@ -24,12 +25,18 @@ export default function CalenderScreenUI({challengeData}) {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={challengeData}
-        keyExtractor={item => item.id}
-        contentContainerStyle={{padding: hp(1)}}
-        renderItem={renderItem}
-      />
+      <View style={{marginVertical: hp(1.5)}}>
+        <CalendarComponent>
+        <View style={{padding: hp(1.5)}}>
+          <FlatList
+            data={challengeData}
+            keyExtractor={item => item.id}
+            contentContainerStyle={{padding: hp(1)}}
+            renderItem={renderItem}
+          />
+            </View>
+        </CalendarComponent>
+      </View>
     </View>
   );
 }

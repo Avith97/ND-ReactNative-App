@@ -8,7 +8,7 @@ import {Images} from '../../../utils/constants/Images';
 
 // Centralized static labels
 const LABELS = {
-  title: 'Hello Adrian!',
+  title: 'Hello Lakhan!',
   subtitle: 'Tell us more about you..',
   genderLabel: 'Select your gender',
   ageLabel: 'Age',

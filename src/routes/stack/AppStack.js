@@ -22,26 +22,102 @@ import ConsentScreen from '../../screens/consentscreen/ConsentScreen';
 import LeaderBoardScreen from '../../screens/leaderboard/LeaderBoardScreen';
 import ProgramDetailScreen from '../../screens/programsdetail/ProgramDetailScreen';
 import SubmitResponseScreen from '../../screens/submitresponse/SubmitResponseScreen';
+import Icons, {iconType} from '../../assets/icons/Icons';
+import Colors from '../../utils/constants/Colors';
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator
       initialRouteName={Strings.NAVIGATION.home}
-      screenOptions={{headerShown: false}}>
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: Colors.primary,
+        tabBarInactiveTintColor: Colors.gray_03,
+      }}>
       {/* <Tab.Screen name={Strings.NAVIGATION.health} component={HealthScreen} /> */}
-      <Tab.Screen name={Strings.NAVIGATION.home} component={HomeScreen} />
+      <Tab.Screen
+        name={Strings.NAVIGATION.home}
+        component={HomeScreen}
+        options={{
+          title: 'Home',
+          headerTitleStyle: {
+            // fontSize: 20,
+            fontWeight: '600',
+            // color: 'black',
+          },
+          tabBarIcon: ({color, size}) => (
+            <Icons
+              type={iconType.feather}
+              name="home"
+              color={color}
+              size={20}
+            />
+          ),
+        }}
+      />
 
-      <Tab.Screen name={Strings.NAVIGATION.program} component={ProgramScreen} />
+      <Tab.Screen
+        name={Strings.NAVIGATION.program}
+        component={ProgramScreen}
+        options={{
+          title: 'Program',
+          headerTitleStyle: {
+            // fontSize: 20,
+            fontWeight: '600',
+            // color: 'black',
+          },
+          tabBarIcon: ({color, size}) => (
+            <Icons
+              type={iconType.feather}
+              name="align-justify"
+              color={color}
+              size={20}
+            />
+          ),
+        }}
+      />
 
       <Tab.Screen
         name={Strings.NAVIGATION.dashboard}
         component={DashboardScreen}
+        options={{
+          title: 'Dashboard',
+          headerTitleStyle: {
+            // fontSize: 20,
+            fontWeight: '600',
+            // color: 'black',
+          },
+          tabBarIcon: ({color, size}) => (
+            <Icons
+              type={iconType.feather}
+              name="bar-chart-2"
+              color={color}
+              size={20}
+            />
+          ),
+        }}
       />
 
       <Tab.Screen
         name={Strings.NAVIGATION.calender}
         component={CalenderScreen}
+        options={{
+          title: 'Calendar',
+          headerTitleStyle: {
+            // fontSize: 20,
+            fontWeight: '600',
+            // color: 'black',
+          },
+          tabBarIcon: ({color, size}) => (
+            <Icons
+              type={iconType.feather}
+              name="calendar"
+              color={color}
+              size={20}
+            />
+          ),
+        }}
       />
     </Tab.Navigator>
   );

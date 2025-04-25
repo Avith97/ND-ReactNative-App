@@ -28,12 +28,10 @@ const ProgramDetailUI = props => {
       <View style={styles.content}>
         {/* Intro */}
         <Text style={styles.title}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing
+        Weightloss Program
         </Text>
         <Text style={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam.
+         Our WeightLoss Program is designed to help you achieve your health and fitness goals through a comprehensive, personalized approach. We understand that each individual's weight loss journey is unique, which is why we offer tailored solutions that address your specific needs, preferences, and lifestyle.
         </Text>
 
         {/* Date */}
@@ -87,7 +85,7 @@ const ProgramDetailUI = props => {
           <View style={styles.organizerInfo}>
             <Image source={Images.company_logo} style={styles.logo} />
             <View>
-              <Text style={styles.orgName}>Lorem ipsum</Text>
+              <Text style={styles.orgName}>Interface</Text>
               <Text>Some short text under the org name</Text>
             </View>
           </View>

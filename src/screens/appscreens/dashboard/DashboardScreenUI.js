@@ -5,6 +5,7 @@ import CustomButton from '../../../common/components/buttons/CustomButton';
 import { hp, wp } from '../../../common/functions/dimensions';
 import { useNavigation } from '@react-navigation/native';
 import Strings from '../../../utils/constants/Strings';
+import CalendarComponent from '../../../common/components/datepicker/CalenderComponent';
 
 export default function DashboardScreenUI() {
  const navigation = useNavigation(); // ✅ Access navigation
@@ -14,8 +15,12 @@ export default function DashboardScreenUI() {
   };
   return (
     <View style={styles.container}>
-      <View>
+
+      <View style={{marginVertical:hp(1.5)}}>
+      <CalendarComponent>
+
         <StepsGraph/>
+      </CalendarComponent>
       </View>
 
       <View style={styles.buttonContainer}>

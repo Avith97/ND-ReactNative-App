@@ -24,14 +24,11 @@ export default function EventDetailScreenUI(props) {
 
       {/* Scrollable Content */}
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.title}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing
-        </Text>
+        <Text style={styles.title}>Step Challenge</Text>
         <Text style={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          Walking once a day, keeps the doctor away!!. Indeed walking helps you
+          in weight loss, relieving anxiety, fighting diabetes and so many other
+          health-related things. Lets "step with a smile" for next seven days.
         </Text>
 
         {/* Date Section */}
@@ -54,7 +51,7 @@ export default function EventDetailScreenUI(props) {
             resizeMode="contain"
           />
           <View style={{flex: 1, marginLeft: wp(3)}}>
-            <Text style={styles.orgName}>Lorem ipsum</Text>
+            <Text style={styles.orgName}>Interface </Text>
             <Text style={styles.orgSubtitle}>
               Lorem ipsum dolor sit amet, consectetur
             </Text>

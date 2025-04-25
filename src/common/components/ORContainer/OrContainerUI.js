@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
     separatorContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginVertical: 16,
+      marginVertical: 6,
+      marginHorizontal:20
     },
     line: {
       flex: 1,
