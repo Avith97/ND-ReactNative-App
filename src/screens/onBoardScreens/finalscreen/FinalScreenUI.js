@@ -1,9 +1,11 @@
 import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import React from 'react';
 import Strings from '../../../utils/constants/Strings';
+import { hp, wp } from '../../../common/functions/dimensions';
+import { Images } from '../../../utils/constants/Images';
 
 const labels = {
-  continue: 'Continue',
+  get_started: 'Get Started',
   title: 'Find Your Work',
   description:
     'Discover and access a wide variety of workout routines, filter and sort them based on criteria like type, duration, and intensity, and often receive personalized recommendations to meet your fitness goals and preferences.',
@@ -17,7 +19,7 @@ export default function FinalScreenUI(props) {
       <View style={styles.contentContainer}>
         {/* Image Section */}
         <Image
-          source={require('../../../assets/images/events/Group.png')} // <-- Replace with your image path
+          source={Images.runner_female_bg_image} // <-- Replace with your image path
           style={styles.image}
           // resizeMode="contain"
         />
@@ -33,7 +35,7 @@ export default function FinalScreenUI(props) {
       <View style={styles.buttonContainer}>
 
       <TouchableOpacity style={styles.continueBtn} onPress={props?.handleSubmit}>
-        <Text style={styles.continueText}>{labels.continue}</Text>
+        <Text style={styles.continueText}>{labels.get_started}</Text>
       </TouchableOpacity>
       </View>
     </View>
@@ -44,13 +46,14 @@ const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#fff'},
   contentContainer: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
   image: {
-    width: '100%',
-    height: 300,
+    width: wp(100),
+    height: hp(40),
+    backgroundColor:"red",
     marginBottom: 20,
+    resizeMode:"cover",
+    opacity:0.6
   },
   textContainer: {
     alignItems: 'center',

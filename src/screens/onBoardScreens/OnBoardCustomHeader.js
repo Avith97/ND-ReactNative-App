@@ -10,6 +10,9 @@ export default function OnBoardCustomHeader({
   hideSkip,
   progress,
 }) {
+
+  console.log(progress ,"gge");
+  
   return (
     <View style={styles.headerContainer}>
       {/* Back Button */}
@@ -27,7 +30,8 @@ export default function OnBoardCustomHeader({
       )}
 
       {/* Normal Progress Bar */}
-      <NormalProgressBar progress={progress} />
+      {progress &&  <NormalProgressBar progress={progress} />}
+     
 
       {!hideSkip ? (
         <TouchableOpacity onPress={onSkip}>
