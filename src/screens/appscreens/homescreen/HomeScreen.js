@@ -8,8 +8,10 @@ import Strings from '../../../utils/constants/Strings';
 
 export default function HomeScreen(props) {
 
+  const { isLoggedIn } = props.route.params;
+
   const handleNavigate =()=>{
-    console.log("hello");
+    
 
     props.navigation.navigate(Strings.NAVIGATION.programdetail)
 
@@ -57,7 +59,7 @@ export default function HomeScreen(props) {
       style={styles.container}
       contentContainerStyle={{paddingBottom: hp(5)}}
       showsVerticalScrollIndicator={false}>
-      <HomeScreenUI {...options} handleNavigate={handleNavigate}/>
+      <HomeScreenUI {...options} isLoggedIn={isLoggedIn} handleNavigate={handleNavigate} />
 
     </ScrollView>
   );

@@ -1,20 +1,19 @@
-import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native'; // ✅ Add this
 import {Images} from '../../../utils/constants/Images';
-import {wp} from '../../../common/functions/dimensions';
+import {hp, wp} from '../../../common/functions/dimensions';
 import Icons, {iconType} from '../../../assets/icons/Icons';
 import Strings from '../../../utils/constants/Strings';
+import CustomButton from '../../../common/components/buttons/CustomButton';
 
-export default function AppCustomHeader({}) {
+export default function AppCustomHeader(props) {
   const navigation = useNavigation(); // ✅ Access navigation
 
-  const onAvatarPress = () => {
-    navigation.navigate(Strings.NAVIGATION.profile); // ✅ Now works!
-  };
+  const {isLoggedIn} = props.isLoggedIn;
 
-  const onBellPress = () => {
-    navigation.navigate(Strings.NAVIGATION.notificationlist);
+  const handleNavigate = name => {
+    navigation.navigate(name);
   };
 
   return (
@@ -26,15 +25,31 @@ export default function AppCustomHeader({}) {
         resizeMode="contain"
       />
 
-      {/* Right Icons */}
-      <View style={styles.rightIcons}>
-        <TouchableOpacity onPress={onBellPress}>
-          <Icons name="bell" type={iconType.feather} size={20} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onAvatarPress}>
-          <Icons name="user" type={iconType.feather} size={20} />
-        </TouchableOpacity>
-      </View>
+      {!isLoggedIn ? (
+        <CustomButton
+          title={'Sign up'}
+          name={Strings.NAVIGATION.auth}
+          onPress={handleNavigate}
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 1,
+          }}
+          btnTitleStyles={{
+            ...styles.textStyle,
+          }}
+        />
+      ) : (
+        <View style={styles.rightIcons}>
+          <TouchableOpacity
+            onPress={() => handleNavigate(Strings.NAVIGATION.notificationlist)}>
+            <Icons name="bell" type={iconType.feather} size={20} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleNavigate(Strings.NAVIGATION.profile)}>
+            <Icons name="user" type={iconType.feather} size={20} />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }
@@ -67,5 +82,10 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
+  },
+  btnStyles: {
+    // width: wp(2),
+    height: hp(4.5),
+    borderRadius: 8,
   },
 });

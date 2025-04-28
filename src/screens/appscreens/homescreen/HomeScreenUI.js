@@ -3,50 +3,71 @@ import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import SessionCard from '../../../common/components/sessioncard/SessionCard';
 import ProgramCard from '../../../common/components/programcard/ProgramCard';
 import PieProgressBar from '../../../common/components/progressbar/PieProgressBar';
-import { hp , wp } from '../../../common/functions/dimensions';
-import { fontSize } from '../../../utils/constants/Fonts';
+import {hp, wp} from '../../../common/functions/dimensions';
+import {fontSize} from '../../../utils/constants/Fonts';
 
 export default function HomeScreenUI(props) {
- 
+  let {isLoggedIn} = props;
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{paddingBottom: hp(5)}} showsVerticalScrollIndicator={false}>
-      <Text style={styles.title}>Welcome, Lakhan!</Text>
-      <Text style={styles.subTitle}>You're doing good today!</Text>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{paddingBottom: hp(5)}}
+      showsVerticalScrollIndicator={false}>
+      <Text style={styles.title}>
+        {isLoggedIn ? 'Welcome, Lakhan!' : 'Welcome!'}
+      </Text>
+      <Text style={styles.subTitle}>
+        {isLoggedIn
+          ? "You're doing good today!"
+          : 'A step Towards Healthy Life !'}
+      </Text>
 
-      <View style={styles.mainContainer}>
-        <View style={styles.progressContainer}>
-          <Text style={styles.progressTitle}>Your daily progress</Text>
-          <View style={styles.progressCenter}>
-            <PieProgressBar percentage={80} />
-            <Text style={styles.progressSubTitle}>Accumulating daily report</Text>
+      {isLoggedIn && (
+        <View style={styles.mainContainer}>
+          <View style={styles.progressContainer}>
+            <Text style={styles.progressTitle}>Your daily progress</Text>
+            <View style={styles.progressCenter}>
+              <PieProgressBar percentage={80} />
+              <Text style={styles.progressSubTitle}>
+                Accumulating daily report
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.progressDataContainer}>
+            <View style={styles.dataItem}>
+              <Text style={styles.emoji}>🔥</Text>
+              <Text style={styles.value}>2,000</Text>
+              <Text style={styles.label}>Kcal Burned</Text>
+            </View>
+            <View style={styles.dataItem}>
+              <Text style={styles.emoji}>👟</Text>
+              <Text style={styles.value}>10,000</Text>
+              <Text style={styles.label}>Steps Walk</Text>
+            </View>
           </View>
         </View>
-
-        <View style={styles.progressDataContainer}>
-          <View style={styles.dataItem}>
-            <Text style={styles.emoji}>🔥</Text>
-            <Text style={styles.value}>2,000</Text>
-            <Text style={styles.label}>Kcal Burned</Text>
-          </View>
-          <View style={styles.dataItem}>
-            <Text style={styles.emoji}>👟</Text>
-            <Text style={styles.value}>10,000</Text>
-            <Text style={styles.label}>Steps Walk</Text>
-          </View>
-        </View>
-      </View>
+      )}
 
       <Section title="Programs">
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {props.programs.map((item, index) => (
-            <ProgramCard key={index} {...item} minWidth={wp(75)} handleNavigate={props.handleNavigate} />
+            <ProgramCard
+              key={index}
+              {...item}
+              minWidth={wp(75)}
+              handleNavigate={props.handleNavigate}
+            />
           ))}
         </ScrollView>
       </Section>
 
       <Section title="Sessions">
-        <ScrollView horizontal  contentContainerStyle={{paddingBottom: hp(2)}} showsHorizontalScrollIndicator={false}>
+        <ScrollView
+          horizontal
+          contentContainerStyle={{paddingBottom: hp(2)}}
+          showsHorizontalScrollIndicator={false}>
           {props.sessions.map((item, index) => (
             <SessionCard key={index} {...item} minWidth={wp(60)} />
           ))}
@@ -68,7 +89,7 @@ const Section = ({title, children}) => (
 
 const styles = StyleSheet.create({
   container: {
-  flex:1
+    flex: 1,
   },
   title: {
     fontSize: fontSize.l,

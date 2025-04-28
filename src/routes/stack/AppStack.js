@@ -26,8 +26,9 @@ import Icons, {iconType} from '../../assets/icons/Icons';
 import Colors from '../../utils/constants/Colors';
 import NotificationListScreen from '../../screens/notificationlistscreen/NotificationListScreen';
 
-const TabNavigator = () => {
+const TabNavigator = props => {
   const Tab = createBottomTabNavigator();
+
   return (
     <Tab.Navigator
       initialRouteName={Strings.NAVIGATION.home}
@@ -40,6 +41,7 @@ const TabNavigator = () => {
       <Tab.Screen
         name={Strings.NAVIGATION.home}
         component={HomeScreen}
+        initialParams={{isLoggedIn: props.route?.params?.isLoggedIn}}
         options={{
           title: 'Home',
           headerTitleStyle: {
@@ -129,6 +131,7 @@ const AppStack = props => {
 
   const Stack = createStackNavigator();
 
+ 
   return (
     <Stack.Navigator
       screenOptions={({navigation, route}) => {
@@ -144,7 +147,11 @@ const AppStack = props => {
 
         if (customHeaderScreens.includes(route.name)) {
           return {
-            header: () => <AppCustomHeader />,
+            header: () => (
+              <AppCustomHeader
+                isLoggedIn={{isLoggedIn: props?.route.params?.isLoggedIn}}
+              />
+            ),
           };
         }
 
@@ -152,7 +159,11 @@ const AppStack = props => {
           headerShown: true, // default header for all other screens
         };
       }}>
-      <Stack.Screen name={Strings.NAVIGATION.home} component={TabNavigator} />
+      <Stack.Screen
+        name={Strings.NAVIGATION.home}
+        component={TabNavigator}
+        initialParams={{isLoggedIn: props?.route.params?.isLoggedIn}}
+      />
       <Stack.Screen
         name={Strings.NAVIGATION.profile}
         component={ProfileScreen}
@@ -226,16 +237,13 @@ const AppStack = props => {
         options={{title: 'Response '}}
       />
 
-
-
       {/* notification list screen */}
-      
+
       <Stack.Screen
         name={Strings.NAVIGATION.notificationlist}
         component={NotificationListScreen}
         options={{title: 'Notification '}}
       />
-      
     </Stack.Navigator>
 
     // <Drawer.Navigator initialRouteName={Strings.NAVIGATION.health}>
