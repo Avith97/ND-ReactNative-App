@@ -9,32 +9,9 @@ import {Avatar} from 'react-native-elements';
 import PieProgressBar from '../../common/components/progressbar/PieProgressBar';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Image} from 'react-native';
+import TabSelector from '../../common/components/tabselector/TabSelector';
 
-export default function LeaderBoardScreenUI() {
-  const DATA = [
-    {
-      id: '1',
-      name: 'Dhiraj Bhasme',
-      score: 1034,
-      backgroundColor: '#E6F7FF', // light blue
-      avatar: 'https://img.icons8.com/3d-fluency/94/user-male-circle.png',
-    },
-    {
-      id: '2',
-      name: 'Lakhan Nemane',
-      score: 988,
-      backgroundColor: '#FFECE6', // light orange
-      avatar: 'https://img.icons8.com/3d-fluency/94/user-male-circle.png',
-    },
-    {
-      id: '3',
-      name: 'Avith Hegde',
-      score: 900,
-      backgroundColor: '#FFF7E6', // light yellow
-      avatar: 'https://img.icons8.com/3d-fluency/94/user-male-circle.png',
-    },
-  ];
-
+export default function LeaderBoardScreenUI(props) {
   const TrophyIcon = () => (
     <Image
       source={{uri: 'https://img.icons8.com/3d-fluency/94/prize.png'}}
@@ -103,45 +80,20 @@ export default function LeaderBoardScreenUI() {
       </View>
 
       <View style={{width: wp(90)}}>
-        <View style={styles.tabSelection_container}>
-          <Text
-            style={{
-              fontWeight: 600,
-              backgroundColor: Colors.primary,
-              paddingVertical: 4,
-              paddingHorizontal: 10,
-              borderRadius: 6,
-            }}>
-            Male
-          </Text>
-          <Text
-            style={{
-              fontWeight: 600,
-              paddingVertical: 4,
-              paddingHorizontal: 10,
-              borderRadius: 6,
-            }}>
-            OverAll Rank
-          </Text>
-          <Text
-            style={{
-              fontWeight: 600,
-              paddingVertical: 4,
-              paddingHorizontal: 10,
-              borderRadius: 6,
-            }}>
-            Female
-          </Text>
-        </View>
+        <TabSelector tabs={props.tabs} onTabChange={props.handleChange} />
 
-        <ScrollView>
-          <FlatList
-            data={DATA}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => <LeaderboardItem item={item} />}
-            scrollEnabled={false} // FlatList won't scroll, only ScrollView will
-          />
-        </ScrollView>
+        {props.selectedTab === 'Male' ? (
+          <ScrollView>
+            <FlatList
+              data={props.DATA}
+              keyExtractor={item => item.id}
+              renderItem={({item}) => <LeaderboardItem item={item} />}
+              scrollEnabled={false} // FlatList won't scroll, only ScrollView will
+            />
+          </ScrollView>
+        ) : (
+          <Text style={{textAlign:"center" , color:Colors.gray_06, marginVertical:hp(3)}}>No Data</Text>
+        )}
       </View>
     </View>
   );

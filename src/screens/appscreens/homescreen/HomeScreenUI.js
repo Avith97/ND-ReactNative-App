@@ -16,7 +16,7 @@ export default function HomeScreenUI(props) {
 
       <View style={styles.mainContainer}>
         <View style={styles.progressContainer}>
-          <Text style={styles.progressTitle}>Your daily{'\n'}progress</Text>
+          <Text style={styles.progressTitle}>Your daily progress</Text>
           <View style={styles.progressCenter}>
             <PieProgressBar percentage={80} />
             <Text style={styles.progressSubTitle}>Accumulating daily report</Text>
@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   progressContainer: {
-    width: 220,
-    height: 280,
+    width: wp(50),
+    height: hp(35),
     backgroundColor: '#26281C',
     borderRadius: 30,
     padding: 20,
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   progressDataContainer: {
-    width: 180,
+    width: wp(50),
     backgroundColor: '#E1FB98',
     borderColor: '#B2DB03',
     borderWidth: 1,

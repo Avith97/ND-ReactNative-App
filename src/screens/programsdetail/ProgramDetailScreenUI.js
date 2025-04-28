@@ -48,7 +48,7 @@ const ProgramDetailUI = props => {
         {/* Register Button */}
         <View style={styles.buttonContainer}>
           <CustomButton
-            title="Register Now"
+            title="Submit Response"
             btnStyles={styles.registerButton}
             onPress={props.handleNavigate}
           />

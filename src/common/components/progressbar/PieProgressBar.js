@@ -6,22 +6,26 @@ import Colors from '../../../utils/constants/Colors';
 import {fontSize} from '../../../utils/constants/Fonts';
 import Icons, {iconType} from '../../../assets/icons/Icons';
 
-const PieProgressBar = ({percentage = 80, leaderboard = false}) => {
+const PieProgressBar = ({
+  percentage = 80,
+  leaderboard = false,
+  program = false,
+}) => {
   const completed = percentage;
   const remaining = 100 - percentage;
 
   return (
     <View style={styles.container}>
-      <Svg width={230} height={230}>
+      <Svg width={250} height={250}>
         <VictoryPie
           standalone={false}
-          width={230}
-          height={230}
+          width={250}
+          height={250}
           data={[
             {x: 'Completed', y: completed},
             {x: 'Remaining', y: remaining},
           ]}
-          innerRadius={48}
+          innerRadius={58}
           cornerRadius={20}
           labels={() => null}
           colorScale={['#AFEA0D', 'gray']}
@@ -48,6 +52,17 @@ const PieProgressBar = ({percentage = 80, leaderboard = false}) => {
               Step Walk{' '}
             </Text>
             <Text style={{color: 'white'}}>1,60,000</Text>
+          </View>
+        ) : program ? (
+          <View>
+             <Icons
+              type={iconType.feather}
+              name={'user-check'}
+              size={10}
+              color={Colors.primary}
+            />
+            <Text style={styles.percentageText}>{`${completed}%`}</Text>
+            <Text style={{color:Colors.primary}}>Progress</Text>
           </View>
         ) : (
           <Text style={styles.percentageText}>{`${completed}%`}</Text>
