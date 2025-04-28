@@ -45,6 +45,10 @@ export default {
     bmi:"bmi",
     notificationsetting:"notificationsetting",
     editprofile:"editprofile",
-    activitysync:"activitysync"
+    activitysync:"activitysync",
+
+
+    // notification list 
+    notificationlist:"notificationlist"
   },
 };

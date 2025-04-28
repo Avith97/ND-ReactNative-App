@@ -70,10 +70,10 @@ const ProgramDetailUI = props => {
           {[1, 2].map(key => (
             <View key={key} style={styles.challengeCard}>
               <Text style={styles.challengeText}>
-                • aliqua. Ut enim ad – veniam labore et dolore
+                • Understanding sugars: Natural vs. added sugars
               </Text>
               <TouchableOpacity>
-                <Text style={styles.link}>See Details</Text>
+                <Text style={styles.link}>Click here</Text>
               </TouchableOpacity>
             </View>
           ))}

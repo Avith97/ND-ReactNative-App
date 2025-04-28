@@ -24,6 +24,7 @@ import ProgramDetailScreen from '../../screens/programsdetail/ProgramDetailScree
 import SubmitResponseScreen from '../../screens/submitresponse/SubmitResponseScreen';
 import Icons, {iconType} from '../../assets/icons/Icons';
 import Colors from '../../utils/constants/Colors';
+import NotificationListScreen from '../../screens/notificationlistscreen/NotificationListScreen';
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -224,6 +225,17 @@ const AppStack = props => {
         component={SubmitResponseScreen}
         options={{title: 'Response '}}
       />
+
+
+
+      {/* notification list screen */}
+      
+      <Stack.Screen
+        name={Strings.NAVIGATION.notificationlist}
+        component={NotificationListScreen}
+        options={{title: 'Notification '}}
+      />
+      
     </Stack.Navigator>
 
     // <Drawer.Navigator initialRouteName={Strings.NAVIGATION.health}>

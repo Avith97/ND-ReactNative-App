@@ -41,7 +41,7 @@ const SignupUI = props => {
           }}
         />
 
-        <Text>Already registered ? Login</Text>
+      
       </View>
     </View>
   );

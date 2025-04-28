@@ -76,6 +76,7 @@ export default {
   // background 
 
   dangerBackground:"#EF8989",
+  borderColor :"#E0E0E0",
 
   // Primary / Action
   primary: '#BCD64E',

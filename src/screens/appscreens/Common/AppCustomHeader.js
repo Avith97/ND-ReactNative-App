@@ -6,11 +6,15 @@ import {wp} from '../../../common/functions/dimensions';
 import Icons, {iconType} from '../../../assets/icons/Icons';
 import Strings from '../../../utils/constants/Strings';
 
-export default function AppCustomHeader({onNotificationPress}) {
+export default function AppCustomHeader({}) {
   const navigation = useNavigation(); // ✅ Access navigation
 
   const onAvatarPress = () => {
     navigation.navigate(Strings.NAVIGATION.profile); // ✅ Now works!
+  };
+
+  const onBellPress = () => {
+    navigation.navigate(Strings.NAVIGATION.notificationlist);
   };
 
   return (
@@ -24,7 +28,9 @@ export default function AppCustomHeader({onNotificationPress}) {
 
       {/* Right Icons */}
       <View style={styles.rightIcons}>
-        <Icons name="bell" type={iconType.feather} size={20} />
+        <TouchableOpacity onPress={onBellPress}>
+          <Icons name="bell" type={iconType.feather} size={20} />
+        </TouchableOpacity>
         <TouchableOpacity onPress={onAvatarPress}>
           <Icons name="user" type={iconType.feather} size={20} />
         </TouchableOpacity>
@@ -62,4 +68,4 @@ const styles = StyleSheet.create({
     height: 36,
     borderRadius: 18,
   },
-}); 
+});

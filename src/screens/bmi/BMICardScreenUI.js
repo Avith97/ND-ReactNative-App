@@ -58,10 +58,11 @@ const generateBars = count => {
         styles.bar,
         {
           backgroundColor: barColors[index] || '#ccc',
-          borderTopLeftRadius: index === 0 ? 10 : 0,
-          borderBottomLeftRadius: index === 0 ? 10 : 0,
-          borderTopRightRadius: index === count - 1 ? 10 : 0,
-          borderBottomRightRadius: index === count - 1 ? 10 : 0,
+          // borderTopLeftRadius: index === 0 ? 10 : 0,
+          // borderBottomLeftRadius: index === 0 ? 10 : 0,
+          // borderTopRightRadius: index === count - 1 ? 10 : 0,
+          // borderBottomRightRadius: index === count - 1 ? 10 : 0,
+          borderRadius:10
         },
       ]}
     />
