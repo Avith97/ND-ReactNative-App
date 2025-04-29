@@ -25,6 +25,9 @@ import SubmitResponseScreen from '../../screens/submitresponse/SubmitResponseScr
 import Icons, {iconType} from '../../assets/icons/Icons';
 import Colors from '../../utils/constants/Colors';
 import NotificationListScreen from '../../screens/notificationlistscreen/NotificationListScreen';
+import GeneralSettingScreen from '../../screens/generalsettingscreen/GeneralSettingScreen';
+import LanguageSettingScreen from '../../screens/generalsettingscreen/langaugesetting/LanguageSettingScreen';
+import UnitSettingsScreen from '../../screens/generalsettingscreen/unitsettingScreen/UnitSettingsScreen';
 
 const TabNavigator = props => {
   const Tab = createBottomTabNavigator();
@@ -149,7 +152,7 @@ const AppStack = props => {
           return {
             header: () => (
               <AppCustomHeader
-                isLoggedIn={{isLoggedIn: props?.route.params?.isLoggedIn}}
+                isLoggedIn={{isLoggedIn: true}}
               />
             ),
           };
@@ -185,6 +188,29 @@ const AppStack = props => {
         component={EditProfileScreen}
         options={{title: 'Edit Profile'}}
       />
+      <Stack.Screen
+        name={Strings.NAVIGATION.generalsetting}
+        component={GeneralSettingScreen}
+        options={{title: 'General Settings'}}
+      />
+
+
+      {/* language setting */}
+
+      <Stack.Screen
+        name={Strings.NAVIGATION.languagesettings}
+        component={LanguageSettingScreen}
+        options={{title: 'Select Language'}}
+      />
+      {/* unitsetting */}
+
+      
+      <Stack.Screen
+        name={Strings.NAVIGATION.unitsettings}
+        component={UnitSettingsScreen}
+        options={{title: 'Select Unit'}}
+      />
+
 
       <Stack.Screen
         name={Strings.NAVIGATION.activitysync}

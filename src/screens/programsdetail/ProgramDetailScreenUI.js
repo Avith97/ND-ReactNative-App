@@ -57,14 +57,20 @@ const ProgramDetailUI = props => {
         {/* Challenges */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Program Challenges</Text>
+          <Text style={{fontSize:fontSize.m , fontWeight:"700" , marginBottom:10}}> 1. Zero Sugar Challenge </Text>
           <Text style={styles.description}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Introducing our 21-day Zero Sugar Challenge! This journey is divided into three manageable segments of 7 days each.
           </Text>
           <View style={styles.bulletList}>
-            <Text>{'\u2022'} Challenge explanation 1...</Text>
-            <Text>{'\u2022'} Challenge explanation 2...</Text>
+            <Text>{'\u2022'} At first, for the initial 7 days, you eliminate all packaged foods from your diet. This means no processed snacks or ready-made meals..</Text>
+            <Text>{'\u2022'} At first, for the initial 7 days, you eliminate all packaged foods from your diet. This means no processed snacks or ready-made meals.</Text>
           </View>
+
+          <Text style={styles.description}>
+          Get off to a strong start in the challenge right from day one. On day one resolve not to eat any packaged food, record your self-affirmation by responding to the question asked (about it)on day 2. Keep this up for the whole week. Now you can effectively track your progress and also follow the tips crafted by experts!
+Each step is designed to gradually reduce your sugar dependence and promote a healthier lifestyle. Embrace the change, feel the energy, and transform your life. Remember, a sugar-free life is a better life.
+          </Text>
+
 
           {/* Challenge Cards */}
           {[1, 2].map(key => (

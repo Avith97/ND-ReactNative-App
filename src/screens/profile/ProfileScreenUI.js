@@ -22,7 +22,7 @@ export default function ProfileScreenUI(props) {
       label: 'Notification Settings',
       link: Strings.NAVIGATION.notificationsetting,
     },
-    {id: '3', icon: 'sliders', label: 'General Settings'},
+    {id: '3', icon: 'sliders', label: 'General Settings' , link:Strings.NAVIGATION.generalsetting},
     {
       id: '4',
       icon: 'link',

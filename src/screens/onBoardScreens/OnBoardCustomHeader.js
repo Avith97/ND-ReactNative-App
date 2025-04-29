@@ -10,9 +10,6 @@ export default function OnBoardCustomHeader({
   hideSkip,
   progress,
 }) {
-
-  console.log(progress ,"gge");
-  
   return (
     <View style={styles.headerContainer}>
       {/* Back Button */}

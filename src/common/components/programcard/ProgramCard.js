@@ -37,7 +37,7 @@ const ProgramCard = ({
         <Text style={styles.title}>{title}</Text>
 
         <CustomButton
-          title={'Register Here'}
+          title={'Register Now'}
           name={''}
           onPress={props?.handleNavigate}
           btnStyles={{
