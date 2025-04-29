@@ -53,10 +53,9 @@ const OtpScreen = (props) => {
     }
 
     async function handleSubmit(params, val) {
-        console.log('submit', params, val)
         let isValid = validate(params, val)
-        if (!isValid) return
-
+        // if (!isValid) return
+        props.navigation.navigate(Strings.NAVIGATION.create_profile)
         try {
             let resp = await services._post(URL.otp_verify, {
                 userName: "vinit@anssoft.in",
@@ -88,7 +87,7 @@ const OtpScreen = (props) => {
             appsnackbar.showErrMsg('Something went wrong')
         }
 
-
+       
 
     }
 

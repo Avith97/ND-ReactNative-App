@@ -7,7 +7,9 @@ export default function FinalScreen(props) {
   const [state, setState] = useState({});
   const [options] = useState({})
   const handleSubmit = () => {
-    props.navigation.navigate(Strings.NAVIGATION.app);
+    props.navigation.navigate(Strings.NAVIGATION.app , {
+      isLoggedIn:true
+    });
   };
   return (
     <View style={styles.container}>

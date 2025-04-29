@@ -25,9 +25,13 @@ import SubmitResponseScreen from '../../screens/submitresponse/SubmitResponseScr
 import Icons, {iconType} from '../../assets/icons/Icons';
 import Colors from '../../utils/constants/Colors';
 import NotificationListScreen from '../../screens/notificationlistscreen/NotificationListScreen';
+import GeneralSettingScreen from '../../screens/generalsettingscreen/GeneralSettingScreen';
+import LanguageSettingScreen from '../../screens/generalsettingscreen/langaugesetting/LanguageSettingScreen';
+import UnitSettingsScreen from '../../screens/generalsettingscreen/unitsettingScreen/UnitSettingsScreen';
 
-const TabNavigator = () => {
+const TabNavigator = props => {
   const Tab = createBottomTabNavigator();
+
   return (
     <Tab.Navigator
       initialRouteName={Strings.NAVIGATION.home}
@@ -40,6 +44,7 @@ const TabNavigator = () => {
       <Tab.Screen
         name={Strings.NAVIGATION.home}
         component={HomeScreen}
+        initialParams={{isLoggedIn: props.route?.params?.isLoggedIn}}
         options={{
           title: 'Home',
           headerTitleStyle: {
@@ -129,6 +134,7 @@ const AppStack = props => {
 
   const Stack = createStackNavigator();
 
+ 
   return (
     <Stack.Navigator
       screenOptions={({navigation, route}) => {
@@ -144,7 +150,11 @@ const AppStack = props => {
 
         if (customHeaderScreens.includes(route.name)) {
           return {
-            header: () => <AppCustomHeader />,
+            header: () => (
+              <AppCustomHeader
+                isLoggedIn={{isLoggedIn: true}}
+              />
+            ),
           };
         }
 
@@ -152,7 +162,11 @@ const AppStack = props => {
           headerShown: true, // default header for all other screens
         };
       }}>
-      <Stack.Screen name={Strings.NAVIGATION.home} component={TabNavigator} />
+      <Stack.Screen
+        name={Strings.NAVIGATION.home}
+        component={TabNavigator}
+        initialParams={{isLoggedIn: props?.route.params?.isLoggedIn}}
+      />
       <Stack.Screen
         name={Strings.NAVIGATION.profile}
         component={ProfileScreen}
@@ -174,6 +188,29 @@ const AppStack = props => {
         component={EditProfileScreen}
         options={{title: 'Edit Profile'}}
       />
+      <Stack.Screen
+        name={Strings.NAVIGATION.generalsetting}
+        component={GeneralSettingScreen}
+        options={{title: 'General Settings'}}
+      />
+
+
+      {/* language setting */}
+
+      <Stack.Screen
+        name={Strings.NAVIGATION.languagesettings}
+        component={LanguageSettingScreen}
+        options={{title: 'Select Language'}}
+      />
+      {/* unitsetting */}
+
+      
+      <Stack.Screen
+        name={Strings.NAVIGATION.unitsettings}
+        component={UnitSettingsScreen}
+        options={{title: 'Select Unit'}}
+      />
+
 
       <Stack.Screen
         name={Strings.NAVIGATION.activitysync}
@@ -226,16 +263,13 @@ const AppStack = props => {
         options={{title: 'Response '}}
       />
 
-
-
       {/* notification list screen */}
-      
+
       <Stack.Screen
         name={Strings.NAVIGATION.notificationlist}
         component={NotificationListScreen}
         options={{title: 'Notification '}}
       />
-      
     </Stack.Navigator>
 
     // <Drawer.Navigator initialRouteName={Strings.NAVIGATION.health}>

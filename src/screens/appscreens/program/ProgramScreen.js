@@ -7,6 +7,10 @@ import Strings from '../../../utils/constants/Strings'
 
 export default function ProgramScreen(props) {
 
+  const [state , setState]=useState({
+    selectedTab:"Ongoing"
+  })
+
     const [options , setOptions] = useState({
         programs : [
             {
@@ -51,8 +55,15 @@ export default function ProgramScreen(props) {
                 image: Images.runner_bg_image,
                 status: 'Ongoing',
               },
-          ]
+          ],
+
+          tabs:['Ongoing', 'Past', 'Upcoming']
     })
+
+
+    const handleChange =(tab)=>{
+      setState((prev)=>({...prev , selectedTab:tab}))
+    }
 
     const handleNavigate =()=>{
       props.navigation.navigate(Strings.NAVIGATION.eventstarted)
@@ -61,7 +72,7 @@ export default function ProgramScreen(props) {
     
   return (
     <View style={styles.container}>
-      <ProgramScreenUI {...options} handleNavigate={handleNavigate} />
+      <ProgramScreenUI {...state} {...options} handleNavigate={handleNavigate} handleChange={handleChange} />
     </View>
   )
 }
@@ -69,7 +80,7 @@ export default function ProgramScreen(props) {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        padding:20,
+        // padding:20,
         backgroundColor:Colors.white
     }
 })

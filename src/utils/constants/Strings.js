@@ -49,6 +49,12 @@ export default {
 
 
     // notification list 
-    notificationlist:"notificationlist"
+    notificationlist:"notificationlist",
+    generalsetting:"generalsetting",
+    languagesettings:"languagesettings",
+unitsettings:"unitsettings"
   },
+
+
+  
 };

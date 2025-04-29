@@ -25,8 +25,11 @@ const ProgramCard = ({
     <TouchableOpacity style={{...styles.card, width: minWidth}}>
       <ImageBackground
         source={image}
+       
         style={styles.image}
         imageStyle={styles.imageStyle}>
+
+<View style={styles.gradientOverlay} />
         <View style={styles.statusTag}>
           <Text style={styles.statusText}>{status}</Text>
         </View>
@@ -34,7 +37,7 @@ const ProgramCard = ({
         <Text style={styles.title}>{title}</Text>
 
         <CustomButton
-          title={'Register Here'}
+          title={'Register Now'}
           name={''}
           onPress={props?.handleNavigate}
           btnStyles={{
@@ -50,6 +53,7 @@ const ProgramCard = ({
           <Text style={styles.detailText}>⏱ {duration}</Text>
           <Text style={styles.detailText}>🔥 {calories} Kcal</Text>
         </View>
+       
       </ImageBackground>
     </TouchableOpacity>
   );
@@ -62,12 +66,19 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   image: {
-    height: 160,
+    height: hp(20),
     padding: 10,
     justifyContent: 'space-between',
+    resizeMode:"contain"
   },
+  gradientOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)', // dark overlay
+  },
+  
   imageStyle: {
     borderRadius: 12,
+   
   },
   statusTag: {
     alignSelf: 'flex-end',

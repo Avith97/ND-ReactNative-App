@@ -27,7 +27,7 @@ export default function OnboardingStack(props) {
           // Strings.NAVIGATION.finalOnboard,
         ];
         const currentIndex = screens.indexOf(route.name);
-        const progress = (currentIndex ) / screens?.length;
+        const progress = (currentIndex+1 ) / screens?.length;
         return {
           header: () => (
             <OnBoardCustomHeader
@@ -45,7 +45,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen
         name={Strings.NAVIGATION.gender}
         component={MoreAboutScreen}
-        options={{headerShown: false}}
+        // options={{headerShown: false}}
       />
       <Stack.Screen
         name={Strings.NAVIGATION.activityLevel}
@@ -66,6 +66,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen
         name={Strings.NAVIGATION.finalOnboard}
         component={FinalScreen}
+           options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

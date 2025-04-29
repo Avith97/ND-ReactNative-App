@@ -1,17 +1,23 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import DashboardScreenUI from './DashboardScreenUI'
 import { hp } from '../../../common/functions/dimensions'
 import Colors from '../../../utils/constants/Colors'
+import ProgramDashboardScreen from '../../programdashboard/ProgramDashboardScreen'
 
 export default function DashboardScreen() {
+
+  const [state , setState] = useState({
+    isVisibleProgramDashboard:true
+  })
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={{paddingBottom: hp(5)}}
       showsVerticalScrollIndicator={false}>
-     <DashboardScreenUI />
+        {state.isVisibleProgramDashboard ? <ProgramDashboardScreen /> :  <DashboardScreenUI />}
+   
     </ScrollView>
   )
 }

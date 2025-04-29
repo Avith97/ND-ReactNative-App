@@ -18,6 +18,8 @@ export const Images = {
   belly5:require(ImgPath + "/onboardImages/Belly/belly5.png"),
   runner_bg_image: require(ImgPath + "/runner_bg_img.png"),
 
+  runner_female_bg_image: require(ImgPath + "/onboardImages/runnerFemale.png"),
+
 
   // consent Images
   google_fit:require(ImgPath + "/ConcentImages/googlefit.png"),
