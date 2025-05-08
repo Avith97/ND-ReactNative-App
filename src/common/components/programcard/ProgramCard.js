@@ -18,11 +18,12 @@ const ProgramCard = ({
   image,
   status,
   minWidth,
-  
+  registered,
+  program,
   ...props
 }) => {
   return (
-    <TouchableOpacity style={{...styles.card, width: minWidth}}>
+    <TouchableOpacity style={{...styles.card, width: minWidth }}>
       <ImageBackground
         source={image}
        
@@ -30,7 +31,7 @@ const ProgramCard = ({
         imageStyle={styles.imageStyle}>
 
 <View style={styles.gradientOverlay} />
-        <View style={styles.statusTag}>
+        <View style={{...styles.statusTag , backgroundColor: Colors.primary }}>
           <Text style={styles.statusText}>{status}</Text>
         </View>
 
@@ -38,11 +39,12 @@ const ProgramCard = ({
 
         <CustomButton
           title={'Register Now'}
-          name={''}
-          onPress={props?.handleNavigate}
+          name={'register'}
+          onPress={()=>props?.handleNavigate(program , registered)}
           btnStyles={{
             ...styles.btnStyles,
             elevation: 5,
+            backgroundColor: Colors.primary ,
           }}
           btnTitleStyles={{
             ...styles.textStyle,

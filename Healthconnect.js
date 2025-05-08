@@ -58,11 +58,12 @@ const HealthScreen = (props) => {
             // }));
             // setchartData(formattedData)
             await fetchSteps(selectedDate)
+            await getAllData(selectedDate)
             // console.log('steps 11 ===>', Steps?.records)
             const Height = await readRecords('Height', {
                 timeRangeFilter: {
                     operator: "before",  // Can be "after", "before", or "between"
-                    // startTime: moment().startOf('day').subtract(1, 'days').toISOString(), // 7 days ago
+                    startTime: moment().startOf('day').subtract(1, 'days').toISOString(), // 7 days ago
                     // startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
                     endTime: moment().endOf('day').toISOString(),
                     // startTime: new Date().toISOString(), // Current time
@@ -70,7 +71,7 @@ const HealthScreen = (props) => {
                 }
             });
             setHeight(Height?.records[0]?.height.inFeet)
-            console.log('height ===>', Height?.records)
+            console.log('height ===>', Height)
             const Weight = await readRecords('Weight', {
                 timeRangeFilter: {
                     operator: "before",  // Can be "after", "before", or "between"
@@ -223,27 +224,27 @@ const HealthScreen = (props) => {
                 }
             });
 
-            const heartRateResponse = await readRecords('HeartRate', {
-                timeRangeFilter: {
-                    operator: "between",  // Can be "after", "before", or "between"
-                    startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
-                    // startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
-                    endTime: moment().toISOString(),
-                    // startTime: new Date().toISOString(), // Current time
-                    // endTime: new Date().toISOString(), // Current time
-                }
-            });
+            // const heartRateResponse = await readRecords('HeartRate', {
+            //     timeRangeFilter: {
+            //         operator: "between",  // Can be "after", "before", or "between"
+            //         startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
+            //         // startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
+            //         endTime: moment().toISOString(),
+            //         // startTime: new Date().toISOString(), // Current time
+            //         // endTime: new Date().toISOString(), // Current time
+            //     }
+            // });
 
-            const sleepDataResponse = await readRecords('SleepSession', {
-                timeRangeFilter: {
-                    operator: "between",  // Can be "after", "before", or "between"
-                    startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
-                    // startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
-                    endTime: moment().toISOString(),
-                    // startTime: new Date().toISOString(), // Current time
-                    // endTime: new Date().toISOString(), // Current time
-                }
-            });
+            // const sleepDataResponse = await readRecords('SleepSession', {
+            //     timeRangeFilter: {
+            //         operator: "between",  // Can be "after", "before", or "between"
+            //         startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
+            //         // startTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days ago
+            //         endTime: moment().toISOString(),
+            //         // startTime: new Date().toISOString(), // Current time
+            //         // endTime: new Date().toISOString(), // Current time
+            //     }
+            // });
 
             const weightResponse = await readRecords('Weight', {
                 timeRangeFilter: {
@@ -264,44 +265,44 @@ const HealthScreen = (props) => {
                 }
             });
 
-            const bodyFatResponse = await readRecords('BodyFat', {
-                timeRangeFilter: {
-                    operator: "between",  // Can be "after", "before", or "between"
-                    startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
-                    endTime: moment().toISOString(),
-                }
-            });
+            // const bodyFatResponse = await readRecords('BodyFat', {
+            //     timeRangeFilter: {
+            //         operator: "between",  // Can be "after", "before", or "between"
+            //         startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
+            //         endTime: moment().toISOString(),
+            //     }
+            // });
 
-            const calorieResponse = await readRecords('TotalCaloriesBurned', {
-                timeRangeFilter: {
-                    operator: "between",  // Can be "after", "before", or "between"
-                    startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
-                    endTime: moment().toISOString(),
-                }
-            });
+            // const calorieResponse = await readRecords('TotalCaloriesBurned', {
+            //     timeRangeFilter: {
+            //         operator: "between",  // Can be "after", "before", or "between"
+            //         startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
+            //         endTime: moment().toISOString(),
+            //     }
+            // });
 
-            const distanceResponse = await readRecords('Distance', {
-                timeRangeFilter: {
-                    operator: "between",  // Can be "after", "before", or "between"
-                    startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
-                    endTime: moment().toISOString(),
-                }
-            });
+            // const distanceResponse = await readRecords('Distance', {
+            //     timeRangeFilter: {
+            //         operator: "between",  // Can be "after", "before", or "between"
+            //         startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
+            //         endTime: moment().toISOString(),
+            //     }
+            // });
 
-            const speedResponse = await readRecords('Speed', {
-                timeRangeFilter: {
-                    operator: "between",  // Can be "after", "before", or "between"
-                    startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
-                    endTime: moment().toISOString(),
-                }
-            });
+            // const speedResponse = await readRecords('Speed', {
+            //     timeRangeFilter: {
+            //         operator: "between",  // Can be "after", "before", or "between"
+            //         startTime: moment().subtract(7, 'days').toISOString(), // 7 days ago
+            //         endTime: moment().toISOString(),
+            //     }
+            // });
 
             const obj = {
                 steps: stepsResponse?.records,
                 heartRate: heartRateResponse?.records[0]?.samples[0]?.beatsPerMinute,
                 sleepData: sleepDataResponse?.records[0]?.startTime ? moment(sleepDataResponse?.records[0]?.startTime).format('DD/MM/YYYY hh:mm:ss A') + moment(sleepDataResponse?.records[0]?.endTime).format('DD/MM/YYYY hh:mm:ss A') : 'No Data',
                 weight: weightResponse?.records[0]?.weight?.inKilograms,
-                height: heightResponse?.records[0]?.height?.inFeet,
+                height: heightResponse?.records[0]?.height,
                 bodyFat: bodyFatResponse?.records[0]?.percentage,
                 calorie: calorieResponse?.records,
                 distance: distanceResponse?.records,
@@ -421,6 +422,9 @@ const HealthScreen = (props) => {
             setLoading(false);
         }
     };
+
+    console.log(allData);
+    
 
 
     const writeStepsData = async (stepsCount) => {

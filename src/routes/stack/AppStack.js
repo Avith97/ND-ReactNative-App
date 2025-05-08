@@ -28,6 +28,7 @@ import NotificationListScreen from '../../screens/notificationlistscreen/Notific
 import GeneralSettingScreen from '../../screens/generalsettingscreen/GeneralSettingScreen';
 import LanguageSettingScreen from '../../screens/generalsettingscreen/langaugesetting/LanguageSettingScreen';
 import UnitSettingsScreen from '../../screens/generalsettingscreen/unitsettingScreen/UnitSettingsScreen';
+import ProgramLeaderBoardScreen from '../../screens/progremleaderboard/ProgramLeaderBoardScreen';
 
 const TabNavigator = props => {
   const Tab = createBottomTabNavigator();
@@ -152,7 +153,7 @@ const AppStack = props => {
           return {
             header: () => (
               <AppCustomHeader
-                isLoggedIn={{isLoggedIn: true}}
+                isLoggedIn={{isLoggedIn: props?.route.params?.isLoggedIn}}
               />
             ),
           };
@@ -255,6 +256,13 @@ const AppStack = props => {
         name={Strings.NAVIGATION.programdetail}
         component={ProgramDetailScreen}
         options={{title: 'Program Detail'}}
+      />
+
+
+<Stack.Screen
+        name={Strings.NAVIGATION.programleaderboard}
+        component={ProgramLeaderBoardScreen}
+        options={{title: 'Program Leaderboard '}}
       />
 
       <Stack.Screen

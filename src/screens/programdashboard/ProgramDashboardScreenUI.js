@@ -8,36 +8,26 @@ import PieProgressBar from '../../common/components/progressbar/PieProgressBar';
 import Colors from '../../utils/constants/Colors';
 import {hp, wp} from '../../common/functions/dimensions';
 import Icons, {iconType} from '../../assets/icons/Icons';
+import CustomButton from '../../common/components/buttons/CustomButton';
 
 export default function ProgramDashboardScreenUI(props) {
-  const TrophyIcon = () => (
-    <Image
-      source={{uri: 'https://img.icons8.com/3d-fluency/94/prize.png'}}
-      style={{width: 24, height: 24}}
-    />
-  );
-
-  const LeaderboardItem = ({item}) => (
-    <View
-      style={[styles.itemContainer, {backgroundColor: item.backgroundColor}]}>
-      <Image source={{uri: item.avatar}} style={styles.avatar} />
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.score}>{item.score}</Text>
-      <TrophyIcon />
-    </View>
-  );
-
-  const DayRecordItem = ({item}) => {
+  const DayRecordItem = ({item, index}) => {
     return (
-      <View style={styles.dayRecordItem}>
+      <View
+        style={{
+          ...styles.dayRecordItem,
+          backgroundColor: item.response ? '#F4101054' : Colors.primary,
+        }}>
         <Icons
           type={iconType.feather}
           name={'user-check'}
           size={10}
           color={Colors.danger}
-          style={{textAlign:"center" , fontWeight:800}}
+          style={{textAlign: 'center', fontWeight: 800}}
         />
-        <Text style={{textAlign:"center" , fontWeight:800}}>Day 1</Text>
+        <Text style={{textAlign: 'center', fontWeight: 800}}>
+          Day {item.id}
+        </Text>
       </View>
     );
   };
@@ -45,7 +35,7 @@ export default function ProgramDashboardScreenUI(props) {
     <View>
       <View style={styles.DaysResponseContainer}>
         <FlatList
-          data={props.DATA}
+          data={props.daysData}
           keyExtractor={item => item.id}
           horizontal
           renderItem={({item}) => <DayRecordItem item={item} />}
@@ -57,14 +47,31 @@ export default function ProgramDashboardScreenUI(props) {
         <PieProgressBar program />
       </View>
 
-      <View style={styles.dashboardData}>
-        <TabSelector tabs={props.tabs} onTabChange={props.handleChange} />
+      <View style={styles.buttonContainer}>
+        <CustomButton
+          title={'Leaderboard'}
+          name={'leaderboard'}
+          onPress={props.handleNavigate}
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 5,
+          }}
+          btnTitleStyles={{
+            ...styles.textStyle,
+          }}
+        />
 
-        <FlatList
-          data={props.DATA}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => <LeaderboardItem item={item} />}
-          scrollEnabled={false} // FlatList won't scroll, only ScrollView will
+        <CustomButton
+          title={'Share'}
+          name={''}
+          // onPress={handleNavigate}
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 5,
+          }}
+          btnTitleStyles={{
+            ...styles.textStyle,
+          }}
         />
       </View>
     </View>
@@ -76,35 +83,9 @@ const styles = StyleSheet.create({
   progressContainer: {
     backgroundColor: Colors.gray_01,
     alignItems: 'center',
-    paddingVertical: hp(2),
+    paddingVertical: hp(4),
     borderRadius: 10,
     marginVertical: hp(1),
-  },
-  itemContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-    // marginHorizontal: 16,
-    marginVertical: 8,
-    borderRadius: 12,
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 25,
-    marginRight: 12,
-  },
-  name: {
-    flex: 1,
-    fontSize: fontSize.md,
-    fontWeight: '600',
-    color: '#333',
-  },
-  score: {
-    fontSize: fontSize.md,
-    fontWeight: '600',
-    marginRight: 8,
-    color: '#333',
   },
 
   //
@@ -115,8 +96,21 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2),
     borderRadius: 10,
     marginRight: hp(1),
-    marginVertical:hp(1),
+    marginVertical: hp(1),
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  buttonContainer: {
+    marginVertical: hp(2),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnStyles: {
+    width: wp(60),
+    marginVertical: hp(1),
+  },
+  plusbtnStyle: {
+    width: wp(10),
   },
 });

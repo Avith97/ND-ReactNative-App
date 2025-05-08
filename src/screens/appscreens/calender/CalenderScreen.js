@@ -5,7 +5,7 @@ import Colors from '../../../utils/constants/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
 import CalenderScreenUI from './CalenderScreenUI';
 
-export default function CalenderScreen() {
+export default function CalenderScreen(props) {
 
     const [options] = useState({
         
@@ -21,17 +21,7 @@ export default function CalenderScreen() {
       borderColor: 'transparent',
       button2: 'Submit Response',
     },
-    {
-      id: '2',
-      title: 'Step Challenge',
-      time: '10:00-13:00',
-      fromDate: '01/04/2025',
-      toDate: '21/04/2025',
-      color: '#8E44AD',
-      bgColor: '#F6F3FF',
-      borderColor: 'transparent',
-      button2: 'Show Result',
-    },
+  
     {
       id: '3',
       title: 'Yoga Challenge',
@@ -51,7 +41,7 @@ export default function CalenderScreen() {
       style={styles.container}
       contentContainerStyle={{paddingBottom: hp(5)}}
       showsVerticalScrollIndicator={false}>
-      <CalenderScreenUI {...options} />
+      <CalenderScreenUI {...options} {...props} />
     </ScrollView>
   );
 }

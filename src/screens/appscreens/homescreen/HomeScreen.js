@@ -1,30 +1,57 @@
 import React, {useState} from 'react';
-import {StyleSheet ,ScrollView} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import HomeScreenUI from './HomeScreenUI';
-import { Images } from '../../../utils/constants/Images';
-import { hp } from '../../../common/functions/dimensions';
+import {Images} from '../../../utils/constants/Images';
+import {hp} from '../../../common/functions/dimensions';
 import ConsentScreen from '../../consentscreen/ConsentScreen';
 import Strings from '../../../utils/constants/Strings';
 
 export default function HomeScreen(props) {
+  const {isLoggedIn} = props.route.params;
 
-  const { isLoggedIn } = props.route.params;
-
-  const handleNavigate =()=>{
+  const handleNavigate = (isProgram, registered) => {
     
+    if (isProgram) {
+      props.navigation.navigate(Strings.NAVIGATION.programdetail, {
+        IsRegistered: registered,
+      });
+    } else {
+      props.navigation.navigate(Strings.NAVIGATION.eventstarted, {
+        IsRegistered: registered,
+      });
+    }
+  };
 
-    props.navigation.navigate(Strings.NAVIGATION.programdetail)
-
-    
-  }
+  // constant data
   const [options] = useState({
     programs: [
+      {
+        title: 'Weightloss Program',
+        duration: '20 Min',
+        calories: 432,
+        image: Images.runner_bg_image,
+        status: 'Ongoing',
+        registered: false,
+        program: true,
+      },
+      {
+        title: 'Weightloss Program',
+        duration: '20 Min',
+        calories: 432,
+        image: Images.runner_bg_image,
+        status: 'Ongoing',
+        registered: true,
+        program: true,
+      },
+    ],
+    Events: [
       {
         title: 'Step Challenge',
         duration: '20 Min',
         calories: 432,
         image: Images.runner_bg_image,
         status: 'Ongoing',
+        registered: true,
       },
       {
         title: 'Cycle Challenge',
@@ -32,6 +59,7 @@ export default function HomeScreen(props) {
         calories: 432,
         image: Images.runner_bg_image,
         status: 'Ongoing',
+        registered: false,
       },
     ],
     sessions: [
@@ -59,13 +87,14 @@ export default function HomeScreen(props) {
       style={styles.container}
       contentContainerStyle={{paddingBottom: hp(5)}}
       showsVerticalScrollIndicator={false}>
-      <HomeScreenUI {...options} isLoggedIn={isLoggedIn} handleNavigate={handleNavigate} />
-
+      <HomeScreenUI
+        {...options}
+        isLoggedIn={isLoggedIn}
+        handleNavigate={handleNavigate}
+      />
     </ScrollView>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -74,5 +103,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingBottom: hp(10),
   },
- 
 });

@@ -13,6 +13,7 @@ import {fontSize} from '../../utils/constants/Fonts';
 import CustomButton from '../../common/components/buttons/CustomButton';
 import {hp, wp} from '../../common/functions/dimensions';
 import Icons, {iconType} from '../../assets/icons/Icons';
+import Video from 'react-native-video';
 
 export default function SubmitResponseScreenUI() {
   const responseData = [
@@ -82,7 +83,13 @@ export default function SubmitResponseScreenUI() {
 
       {/* video */}
       <View style={styles.videoContainer}>
-        <Text>Video section</Text>
+      <Video
+        source={{ uri: 'http://192.168.1.49:8443/All/Yoga%20Videos/Day%201.mp4' }}
+        controls={true}
+        resizeMode="contain"
+        style={styles.video}
+        // volume={volume}
+      />
       </View>
 
       {/* Responses */}
@@ -194,4 +201,14 @@ const styles = StyleSheet.create({
     fontSize: fontSize.md,
     fontWeight: 600,
   },
+
+
+  //
+  videoContainer:{
+backgroundColor:"#000",
+borderRadius:10,
+  },
+  video: { width: '100%', height: 190  },
+
+  
 });

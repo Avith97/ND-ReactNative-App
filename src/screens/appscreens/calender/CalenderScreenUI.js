@@ -3,8 +3,21 @@ import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {hp, wp} from '../../../common/functions/dimensions';
 import {fontSize} from '../../../utils/constants/Fonts';
 import CalendarComponent from '../../../common/components/datepicker/CalenderComponent';
+import CustomButton from '../../../common/components/buttons/CustomButton';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import Strings from '../../../utils/constants/Strings';
 
-export default function CalenderScreenUI({challengeData}) {
+export default function CalenderScreenUI({challengeData ,...props}) {
+
+  const handleNavigate =()=>{
+    props.navigation.navigate(Strings.NAVIGATION.submitresponse)
+  }
+
+  const viewDetail =()=>{
+    props.navigation.navigate(Strings.NAVIGATION.programdetail , {
+      IsRegistered: true,
+    })
+  }
   const renderItem = ({item}) => (
     <View
       style={[
@@ -16,9 +29,37 @@ export default function CalenderScreenUI({challengeData}) {
         <Text style={styles.timeText}>{item.time}</Text>
       </View>
       <Text style={styles.title}>{item.title}</Text>
-      <View style={styles.rangeRow}>
+      <View style={{...styles.rangeRow}}>
         <Text style={styles.date}>From – {item.fromDate}</Text>
         <Text style={styles.date}>To – {item.toDate}</Text>
+      </View>
+      <View style={{flexDirection: 'row', gap: 10, marginTop: '10'}}>
+        <CustomButton
+          title="View detail"
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 5,
+            height: hp(4.5),
+            width: wp(1),
+          }}
+          onPress={viewDetail}
+          btnTitleStyles={{
+            ...styles.textStyle,
+          }}
+        />
+        <CustomButton
+          title="Submit Response"
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 5,
+            height: hp(4.5),
+            width: wp(1),
+          }}
+          onPress={handleNavigate}
+          btnTitleStyles={{
+            ...styles.textStyle,
+          }}
+        />
       </View>
     </View>
   );
@@ -27,14 +68,14 @@ export default function CalenderScreenUI({challengeData}) {
     <View style={styles.container}>
       <View style={{marginVertical: hp(1.5)}}>
         <CalendarComponent>
-        <View style={{padding: hp(1.5)}}>
-          <FlatList
-            data={challengeData}
-            keyExtractor={item => item.id}
-            contentContainerStyle={{padding: hp(1)}}
-            renderItem={renderItem}
-          />
-            </View>
+          <View style={{padding: hp(1.5)}}>
+            <FlatList
+              data={challengeData}
+              keyExtractor={item => item.id}
+              contentContainerStyle={{padding: hp(1)}}
+              renderItem={renderItem}
+            />
+          </View>
         </CalendarComponent>
       </View>
     </View>

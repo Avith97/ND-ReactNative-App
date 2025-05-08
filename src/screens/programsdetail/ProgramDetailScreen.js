@@ -4,12 +4,18 @@ import ProgramDetailUI from './ProgramDetailScreenUI';
 import Strings from '../../utils/constants/Strings';
 
 export default function ProgramDetailScreen(props) {
-  const handleNavigate = () => {
-    props.navigation.navigate(Strings.NAVIGATION.submitresponse);
+  const {IsRegistered} = props.route.params;
+
+  const handleNavigate = name => {
+    if (name === 'register') {
+      props.navigation.navigate(Strings.NAVIGATION.eventregister);
+    } else {
+      props.navigation.navigate(Strings.NAVIGATION.submitresponse);
+    }
   };
   return (
     <View style={{flex: 1}}>
-      <ProgramDetailUI handleNavigate={handleNavigate} />
+      <ProgramDetailUI handleNavigate={handleNavigate} IsRegistered ={IsRegistered} />
     </View>
   );
 }

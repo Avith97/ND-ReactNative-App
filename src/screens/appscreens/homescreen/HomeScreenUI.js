@@ -1,13 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import SessionCard from '../../../common/components/sessioncard/SessionCard';
 import ProgramCard from '../../../common/components/programcard/ProgramCard';
 import PieProgressBar from '../../../common/components/progressbar/PieProgressBar';
 import {hp, wp} from '../../../common/functions/dimensions';
 import {fontSize} from '../../../utils/constants/Fonts';
+import HealthScreen from '../../../../Healthconnect';
 
 export default function HomeScreenUI(props) {
   let {isLoggedIn} = props;
+
+
+  const [loading, setloading] = useState(false)
+    useEffect(() => {
+      initHealthConnect()
+      // setupBackgroundFetch(); // Initialize background fetch when the app loads
+  
+      // // Listen to app state changes (foreground or background)
+      // const appStateListener = AppState.addEventListener("change", (state) => {
+      //   if (state === "active") { // If the app comes to the foreground
+      //     console.log("App in foreground, starting vibration.");
+      //     startVibrationLoop(); // Start the vibration loop
+      //   } else { // If the app moves to the background
+      //     console.log("App in background, stopping vibration.");
+      //     stopVibrationLoop(); // Stop the vibration loop
+      //   }
+      // });
+  
+      // // Cleanup the event listener when the component unmounts
+      // return () => appStateListener.remove();
+    }, []);
+  
+    const initHealthConnect = () => {
+      setloading(true)
+      // initialize()
+      setTimeout(() => {
+        setloading(false)
+      }, 200)
+    }
+  
+    function handleLoading(params) {
+      setloading(params)
+    }
 
   return (
     <ScrollView
@@ -63,6 +97,11 @@ export default function HomeScreenUI(props) {
         </ScrollView>
       </Section>
 
+      {/* <View>
+        <HealthScreen loading={loading} handleLoading={handleLoading}  />
+      </View> */}
+
+
       <Section title="Sessions">
         <ScrollView
           horizontal
@@ -80,8 +119,8 @@ export default function HomeScreenUI(props) {
 const Section = ({title, children}) => (
   <View style={styles.wrapper}>
     <View style={styles.header}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.seeAll}>See All</Text>
+      <Text style={styles.title}>{title!== "Events" && title}</Text>
+      <Text style={styles.seeAll}>{title!== "Events" && "See All"}</Text>
     </View>
     {children}
   </View>
@@ -101,7 +140,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   wrapper: {
-    marginVertical: 20,
+    marginVertical: 5,
   },
   header: {
     flexDirection: 'row',

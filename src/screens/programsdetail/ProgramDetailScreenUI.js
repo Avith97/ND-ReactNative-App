@@ -15,6 +15,7 @@ import CustomButton from '../../common/components/buttons/CustomButton';
 import Icons, {iconType} from '../../assets/icons/Icons';
 
 const ProgramDetailUI = props => {
+  
   return (
     <ScrollView style={styles.container}>
       {/* Banner */}
@@ -27,11 +28,13 @@ const ProgramDetailUI = props => {
 
       <View style={styles.content}>
         {/* Intro */}
-        <Text style={styles.title}>
-        Weightloss Program
-        </Text>
+        <Text style={styles.title}>Weightloss Program</Text>
         <Text style={styles.description}>
-         Our WeightLoss Program is designed to help you achieve your health and fitness goals through a comprehensive, personalized approach. We understand that each individual's weight loss journey is unique, which is why we offer tailored solutions that address your specific needs, preferences, and lifestyle.
+          Our WeightLoss Program is designed to help you achieve your health and
+          fitness goals through a comprehensive, personalized approach. We
+          understand that each individual's weight loss journey is unique, which
+          is why we offer tailored solutions that address your specific needs,
+          preferences, and lifestyle.
         </Text>
 
         {/* Date */}
@@ -47,30 +50,59 @@ const ProgramDetailUI = props => {
 
         {/* Register Button */}
         <View style={styles.buttonContainer}>
-          <CustomButton
-            title="Submit Response"
-            btnStyles={styles.registerButton}
-            onPress={props.handleNavigate}
-          />
+          {props.IsRegistered ? (
+            <CustomButton
+              title="Submit Response"
+              name="submit"
+              btnStyles={styles.registerButton}
+              onPress={props.handleNavigate}
+            />
+          ) : (
+            <CustomButton
+              title="Register Now"
+              name="register"
+              btnStyles={styles.registerButton}
+              onPress={props.handleNavigate}
+            />
+          )}
         </View>
 
         {/* Challenges */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Program Challenges</Text>
-          <Text style={{fontSize:fontSize.m , fontWeight:"700" , marginBottom:10}}> 1. Zero Sugar Challenge </Text>
+          <Text
+            style={{fontSize: fontSize.m, fontWeight: '700', marginBottom: 10}}>
+            {' '}
+            1. Zero Sugar Challenge{' '}
+          </Text>
           <Text style={styles.description}>
-          Introducing our 21-day Zero Sugar Challenge! This journey is divided into three manageable segments of 7 days each.
+            Introducing our 21-day Zero Sugar Challenge! This journey is divided
+            into three manageable segments of 7 days each.
           </Text>
           <View style={styles.bulletList}>
-            <Text>{'\u2022'} At first, for the initial 7 days, you eliminate all packaged foods from your diet. This means no processed snacks or ready-made meals..</Text>
-            <Text>{'\u2022'} At first, for the initial 7 days, you eliminate all packaged foods from your diet. This means no processed snacks or ready-made meals.</Text>
+            <Text>
+              {'\u2022'} At first, for the initial 7 days, you eliminate all
+              packaged foods from your diet. This means no processed snacks or
+              ready-made meals..
+            </Text>
+            <Text>
+              {'\u2022'} At first, for the initial 7 days, you eliminate all
+              packaged foods from your diet. This means no processed snacks or
+              ready-made meals.
+            </Text>
           </View>
 
           <Text style={styles.description}>
-          Get off to a strong start in the challenge right from day one. On day one resolve not to eat any packaged food, record your self-affirmation by responding to the question asked (about it)on day 2. Keep this up for the whole week. Now you can effectively track your progress and also follow the tips crafted by experts!
-Each step is designed to gradually reduce your sugar dependence and promote a healthier lifestyle. Embrace the change, feel the energy, and transform your life. Remember, a sugar-free life is a better life.
+            Get off to a strong start in the challenge right from day one. On
+            day one resolve not to eat any packaged food, record your
+            self-affirmation by responding to the question asked (about it)on
+            day 2. Keep this up for the whole week. Now you can effectively
+            track your progress and also follow the tips crafted by experts!
+            Each step is designed to gradually reduce your sugar dependence and
+            promote a healthier lifestyle. Embrace the change, feel the energy,
+            and transform your life. Remember, a sugar-free life is a better
+            life.
           </Text>
-
 
           {/* Challenge Cards */}
           {[1, 2].map(key => (
