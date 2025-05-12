@@ -5,10 +5,10 @@ import Colors from '../../utils/constants/Colors'
 
 export default function ProgramLeaderBoardScreen() {
 
-    const [state , setState] = useState({selectedTab:"5 Days"})
+    const [state , setState] = useState({selectedTab:"Male"})
 
     const [options] = useState({
-        tabs: ['5 Days', '10 Days', '10 Days'],
+        tabs: ['Male', 'OverAll', 'Female'],
         DATA: [
           {
             id: '1',
@@ -35,7 +35,7 @@ export default function ProgramLeaderBoardScreen() {
     })
 
     const handleChange = tab => {
-        setGestureState(prev => ({...prev, selectedTab: tab}));
+        setState(prev => ({...prev, selectedTab: tab}));
       };
   return (
     <View style={{flex:1 ,backgroundColor:Colors.white , padding:20}}>

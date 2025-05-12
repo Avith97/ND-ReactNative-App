@@ -1,34 +1,47 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {fontSize} from '../../../utils/constants/Fonts';
-import {hp} from '../../functions/dimensions';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { fontSize } from '../../../utils/constants/Fonts';
+import { hp } from '../../functions/dimensions';
 
-const TabSelector = ({tabs = [], onTabChange}) => {
+const TabSelector = ({ 
+  tabs = [], 
+  onTabChange, 
+  activeStyle = 'background', 
+  activeColor = '#C3D600' 
+}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleTabPress = index => {
+  const handleTabPress = (index) => {
     setSelectedIndex(index);
-    if (onTabChange) {
-      onTabChange(tabs[index]);
-    }
+    onTabChange?.(tabs[index]);
   };
 
   return (
     <View style={styles.container}>
-      {tabs.map((tab, index) => (
-        <TouchableOpacity
-          key={index}
-          style={[styles.tab, selectedIndex === index && styles.activeTab]}
-          onPress={() => handleTabPress(index)}>
-          <Text
-            style={[
-              styles.tabText,
-              selectedIndex === index && styles.activeTabText,
-            ]}>
-            {tab}
-          </Text>
-        </TouchableOpacity>
-      ))}
+      {tabs.map((tab, index) => {
+        const isActive = selectedIndex === index;
+
+        const tabStyle = [
+          styles.tab,
+          activeStyle === 'background' && isActive && styles.activeBackground(activeColor),
+          activeStyle === 'underline' && isActive && styles.activeUnderline(activeColor),
+        ];
+
+        const textStyle = [
+          styles.tabText,
+          isActive && styles.activeTabText,
+        ];
+
+        return (
+          <TouchableOpacity 
+            key={index} 
+            style={tabStyle} 
+            onPress={() => handleTabPress(index)}
+          >
+            <Text style={textStyle}>{tab}</Text>
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 };
@@ -47,10 +60,6 @@ const styles = StyleSheet.create({
   tab: {
     paddingHorizontal: hp(4),
     paddingVertical: 8,
-    borderRadius: 8,
-  },
-  activeTab: {
-    backgroundColor: '#C3D600', // active tab color
   },
   tabText: {
     color: 'black',
@@ -59,4 +68,13 @@ const styles = StyleSheet.create({
   activeTabText: {
     fontWeight: 'bold',
   },
+  activeBackground: (color) => ({
+    backgroundColor: color,
+    borderRadius: 8,
+  }),
+  activeUnderline: (color) => ({
+    borderBottomWidth: 4,
+    borderColor: color,
+    paddingBottom: 2,
+  }),
 });

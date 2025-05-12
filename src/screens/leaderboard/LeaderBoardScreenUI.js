@@ -48,20 +48,9 @@ export default function LeaderBoardScreenUI(props) {
           }}
         />
       </View>
+      {/* user card */}
+      <UserLeaderBoardCard />
 
-      <View style={styles.userCard}>
-        <Avatar
-          rounded
-          size={'large'}
-          source={{
-            uri: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp',
-          }}
-          avatarStyle={styles.avatarImage}></Avatar>
-        <View>
-          <Text style={styles.nameTitle}>Lakhan Mahadu Nemane</Text>
-          <Text>BIB no: 1628</Text>
-        </View>
-      </View>
       <View style={styles.userRecordSection}>
         <View style={styles.resultContainer}>
           <Text style={styles.resultTitle}>Result</Text>
@@ -92,7 +81,14 @@ export default function LeaderBoardScreenUI(props) {
             />
           </ScrollView>
         ) : (
-          <Text style={{textAlign:"center" , color:Colors.gray_06, marginVertical:hp(3)}}>No Data</Text>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: Colors.gray_06,
+              marginVertical: hp(3),
+            }}>
+            No Data
+          </Text>
         )}
       </View>
     </View>
@@ -100,19 +96,6 @@ export default function LeaderBoardScreenUI(props) {
 }
 
 const styles = StyleSheet.create({
-  userCard: {
-    backgroundColor: '#BCD64E2B',
-    paddingVertical: hp(1),
-    paddingHorizontal: wp(3),
-    borderRadius: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  nameTitle: {
-    fontSize: fontSize.md,
-    fontWeight: 600,
-  },
   userRecordSection: {
     width: wp(100),
     marginVertical: hp(2),

@@ -6,6 +6,7 @@ import CalendarComponent from '../../../common/components/datepicker/CalenderCom
 import CustomButton from '../../../common/components/buttons/CustomButton';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Strings from '../../../utils/constants/Strings';
+import TabSelector from '../../../common/components/tabselector/TabSelector';
 
 export default function CalenderScreenUI({challengeData, ...props}) {
   const handleNavigate = () => {
@@ -23,29 +24,39 @@ export default function CalenderScreenUI({challengeData, ...props}) {
         styles.card,
         {backgroundColor: item.bgColor, borderColor: item.borderColor},
       ]}>
-      <View style={{flexDirection: 'row', gap: 10, paddingVertical:hp(1)}}>
+      <View style={{flexDirection: 'row', gap: 10, paddingVertical: hp(1)}}>
         <Text style={styles.timeText}>{item.time}</Text>
         <View style={{borderWidth: 1, borderColor: '#000'}}></View>
 
         <Text style={styles.title}>{item.title}</Text>
       </View>
-      <Text style={{textAlign:"right", fontSize:fontSize.normal}}>View Details</Text>
+      <Text style={{textAlign: 'right', fontSize: fontSize.normal}}>
+        View Details
+      </Text>
     </View>
   );
 
   return (
     <View style={styles.container}>
+      <View style={{marginVertical: hp(1)}}>
+        <TabSelector
+          tabs={props.tabs}
+          onTabChange={props.handleChange}
+          activeStyle={'underline'}
+        />
+      </View>
       <View style={{marginVertical: hp(1.5)}}>
-        <CalendarComponent>
-          <View style={{padding: hp(1.5)}}>
-            <FlatList
-              data={challengeData}
-              keyExtractor={item => item.id}
-              contentContainerStyle={{padding: hp(1)}}
-              renderItem={renderItem}
-            />
-          </View>
-        </CalendarComponent>
+        {/* <CalendarComponent>
+         
+        </CalendarComponent> */}
+        <View style={{padding: hp(1.5)}}>
+          <FlatList
+            data={challengeData}
+            keyExtractor={item => item.id}
+            contentContainerStyle={{padding: hp(1)}}
+            renderItem={renderItem}
+          />
+        </View>
       </View>
     </View>
   );

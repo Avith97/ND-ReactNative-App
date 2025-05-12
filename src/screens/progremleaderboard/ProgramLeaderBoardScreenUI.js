@@ -7,6 +7,7 @@ import CustomTextInput from '../../common/components/textInput/CustomTextInput';
 import {hp, wp} from '../../common/functions/dimensions';
 import Icons, {iconType} from '../../assets/icons/Icons';
 import Colors from '../../utils/constants/Colors';
+import UserLeaderBoardCard from '../../common/components/userleaderboardcard/UserLeaderBoardCard';
 
 export default function ProgramLeaderBoardScreenUI(props) {
   const TrophyIcon = () => (
@@ -42,13 +43,17 @@ export default function ProgramLeaderBoardScreenUI(props) {
             placeholder: 'Name / BIB no.',
           }}
           leftIcon={{
-            type: iconType.feather,
-            name: 'search',
+            type: iconType.material,
+            name: 'Search',
             size: fontSize.l,
-            color: Colors.red,
+            // color: Colors.red,
           }}
         />
       </View>
+
+      <UserLeaderBoardCard />
+
+
 
       <View style={styles.dashboardData}>
         <TabSelector tabs={props.tabs} onTabChange={props.handleChange} />

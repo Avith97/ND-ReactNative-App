@@ -39,7 +39,8 @@ const EventCard = ({title}) => {
 
       {/* Footprint Section */}
       <View style={styles.mainSection}>
-        <FootPrintItem />
+
+        <FootPrintItem  />
         <View style={styles.middleSection}>
           <View style={styles.dashedLine} />
           <View style={styles.row}>
