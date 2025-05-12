@@ -5,6 +5,7 @@ import {fontSize} from '../../../utils/constants/Fonts';
 import TabSelector from '../../../common/components/tabselector/TabSelector';
 import Colors from '../../../utils/constants/Colors';
 import EventCard from '../../../common/components/eventcard/EventCard';
+import ProgramCard from '../../../common/components/programcard/ProgramCard';
 export default function ProgramScreenUI(props) {
  
 
@@ -14,11 +15,11 @@ export default function ProgramScreenUI(props) {
         <TabSelector tabs={props.tabs} onTabChange={props.handleChange} />
       </View>
       <View style={styles.wrapper}>
-        {props.selectedTab === 'Ongoing' ? (
+        {props.selectedTab === 'My Programs' ? (
           <View style={styles.programList}>
             {props.programs.map((item, index) => (
               <View key={index} style={styles.cardSpacing}>
-                <EventCard
+                <ProgramCard
                   {...item}
                   minWidth={'100%'}
                   handleNavigate={props.handleNavigate}
