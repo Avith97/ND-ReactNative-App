@@ -5,8 +5,9 @@ import { fontSize } from '../../../utils/constants/Fonts';
 import Colors from '../../../utils/constants/Colors';
 import { hp, wp } from '../../functions/dimensions';
 import CustomButton from '../buttons/CustomButton';
+import Strings from '../../../utils/constants/Strings';
 
-const ChallengeCard = ({ title = 'Zero Sugar Challenge', points = 180 }) => {
+const ChallengeCard = ({ title = 'Zero Sugar Challenge', points = 180 , handleNavigate }) => {
   const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   const completedDays = [0, 1, 2]; // Example: 1st, 2nd, 3rd days completed (0-based)
 
@@ -56,11 +57,12 @@ const ChallengeCard = ({ title = 'Zero Sugar Challenge', points = 180 }) => {
 
           <CustomButton
             title="Submit Response"
-            name=""
+            name={Strings.NAVIGATION.submitresponse}
             btnStyles={{
               ...styles.btnStyles,
               elevation: 5,
             }}
+            onPress={handleNavigate}
             btnTitleStyles={styles.textStyle}
           />
         </View>
@@ -72,12 +74,19 @@ const ChallengeCard = ({ title = 'Zero Sugar Challenge', points = 180 }) => {
         <View style={styles.weekRow}>
           {weekDays.map((day, index) => (
             <View key={index} style={styles.dayCircle}>
+
               <View
                 style={[
-                  styles.pendingCircle,
+                  styles.pendingCircle,                   // completedDays.includes(index) && styles.filledDot,
+                ]}
+              >
+                  <View
+                style={[
+                  styles.pendingCircle, {backgroundColor:"red"},
                   completedDays.includes(index) && styles.filledDot,
                 ]}
               />
+              </View>
               <Text style={styles.dayText}>{day}</Text>
             </View>
           ))}

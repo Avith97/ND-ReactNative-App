@@ -84,13 +84,18 @@ export default function HomeScreenUI(props) {
 
       {/* ongoing  events  */}
       <View style={{marginVertical: hp(1)}}>
-        {props.Events.map((item, index) => (
-          <EventCard
-            key={index}
-            {...item}
-            handleNavigate={props.handleNavigate}
-          />
-        ))}
+        {props.Events.map((item, index) => {
+          return (
+            <>
+              <EventCard
+                key={index}
+                {...item}
+                handleNavigate={props.handleNavigate}
+              />
+              {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
+            </>
+          );
+        })}
       </View>
 
       {/* ongoing challenges */}
@@ -108,7 +113,7 @@ export default function HomeScreenUI(props) {
       <View style={{marginVertical: hp(1)}}>
         <Text style={styles.title}>Planning Diet for Weight Management</Text>
         {props.sessions.map((item, index) => (
-          <SessionCard key={index} {...item}  />
+          <SessionCard key={index} {...item} />
         ))}
       </View>
 

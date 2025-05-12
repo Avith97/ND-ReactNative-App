@@ -18,6 +18,7 @@ export default function ProgramScreen(props) {
         calories: 432,
         image: Images.runner_bg_image,
         status: 'Ongoing',
+        label:"View Result"
       },
 
     ],

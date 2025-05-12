@@ -10,7 +10,10 @@ export default function HomeScreen(props) {
   const {isLoggedIn} = props.route.params;
 
   const handleNavigate = (isProgram, registered) => {
-    if (isProgram) {
+
+    if (isProgram === Strings.NAVIGATION.submitresponse) {
+      props.navigation.navigate(Strings.NAVIGATION.submitresponse);
+    } else if (isProgram) {
       props.navigation.navigate(Strings.NAVIGATION.programdetail, {
         IsRegistered: registered,
       });
