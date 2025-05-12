@@ -1,10 +1,10 @@
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import React, {useState} from 'react';
-import ProgramCard from '../../../common/components/programcard/ProgramCard';
 import {wp, hp} from '../../../common/functions/dimensions';
 import {fontSize} from '../../../utils/constants/Fonts';
 import TabSelector from '../../../common/components/tabselector/TabSelector';
 import Colors from '../../../utils/constants/Colors';
+import EventCard from '../../../common/components/eventcard/EventCard';
 export default function ProgramScreenUI(props) {
  
 
@@ -18,7 +18,7 @@ export default function ProgramScreenUI(props) {
           <View style={styles.programList}>
             {props.programs.map((item, index) => (
               <View key={index} style={styles.cardSpacing}>
-                <ProgramCard
+                <EventCard
                   {...item}
                   minWidth={'100%'}
                   handleNavigate={props.handleNavigate}

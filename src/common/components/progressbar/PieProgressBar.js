@@ -16,17 +16,17 @@ const PieProgressBar = ({
 
   return (
     <View style={styles.container}>
-      <Svg width={250} height={250}>
+      <Svg width={200} height={200}>
         <VictoryPie
           standalone={false}
-          width={250}
-          height={250}
+          width={200}
+          height={200}
           data={[
             {x: 'Completed', y: completed},
             {x: 'Remaining', y: remaining},
           ]}
-          innerRadius={58}
-          cornerRadius={20}
+          innerRadius={70}
+          cornerRadius={10}
           labels={() => null}
           colorScale={['#AFEA0D', 'gray']}
           startAngle={0}
@@ -35,7 +35,7 @@ const PieProgressBar = ({
       </Svg>
       <View style={styles.labelContainer}>
         {leaderboard ? (
-          <View>
+          <View style={{alignItems:"center"}}>
             <Icons
               type={iconType.feather}
               name={'user-check'}
@@ -49,23 +49,31 @@ const PieProgressBar = ({
                 fontSize: fontSize.s,
                 textAlign: 'center',
               }}>
-              Step Walk{' '}
+              Step Walk
             </Text>
             <Text style={{color: 'white'}}>1,60,000</Text>
           </View>
         ) : program ? (
-          <View>
-             <Icons
+          <View style={{alignItems:"center"}}>
+            <Icons
               type={iconType.feather}
               name={'user-check'}
               size={10}
               color={Colors.primary}
             />
             <Text style={styles.percentageText}>{`${completed}%`}</Text>
-            <Text style={{color:Colors.primary}}>Progress</Text>
+            <Text style={{color: Colors.primary}}>Progress</Text>
           </View>
         ) : (
-          <Text style={styles.percentageText}>{`${completed}%`}</Text>
+          <View style={{alignItems:"center"}}>
+            <Icons
+              type={iconType.material}
+              name={'spa'}
+              size={15}
+              color={Colors.primary}
+            />
+            <Text style={styles.percentageText}>{`${completed}%`}</Text>
+          </View>
         )}
       </View>
     </View>

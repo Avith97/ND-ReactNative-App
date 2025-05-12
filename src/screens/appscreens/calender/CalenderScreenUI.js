@@ -7,60 +7,29 @@ import CustomButton from '../../../common/components/buttons/CustomButton';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Strings from '../../../utils/constants/Strings';
 
-export default function CalenderScreenUI({challengeData ,...props}) {
+export default function CalenderScreenUI({challengeData, ...props}) {
+  const handleNavigate = () => {
+    props.navigation.navigate(Strings.NAVIGATION.submitresponse);
+  };
 
-  const handleNavigate =()=>{
-    props.navigation.navigate(Strings.NAVIGATION.submitresponse)
-  }
-
-  const viewDetail =()=>{
-    props.navigation.navigate(Strings.NAVIGATION.programdetail , {
+  const viewDetail = () => {
+    props.navigation.navigate(Strings.NAVIGATION.programdetail, {
       IsRegistered: true,
-    })
-  }
+    });
+  };
   const renderItem = ({item}) => (
     <View
       style={[
         styles.card,
         {backgroundColor: item.bgColor, borderColor: item.borderColor},
       ]}>
-      <View style={styles.headerRow}>
-        <View style={[styles.dot, {backgroundColor: item.color}]} />
+      <View style={{flexDirection: 'row', gap: 10, paddingVertical:hp(1)}}>
         <Text style={styles.timeText}>{item.time}</Text>
+        <View style={{borderWidth: 1, borderColor: '#000'}}></View>
+
+        <Text style={styles.title}>{item.title}</Text>
       </View>
-      <Text style={styles.title}>{item.title}</Text>
-      <View style={{...styles.rangeRow}}>
-        <Text style={styles.date}>From – {item.fromDate}</Text>
-        <Text style={styles.date}>To – {item.toDate}</Text>
-      </View>
-      <View style={{flexDirection: 'row', gap: 10, marginTop: '10'}}>
-        <CustomButton
-          title="View detail"
-          btnStyles={{
-            ...styles.btnStyles,
-            elevation: 5,
-            height: hp(4.5),
-            width: wp(1),
-          }}
-          onPress={viewDetail}
-          btnTitleStyles={{
-            ...styles.textStyle,
-          }}
-        />
-        <CustomButton
-          title="Submit Response"
-          btnStyles={{
-            ...styles.btnStyles,
-            elevation: 5,
-            height: hp(4.5),
-            width: wp(1),
-          }}
-          onPress={handleNavigate}
-          btnTitleStyles={{
-            ...styles.textStyle,
-          }}
-        />
-      </View>
+      <Text style={{textAlign:"right", fontSize:fontSize.normal}}>View Details</Text>
     </View>
   );
 
@@ -105,7 +74,7 @@ const styles = StyleSheet.create({
     marginRight: wp(2),
   },
   timeText: {
-    color: '#8E8E93',
+    color: '#000',
     fontWeight: '600',
   },
   title: {

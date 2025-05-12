@@ -10,7 +10,6 @@ export default function HomeScreen(props) {
   const {isLoggedIn} = props.route.params;
 
   const handleNavigate = (isProgram, registered) => {
-    
     if (isProgram) {
       props.navigation.navigate(Strings.NAVIGATION.programdetail, {
         IsRegistered: registered,
@@ -24,60 +23,32 @@ export default function HomeScreen(props) {
 
   // constant data
   const [options] = useState({
-    programs: [
+    Challenges: [
       {
-        title: 'Weightloss Program',
-        duration: '20 Min',
-        calories: 432,
-        image: Images.runner_bg_image,
-        status: 'Ongoing',
-        registered: false,
-        program: true,
-      },
-      {
-        title: 'Weightloss Program',
-        duration: '20 Min',
-        calories: 432,
-        image: Images.runner_bg_image,
-        status: 'Ongoing',
-        registered: true,
-        program: true,
+        title: 'Zero Sugar Challenge',
+        points: 180,
+        badge: 2,
+        responseReceived: [{}],
       },
     ],
     Events: [
       {
         title: 'Step Challenge',
-        duration: '20 Min',
-        calories: 432,
         image: Images.runner_bg_image,
-        status: 'Ongoing',
-        registered: true,
-      },
-      {
-        title: 'Cycle Challenge',
-        duration: '20 Min',
-        calories: 432,
-        image: Images.runner_bg_image,
-        status: 'Ongoing',
-        registered: false,
+        todayStepsCount: 1487,
+        yesterdayStepsCount: 1677,
+        weeklyStepsCount: 23477,
+        totalCalories: 1086,
+        distance: 12,
+        completionTime: 204,
       },
     ],
     sessions: [
       {
-        image: Images.runner_bg_image,
-        title: 'Everything You Need to Know About Nonalcoholic Beer',
-        author: 'Jay Manning',
-        date: 'Nov 20, 2023',
-        description:
-          'Brewers are putting out great-tasting beers without alcohol...',
-      },
-      {
-        image: Images.runner_bg_image,
-        title: 'Eating More Plant-Based Meals May Help You Live Longer',
-        author: 'Jay Manning',
-        date: 'Nov 20, 2023',
-        description:
-          'Cutting out red and processed meats for nuts and beans...',
+        time: ' 3:00 pm  to 4:00 pm',
+        facultyName: 'Dr.Jatin Shah',
+        mode: 'Online',
+        status: 'Yet to be started',
       },
     ],
   });
@@ -99,7 +70,7 @@ export default function HomeScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 12,
     backgroundColor: '#fff',
     paddingBottom: hp(10),
   },

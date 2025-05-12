@@ -45,7 +45,7 @@ const TabNavigator = props => {
       <Tab.Screen
         name={Strings.NAVIGATION.home}
         component={HomeScreen}
-        initialParams={{isLoggedIn: props.route?.params?.isLoggedIn}}
+        initialParams={{isLoggedIn: true}}
         options={{
           title: 'Home',
           headerTitleStyle: {
@@ -153,7 +153,7 @@ const AppStack = props => {
           return {
             header: () => (
               <AppCustomHeader
-                isLoggedIn={{isLoggedIn: props?.route.params?.isLoggedIn}}
+                isLoggedIn={{isLoggedIn: false}}
               />
             ),
           };
@@ -166,7 +166,7 @@ const AppStack = props => {
       <Stack.Screen
         name={Strings.NAVIGATION.home}
         component={TabNavigator}
-        initialParams={{isLoggedIn: props?.route.params?.isLoggedIn}}
+        initialParams={{isLoggedIn: false}}
       />
       <Stack.Screen
         name={Strings.NAVIGATION.profile}
