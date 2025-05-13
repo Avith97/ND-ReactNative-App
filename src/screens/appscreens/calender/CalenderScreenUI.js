@@ -38,7 +38,7 @@ export default function CalenderScreenUI({challengeData, ...props}) {
 
   return (
     <View style={styles.container}>
-      <View style={{marginVertical: hp(1)}}>
+      <View style={{marginTop: hp(1)}}>
         <TabSelector
           tabs={props.tabs}
           onTabChange={props.handleChange}
@@ -46,17 +46,19 @@ export default function CalenderScreenUI({challengeData, ...props}) {
         />
       </View>
       <View style={{marginVertical: hp(1.5)}}>
-        {/* <CalendarComponent>
+        <CalendarComponent mode={props.selectedTab === "Day" ? "day" : "month"}>
          
-        </CalendarComponent> */}
-        <View style={{padding: hp(1.5)}}>
+        <View style={{marginVertical:hp(2)}}>
           <FlatList
             data={challengeData}
             keyExtractor={item => item.id}
-            contentContainerStyle={{padding: hp(1)}}
+            // contentContainerStyle={{padding: hp(1)}}
             renderItem={renderItem}
+
           />
         </View>
+        </CalendarComponent>
+        
       </View>
     </View>
   );
@@ -65,6 +67,7 @@ export default function CalenderScreenUI({challengeData, ...props}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal:20
   },
   card: {
     paddingHorizontal: wp(4),

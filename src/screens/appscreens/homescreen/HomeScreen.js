@@ -31,7 +31,7 @@ export default function HomeScreen(props) {
 
   // constant data
   const [options] = useState({
-    ongoingEvents: false,
+    ongoingEvents: true,
 
     Challenges: [
       {
@@ -51,7 +51,7 @@ export default function HomeScreen(props) {
         totalCalories: 1086,
         distance: 12,
         completionTime: 204,
-        registered: true,
+        registered: false,
         started: false,
         eventType: 'Public',
         isEventEnd: false,

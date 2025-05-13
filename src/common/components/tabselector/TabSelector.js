@@ -1,43 +1,47 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { fontSize } from '../../../utils/constants/Fonts';
-import { hp } from '../../functions/dimensions';
+import React, {useState} from 'react';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {fontSize} from '../../../utils/constants/Fonts';
+import {hp} from '../../functions/dimensions';
 
-const TabSelector = ({ 
-  tabs = [], 
-  onTabChange, 
-  activeStyle = 'background', 
-  activeColor = '#C3D600' 
+const TabSelector = ({
+  tabs = [],
+  onTabChange,
+  activeStyle = 'background',
+  activeColor = '#C3D600',
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleTabPress = (index) => {
+  const handleTabPress = index => {
     setSelectedIndex(index);
     onTabChange?.(tabs[index]);
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor: activeStyle !== 'underline' ? '#f5f5f5' : '',
+      }}>
       {tabs.map((tab, index) => {
         const isActive = selectedIndex === index;
 
         const tabStyle = [
           styles.tab,
-          activeStyle === 'background' && isActive && styles.activeBackground(activeColor),
-          activeStyle === 'underline' && isActive && styles.activeUnderline(activeColor),
+          activeStyle === 'background' &&
+            isActive &&
+            styles.activeBackground(activeColor),
+          activeStyle === 'underline' &&
+            isActive &&
+            styles.activeUnderline(activeColor),
         ];
 
-        const textStyle = [
-          styles.tabText,
-          isActive && styles.activeTabText,
-        ];
+        const textStyle = [styles.tabText, isActive && styles.activeTabText];
 
         return (
-          <TouchableOpacity 
-            key={index} 
-            style={tabStyle} 
-            onPress={() => handleTabPress(index)}
-          >
+          <TouchableOpacity
+            key={index}
+            style={tabStyle}
+            onPress={() => handleTabPress(index)}>
             <Text style={textStyle}>{tab}</Text>
           </TouchableOpacity>
         );
@@ -51,7 +55,6 @@ export default TabSelector;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: '#f5f5f5',
     padding: 6,
     borderRadius: 8,
     justifyContent: 'space-around',
@@ -68,11 +71,11 @@ const styles = StyleSheet.create({
   activeTabText: {
     fontWeight: 'bold',
   },
-  activeBackground: (color) => ({
+  activeBackground: color => ({
     backgroundColor: color,
     borderRadius: 8,
   }),
-  activeUnderline: (color) => ({
+  activeUnderline: color => ({
     borderBottomWidth: 4,
     borderColor: color,
     paddingBottom: 2,
