@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Dimensions } from 'react-native';
 import { VictoryChart, VictoryBar, VictoryTheme, VictoryAxis, VictoryGroup, VictoryLegend, VictoryTooltip } from 'victory-native';
+import Colors from '../../../utils/constants/Colors';
 
 const BarChart = ({
     data,
@@ -78,7 +79,7 @@ const BarChart = ({
                 ) : (
                
                     
-                    <VictoryBar colorScale={colorScale}
+                    <VictoryBar colorScale={colorScale}  style={{ data: { fill: Colors.primary } }}
                         data={parsedData}
                         x={xKey}
                         y={yKeys[0]}

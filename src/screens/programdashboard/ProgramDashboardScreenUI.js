@@ -66,7 +66,7 @@ export default function ProgramDashboardScreenUI(props) {
           <TabSelector
             tabs={props.tabs}
             onTabChange={props.handleChange}
-            activeStyle={"underline"}
+            activeStyle={'underline'}
           />
         </View>
 
@@ -81,8 +81,8 @@ export default function ProgramDashboardScreenUI(props) {
           chartHeight={250}
           xKey="day"
           colorScale={[Colors.primary, Colors.secondary]}
-          xAxisLabel="Days"
-          yAxisLabel="Steps"
+          // xAxisLabel="Days"
+          // yAxisLabel="Steps"
         />
       </View>
     </View>

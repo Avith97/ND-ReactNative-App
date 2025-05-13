@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Icons, { iconType } from '../../../assets/icons/Icons';
-import { fontSize } from '../../../utils/constants/Fonts';
+import {View, Text, StyleSheet} from 'react-native';
+import Icons, {iconType} from '../../../assets/icons/Icons';
+import {fontSize} from '../../../utils/constants/Fonts';
 import Colors from '../../../utils/constants/Colors';
-import { hp, wp } from '../../functions/dimensions';
+import {hp, wp} from '../../functions/dimensions';
 import CustomButton from '../buttons/CustomButton';
 import Strings from '../../../utils/constants/Strings';
 
-const ChallengeCard = ({ title = 'Zero Sugar Challenge', points = 180 , handleNavigate }) => {
+const ChallengeCard = ({
+  title = 'Zero Sugar Challenge',
+  points = 180,
+  handleNavigate,
+}) => {
   const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   const completedDays = [0, 1, 2]; // Example: 1st, 2nd, 3rd days completed (0-based)
 
@@ -32,7 +36,7 @@ const ChallengeCard = ({ title = 'Zero Sugar Challenge', points = 180 , handleNa
               name="info-outline"
               size={12}
               color={Colors.black}
-              style={{ marginLeft: 4 }}
+              style={{marginLeft: 4}}
             />
           </View>
         </View>
@@ -44,13 +48,9 @@ const ChallengeCard = ({ title = 'Zero Sugar Challenge', points = 180 , handleNa
               type={iconType?.material}
               name="spa"
               size={30}
-              style={{ marginRight: 8 }}
+              style={{marginRight: 8}}
             />
-            <Icons
-              type={iconType?.material}
-              name="spa"
-              size={30}
-            />
+            <Icons type={iconType?.material} name="spa" size={30} />
           </View>
 
           <View style={styles.dashedDivider} />
@@ -74,18 +74,16 @@ const ChallengeCard = ({ title = 'Zero Sugar Challenge', points = 180 , handleNa
         <View style={styles.weekRow}>
           {weekDays.map((day, index) => (
             <View key={index} style={styles.dayCircle}>
-
               <View
                 style={[
-                  styles.pendingCircle,                   // completedDays.includes(index) && styles.filledDot,
-                ]}
-              >
-                  <View
-                style={[
-                  styles.pendingCircle, {backgroundColor:"red"},
-                  completedDays.includes(index) && styles.filledDot,
-                ]}
-              />
+                  styles.pendingCircle, // completedDays.includes(index) && styles.filledDot,
+                ]}>
+                <View
+                  style={[
+                    styles.pendingInsideCircle,
+                    completedDays.includes(index) && styles.filledDot,
+                  ]}
+                />
               </View>
               <Text style={styles.dayText}>{day}</Text>
             </View>
@@ -170,14 +168,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pendingCircle: {
-    width: 16,
-    height: 16,
+    width: 19,
+    height: 19,
     borderRadius: 12,
     borderWidth: 2,
     borderColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 4,
+  },
+
+  pendingInsideCircle: {
+    width: 12,
+    height: 12,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#000',
+    justifyContent: 'center',
   },
   filledDot: {
     backgroundColor: '#000',
