@@ -1,9 +1,13 @@
 import React, {useState, useCallback} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import {Calendar, CalendarProvider, WeekCalendar} from 'react-native-calendars';
+import {
+  Calendar,
+  CalendarProvider,
+  WeekCalendar,
+} from 'react-native-calendars';
 import moment from 'moment';
-import Icons, { iconType } from '../../../assets/icons/Icons';
+import Icons, {iconType} from '../../../assets/icons/Icons';
 
 export default function CalendarComponent({children}) {
   const [weekView, setWeekView] = useState(true);
@@ -40,14 +44,29 @@ export default function CalendarComponent({children}) {
       selected: true,
       selectedColor: '#c5f73d',
       selectedTextColor: 'black',
+      periods: [
+        {startingDay: true, color: '#00B0FF'},
+        {endingDay: true, color: '#FFD700'},
+      ],
     },
     '2025-04-03': {
       dots: [sportDot],
       marked: true,
+      periods: [{startingDay: true, endingDay: true, color: '#00B0FF'}],
+    },
+    '2025-04-04': {
+      periods: [{startingDay: false, endingDay: false, color: '#00B0FF'}],
+    },
+    '2025-04-05': {
+      periods: [{startingDay: false, endingDay: true, color: '#00B0FF'}],
     },
     '2025-04-10': {
       dots: [sportDot, meetingDot, workoutDot],
       marked: true,
+      periods: [
+        {startingDay: true, endingDay: true, color: '#32CD32'},
+        {startingDay: true, endingDay: true, color: '#FFD700'},
+      ],
     },
   };
 
@@ -72,13 +91,17 @@ export default function CalendarComponent({children}) {
 
       <TouchableOpacity
         onPress={() => setWeekView(prev => !prev)}
-        style={{backgroundColor: 'rgba(0,0,0,0.2)', padding: 10 , borderRadius:10}}>
-         <Icons
-            name="calendar"
-            type={iconType.feather}
-            size={20}
-            color="black"
-          />
+        style={{
+          backgroundColor: 'rgba(0,0,0,0.2)',
+          padding: 10,
+          borderRadius: 10,
+        }}>
+        <Icons
+          name="calendar"
+          type={iconType.feather}
+          size={20}
+          color="black"
+        />
       </TouchableOpacity>
     </View>
   );
@@ -142,7 +165,7 @@ export default function CalendarComponent({children}) {
         ) : (
           <Calendar
             key="month"
-            markingType={'multi-dot'}
+            markingType={'multi-period'}
             renderHeader={() => null}
             current={selectedDate}
             onDayPress={handleDatePress}
@@ -208,7 +231,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 20,
     marginBottom: 5,
-    // marginTop: 10,
   },
   arrow: {
     fontSize: 18,

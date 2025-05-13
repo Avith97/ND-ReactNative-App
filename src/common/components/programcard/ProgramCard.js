@@ -13,38 +13,43 @@ import Colors from '../../../utils/constants/Colors';
 
 const ProgramCard = ({
   title,
-  duration,
-  calories,
+  duration = '20 min',
+  calories = 332,
   image,
   status,
   minWidth,
   registered,
   program,
+
   ...props
 }) => {
   return (
-    <TouchableOpacity style={{...styles.card, width: minWidth }}>
+    <TouchableOpacity style={{...styles.card, width: minWidth}}>
       <ImageBackground
         source={image}
-       
         style={styles.image}
         imageStyle={styles.imageStyle}>
-
-<View style={styles.gradientOverlay} />
-        <View style={{...styles.statusTag , backgroundColor: Colors.primary }}>
-          <Text style={styles.statusText}>{status}</Text>
+        <View style={styles.gradientOverlay} />
+        <View
+          style={{
+            ...styles.statusTag,
+            backgroundColor: !registered ? '#EC6B47AB' : Colors.primary,
+          }}>
+          <Text style={styles.statusText}>
+            {registered ? 'Not yet started' : 'Not Registered'}
+          </Text>
         </View>
 
         <Text style={styles.title}>{title}</Text>
 
         <CustomButton
-          title={'View Result'}
+          title={registered ? 'View Detail' : 'Register Now'}
           name={'register'}
-          onPress={()=>props?.handleNavigate(program , registered)}
+          onPress={() => props?.handleNavigate(program, registered)}
           btnStyles={{
             ...styles.btnStyles,
             elevation: 5,
-            backgroundColor: Colors.primary ,
+            backgroundColor: Colors.primary,
           }}
           btnTitleStyles={{
             ...styles.textStyle,
@@ -55,7 +60,6 @@ const ProgramCard = ({
           <Text style={styles.detailText}>⏱ {duration}</Text>
           <Text style={styles.detailText}>🔥 {calories} Kcal</Text>
         </View>
-       
       </ImageBackground>
     </TouchableOpacity>
   );
@@ -63,7 +67,8 @@ const ProgramCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    marginRight: 15,
+    width: wp(100),
+    // marginRight: 15,
     borderRadius: 12,
     overflow: 'hidden',
   },
@@ -71,16 +76,15 @@ const styles = StyleSheet.create({
     height: hp(20),
     padding: 10,
     justifyContent: 'space-between',
-    resizeMode:"contain"
+    resizeMode: 'contain',
   },
   gradientOverlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.4)', // dark overlay
   },
-  
+
   imageStyle: {
     borderRadius: 12,
-   
   },
   statusTag: {
     alignSelf: 'flex-end',

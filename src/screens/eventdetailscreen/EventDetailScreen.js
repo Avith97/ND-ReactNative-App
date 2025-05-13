@@ -5,13 +5,15 @@ import Strings from '../../utils/constants/Strings'
 
 export default function EventDetailScreen(props) {
 
+  let {IsRegistered }  = props.route.params;
+
     const handleNavigate =()=>{
         props.navigation.navigate(Strings.NAVIGATION.eventregister)
        }
     
   return (
     <View style={{flex:1}}>
-      <EventDetailScreenUI handleNavigate={handleNavigate}/>
+      <EventDetailScreenUI IsRegistered={IsRegistered} handleNavigate={handleNavigate}/>
     </View>
   )
 }

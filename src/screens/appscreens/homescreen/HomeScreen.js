@@ -10,22 +10,29 @@ export default function HomeScreen(props) {
   const {isLoggedIn} = props.route.params;
 
   const handleNavigate = (isProgram, registered) => {
-
-    if (isProgram === Strings.NAVIGATION.submitresponse) {
-      props.navigation.navigate(Strings.NAVIGATION.submitresponse);
-    } else if (isProgram) {
-      props.navigation.navigate(Strings.NAVIGATION.programdetail, {
-        IsRegistered: registered,
-      });
-    } else {
+    if (!registered) {
       props.navigation.navigate(Strings.NAVIGATION.eventstarted, {
         IsRegistered: registered,
       });
+    } else {
+      if (isProgram === Strings.NAVIGATION.submitresponse) {
+        props.navigation.navigate(Strings.NAVIGATION.submitresponse);
+      } else if (isProgram) {
+        props.navigation.navigate(Strings.NAVIGATION.programdetail, {
+          IsRegistered: registered,
+        });
+      } else {
+        props.navigation.navigate(Strings.NAVIGATION.eventstarted, {
+          IsRegistered: registered,
+        });
+      }
     }
   };
 
   // constant data
   const [options] = useState({
+    ongoingEvents: false,
+
     Challenges: [
       {
         title: 'Zero Sugar Challenge',
@@ -44,6 +51,10 @@ export default function HomeScreen(props) {
         totalCalories: 1086,
         distance: 12,
         completionTime: 204,
+        registered: true,
+        started: false,
+        eventType: 'Public',
+        isEventEnd: false,
       },
     ],
     sessions: [

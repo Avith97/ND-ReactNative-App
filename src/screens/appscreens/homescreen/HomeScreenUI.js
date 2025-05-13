@@ -8,6 +8,7 @@ import HealthScreen from '../../../../Healthconnect';
 import Colors from '../../../utils/constants/Colors';
 import EventCard from '../../../common/components/eventcard/EventCard';
 import ChallengeCard from '../../../common/components/challengecard/ChallengeCard';
+import ProgramCard from '../../../common/components/programcard/ProgramCard';
 
 export default function HomeScreenUI(props) {
   let {isLoggedIn} = props;
@@ -59,65 +60,90 @@ export default function HomeScreenUI(props) {
             : 'A step Towards Healthy Life !'}
         </Text>
       </View>
-      {/* progress card */}
-      <View style={styles.progress_card_wrapper}>
-        <View>
-          <Text style={{...styles.title, color: Colors.smoky_white}}>
-            Your daily progress
-          </Text>
-          <Text style={styles.subTitle}>Wellness Program</Text>
-          <Text
-            style={{
-              ...styles.subTitle,
-              color: Colors.smoky_white,
-              opacity: 0.5,
-            }}>
-            Accumulating daily report
-          </Text>
-          <Text style={styles.rangetitle}>From - 01/04/2025</Text>
-          <Text style={styles.rangetitle}>To - 21/04/2025</Text>
-        </View>
-        <View>
-          <PieProgressBar />
-        </View>
-      </View>
 
-      {/* ongoing  events  */}
-      <View style={{marginVertical: hp(1)}}>
-        {props.Events.map((item, index) => {
-          return (
-            <>
-              <EventCard
+      {props.ongoingEvents ? (
+        <>
+          {/* progress card */}
+          <View style={styles.progress_card_wrapper}>
+            <View>
+              <Text style={{...styles.title, color: Colors.smoky_white}}>
+                Your daily progress
+              </Text>
+              <Text style={styles.subTitle}>Wellness Program</Text>
+              <Text
+                style={{
+                  ...styles.subTitle,
+                  color: Colors.smoky_white,
+                  opacity: 0.5,
+                }}>
+                Accumulating daily report
+              </Text>
+              <Text style={styles.rangetitle}>From - 01/04/2025</Text>
+              <Text style={styles.rangetitle}>To - 21/04/2025</Text>
+            </View>
+            <View>
+              <PieProgressBar />
+            </View>
+          </View>
+
+          {/* ongoing  events  */}
+          <View style={{marginVertical: hp(1)}}>
+            {props.Events.map((item, index) => {
+              return (
+                <>
+                  <EventCard
+                    key={index}
+                    {...item}
+                    handleNavigate={props.handleNavigate}
+                  />
+                  {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
+                </>
+              );
+            })}
+          </View>
+
+          {/* ongoing challenges */}
+          <View style={{marginVertical: hp(2)}}>
+            {props.Challenges?.map((item, index) => (
+              <ChallengeCard
                 key={index}
                 {...item}
                 handleNavigate={props.handleNavigate}
               />
-              {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
-            </>
-          );
-        })}
-      </View>
+            ))}
+          </View>
 
-      {/* ongoing challenges */}
-
-      <View style={{marginVertical: hp(2)}}>
-        {props.Challenges?.map((item, index) => (
-          <ChallengeCard
-            key={index}
-            {...item}
-            handleNavigate={props.handleNavigate}
-          />
-        ))}
-      </View>
-
-      <View style={{marginVertical: hp(1)}}>
-        <Text style={styles.title}>Planning Diet for Weight Management</Text>
-        {props.sessions.map((item, index) => (
-          <SessionCard key={index} {...item} />
-        ))}
-      </View>
-
-      {/* session */}
+          {/* session */}
+          <View style={{marginVertical: hp(1)}}>
+            <Text style={styles.title}>
+              Planning Diet for Weight Management
+            </Text>
+            {props.sessions.map((item, index) => (
+              <SessionCard key={index} {...item} />
+            ))}
+          </View>
+        </>
+      ) : (
+        <>
+          {/* ongoing  events  */}
+          <View style={{marginVertical: hp(1)}}>
+            {props.Events.map((item, index) => {
+             
+              return (
+                <>
+                  <ProgramCard
+                    key={index}
+                    {...item}
+                    handleNavigate={props.handleNavigate}
+                  
+                  />
+                  {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
+                </>
+              );
+            })}
+          </View>
+        </>
+      )}
     </ScrollView>
   );
 }

@@ -18,8 +18,8 @@ export default function ProgramScreen(props) {
         calories: 432,
         image: Images.runner_bg_image,
         status: 'Ongoing',
+        registered: true,
       },
-
     ],
 
     tabs: ['My Programs', 'Upcoming'],
@@ -30,7 +30,9 @@ export default function ProgramScreen(props) {
   };
 
   const handleNavigate = () => {
-    props.navigation.navigate(Strings.NAVIGATION.eventstarted);
+    props.navigation.navigate(Strings.NAVIGATION.eventstarted, {
+      IsRegistered: true,
+    });
   };
 
   return (

@@ -17,9 +17,12 @@ export default function EventDetailScreenUI(props) {
           resizeMode="cover"
           style={styles.bannerImage}
         />
-        <View style={styles.badgeContainer}>
-          <Text style={styles.badgeText}>Not Registered</Text>
-        </View>
+        {/* status see only registered=true */}
+        {!props.IsRegistered && (
+          <View style={styles.badgeContainer}>
+            <Text style={styles.badgeText}>Not Registered</Text>
+          </View>
+        )}
       </View>
 
       {/* Scrollable Content */}
@@ -60,13 +63,15 @@ export default function EventDetailScreenUI(props) {
       </ScrollView>
 
       {/* Floating Button */}
-      <View style={styles.buttonWrapper}>
-        <CustomButton
-          title={'Register Now'}
-          btnStyles={styles.btnStyle}
-          onPress={props.handleNavigate}
-        />
-      </View>
+      {!props.IsRegistered && (
+        <View style={styles.buttonWrapper}>
+          <CustomButton
+            title={'Register Now'}
+            btnStyles={styles.btnStyle}
+            onPress={props.handleNavigate}
+          />
+        </View>
+      )}
     </View>
   );
 }

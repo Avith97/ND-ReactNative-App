@@ -135,7 +135,6 @@ const AppStack = props => {
 
   const Stack = createStackNavigator();
 
- 
   return (
     <Stack.Navigator
       screenOptions={({navigation, route}) => {
@@ -153,7 +152,7 @@ const AppStack = props => {
           return {
             header: () => (
               <AppCustomHeader
-                isLoggedIn={{isLoggedIn: false}}
+                isLoggedIn={{isLoggedIn: props.route.params.isLoggedIn}}
               />
             ),
           };
@@ -166,7 +165,7 @@ const AppStack = props => {
       <Stack.Screen
         name={Strings.NAVIGATION.home}
         component={TabNavigator}
-        initialParams={{isLoggedIn: false}}
+        initialParams={{isLoggedIn: props.route.params.isLoggedIn}}
       />
       <Stack.Screen
         name={Strings.NAVIGATION.profile}
@@ -195,7 +194,6 @@ const AppStack = props => {
         options={{title: 'General Settings'}}
       />
 
-
       {/* language setting */}
 
       <Stack.Screen
@@ -205,13 +203,11 @@ const AppStack = props => {
       />
       {/* unitsetting */}
 
-      
       <Stack.Screen
         name={Strings.NAVIGATION.unitsettings}
         component={UnitSettingsScreen}
         options={{title: 'Select Unit'}}
       />
-
 
       <Stack.Screen
         name={Strings.NAVIGATION.activitysync}
@@ -258,8 +254,7 @@ const AppStack = props => {
         options={{title: 'Program Detail'}}
       />
 
-
-<Stack.Screen
+      <Stack.Screen
         name={Strings.NAVIGATION.programleaderboard}
         component={ProgramLeaderBoardScreen}
         options={{title: 'Program Leaderboard '}}
