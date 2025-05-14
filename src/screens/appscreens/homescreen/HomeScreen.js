@@ -32,7 +32,7 @@ export default function HomeScreen(props) {
   // constant data
   const [options] = useState({
     ongoingEvents: true,
-
+ notResponding:true,
     Challenges: [
       {
         title: 'Zero Sugar Challenge',
@@ -51,10 +51,11 @@ export default function HomeScreen(props) {
         totalCalories: 1086,
         distance: 12,
         completionTime: 204,
-        registered: false,
+        registered: true,
         started: false,
         eventType: 'Public',
         isEventEnd: false,
+       
       },
     ],
     sessions: [

@@ -9,6 +9,7 @@ import Colors from '../../../utils/constants/Colors';
 import EventCard from '../../../common/components/eventcard/EventCard';
 import ChallengeCard from '../../../common/components/challengecard/ChallengeCard';
 import ProgramCard from '../../../common/components/programcard/ProgramCard';
+import NotRespondingCard from '../../../common/components/notrespondingcard/NotRespondingCard';
 
 export default function HomeScreenUI(props) {
   let {isLoggedIn} = props;
@@ -86,6 +87,10 @@ export default function HomeScreenUI(props) {
             </View>
           </View>
 
+          {/* not responding challenge */}
+
+          {props.notResponding && <NotRespondingCard  handleNavigate={props.handleNavigate} />}
+
           {/* ongoing  events  */}
           <View style={{marginVertical: hp(1)}}>
             {props.Events.map((item, index) => {
@@ -128,14 +133,12 @@ export default function HomeScreenUI(props) {
           {/* ongoing  events  */}
           <View style={{marginVertical: hp(1)}}>
             {props.Events.map((item, index) => {
-             
               return (
                 <>
                   <ProgramCard
                     key={index}
                     {...item}
                     handleNavigate={props.handleNavigate}
-                  
                   />
                   {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
                 </>

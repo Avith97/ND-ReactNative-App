@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     color: 'black',
-    fontSize: fontSize.normal,
+    fontSize: fontSize.md,
   },
   activeTabText: {
     fontWeight: 'bold',
