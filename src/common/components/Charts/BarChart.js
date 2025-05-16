@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Dimensions } from 'react-native';
 import { VictoryChart, VictoryBar, VictoryTheme, VictoryAxis, VictoryGroup, VictoryLegend, VictoryTooltip } from 'victory-native';
+import Colors from '../../../utils/constants/Colors';
 
 const BarChart = ({
     data,
@@ -9,7 +10,7 @@ const BarChart = ({
     chartWidth,
     chartHeight,
     barWidth = 20,
-    colorScale = ['tomato', 'blue', 'green', 'orange'],
+    colorScale = [],
     xAxisLabel = '',
     yAxisLabel = '',
     showLegend = true,
@@ -19,10 +20,8 @@ const BarChart = ({
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
     const isMultiple = Array.isArray(yKeys) && yKeys.length > 1;
-    console.log(data);
-    
 
-    const parsedData = data || []?.map(item => {
+    const parsedData = (data || []).map(item => {
         let parsedItem = { ...item };
         yKeys.forEach(key => {
             parsedItem[key] = parseFloat(item[key]);
@@ -30,57 +29,66 @@ const BarChart = ({
         return parsedItem;
     });
 
+    // Dynamically calculate bar width and domain padding
+    const maxBars = parsedData.length * (isMultiple ? yKeys.length : 1);
+    const calculatedBarWidth = Math.min(barWidth, (screenWidth - 40) / maxBars);
+    const calculatedDomainPadding = Math.max(20, calculatedBarWidth * 2);
+
     return (
-        <View style={{ flex: 1 ,width: chartWidth || screenWidth , height: chartHeight || screenHeight / 2, paddingBottom: 40, marginBottom: 20 }}>
+        <View style={{ flex: 1, width: chartWidth || screenWidth, height: chartHeight || screenHeight / 2, paddingBottom: 40, marginBottom: 20 }}>
             <VictoryChart
-                domainPadding={{ x: isMultiple ? 60 : 40 }}
+                domainPadding={{ x: calculatedDomainPadding }}
                 theme={VictoryTheme.material}
-                width={chartWidth || screenWidth }
+                width={chartWidth || screenWidth}
                 height={chartHeight || screenHeight / 2}
             >
                 {showLegend && isMultiple && (
-                      <VictoryLegend
-                      x={legendPosition === 'top' ? 50 : 190}
-                      y={legendPosition === 'top' ? 10 : chartHeight - 20}
-                      orientation={legendPosition === 'top' ? 'horizontal' : 'horizontal'}
-                      gutter={20}
-                      data={yKeys.map((key, index) => ({ name: key, symbol: { fill: colorScale[index % colorScale.length] } }))}
-                  />
+                    <VictoryLegend
+                        x={legendPosition === 'top' ? 50 : 190}
+                        y={legendPosition === 'top' ? 10 : chartHeight - 20}
+                        orientation={legendPosition === 'top' ? 'horizontal' : 'horizontal'}
+                        gutter={20}
+                        data={yKeys.map((key, index) => ({ name: key, symbol: { fill: colorScale[index % colorScale.length] } }))}
+                    />
                 )}
 
                 <VictoryAxis
                     label={xAxisLabel}
-                    style={{ axisLabel: { padding: 30 }, tickLabels: { padding: 10, angle: -30 } }}
+                    style={{axis: { stroke: 'transparent' }, grid: { stroke: 'transparent' },  axisLabel: { padding: 30 }}}
                 />
                 <VictoryAxis
                     dependentAxis
                     label={yAxisLabel}
-                    style={{ axisLabel: { padding: 40 }, tickLabels: { padding: 5 } }}
+                    style={{axis: { stroke: 'transparent' } , axisLabel: { padding: 40 }}}
                 />
 
                 {isMultiple ? (
-                    <VictoryGroup offset={barWidth * 1.5} colorScale={colorScale}>
+                    <VictoryGroup offset={calculatedBarWidth * 1.5} colorScale={colorScale}>
                         {yKeys.map((key, index) => (
                             <VictoryBar
                                 key={index}
                                 data={parsedData}
                                 x={xKey}
                                 y={key}
-                                barWidth={barWidth}
-                                labels={({ datum }) => showDataLabels ? datum[key] : ''}
+                                barWidth={calculatedBarWidth}
+                                labels={({ datum }) => (showDataLabels ? datum[key] : '')}
                                 labelComponent={<VictoryTooltip />}
                             />
                         ))}
                     </VictoryGroup>
                 ) : (
-                    <VictoryBar
+               
+                    
+                    <VictoryBar colorScale={colorScale}  style={{ data: { fill: Colors.primary } }}
                         data={parsedData}
                         x={xKey}
                         y={yKeys[0]}
-                        barWidth={barWidth}
-                        labels={({ datum }) => showDataLabels ? datum[yKeys[0]] : ''}
+                        barWidth={calculatedBarWidth}
+                        labels={({ datum }) => (showDataLabels ? datum[yKeys[0]] : '')}
                         labelComponent={<VictoryTooltip />}
                     />
+                  
+                  
                 )}
             </VictoryChart>
         </View>

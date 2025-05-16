@@ -1,42 +1,47 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { fontSize } from '../../../utils/constants/Fonts';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {fontSize} from '../../../utils/constants/Fonts';
+import {hp} from '../../functions/dimensions';
 
-const SessionCard = ({ image, title, author, date, description }) => {
+const SessionCard = props => {
   return (
-    <TouchableOpacity style={styles.card}>
-      <Image source={image} style={styles.image} />
-      
+    <View style={{...styles.card}}>
       <View style={styles.content}>
-        <Text style={styles.title} numberOfLines={2}>{title}</Text>
-        <Text style={styles.meta}>By {author}   |   {date}</Text>
-        <Text style={styles.description} numberOfLines={2}>{description}</Text>
+        <Text style={{textAlign: 'right', paddingVertical: hp(1)}}>
+          Time : 3:00 pm to 4:00 pm
+        </Text>
+        <View style={styles.dashedLine} />
+        <Text style={styles.title} numberOfLines={2}>
+          Faculty: {props?.facultyName}
+        </Text>
+        <Text style={styles.meta}>Mode: {props?.mode}</Text>
+        <Text style={styles.description} numberOfLines={2}>
+          Status: {props?.status}
+        </Text>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    width: 250,
-    borderRadius: 12,
-    backgroundColor: '#fff',
-    marginRight: 15,
-    overflow: 'hidden',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    paddingBottom:10
-  },
-  image: {
-    height: 120,
-    width: '100%',
-    resizeMode: 'cover',
-  },
-  content: {
+    backgroundColor: '#E1FB98',
+    borderWidth: 1,
+    borderColor: '#B2DB03',
+    borderRadius: 16,
+    marginTop: hp(1.5),
     padding: 10,
+  },
+
+  content: {
+    flex: 1,
+  },
+  dashedLine: {
+    borderBottomWidth: 1,
+    borderStyle: 'dashed',
+    borderColor: '#000',
+    opacity: 0.4,
+    marginBottom: 12,
   },
   title: {
     fontWeight: 'bold',

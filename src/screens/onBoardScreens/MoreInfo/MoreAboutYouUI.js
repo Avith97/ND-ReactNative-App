@@ -8,7 +8,7 @@ import {Images} from '../../../utils/constants/Images';
 
 // Centralized static labels
 const LABELS = {
-  title: 'Hello Adrian!',
+  title: 'Hello Lakhan!',
   subtitle: 'Tell us more about you..',
   genderLabel: 'Select your gender',
   ageLabel: 'Age',
@@ -20,7 +20,7 @@ const LABELS = {
   heightUnits: ['CM', 'FT'],
   agePlaceholder: 'Enter age',
   weightPlaceholder: 'Kg',
-  heightPlaceholder: 'Ft In',
+  heightPlaceholder: 'Cm',
 };
 
 export default function GenderScreenUI(props) {
@@ -70,7 +70,7 @@ export default function GenderScreenUI(props) {
         <View style={styles.row}>
           <CustomTextInput
             name={'weight'}
-            inputStyle={{...styles.textInputStyle, width: wp(60)}}
+            inputStyle={{...styles.textInputStyle, width: wp(90)}}
             onChangeText={props?.handleChange}
             inputProps={{
               // flex: 1,
@@ -79,8 +79,8 @@ export default function GenderScreenUI(props) {
             }}
           />
 
-          <View style={styles.unitContainer}>
-            {LABELS.weightUnits.map(unit => (
+          {/* <View style={styles.unitContainer}>
+            {LABELS.weightUnits?.map(unit => (
               <TouchableOpacity
                 key={unit}
                 style={[
@@ -91,14 +91,14 @@ export default function GenderScreenUI(props) {
                 <Text>{unit}</Text>
               </TouchableOpacity>
             ))}
-          </View>
+          </View> */}
         </View>
 
         <Text style={styles.label}>{LABELS.heightLabel}</Text>
         <View style={styles.row}>
           <CustomTextInput
             name={'height'}
-            inputStyle={{...styles.textInputStyle, width: wp(60)}}
+            inputStyle={{...styles.textInputStyle, width: wp(90)}}
             onChangeText={props.handleChange}
             inputProps={{
               // flex: 1,
@@ -107,8 +107,8 @@ export default function GenderScreenUI(props) {
             }}
           />
 
-          <View style={styles.unitContainer}>
-            {LABELS.heightUnits.map(unit => (
+          {/* <View style={styles.unitContainer}>
+            {LABELS.heightUnits?.map(unit => (
               <TouchableOpacity
                 key={unit}
                 style={[
@@ -119,7 +119,7 @@ export default function GenderScreenUI(props) {
                 <Text>{unit}</Text>
               </TouchableOpacity>
             ))}
-          </View>
+          </View> */}
         </View>
       </View>
 

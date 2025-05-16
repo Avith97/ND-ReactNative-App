@@ -2,9 +2,15 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import Strings from '../../utils/constants/Strings';
 import OnBoardCustomHeader from '../../screens/onBoardScreens/OnBoardCustomHeader';
+
+
+
+
+import MoreAboutScreen from '../../screens/onBoardScreens/MoreInfo/MoreAboutScreen';
+import ActivityLevelScreen from '../../screens/onBoardScreens/ActivityLevel/ActivityLevelScreen';
 import BellyConditionScreen from '../../screens/onBoardScreens/bellycondition/BellyConditionScreen';
-import ExerciseScreen from '../../screens/onBoardScreens/exercisescreen/ExerciseScreen';
 import MotivationScreen from '../../screens/onBoardScreens/motivation/MotivationScreen';
+import ExerciseScreen from '../../screens/onBoardScreens/exercisescreen/ExerciseScreen';
 import FinalScreen from '../../screens/onBoardScreens/finalscreen/FinalScreen';
 import MoreAboutScreen from '../../screens/onBoardScreens/MoreInfo/MoreAboutScreen';
 import ActivityLevelScreen from '../../screens/onBoardScreens/ActivityLevel/ActivityLevelScreen';
@@ -27,7 +33,7 @@ export default function OnboardingStack(props) {
           // Strings.NAVIGATION.finalOnboard,
         ];
         const currentIndex = screens.indexOf(route.name);
-        const progress = (currentIndex ) / screens?.length;
+        const progress = (currentIndex+1 ) / screens?.length;
         return {
           header: () => (
             <OnBoardCustomHeader
@@ -45,7 +51,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen
         name={Strings.NAVIGATION.gender}
         component={MoreAboutScreen}
-        options={{headerShown: false}}
+        // options={{headerShown: false}}
       />
       <Stack.Screen
         name={Strings.NAVIGATION.activityLevel}
@@ -66,6 +72,7 @@ export default function OnboardingStack(props) {
       <Stack.Screen
         name={Strings.NAVIGATION.finalOnboard}
         component={FinalScreen}
+           options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

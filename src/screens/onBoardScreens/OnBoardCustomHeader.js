@@ -27,7 +27,8 @@ export default function OnBoardCustomHeader({
       )}
 
       {/* Normal Progress Bar */}
-      <NormalProgressBar progress={progress} />
+      {progress &&  <NormalProgressBar progress={progress} />}
+     
 
       {!hideSkip ? (
         <TouchableOpacity onPress={onSkip}>

@@ -51,7 +51,8 @@ const LoginScreen = (props) => {
             props.navigation.navigate(Strings.NAVIGATION.signup)
             return
         }
-        props.navigation.navigate(Strings.NAVIGATION.onboard)
+        props.navigation.navigate(Strings.NAVIGATION.signup)
+     
         let isValid = validate()
         if (!isValid) return
 

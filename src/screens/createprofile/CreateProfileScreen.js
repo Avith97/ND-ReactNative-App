@@ -1,6 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import CreateProfileScreenUI from './CreateProfileScreenUI';
+import Strings from '../../utils/constants/Strings';
 
 export default function CreateProfileScreen(props) {
   const [state, setstate] = useState({
@@ -47,7 +48,7 @@ export default function CreateProfileScreen(props) {
   }
 
   const handleSubmit=()=>{
-    console.log();
+    props.navigation.navigate(Strings.NAVIGATION.onboard)
     
   }
   return (

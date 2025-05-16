@@ -6,26 +6,55 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import { fontSize } from '../../../utils/constants/Fonts';
+import {fontSize} from '../../../utils/constants/Fonts';
+import CustomButton from '../buttons/CustomButton';
+import {hp, wp} from '../../functions/dimensions';
+import Colors from '../../../utils/constants/Colors';
 
-const ProgramCard = ({title, duration, calories, image, status}) => {
+const ProgramCard = ({
+  title,
+  duration = '20 min',
+  calories = 332,
+  image,
+  status,
+  minWidth,
+  registered,
+  program,
+
+  ...props
+}) => {
   return (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={{...styles.card, width: minWidth}}>
       <ImageBackground
         source={image}
         style={styles.image}
         imageStyle={styles.imageStyle}>
-        <View style={styles.statusTag}>
-          <Text style={styles.statusText}>{status}</Text>
+        <View style={styles.gradientOverlay} />
+        <View
+          style={{
+            ...styles.statusTag,
+            backgroundColor: !registered ? '#EC6B47AB' : Colors.primary,
+          }}>
+          <Text style={styles.statusText}>
+            {registered ? 'Not yet started' : 'Not Registered'}
+          </Text>
         </View>
-
-        
 
         <Text style={styles.title}>{title}</Text>
 
-        <TouchableOpacity style={styles.registerButton}>
-          <Text style={styles.registerText}>Register Now</Text>
-        </TouchableOpacity>
+        <CustomButton
+          title={registered ? 'View Detail' : 'Register Now'}
+          name={'register'}
+          onPress={() => props?.handleNavigate(program, registered)}
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 5,
+            backgroundColor: Colors.primary,
+          }}
+          btnTitleStyles={{
+            ...styles.textStyle,
+          }}
+        />
 
         <View style={styles.detailsRow}>
           <Text style={styles.detailText}>⏱ {duration}</Text>
@@ -38,22 +67,28 @@ const ProgramCard = ({title, duration, calories, image, status}) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: 280,
-    marginRight: 15,
+    width: wp(100),
+    // marginRight: 15,
     borderRadius: 12,
     overflow: 'hidden',
   },
   image: {
-    height: 160,
+    height: hp(20),
     padding: 10,
     justifyContent: 'space-between',
+    resizeMode: 'contain',
   },
+  gradientOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.4)', // dark overlay
+  },
+
   imageStyle: {
     borderRadius: 12,
   },
   statusTag: {
     alignSelf: 'flex-end',
-    backgroundColor: '#B5FF6B',
+    backgroundColor: Colors.app_primary,
     paddingVertical: 2,
     paddingHorizontal: 8,
     borderRadius: 10,
@@ -68,26 +103,21 @@ const styles = StyleSheet.create({
     fontSize: fontSize.md,
     fontWeight: 'bold',
   },
-  registerButton: {
-    backgroundColor: '#B5FF6B',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    alignSelf: 'flex-start',
-    borderRadius: 6,
+  btnStyles: {
+    width: wp(4),
+    height: hp(4.5),
+    borderRadius: 8,
   },
-  registerText: {
-    color: '#000',
-    fontWeight: '600',
-    fontSize: fontSize.s,
-  },
+
   detailsRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 5,
+    // justifyContent: 'space-between',
+    // marginTop: 5,
+    gap: 10,
   },
   detailText: {
     color: '#fff',
-     fontSize: fontSize.normal,
+    fontSize: fontSize.normal,
   },
 });
 
