@@ -4,6 +4,7 @@ import {Calendar, CalendarProvider} from 'react-native-calendars';
 import moment from 'moment';
 import {hp} from '../../functions/dimensions';
 import Colors from '../../../utils/constants/Colors';
+import { getWeekRange } from '../../functions/dateUtils';
 
 export default function CalendarComponent({children, mode = 'month'}) {
   const [selectedDate, setSelectedDate] = useState(
@@ -27,6 +28,8 @@ export default function CalendarComponent({children, mode = 'month'}) {
     setPickerYear(moment(newDate).year());
   };
 
+  let dateDisplay = getWeekRange(moment())
+
   // Period ranges to match the image
   const markedDates = {
     '2025-05-06': {startingDay: true, color: '#85E3FF', textColor: 'black'},
@@ -46,6 +49,10 @@ export default function CalendarComponent({children, mode = 'month'}) {
     '2025-05-26': {endingDay: true, color: '#84BAFF', textColor: 'black'},
   };
 
+console.log(dateDisplay);
+
+  
+
   // mode means tab   day | week | month
   const renderHeader = () => (
     <View style={styles.headerContainer}>
@@ -54,9 +61,9 @@ export default function CalendarComponent({children, mode = 'month'}) {
       </TouchableOpacity>
 
       <Text style={styles.headerText}>
-        {mode === 'day'
-          ? moment(selectedDate).format('D MMMM')
-          : moment(selectedDate).format('MMMM YYYY')}
+        {mode === 'day' 
+          ? moment(selectedDate).format('D MMMM') 
+          : mode === "weeks" ? dateDisplay : moment(selectedDate).format('MMMM YYYY')}
       </Text>
 
       <TouchableOpacity onPress={() => navigateDate(1, mode, true)}>
@@ -69,7 +76,7 @@ export default function CalendarComponent({children, mode = 'month'}) {
     <View style={styles.container}>
       <CalendarProvider date={selectedDate}>
         {renderHeader()}
-        {mode !== 'day' && (
+        {mode === 'month' && (
           <View style={{backgroundColor: '#000', padding: 10, borderRadius: 6}}>
             <Calendar
               current={selectedDate}

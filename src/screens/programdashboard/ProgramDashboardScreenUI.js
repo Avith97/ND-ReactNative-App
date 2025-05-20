@@ -32,6 +32,7 @@ export default function ProgramDashboardScreenUI(props) {
   return (
     <View>
       <View style={styles.progressContainer}>
+        <Text style={{color:Colors.white ,paddingBottom:hp(1) , fontSize:fontSize.m, fontWeight:700}}>Personal Progress</Text>
         <PieProgressBar program />
       </View>
 

@@ -36,14 +36,14 @@ const ProgramCard = ({
             backgroundColor: !registered ? '#EC6B47AB' : Colors.primary,
           }}>
           <Text style={styles.statusText}>
-            {registered ? 'Not yet started' : 'Not Registered'}
+            {registered ? 'ongoing' : 'Not Registered'}
           </Text>
         </View>
 
         <Text style={styles.title}>{title}</Text>
 
         <CustomButton
-          title={registered ? 'View Detail' : 'Register Now'}
+          title={registered ? 'View Result' : 'Register Now'}
           name={'register'}
           onPress={() => props?.handleNavigate(program, registered)}
           btnStyles={{
@@ -56,9 +56,13 @@ const ProgramCard = ({
           }}
         />
 
+        <View  >
+          <Text style={{color:Colors.white}}>🗓️  May 7,  2025 - June 6, 2025</Text>
+        </View>
+
         <View style={styles.detailsRow}>
-          <Text style={styles.detailText}>⏱ {duration}</Text>
-          <Text style={styles.detailText}>🔥 {calories} Kcal</Text>
+          {/* <Text style={styles.detailText}>⏱ {duration}</Text> */}
+          {/* <Text style={styles.detailText}>🔥 {calories} Kcal</Text> */}
         </View>
       </ImageBackground>
     </TouchableOpacity>
@@ -100,7 +104,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#fff',
-    fontSize: fontSize.md,
+    fontSize: fontSize.m,
     fontWeight: 'bold',
   },
   btnStyles: {

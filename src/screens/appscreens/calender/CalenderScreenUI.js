@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import {hp, wp} from '../../../common/functions/dimensions';
 import {fontSize} from '../../../utils/constants/Fonts';
 import CalendarComponent from '../../../common/components/datepicker/CalenderComponent';
@@ -14,7 +14,7 @@ export default function CalenderScreenUI({challengeData, ...props}) {
   };
 
   const viewDetail = () => {
-    props.navigation.navigate(Strings.NAVIGATION.programdetail, {
+    props.navigation.navigate(Strings.NAVIGATION.eventdetail, {
       IsRegistered: true,
     });
   };
@@ -30,9 +30,29 @@ export default function CalenderScreenUI({challengeData, ...props}) {
 
         <Text style={styles.title}>{item.title}</Text>
       </View>
-      <Text style={{textAlign: 'right', fontSize: fontSize.normal}}>
+      <TouchableOpacity  onPress={viewDetail}>
+        <Text style={{textAlign: 'right', fontSize: fontSize.normal}}>
         View Details
-      </Text>
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  const renderWeekItem = ({item}) => (
+    <View
+      style={[
+        styles.card,
+        {backgroundColor: item.bgColor, borderColor: item.borderColor ,flexDirection: 'row',gap:10 ,alignItems:'center' ,paddingVertical: 0,   paddingHorizontal: 0,
+    paddingVertical: hp(0),
+    marginVertical: hp(0.6),},
+      ]}>
+      <View style={styles.weekCardBox}>
+       
+
+        <Text style={{...styles.timeText , color:Colors.white}}>12 May</Text>
+      </View>
+      <Text style={styles.title}>{item.title}</Text>
+     
     </View>
   );
 
@@ -46,19 +66,23 @@ export default function CalenderScreenUI({challengeData, ...props}) {
         />
       </View>
       <View style={{marginVertical: hp(1.5)}}>
-        <CalendarComponent mode={props.selectedTab === "Day" ? "day" : "month"}>
-         
-        <View style={{marginVertical:hp(2)}}>
-          <FlatList
-            data={challengeData}
-            keyExtractor={item => item.id}
-            // contentContainerStyle={{padding: hp(1)}}
-            renderItem={renderItem}
-
-          />
-        </View>
+        <CalendarComponent
+          mode={
+            props.selectedTab === 'Day'
+              ? 'day'
+              : props.selectedTab === 'Week'
+              ? 'weeks'
+              : 'month'
+          }>
+          <View style={{marginVertical: hp(2)}}>
+            <FlatList
+              data={challengeData}
+              keyExtractor={item => item.id}
+              // contentContainerStyle={{padding: hp(1)}}
+              renderItem={props.selectedTab === 'Week' ? renderWeekItem :renderItem}
+            />
+          </View>
         </CalendarComponent>
-        
       </View>
     </View>
   );
@@ -67,7 +91,7 @@ export default function CalenderScreenUI({challengeData, ...props}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal:20
+    paddingHorizontal: 20,
   },
   card: {
     paddingHorizontal: wp(4),
@@ -105,5 +129,19 @@ const styles = StyleSheet.create({
   date: {
     fontSize: fontSize.normal,
     color: '#333',
+  },
+
+  // 
+  weekCardBox: {
+    backgroundColor: '#000',
+    width: wp(20),
+    height: hp(10),
+    // padding: hp(1),
+    borderRadius: 8,
+    // marginVertical: hp(0.6),
+    borderWidth: 2,
+    borderColor: '#000',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

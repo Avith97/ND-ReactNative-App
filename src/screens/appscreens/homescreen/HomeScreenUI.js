@@ -53,7 +53,7 @@ export default function HomeScreenUI(props) {
       showsVerticalScrollIndicator={false}>
       <View style={{paddingHorizontal: 5, marginBottom: hp(1)}}>
         <Text style={styles.title}>
-          {isLoggedIn ? 'Welcome, Lakhan!' : 'Welcome!'}
+          {isLoggedIn ? 'Welcome' : 'Welcome!'}
         </Text>
         <Text style={styles.subTitle}>
           {isLoggedIn
