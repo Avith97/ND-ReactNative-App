@@ -4,14 +4,16 @@ import CustomModal from '../../common/components/Modal/CustomModal';
 import {FlatList} from 'react-native';
 import {fontSize} from '../../utils/constants/Fonts';
 import Colors from '../../utils/constants/Colors';
-import { hp } from '../../common/functions/dimensions';
+import {hp, wp} from '../../common/functions/dimensions';
+import DialogBox from '../../common/components/Modal/DialogBox';
+import CustomButton from '../../common/components/buttons/CustomButton';
 
 export default function GeneralSettingScreenUI(props) {
-  const [modalVisible, setModalVisible] = useState(false);
-
   const renderItem = ({item}) => {
     return (
-      <TouchableOpacity style={styles.renderItem} onPress={()=>props.handleChange(item.id)}>
+      <TouchableOpacity
+        style={styles.renderItem}
+        onPress={() => props.handleChange(item.id)}>
         <Text style={styles.title}>{item.name}</Text>
         <Text style={styles.subtitle}>{item.value}</Text>
       </TouchableOpacity>
@@ -19,11 +21,53 @@ export default function GeneralSettingScreenUI(props) {
   };
   return (
     <View>
-      {/* <Button title="Show Modal" onPress={() => setModalVisible(true)} />
-      <CustomModal visible={modalVisible} onClose={() => setModalVisible(false)}>
-        <Text style={{ fontSize: 18, marginBottom: 10 }}>This is custom content!</Text>
-        <Button title="Custom Button" onPress={() => alert('Custom Button Pressed')} />
-      </CustomModal> */}
+      {/* Custom Modal */}
+      <DialogBox
+        visible={props.modalVisible}
+        onClose={() => props.setModalVisible(false)}
+        title="Delete Account">
+        <Text style={{fontSize: 18, marginBottom: 10}}>
+          Are you sure you want to delete your account?
+        </Text>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 50,
+            width: '50%',
+          }}>
+          <TouchableOpacity onPress={() => props.setModalVisible(false)}>
+            <Text style={{fontSize: 16, color: 'black'}}>Cancel</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              props.setModalVisible(false);
+              // call delete logic here if needed
+              alert('Account deleted');
+            }}>
+            <Text style={{fontSize: 16, color: '#F55346', fontWeight: 'bold'}}>
+              Yes, Delete
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* <Button
+          title="Yes, Delete"
+          onPress={() => {
+            props.setModalVisible(false);
+            // call delete logic here if needed
+            alert("Account deleted");
+          }}
+        />
+        <Button
+          title="Cancel"
+          onPress={() => props.setModalVisible(false)}
+          color="gray"
+        /> */}
+      </DialogBox>
 
       <FlatList
         data={props.settingsData}

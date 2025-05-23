@@ -5,6 +5,7 @@ import Colors from '../../utils/constants/Colors';
 import Strings from '../../utils/constants/Strings';
 
 export default function GeneralSettingScreen(props) {
+  const [modalVisible, setModalVisible] = useState(false);
   const [options] = useState({
     settingsData: [
       {
@@ -14,19 +15,31 @@ export default function GeneralSettingScreen(props) {
         options: ['cm', 'ft'],
       },
       {id: '2', name: 'Language', value: 'English', options: ['kg', 'lbs']},
+      {
+        id: '3',
+        name: 'Delete Account',
+        value: 'Permanently delete your account and all personal data.',
+      },
     ],
   });
 
   const handleChange = name => {
     if (name === '1') {
       props.navigation.navigate(Strings.NAVIGATION.unitsettings);
-    } else {
+    } else if (name === '2') {
       props.navigation.navigate(Strings.NAVIGATION.languagesettings);
+    } else if (name === '3') {
+      setModalVisible(true);
     }
   };
   return (
     <View style={styles.container}>
-      <GeneralSettingScreenUI {...options} handleChange={handleChange} />
+      <GeneralSettingScreenUI
+        {...options}
+        handleChange={handleChange}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
     </View>
   );
 }

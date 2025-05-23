@@ -1,13 +1,18 @@
 import React from 'react';
-import { Modal, View, StyleSheet } from 'react-native';
+import {Modal, View, StyleSheet, Text} from 'react-native';
 
-const DialogBox = ({ visible, onClose, children }) => {
+const DialogBox = ({visible, onClose, children, title}) => {
   if (!visible) return null;
 
   return (
-    <Modal transparent={true} animationType="slide" visible={visible} onRequestClose={onClose}>
+    <Modal
+      transparent={true}
+      animationType="slide"
+      visible={visible}
+      onRequestClose={onClose}>
       <View style={styles.overlay}>
         <View style={styles.dialog}>
+          {title && <Text style={styles.title}>{title}</Text>}
           {children}
         </View>
       </View>
@@ -16,6 +21,12 @@ const DialogBox = ({ visible, onClose, children }) => {
 };
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
   overlay: {
     flex: 1,
     justifyContent: 'center',
