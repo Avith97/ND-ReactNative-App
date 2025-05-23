@@ -30,9 +30,7 @@ export default function ProgramScreen(props) {
   };
 
   const handleNavigate = () => {
-    props.navigation.navigate(Strings.NAVIGATION.eventstarted, {
-      IsRegistered: true,
-    });
+    props.navigation.navigate(Strings.NAVIGATION.dashboard);
   };
 
   return (

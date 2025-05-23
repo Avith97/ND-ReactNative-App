@@ -9,6 +9,7 @@ const FootPrintItem = ({
   iconName = 'hiking',
   steps = '1087',
   label = "Today's Steps",
+  day=0
 }) => (
   <View style={styles.centered}>
     <Icons
@@ -17,9 +18,9 @@ const FootPrintItem = ({
       size={20}
       color={Colors.primary}
     />
-    <Text style={styles.stepValue}>{steps}</Text>
+    <Text style={{...styles.stepValue, fontSize:day===1 ? fontSize.l : fontSize.md}}>{steps}</Text>
     <Text
-      style={{...styles.title, fontSize: fontSize.normal, fontWeight: '400'}}>
+      style={{...styles.title, fontSize:day ===1 ? fontSize.m : fontSize.normal, fontWeight:day ===1 ? '700': '400' }}>
       {label}
     </Text>
   </View>
@@ -40,12 +41,12 @@ const EventCard = ({title}) => {
       {/* Footprint Section */}
       <View style={styles.mainSection}>
 
-        <FootPrintItem  />
+        <FootPrintItem day={1}   />
         <View style={styles.middleSection}>
           <View style={styles.dashedLine} />
           <View style={styles.row}>
-            <FootPrintItem />
-            <FootPrintItem />
+            <FootPrintItem  steps={1677} label={"Yesterday’s Steps "}  />
+            <FootPrintItem steps={23477} label={"Weekly Steps"} />
           </View>
         </View>
       </View>
