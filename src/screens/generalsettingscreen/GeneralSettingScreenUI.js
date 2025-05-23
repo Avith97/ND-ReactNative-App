@@ -34,39 +34,29 @@ export default function GeneralSettingScreenUI(props) {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'center',
-            gap: 50,
-            width: '50%',
+            justifyContent: 'space-around',
+            width: '100%',
+            paddingVertical: 10,
           }}>
-          <TouchableOpacity onPress={() => props.setModalVisible(false)}>
-            <Text style={{fontSize: 16, color: 'black'}}>Cancel</Text>
-          </TouchableOpacity>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <TouchableOpacity onPress={() => props.setModalVisible(false)}>
+              <Text style={{fontSize: 16, color: 'black'}}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
 
-          <TouchableOpacity
-            onPress={() => {
-              props.setModalVisible(false);
-              // call delete logic here if needed
-              alert('Account deleted');
-            }}>
-            <Text style={{fontSize: 16, color: '#F55346', fontWeight: 'bold'}}>
-              Yes, Delete
-            </Text>
-          </TouchableOpacity>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            <TouchableOpacity
+              onPress={() => {
+                props.setModalVisible(false);
+                alert('Account deleted');
+              }}>
+              <Text
+                style={{fontSize: 16, color: '#F55346', fontWeight: 'bold'}}>
+                Yes, Delete
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-
-        {/* <Button
-          title="Yes, Delete"
-          onPress={() => {
-            props.setModalVisible(false);
-            // call delete logic here if needed
-            alert("Account deleted");
-          }}
-        />
-        <Button
-          title="Cancel"
-          onPress={() => props.setModalVisible(false)}
-          color="gray"
-        /> */}
       </DialogBox>
 
       <FlatList
