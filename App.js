@@ -47,6 +47,7 @@ import {
 import HealthScreen from "./Healthconnect";
 import ErrorBoundary from "./src/common/components/errorboundary/ErrorBoundary";
 import Navigator from "./src/routes";
+import CustomWebView from "./src/common/components/webview/CustomWebView";
 // Define a vibration pattern: vibrate for 500ms, pause for 1 second, then vibrate for 500ms again
 const VIBRATION_PATTERN = [500, 1000, 500];
 
@@ -231,6 +232,12 @@ const App = () => {
 
   return (
     <ErrorBoundary>
+      {/* <CustomWebView
+        // URL={'https://reactnative.dev/'}
+        // URL={'https://necessarydevil.com/faq'}
+        // URL={'https://necessarydevil.com/terms'}
+        URL={'https://necessarydevil.com/privacy'}
+      /> */}
       <Navigator />
     {/* <View style={{ flex: 1 }}> */}
       {/* <Text>Vibration Service Running</Text>
