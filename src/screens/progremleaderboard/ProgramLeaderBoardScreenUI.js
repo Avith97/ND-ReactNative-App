@@ -1,15 +1,21 @@
+// react native imports
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
+
+
+// common components
 import TabSelector from '../../common/components/tabselector/TabSelector';
-import {Image} from 'react-native';
-import Fonts, {fontSize} from '../../utils/constants/Fonts';
-import CustomTextInput from '../../common/components/textInput/CustomTextInput';
-import {hp, wp} from '../../common/functions/dimensions';
-import Icons, {iconType} from '../../assets/icons/Icons';
 import UserLeaderBoardCard from '../../common/components/userleaderboardcard/UserLeaderBoardCard';
+import CustomTextInput from '../../common/components/textInput/CustomTextInput';
 import CustomDropdown from '../../common/components/dropdown/CustomDropdown';
 import DialogBox from '../../common/components/Modal/DialogBox';
 import CustomButton from '../../common/components/buttons/CustomButton';
+
+// constants utils & assets
+import {Image} from 'react-native';
+import Fonts, {fontSize} from '../../utils/constants/Fonts';
+import {hp, wp} from '../../common/functions/dimensions';
+import Icons, {iconType} from '../../assets/icons/Icons';
 
 export default function ProgramLeaderBoardScreenUI(props) {
   const TrophyIcon = () => (

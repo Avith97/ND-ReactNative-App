@@ -1,34 +1,26 @@
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import React, {useState} from 'react';
-import {wp, hp} from '../../../common/functions/dimensions';
-import {fontSize} from '../../../utils/constants/Fonts';
-import TabSelector from '../../../common/components/tabselector/TabSelector';
-import Colors from '../../../utils/constants/Colors';
-import EventCard from '../../../common/components/eventcard/EventCard';
-import ProgramCard from '../../../common/components/programcard/ProgramCard';
-export default function ProgramScreenUI(props) {
- 
+// react native components
+import React from 'react';
+import {StyleSheet, View, ScrollView} from 'react-native';
 
+// constants utils
+import {hp} from '../../../common/functions/dimensions';
+
+// common components
+import TabSelector from '../../../common/components/tabselector/TabSelector';
+import MyProgramTab from './Tabs/MyProgramTab';
+import UpComingsTab from './Tabs/UpComingsTab';
+
+export default function ProgramScreenUI(props) {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={{marginVertical: hp(1)}}>
-        <TabSelector tabs={props.tabs} onTabChange={props.handleChange} />
+        <TabSelector tabs={props.tabs} onTabChange={props?.handleChange} />
       </View>
       <View style={styles.wrapper}>
-        {props.selectedTab === 'My Programs' ? (
-          <View style={styles.programList}>
-            {props.programs.map((item, index) => (
-              <View key={index} style={styles.cardSpacing}>
-                <ProgramCard
-                  {...item}
-                  minWidth={'100%'}
-                  handleNavigate={props.handleNavigate}
-                />
-              </View>
-            ))}
-          </View>
+        {props.selectedTabID === 0 ? (
+          <MyProgramTab {...props} />
         ) : (
-          <Text style={styles.noFoundTitle}>No Records Found</Text>
+          <UpComingsTab {...props} />
         )}
       </View>
     </ScrollView>
@@ -44,17 +36,5 @@ const styles = StyleSheet.create({
   wrapper: {
     marginTop: hp(2),
     paddingHorizontal: 20,
-  },
-
-  programList: {
-    gap: hp(2), // vertical space between cards
-  },
-  cardSpacing: {
-    width: '100%',
-  },
-  noFoundTitle: {
-    fontSize: fontSize.md,
-    color: Colors.gray_06,
-    textAlign: 'center',
   },
 });

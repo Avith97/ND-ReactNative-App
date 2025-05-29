@@ -22,6 +22,7 @@ const TabSelector = ({
         ...styles.container,
         backgroundColor: activeStyle !== 'underline' ? '#f5f5f5' : '',
       }}>
+      {/*  */}
       {tabs.map((tab, index) => {
         const isActive = selectedIndex === index;
 
@@ -42,7 +43,7 @@ const TabSelector = ({
             key={index}
             style={tabStyle}
             onPress={() => handleTabPress(index)}>
-            <Text style={textStyle}>{tab}</Text>
+            <Text style={textStyle}>{tab.title}</Text>
           </TouchableOpacity>
         );
       })}

@@ -1,13 +1,17 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import ProgramScreenUI from './ProgramScreenUI';
+
+// constants utils & assets
 import Colors from '../../../utils/constants/Colors';
 import {Images} from '../../../utils/constants/Images';
 import Strings from '../../../utils/constants/Strings';
 
+// UI component
+import ProgramScreenUI from './ProgramScreenUI';
+
 export default function ProgramScreen(props) {
   const [state, setState] = useState({
-    selectedTab: 'My Programs',
+    selectedTabID: 0,
   });
 
   const [options, setOptions] = useState({
@@ -22,11 +26,15 @@ export default function ProgramScreen(props) {
       },
     ],
 
-    tabs: ['My Programs', 'Upcoming'],
+    tabs: [
+      {id: 0, title: 'My Programs'},
+      {id: 1, title: 'Upcoming'},
+    ],
   });
 
   const handleChange = tab => {
-    setState(prev => ({...prev, selectedTab: tab}));
+
+    setState(prev => ({...prev, selectedTabID: tab?.id}));
   };
 
   const handleNavigate = () => {

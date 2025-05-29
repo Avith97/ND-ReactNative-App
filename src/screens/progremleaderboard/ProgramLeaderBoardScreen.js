@@ -1,7 +1,12 @@
+// react native imports
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import ProgramLeaderBoardScreenUI from './ProgramLeaderBoardScreenUI';
+
+// constants utils & assets
 import Colors from '../../utils/constants/Colors';
+
+// UI component
+import ProgramLeaderBoardScreenUI from './ProgramLeaderBoardScreenUI';
 
 export default function ProgramLeaderBoardScreen() {
   const [dialogVisible, setDialogVisible] = useState(false);
@@ -12,7 +17,7 @@ export default function ProgramLeaderBoardScreen() {
     weekFilter: '',
   });
   const [options] = useState({
-    tabs: ['Male', 'OverAll', 'Female'],
+    tabs: [{id:0,title:'Male'},{id:1, title: 'OverAll'}, {id:2, title:'Female'}],
     DATA: [
       {
         id: '1',

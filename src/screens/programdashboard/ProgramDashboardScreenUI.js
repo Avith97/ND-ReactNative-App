@@ -1,13 +1,13 @@
+// react native imports
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {Image} from 'react-native';
-import {FlatList} from 'react-native';
+// constants utils & assets
 import {fontSize} from '../../utils/constants/Fonts';
-import TabSelector from '../../common/components/tabselector/TabSelector';
-import PieProgressBar from '../../common/components/progressbar/PieProgressBar';
 import Colors from '../../utils/constants/Colors';
 import {hp, wp} from '../../common/functions/dimensions';
-import Icons, {iconType} from '../../assets/icons/Icons';
+
+// common components
+import PieProgressBar from '../../common/components/progressbar/PieProgressBar';
 import CustomButton from '../../common/components/buttons/CustomButton';
 import BarChart from '../../common/components/Charts/BarChart';
 import CustomWeekAndMonth from '../../common/components/customweekandmonth/CustomWeekAndMonth';
@@ -63,14 +63,7 @@ export default function ProgramDashboardScreenUI(props) {
       <View style={styles.barChartSection}>
         {/* tabbar */}
 
-        <View style={{marginVertical: hp(1)}}>
-          <TabSelector
-            tabs={props.tabs}
-            onTabChange={props.handleChange}
-            activeStyle={'underline'}
-          />
-        </View>
-
+      
         {/* week and month View */}
 
         <CustomWeekAndMonth mode={props.selectedTab} />

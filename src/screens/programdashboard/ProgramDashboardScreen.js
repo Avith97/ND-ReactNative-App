@@ -1,9 +1,14 @@
+// react-native
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+
+// UI components
 import ProgramDashboardScreenUI from './ProgramDashboardScreenUI';
+
+// constants utils & assets
 import Colors from '../../utils/constants/Colors';
 import Strings from '../../utils/constants/Strings';
-import {useNavigation} from '@react-navigation/native';
 
 export default function ProgramDashboardScreen(props) {
   const navigation = useNavigation();
