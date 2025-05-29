@@ -27,15 +27,15 @@ const MyOnboardingSlide = ({ index, x, SlideComponent }) => {
         const scale = interpolate(
             x.value,
             inputRange,
-            [0.8, 1, 0.8],
-            'clamp'
+            [0.5, 1, 0.5],
+            'extend'
         );
 
         const opacity = interpolate(
             x.value,
             inputRange,
             [0.5, 1, 0.5],
-            'clamp'
+            'extend'
         );
 
         return {
