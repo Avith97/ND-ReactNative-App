@@ -1,8 +1,8 @@
-import {View, Text, Linking} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import { View, Text, Linking } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import SplashUI from './SplashUI';
 import Strings from '../../utils/constants/Strings';
-import {appsnackbar} from '../../common/functions/snackbar_actions';
+import { appsnackbar } from '../../common/functions/snackbar_actions';
 // import https from 'https';
 import axios from 'axios';
 
@@ -15,18 +15,20 @@ const SplashScreen = props => {
     checkAppLaunch();
     setTimeout(() => {
       if (!state.isLoggedIn) {
-        props.navigation.replace(Strings.NAVIGATION.app, {
-          isLoggedIn: false,
-        });
+        // props.navigation.replace(Strings.NAVIGATION.app, {
+        //   isLoggedIn:false,
+        // });
       }
       //   props.navigation.replace(Strings.NAVIGATION.auth);
     }, 5000);
     return () => {
+      console.log('first unmount')
       Linking.removeAllListeners('url');
     };
   }, []);
 
   async function checkAppLaunch(params) {
+    // getdevice()
     let x = await Linking.getInitialURL();
     if (x) {
       console.log('<==== new console ====>', x);
@@ -44,7 +46,7 @@ const SplashScreen = props => {
   }
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <SplashUI />
     </View>
   );
