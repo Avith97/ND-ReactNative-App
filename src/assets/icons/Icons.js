@@ -13,9 +13,8 @@ import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-// import config from '../../../resources/fonts/selection.json';
-// import config from './selection.json'
-// import { createIconSetFromIcoMoon } from 'react-native-vector-icons';
+import config from './selection.json'
+import { createIconSetFromIcoMoon } from 'react-native-vector-icons';
 
 const getIconFont = (type) => {
     switch (type) {
@@ -47,8 +46,8 @@ const getIconFont = (type) => {
             return EntypoIcon;
         case 'OcticonIcon':
             return OcticonIcon;
-        // default:
-        //     return createIconSetFromIcoMoon(config, 'icomoon', 'icomoon.ttf');;
+        default:
+            return createIconSetFromIcoMoon(config, 'icomoon', 'icomoon.ttf');;
     }
 };
 

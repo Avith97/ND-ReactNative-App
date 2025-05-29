@@ -238,8 +238,18 @@ const App = () => {
         // URL={'https://necessarydevil.com/terms'}
         URL={'https://necessarydevil.com/privacy'}
       /> */}
-      <Navigator />
-    {/* <View style={{ flex: 1 }}> */}
+      {/* <Navigator /> */}
+      <OnboardingWrapper
+        slides={[
+          () => <SplashScreen />,
+          () => <LoginScreen />,
+          () => <SignUpScreen />,
+        ]}
+        onSkip={() => console.log('Skipped')}
+        onFinish={() => console.log('Finished')}
+      />
+
+      {/* <View style={{ flex: 1 }}> */}
       {/* <Text>Vibration Service Running</Text>
       <Button title="Vibration" onPress={vibrate} /> */}
       {loading &&
