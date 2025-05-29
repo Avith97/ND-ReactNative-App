@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import SplashUI from './SplashUI';
 import Strings from '../../utils/constants/Strings';
 import { appsnackbar } from '../../common/functions/snackbar_actions';
-// import https from 'https';
-import axios from 'axios';
 
 const SplashScreen = props => {
   const [state, setState] = useState({
@@ -28,21 +26,25 @@ const SplashScreen = props => {
   }, []);
 
   async function checkAppLaunch(params) {
-    // getdevice()
-    let x = await Linking.getInitialURL();
-    if (x) {
-      console.log('<==== new console ====>', x);
-      appsnackbar.showSuccessMsg(`${x}\nApp open from link`);
-    }
+    try {
+      // getdevice()
+      let x = await Linking.getInitialURL();
+      if (x) {
+        console.log('<==== new console ====>', x);
+        appsnackbar.showSuccessMsg(`${x}\nApp open from link`);
+      }
 
-    Linking.addEventListener('url', e => {
-      console.log('token from appA -->', e);
-      // setTimeout(() => {
-      appsnackbar.showSuccessMsg(`${e.url}\nApp open from link`);
-      // }, 6000);
-      //   Linking.openURL(`dummyApp://token${`newtoken123`}`)
-      // Linking.openURL(`dummyApp://token${`newtoken123`}`)
-    });
+      Linking.addEventListener('url', e => {
+        console.log('token from appA -->', e);
+        // setTimeout(() => {
+        appsnackbar.showSuccessMsg(`${e.url}\nApp open from link`);
+        // }, 6000);
+        //   Linking.openURL(`dummyApp://token${`newtoken123`}`)
+        // Linking.openURL(`dummyApp://token${`newtoken123`}`)
+      });
+    } catch (e) {
+      console.log('error --->', e)
+    }
   }
 
   return (
