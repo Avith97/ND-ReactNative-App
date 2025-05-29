@@ -48,10 +48,6 @@ import HealthScreen from "./Healthconnect";
 import ErrorBoundary from "./src/common/components/errorboundary/ErrorBoundary";
 import Navigator from "./src/routes";
 import CustomWebView from "./src/common/components/webview/CustomWebView";
-import OnboardingWrapper from "./src/common/components/onboarding/OnboardingWrapper";
-import SplashScreen from "./src/screens/splash/SplashScreen";
-import LoginScreen from "./src/screens/login/LoginScreen";
-import SignUpScreen from "./src/screens/signup/SignUpScreen";
 // Define a vibration pattern: vibrate for 500ms, pause for 1 second, then vibrate for 500ms again
 const VIBRATION_PATTERN = [500, 1000, 500];
 
@@ -242,17 +238,7 @@ const App = () => {
         // URL={'https://necessarydevil.com/terms'}
         URL={'https://necessarydevil.com/privacy'}
       /> */}
-      {/* <Navigator /> */}
-      <OnboardingWrapper
-        slides={[
-          () => <SplashScreen />,
-          () => <LoginScreen />,
-          () => <SignUpScreen />,
-        ]}
-        onSkip={() => console.log('Skipped')}
-        onFinish={() => console.log('Finished')}
-      />
-
+      <Navigator />
     {/* <View style={{ flex: 1 }}> */}
       {/* <Text>Vibration Service Running</Text>
       <Button title="Vibration" onPress={vibrate} /> */}
