@@ -3,8 +3,6 @@ import { environment } from "../../../settings"
 import { store } from "../../redux/store"
 
 export const BASE_URL = {
-    // LIVE: 'https://jsonplaceholder.typicode.com/',
-    // LIVE: 'https://192.168.1.49:8443/api/v1/',
     LIVE: 'https://events.necessarydevil.com/api/v1/',
     UAT: 'UAT',
     DEV: 'https://192.168.1.49:8443/api/v1/',

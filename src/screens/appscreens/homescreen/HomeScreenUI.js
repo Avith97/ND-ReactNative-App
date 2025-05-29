@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import SessionCard from '../../../common/components/sessioncard/SessionCard';
 import PieProgressBar from '../../../common/components/progressbar/PieProgressBar';
 import {hp, wp} from '../../../common/functions/dimensions';
-import Fonts, { fontSize } from '../../../utils/constants/Fonts';
+import {fontSize} from '../../../utils/constants/Fonts';
 import HealthScreen from '../../../../Healthconnect';
 import Colors from '../../../utils/constants/Colors';
 import EventCard from '../../../common/components/eventcard/EventCard';
@@ -95,14 +95,14 @@ export default function HomeScreenUI(props) {
           <View style={{marginVertical: hp(1)}}>
             {props.Events.map((item, index) => {
               return (
-                <View key={index}>
+                <>
                   <EventCard
                     key={index}
                     {...item}
                     handleNavigate={props.handleNavigate}
                   />
                   {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
-                </View>
+                </>
               );
             })}
           </View>
@@ -120,13 +120,11 @@ export default function HomeScreenUI(props) {
 
           {/* session */}
           <View style={{marginVertical: hp(1)}}>
-            <Text style={{ ...styles.title, fontFamily: Fonts.BoldItalic }}>
+            <Text style={styles.title}>
               Planning Diet for Weight Management
             </Text>
             {props.sessions.map((item, index) => (
-              <View key={index}>
               <SessionCard key={index} {...item} />
-              </View>
             ))}
           </View>
         </>
@@ -159,13 +157,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSize.m,
-    // fontFamily: 'Poppins-Black',
-    fontFamily: Fonts.Italic,
-    // fontWeight: 'bold',
+    fontWeight: 'bold',
     marginBottom: hp(0.5),
   },
   subTitle: {
-    fontFamily: Fonts.BoldItalic,
     fontSize: fontSize.normal,
     color: '#94AE27',
     marginBottom: hp(1),

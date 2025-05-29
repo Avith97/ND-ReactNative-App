@@ -253,7 +253,7 @@ const App = () => {
         onFinish={() => console.log('Finished')}
       />
 
-      {/* <View style={{ flex: 1 }}> */}
+    {/* <View style={{ flex: 1 }}> */}
       {/* <Text>Vibration Service Running</Text>
       <Button title="Vibration" onPress={vibrate} /> */}
       {loading &&

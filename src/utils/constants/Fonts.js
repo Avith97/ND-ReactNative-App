@@ -2,24 +2,26 @@ import { hp } from "../../common/functions/dimensions"
 
 
 export default {
-    Black: "Poppins-Black",
-    BlackItalic: "Poppins-BlackItalic",
-    Bold: "Poppins-Bold",
-    BoldItalic: "Poppins-BoldItalic",
-    ExtraBold: "Poppins-ExtraBold",
-    ExtraBoldItalic: "Poppins-ExtraBoldItalic",
-    ExtraLight: "Poppins-ExtraLight",
-    ExtraLightItalic: "Poppins-ExtraLightItalic",
-    Italic: "Poppins-Italic",
-    Light: "Poppins-Light",
-    LightItalic: "Poppins-LightItalic",
-    Medium: "Poppins-Medium",
-    MediumItalic: "Poppins-MediumItalic",
-    Regular: "Poppins-Regular",
-    SemiBold: "Poppins-SemiBold",
-    SemiBoldItalic: "Poppins-SemiBoldItalic",
-    Thin: "Poppins-Thin",
-    ThinItalic: "Poppins-ThinItalic"
+    black: 'Montserrat-Black',
+    blackItalic: 'Montserrat-BlackItalic',
+    bold: "Montserrat-Bold",
+    boldItalic: 'Montserrat-BoldItalic',
+    extraBold: "Montserrat-ExtraBold",
+    extraBoldItalic: "Montserrat-ExtraBoldItalic",
+    light: "Montserrat-Light",
+    lightItalic: "Montserrat-LightItalic",
+    extraLight: "Montserrat-ExtraLight",
+    extraLightItalic: "Montserrat-ExtraLightItalic",
+    medium: "Montserrat-Medium",
+    mediumItalic: "Montserrat-MediumItalic",
+    regular: "Montserrat-Regular",
+    semiBold: 'Montserrat-SemiBold',
+    semiBoldItalic: "Montserrat-SemiBoldItalic",
+    thin: 'Montserrat-Thin',
+    thinItalic: 'Montserrat-ThinItalic',
+    variableFont: 'Montserrat-VariableFont_wght',
+    italicVariable: "Montserrat-Italic-VariableFont_wght",
+
 }
 
 export const fontSize = {
