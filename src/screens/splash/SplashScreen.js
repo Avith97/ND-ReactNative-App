@@ -16,7 +16,7 @@ const SplashScreen = props => {
     setTimeout(() => {
       if (!state.isLoggedIn) {
         props.navigation.replace(Strings.NAVIGATION.app, {
-          isLoggedIn:false,
+          isLoggedIn: false,
         });
       }
       //   props.navigation.replace(Strings.NAVIGATION.auth);
@@ -27,25 +27,6 @@ const SplashScreen = props => {
   }, []);
 
   async function checkAppLaunch(params) {
-    // getdevice()
-    axios.get('https://192.168.1.49:8443/api/v1/yoga/challenge/leaderboard/details/435',
-      {
-        timeout: 10000,
-      },
-    )
-      .then(function (response) {
-        console.log(response, '<==== response ====>');
-
-        alert('response success');
-      })
-      .catch(function (error) {
-        alert('response error');
-        console.log(
-          error,
-          '<==== error ====>',
-          JSON.parse(JSON.stringify(error)),
-        );
-      });
     let x = await Linking.getInitialURL();
     if (x) {
       console.log('<==== new console ====>', x);

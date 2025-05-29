@@ -1,15 +1,19 @@
-import {View, Text, Image, StyleSheet} from 'react-native';
+// react native components
 import React from 'react';
-import CustomImageBackground from '../../common/components/background/CustomImageBackground';
-import {hp, wp} from '../../common/functions/dimensions';
-import CustomTextInput from '../../common/components/textInput/CustomTextInput';
-import Fonts, {fontSize} from '../../utils/constants/Fonts';
-import Colors from '../../utils/constants/Colors';
+import {View, Text, Image, StyleSheet} from 'react-native';
+
+// common components
 import CustomButton from '../../common/components/buttons/CustomButton';
-import {store} from '../../redux/store';
-import {Images} from '../../utils/constants/Images';
-import {iconType} from '../../assets/icons/Icons';
 import OrContainerUI from '../../common/components/ORContainer/OrContainerUI';
+
+//constants assets & dimensions
+import Colors from '../../utils/constants/Colors';
+import {hp, wp} from '../../common/functions/dimensions';
+import Fonts, {fontSize} from '../../utils/constants/Fonts';
+import {Images} from '../../utils/constants/Images';
+
+// Labels object for all static text
+import {en as labels} from '../../utils/labels/en';
 
 const LoginUI = props => {
   return (
@@ -18,7 +22,7 @@ const LoginUI = props => {
 
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{top: -hp(4), fontSize: fontSize.l, fontWeight: 600}}>
-          Join the ND community
+          {labels?.joinCommunity}
         </Text>
         <View
           style={{
@@ -34,53 +38,15 @@ const LoginUI = props => {
             resizeMode="contain"
           />
         </View>
-        {/* <View>
-                        <CustomTextInput
-                            name={'userId'}
-                            inputStyle={{ ...styles.textInputStyle }}
-                            onChangeText={props?.handleChange}
-                            inputProps={{
-                                // flex: 1,
-                                value: props.userId,
-                                placeholder: 'Email or Mobile',
-                            }}
-                        />
-                    </View>
-                    <View >
-                        <CustomButton
-                            title={'Login using OTP'}
-                            name={'getOtp'}
-                            onPress={props?.handleSubmit}
-                            // isLoading={store.getState().settings.isLoading}
-                            btnStyles={styles.loginBtn}
-                            btnTitleStyles={{
-                                
-                                ...styles.textStyle,
-                                ...styles.btnTextStyle,
-                            }}
-                        />
-                       {/* <OrContainerUI /> */}
-        {/* </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: hp(1) }}>
-                        <Text style={{ fontSize: fontSize.md, textAlign: 'center' }}>New User? </Text>
-                        <Text
-                            onPress={() => props.handleSubmit('signup')}
-                            style={{ fontSize: fontSize.md, color: Colors.color1 }}
-                        >
-                            Sign-Up
-                        </Text>
-                    </View>
-                    <Text style={{ fontSize: fontSize.s, textAlign: 'center', marginVertical: hp(1)  }}>OR</Text> */}
 
         <CustomButton
-          title={'Sign up With Google'}
+          title={labels?.signUpWithGoogle}
           name={'sign_in_google'}
-          onPress={props?.handleSubmit}
+          // onPress={props?.handleSubmit}
           // isLoading={store.getState().settings.isLoading}
           btnStyles={{
             ...styles.btnStyles,
             elevation: 1,
-            backgroundColor: Colors.white,
             backgroundColor: Colors.white,
             borderWidth: 1,
             borderColor: `#1D1D1DB2`,
@@ -102,9 +68,9 @@ const LoginUI = props => {
         <OrContainerUI />
 
         <CustomButton
-          title={'Sign up with E-mail/ Mob. number '}
+          title={labels?.signUpWithEmail}
           name={'sign_in_google'}
-          onPress={props?.handleSubmit}
+          onPress={props?.handleNavigate}
           // isLoading={store.getState().settings.isLoading}
           btnStyles={{
             ...styles.btnStyles,
@@ -121,49 +87,9 @@ const LoginUI = props => {
         />
 
         <View style={{flexDirection: 'row'}}>
-          <Text>Already registered ?</Text>{' '}
-          <Text style={{color: Colors.targetColor}}> Login</Text>
+          <Text>{labels?.alreadyRegistered}</Text>{' '}
+          <Text style={{color: Colors.targetColor}}> {labels?.login}</Text>
         </View>
-
-        {/* <View>
-                        <CustomButton
-                            title={'Sign in With Google'}
-                            name={'sign_in_google'}
-                            onPress={props?.handleSubmit}
-                            // isLoading={store.getState().settings.isLoading}
-                            btnStyles={{ ...styles.btnStyles, elevation: 5, backgroundColor: Colors.smoky_white, borderRadius: 2 }}
-                            btnTitleStyles={{
-                                ...styles.textStyle,
-                                marginLeft: wp(5)
-                            }}
-                            leftImg={{
-                                source: Images.google_logo,
-                                style: {
-                                    height: hp(3),
-                                    width: wp(6),
-                                }
-                            }}
-                        />
-                    </View>
-                    <View>
-                        <CustomButton
-                            title={'Help Videos'}
-                            name={'videos'}
-                            onPress={props?.handleSubmit}
-                            // isLoading={store.getState().settings.isLoading}
-                            btnStyles={{ ...styles.btnStyles, elevation: 5, backgroundColor: Colors.smoky_white, borderRadius: 2 }}
-                            btnTitleStyles={{
-                                ...styles.textStyle,
-                                marginLeft: wp(2.5)
-                            }}
-                            leftIcon={{
-                                type: iconType.materialCommunity,
-                                name: 'youtube',
-                                size: fontSize.l,
-                                color: Colors.red
-                            }}
-                        />
-                    </View> */}
       </View>
       {/* </CustomImageBackground> */}
     </View>
