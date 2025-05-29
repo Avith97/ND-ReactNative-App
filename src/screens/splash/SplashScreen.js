@@ -3,6 +3,8 @@ import React, {useEffect, useState} from 'react';
 import SplashUI from './SplashUI';
 import Strings from '../../utils/constants/Strings';
 import {appsnackbar} from '../../common/functions/snackbar_actions';
+// import https from 'https';
+import axios from 'axios';
 
 const SplashScreen = props => {
   const [state, setState] = useState({
