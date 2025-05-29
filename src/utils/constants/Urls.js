@@ -1,15 +1,14 @@
-import { create } from "react-test-renderer"
 import { environment } from "../../../settings"
-import { store } from "../../redux/store"
 
-export const BASE_URL = {
-    // LIVE: 'https://jsonplaceholder.typicode.com/',
-    // LIVE: 'https://192.168.1.49:8443/api/v1/',
+const SERVER = {
     LIVE: 'https://events.necessarydevil.com/api/v1/',
-    UAT: 'UAT',
     DEV: 'https://192.168.1.49:8443/api/v1/',
+    UAT: 'UAT',
     PRE_PROD: 'PRE_PROD'
 }
+
+export const BASE_URL = SERVER[environment]
+
 
 export const URL = {
     google: 'www.google.in',

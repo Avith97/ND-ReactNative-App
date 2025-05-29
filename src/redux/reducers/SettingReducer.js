@@ -2,7 +2,7 @@ import { api } from '../../services/axios/Api'
 import actions from '../action_types/actions'
 
 const initialState = {
-  environment: 'DEV',
+  environment: 'LIVE',//ignore
   isLoading: false
 }
 

@@ -6,11 +6,12 @@ import Colors from '../../utils/constants/Colors'
 import { handleSync } from '../../redux/actions/loading'
 import Strings from '../../utils/constants/Strings'
 import { BASE_URL } from '../../utils/constants/Urls'
+import { environment } from '../../../settings'
 
 const api = {
     //normal request
     _axios: axios.create({
-        baseURL: BASE_URL[store.getState().settings.environment],
+        baseURL: BASE_URL,
         headers: {
             Authorization: `Bearer ${store.getState().auth.token}`,
             Accept: 'application/json',
@@ -20,7 +21,7 @@ const api = {
 
     //form request
     _axiosFormData: axios.create({
-        baseURL: BASE_URL[store.getState().settings.environment],
+        baseURL: BASE_URL,
         headers: {
             Authorization: `Bearer ${store.getState().auth.token}`,
             Accept: 'application/json',
@@ -31,7 +32,7 @@ const api = {
     refreshInstance: token => {
         console.log('access token --->', store.getState().auth.token)
         api._axios = axios.create({
-            baseURL: BASE_URL[store.getState().settings.environment],
+            baseURL: BASE_URL,
             headers: {
                 Authorization: `Bearer ${token}`,
                 Accept: 'application/json',
