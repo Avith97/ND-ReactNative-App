@@ -138,6 +138,8 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish }) => {
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderItem}
                 onScroll={scrollHandler}
+                scrollEnabled={false}
+                bounces={false}
                 scrollEventThrottle={16}
             />
             <View style={{
