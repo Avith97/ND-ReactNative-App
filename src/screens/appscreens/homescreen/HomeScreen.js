@@ -1,13 +1,39 @@
-import React, {useState} from 'react';
-import {StyleSheet, ScrollView} from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, ScrollView, Platform } from 'react-native';
 import HomeScreenUI from './HomeScreenUI';
-import {Images} from '../../../utils/constants/Images';
-import {hp} from '../../../common/functions/dimensions';
+import { Images } from '../../../utils/constants/Images';
+import { hp } from '../../../common/functions/dimensions';
 import ConsentScreen from '../../consentscreen/ConsentScreen';
 import Strings from '../../../utils/constants/Strings';
+import HealthScreen from '../../../../Healthconnect';
+import { initialize, requestPermission } from 'react-native-health-connect';
+import useHealthConnectData from '../../../common/functions/CustomHooks/HealthConnectData';
 
 export default function HomeScreen(props) {
-  const {isLoggedIn} = props.route.params;
+  const { isLoggedIn } = props.route.params;
+
+  const [loading, setLoading] = useState(false);
+
+
+
+// Custom hook to fetch health connect data
+  const  {healthConnectData , fetchAllData} = useHealthConnectData();
+
+// Initialize Health Connect and request permissions
+  const requestHealthPermissions = useCallback(async () => {
+    if (Platform.OS === 'ios') return;
+    await initialize();
+    try {
+      await requestPermission([
+        { accessType: 'read', recordType: 'Steps' },
+        { accessType: 'read', recordType: 'Distance' },
+        { accessType: 'read', recordType: 'ActiveCaloriesBurned' },
+      ]);
+      await fetchAllData();
+    } catch (error) {
+      console.error('Permission error:', error);
+    }
+  }, []);
 
   const handleNavigate = (isProgram, registered) => {
     if (!registered) {
@@ -32,7 +58,7 @@ export default function HomeScreen(props) {
   // constant data
   const [options] = useState({
     ongoingEvents: true,
-//  notResponding:true,
+    //  notResponding:true,
     Challenges: [
       {
         title: 'Zero Sugar Challenge',
@@ -55,7 +81,7 @@ export default function HomeScreen(props) {
         started: false,
         eventType: 'Public',
         isEventEnd: false,
-       
+
       },
     ],
     sessions: [
@@ -68,11 +94,22 @@ export default function HomeScreen(props) {
     ],
   });
 
+  function handleLoading(params) {
+    setLoading(params)
+  }
+
+
+  useEffect(() => {
+    requestHealthPermissions();
+  }, [requestHealthPermissions]);
+
+
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{paddingBottom: hp(5)}}
+      contentContainerStyle={{ paddingBottom: hp(5) }}
       showsVerticalScrollIndicator={false}>
+      {/* <HealthScreen handleLoading={handleLoading} /> */}
       <HomeScreenUI
         {...options}
         isLoggedIn={isLoggedIn}

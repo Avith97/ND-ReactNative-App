@@ -24,6 +24,9 @@
     <uses-permission android:name="android.permission.health.READ_BODY_TEMPERATURE" />
     <uses-permission android:name="android.permission.health.READ_BODY_FAT" />
     <uses-permission android:name="android.permission.health.READ_SPEED" />
+    <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED" />
+
+    
     
     <!-- Add WRITE permissions if needed -->
     <uses-permission android:name="android.permission.health.WRITE_HEART_RATE" />
