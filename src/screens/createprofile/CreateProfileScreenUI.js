@@ -9,44 +9,38 @@ import moment from 'moment';
 import CustomDateTimePicker from '../../common/components/textInput/CustomDateTimePicker';
 import {CheckBox} from 'react-native-elements';
 import CustomDropdown from '../../common/components/dropdown/CustomDropdown';
+import { countryList } from '../../data/ConstantsData';
+
+// Labels object
+import {en as LABELS} from '../../utils/labels/en';
 
 export default function CreateProfileScreenUI(props) {
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(moment().toDate());
-  const showDatePicker = () => setDatePickerVisibility(true);
-  const hideDatePicker = () => setDatePickerVisibility(false);
-  const handleConfirm = date => {
-    setSelectedDate(date);
-    hideDatePicker();
-  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Create Profile</Text>
+      <Text style={styles.title}>{LABELS.createProfile}</Text>
       <View>
         <View style={{marginVertical: hp(1)}}>
           <CustomTextInput
-            name={'firstname'}
-            label={'First Name'}
+            name={'firstName'}
+            label={LABELS.firstName}
             inputStyle={{...styles.textInputStyle}}
             onChangeText={props?.handleChange}
             inputProps={{
-              // flex: 1,
-              value: props.firstname,
-              placeholder: 'Enter First Name',
+              value: props.firstName,
+              placeholder: LABELS.firstNamePlaceholder,
             }}
           />
         </View>
         <View style={{marginVertical: hp(1)}}>
           <CustomTextInput
-            name={'lastname'}
-            label={'Last Name'}
+            name={'lastName'}
+            label={LABELS.lastName}
             inputStyle={{...styles.textInputStyle}}
             onChangeText={props?.handleChange}
             inputProps={{
-              // flex: 1,
-              value: props.lastname,
-              placeholder: 'Enter Last Name',
+              value: props.lastName,
+              placeholder: LABELS.lastNamePlaceholder,
             }}
           />
         </View>
@@ -54,13 +48,12 @@ export default function CreateProfileScreenUI(props) {
         <View style={{marginVertical: hp(1)}}>
           <CustomTextInput
             name={'email'}
-            label={'Email'}
+            label={LABELS.email}
             inputStyle={{...styles.textInputStyle}}
             onChangeText={props?.handleChange}
             inputProps={{
-              // flex: 1,
               value: props.email,
-              placeholder: 'Enter Email Address',
+              placeholder: LABELS.emailPlaceholder,
             }}
           />
         </View>
@@ -68,36 +61,35 @@ export default function CreateProfileScreenUI(props) {
         <View style={{marginVertical: hp(1)}}>
           <CustomDropdown
             name="country"
-            title="Country"
-            label="Select"
+            title={LABELS.country}
+            label={LABELS.select}
             mandatory
-            data={[{country: 'India'}, {country: 'Australia'}]}
+            data={countryList}
             onChangeText={props.handleChange}
-            valueExtractor={item => item.country}
-            labelExtractor={item => item.country}
+            valueExtractor={item => item.label}
+            labelExtractor={item => item.label}
           />
         </View>
 
         <View style={{marginVertical: hp(1.5)}}>
           <CustomTextInput
             name={'mobilenumber'}
-            label={'Mobile Number'}
+            label={LABELS.mobileNumber}
             inputStyle={{...styles.textInputStyle}}
             onChangeText={props?.handleChange}
             inputProps={{
-              // flex: 1,
               value: props.mobilenumber,
-              placeholder: '+91 ******',
+              placeholder: LABELS.mobilePlaceholder,
             }}
           />
         </View>
         <View style={{marginVertical: hp(1.5)}}>
           <CustomDateTimePicker
-            label="Date of Birth"
-            name="dob"
+            label={LABELS.dob}
+            name="DOB"
             mandatory={true}
-            value={selectedDate}
-            onChangeText={(name, value) => console.log(value, name)}
+            value={props.DOB}
+            onChangeText={(name, value) => props.handleChange(name , value)}
           />
         </View>
       </View>
@@ -110,14 +102,13 @@ export default function CreateProfileScreenUI(props) {
         }}>
         <CheckBox
           value={true}
-          // onValueChange={(setChecked)}
           tintColors={{true: '#4caf50', false: '#ccc'}}
         />
-        <Text style={{width: wp(75)}}>Sign up for e-mails to get updates.</Text>
+        <Text style={{width: wp(75)}}>{LABELS.signUpEmail}</Text>
       </View>
       <View style={{marginTop: hp(0.5)}}>
         <CustomButton
-          title={'Create Account'}
+          title={LABELS.createAccount}
           name={''}
           onPress={props?.handleSubmit}
           btnStyles={{
@@ -137,10 +128,10 @@ export default function CreateProfileScreenUI(props) {
           flexDirection: 'row',
           flexWrap: 'wrap',
         }}>
-        <Text>By creating your account, you agree to the</Text>
-        <Text style={{color: Colors.targetColor}}>Terms of Services </Text>
-        <Text>and</Text>
-        <Text style={{color: Colors.targetColor}}> Privacy Policy</Text>
+        <Text>{LABELS.termsPrefix}</Text>
+        <Text style={{color: Colors.targetColor}}>{LABELS.terms}</Text>
+        <Text>{LABELS.and}</Text>
+        <Text style={{color: Colors.targetColor}}>{LABELS.privacy}</Text>
       </View>
     </View>
   );
@@ -162,7 +153,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.normal,
     elevation: 5,
     height: hp('5'),
-    width: wp('90'), // Matches the text input width with the remaining space
+    width: wp('90'),
     color: Colors.text_black,
   },
 });

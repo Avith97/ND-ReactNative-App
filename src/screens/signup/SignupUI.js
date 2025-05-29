@@ -1,47 +1,48 @@
-import {View, Text, Image, StyleSheet} from 'react-native';
+// react-native components
 import React from 'react';
-import CustomImageBackground from '../../common/components/background/CustomImageBackground';
-import {hp, wp} from '../../common/functions/dimensions';
+import {View, Text, StyleSheet} from 'react-native';
+
+// common components
 import CustomButton from '../../common/components/buttons/CustomButton';
 import CustomTextInput from '../../common/components/textInput/CustomTextInput';
+
+// constants assets & dimensions
+import {hp, wp} from '../../common/functions/dimensions';
 import Fonts, {fontSize} from '../../utils/constants/Fonts';
 import Colors from '../../utils/constants/Colors';
-import {Images} from '../../utils/constants/Images';
+
+// Labels object
+import {en as labels} from '../../utils/labels/en';
 
 const SignupUI = props => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign up</Text>
-      {/* <Text>Login UI</Text> */}
+      <Text style={styles.title}>{labels.title}</Text>
       <View style={{flex: 1, alignItems: 'center'}}>
-        <View style={{}}>
+        <View>
           <CustomTextInput
-            name={'userId'}
-            label="Enter Email or Mobile Number"
+            name={'userName'}
+            label={labels.emailOrMobileLabel}
             inputStyle={{...styles.textInputStyle}}
             onChangeText={props?.handleChange}
             inputProps={{
-              // flex: 1,
               editable: props.showOtp ? false : true,
-              value: props.userId,
-              placeholder: 'Enter Email/Mobile Number',
+              value: props.userName,
+              placeholder: labels.emailOrMobilePlaceholder,
             }}
           />
         </View>
 
         <CustomButton
-          title={'Send OTP'}
+          title={labels.sendOtp}
           name={'sendOTP'}
           onPress={props?.handleSubmit}
-          // isLoading={store.getState().settings.isLoading}
           btnStyles={styles.btnStyles}
           btnTitleStyles={{
             ...styles.textStyle,
             ...styles.btnTextStyle,
           }}
         />
-
-      
       </View>
     </View>
   );
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.normal,
     elevation: 5,
     height: hp('6'),
-    width: wp('90'), // Matches the text input width with the remaining space
+    width: wp('90'),
     color: Colors.text_black,
   },
   title: {
