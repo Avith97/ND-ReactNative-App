@@ -156,7 +156,8 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f8f8f8',
+        // backgroundColor: '#f8f8f8',
+        backgroundColor: '#fff'
     },
     header: {
         flexDirection: 'row',
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
         padding: wp(4),
         backgroundColor: '#fff',
         // borderBottomWidth: 1,
-        borderBottomColor: '#eee',
+        // borderBottomColor: '#eee',
     },
     progressBarBackground: {
         flex: 1,
@@ -204,7 +205,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        paddingHorizontal: 30,
+        // paddingHorizontal: 30,
+        // backgroundColor: 'red',
         backgroundColor: '#fff',
     },
     slideTitle: {
