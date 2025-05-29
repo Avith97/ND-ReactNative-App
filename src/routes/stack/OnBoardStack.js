@@ -4,14 +4,12 @@ import Strings from '../../utils/constants/Strings';
 import OnBoardCustomHeader from '../../screens/onBoardScreens/OnBoardCustomHeader';
 
 
-
-
-import MoreAboutScreen from '../../screens/onBoardScreens/MoreInfo/MoreAboutScreen';
-import ActivityLevelScreen from '../../screens/onBoardScreens/ActivityLevel/ActivityLevelScreen';
 import BellyConditionScreen from '../../screens/onBoardScreens/bellycondition/BellyConditionScreen';
 import MotivationScreen from '../../screens/onBoardScreens/motivation/MotivationScreen';
 import ExerciseScreen from '../../screens/onBoardScreens/exercisescreen/ExerciseScreen';
 import FinalScreen from '../../screens/onBoardScreens/finalscreen/FinalScreen';
+import MoreAboutScreen from '../../screens/onBoardScreens/MoreInfo/MoreAboutScreen';
+import ActivityLevelScreen from '../../screens/onBoardScreens/ActivityLevel/ActivityLevelScreen';
 
 const Stack = createStackNavigator();
 

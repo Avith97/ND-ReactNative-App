@@ -1,13 +1,15 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import TabSelector from '../../common/components/tabselector/TabSelector';
 import {Image} from 'react-native';
-import {fontSize} from '../../utils/constants/Fonts';
+import Fonts, {fontSize} from '../../utils/constants/Fonts';
 import CustomTextInput from '../../common/components/textInput/CustomTextInput';
 import {hp, wp} from '../../common/functions/dimensions';
 import Icons, {iconType} from '../../assets/icons/Icons';
-import Colors from '../../utils/constants/Colors';
 import UserLeaderBoardCard from '../../common/components/userleaderboardcard/UserLeaderBoardCard';
+import CustomDropdown from '../../common/components/dropdown/CustomDropdown';
+import DialogBox from '../../common/components/Modal/DialogBox';
+import CustomButton from '../../common/components/buttons/CustomButton';
 
 export default function ProgramLeaderBoardScreenUI(props) {
   const TrophyIcon = () => (
@@ -30,7 +32,9 @@ export default function ProgramLeaderBoardScreenUI(props) {
     <View>
       <View style={styles.headerIconTitle}>
         <Text style={{fontSize: fontSize.m, fontWeight: 700}}>Leaderboard</Text>
-        <Icons name={'filter'} type={iconType.feather} size={20} />
+        <TouchableOpacity onPress={props.toggleDialog}>
+          <Icons name={'filter'} type={iconType.feather} size={20} />
+        </TouchableOpacity>
       </View>
       <View style={{marginBottom: hp(1.5)}}>
         <CustomTextInput
@@ -53,8 +57,6 @@ export default function ProgramLeaderBoardScreenUI(props) {
 
       <UserLeaderBoardCard />
 
-
-
       <View style={styles.dashboardData}>
         <TabSelector tabs={props.tabs} onTabChange={props.handleChange} />
 
@@ -65,6 +67,98 @@ export default function ProgramLeaderBoardScreenUI(props) {
           scrollEnabled={false} // FlatList won't scroll, only ScrollView will
         />
       </View>
+      <DialogBox visible={props.dialogVisible} onClose={props.toggleDialog}>
+        <View
+          style={{
+            marginVertical: hp(1),
+            flexDirection: 'column',
+            width: '100%',
+          }}>
+          {/* Row 1 */}
+          <View
+            style={{
+              flexDirection: 'row',
+              marginBottom: hp(1),
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              alignContent: 'center',
+            }}>
+            <Text>Week Filter</Text>
+            <View style={{width: '50%'}}>
+              <CustomDropdown
+                name="weekFilter"
+                label="Select"
+                data={[
+                  {weekFilter: '1 May - 7 May'},
+                  {weekFilter: '8 May - 14 May'},
+                  {weekFilter: '15 May - 21 May'},
+                ]}
+                onChangeText={props.handleDropdownChange}
+                valueExtractor={item => item.weekFilter}
+                labelExtractor={item => item.weekFilter}
+              />
+            </View>
+          </View>
+
+          {/* Row 2 */}
+          <View
+            style={{
+              flexDirection: 'row',
+              marginBottom: hp(1),
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              alignContent: 'center',
+            }}>
+            <Text>Top Participant</Text>
+            <View style={{width: '50%'}}>
+              <CustomDropdown
+                name="topParticipant"
+                label="Select"
+                data={[
+                  {topParticipant: '5'},
+                  {topParticipant: '10'},
+                  {topParticipant: '15'},
+                ]}
+                onChangeText={props.handleDropdownChange}
+                valueExtractor={item => item.topParticipant}
+                labelExtractor={item => item.topParticipant}
+              />
+            </View>
+          </View>
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: "flex-end",
+            width: '100%',
+            gap: 10,
+          }}>
+          <CustomButton
+            title={'Cancel'}
+            name={'cancel'}
+            onPress={props?.toggleDialog}
+            btnStyles={styles.btnStyles}
+            minWidth={wp('30')}
+            btnTitleStyles={{
+              ...styles.textStyle,
+              ...styles.btnTextStyle,
+            }}
+          />
+          <CustomButton
+            title={'Apply'}
+            name={'apply'}
+            onPress={props?.toggleDialog}
+            minWidth={wp('30')}
+            btnStyles={styles.btnStylesApply}
+            btnTitleStyles={{
+              ...styles.textStyle,
+              ...styles.btnTextStyleApply,
+            }}
+          />
+        </View>
+      </DialogBox>
     </View>
   );
 }
@@ -101,5 +195,34 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginRight: 8,
     color: '#333',
+  },
+  textStyle: {
+    fontFamily: Fonts.medium,
+    color: 'black',
+  },
+  btnStyles: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: hp('1'),
+    height: hp('6'),
+    borderWidth: 1,
+    marginVertical: hp(1),
+  },
+  btnTextStyle: {
+    color: 'black',
+  },
+  btnStylesApply: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: hp('1'),
+    height: hp('6'),
+    borderRadius: 10,
+    marginVertical: hp(1),
+  },
+  btnTextStyleApply: {
+    color: 'black',
   },
 });
