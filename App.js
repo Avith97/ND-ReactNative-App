@@ -248,6 +248,7 @@ const App = () => {
           () => <SplashScreen />,
           () => <LoginScreen />,
           () => <SignUpScreen />,
+          () => <LoginScreen />,
         ]}
         onSkip={() => console.log('Skipped')}
         onFinish={() => console.log('Finished')}
