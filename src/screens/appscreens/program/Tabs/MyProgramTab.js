@@ -1,6 +1,6 @@
 // react native imports
 import React from 'react';
-import {StyleSheet,  View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 // common components
 import ProgramCard from '../../../../common/components/programcard/ProgramCard';

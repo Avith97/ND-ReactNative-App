@@ -14,4 +14,8 @@ export const URL = {
     otp: 'login/otp',
     otp_verify: 'login/verify/otp',//{userName: "vinit@anssoft.in", otp: "122222", distKey: "TXK8vWYRPSXm08uXrZYV0g=="}//{code: "401", verbose: "Invalid OTP"}}
     create_profile: 'signup',
+
+    //Get All Event list
+    events: "3668/events",
+    upcomingEvents: "upcomingEvents/3668"
 }
