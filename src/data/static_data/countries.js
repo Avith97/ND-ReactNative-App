@@ -1,4 +1,4 @@
-export const countryList = [
+export const Countries = [
   { label: "Israel", value: " 972", code: "IL" },
   { label: "Afghanistan", value: " 93", code: "AF" },
   { label: "Albania", value: " 355", code: "AL" },
