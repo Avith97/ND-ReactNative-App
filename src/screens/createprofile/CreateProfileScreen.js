@@ -5,16 +5,18 @@ import Strings from '../../utils/constants/Strings';
 import moment from 'moment';
 import {services} from '../../services/axios/services';
 import {URL} from '../../utils/constants/Urls';
+import {appsnackbar} from '../../common/functions/snackbar_actions';
 
 export default function CreateProfileScreen(props) {
   const [state, setstate] = useState({
     firstName: null,
     lastName: '',
     email: '',
-    country: '',
-    contactNumber: '',
-    DOB: moment().toDate(),
+    country: null,
+    contactNumber: null,
+    DOB: null,
     isDatePickerVisible: false,
+    emailUpdateCheck:false
   });
 
   const handleConfirm = date => {
@@ -46,13 +48,44 @@ export default function CreateProfileScreen(props) {
   function validate(params) {
     let err = {};
     let isValid = true;
-    if (!state.userId) {
-      isValid = false;
-      err = {userIdErr: true};
-      console.log('invalid');
-      appsnackbar.showErrMsg('Please enter valid email or mobile number');
-    }
 
+    const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const mobileRegex = /^[6-9]\d{9}$/;
+    const nameRegex = /^[A-Za-z]+$/;
+
+    if (!state.firstName?.length || !nameRegex.test(state.firstName)) {
+      isValid = false;
+      err = {firstNameErr: true};
+      console.log('invalid');
+      appsnackbar.showErrMsg('Please enter valid first name');
+    } 
+    else if (!state.lastName?.length || !nameRegex.test(state.lastName)) {
+      isValid = false;
+      err = {lastNameErr: true};
+      appsnackbar.showErrMsg('Please enter valid last name');
+    } else if (!checkEmail.test(state.email)) {
+      isValid = false;
+      err = {emailErr: true};
+      appsnackbar.showErrMsg('Please enter valid email');
+
+    } 
+    else if (!state.country?.trim()?.length) {
+      isValid = false;
+      err = {countryErr: true};
+      appsnackbar.showErrMsg('Please select country');
+    } 
+    else if (!mobileRegex.test(state.contactNumber)) {
+      isValid = false;
+      err = {contactNumberErr: true};
+      appsnackbar.showErrMsg('Please enter valid contact number');
+    } 
+    else if (!state.DOB) {
+      isValid = false;  
+      err = {dobErr: true};
+      appsnackbar.showErrMsg('Please select date of birth');
+    } 
+
+    
     seterr(err);
     setTimeout(() => {
       seterr(null);
@@ -62,14 +95,19 @@ export default function CreateProfileScreen(props) {
   }
 
   async function handleSubmit(params, value) {
+
+    let isValid = validate();
+    if (!isValid) return;
+
+return
     try {
-      let Obj = new FormData();
+      let syncObj = new FormData();
       let userObject = {
         userRequest: {
           firstName: state.firstName,
           lastName: state.lastName,
           gender: 'MALE',
-          pincode: '645732',
+          // pincode: '645732',
           country: state.country,
           otpVerified: true,
           dob: moment(state.DOB).format('DD-MM-yyyy'),
@@ -82,14 +120,14 @@ export default function CreateProfileScreen(props) {
       };
 
       // Append userRequest as a JSON string
-      Obj.append('userRequest', JSON.stringify(userObject.userRequest));
+      syncObj.append('userRequest', JSON.stringify(userObject.userRequest));
 
       // Optionally append file if it exists
       if (userObject.profilePicture) {
-        Obj.append('profilePicture', userObject.profilePicture);
+        syncObj.append('profilePicture', userObject.profilePicture);
       }
 
-      let resp = await services._postFormData(URL.create_profile, Obj);
+      let resp = await services._postFormData(URL.create_profile, syncObj);
 
       if (resp.data?.type !== 'success') {
         appsnackbar.showErrMsg(resp?.error_data || resp?.verbose);

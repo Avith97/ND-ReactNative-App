@@ -17,7 +17,7 @@ const SplashScreen = props => {
         //   isLoggedIn:false,
         // });
       }
-      //   props.navigation.replace(Strings.NAVIGATION.auth);
+        props.navigation.replace(Strings.NAVIGATION.auth);
     }, 5000);
     return () => {
       console.log('first unmount')

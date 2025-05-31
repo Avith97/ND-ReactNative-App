@@ -43,9 +43,10 @@ const PinCodeTextInput = (props) => {
                 onFulfill={(pin) => {
                     console.log('submit pin -->', pin)
                     Keyboard.dismiss()
-                    props.onPinSubmit(props.name, pin)
+                    props.onPinSubmit?.(props.name, pin)
                     // setTimeout(() => {
-                    // c_pinInput.current.focus()
+                     // pinref.current.focus()
+                     // pinref?.current?.shake(800)
                     // }, 100);
                 }}
 
@@ -54,7 +55,7 @@ const PinCodeTextInput = (props) => {
                 cellSpacing={wp(1.8)}
                 cellStyle={pinErr ? styles.cellStyleErr : styles.cellStyle}
                 cellStyleFocused={styles.cellStyleFocused}
-                // cellStyleFilled={{ backgroundColor: 'red' }}
+                // cellStyleFilled={{ borderColor: 'red' }}
                 textStyle={styles.textStyle}
                 value={props.value || pin}
 

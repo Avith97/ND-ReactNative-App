@@ -1,20 +1,22 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import CustomButton from '../../common/components/buttons/CustomButton';
 import {hp, wp} from '../../common/functions/dimensions';
 import {fontSize} from '../../utils/constants/Fonts';
 import Colors from '../../utils/constants/Colors';
 import CustomTextInput from '../../common/components/textInput/CustomTextInput';
-import moment from 'moment';
 import CustomDateTimePicker from '../../common/components/textInput/CustomDateTimePicker';
-import {CheckBox} from 'react-native-elements';
+
 import CustomDropdown from '../../common/components/dropdown/CustomDropdown';
-import { countryList } from '../../data/ConstantsData';
 
 // Labels object
 import {en as LABELS} from '../../utils/labels/en';
+import {Countries} from '../../data/static_data/countries';
+import {useSelector} from 'react-redux';
+import { CheckBox } from 'react-native-elements';
 
 export default function CreateProfileScreenUI(props) {
+  const isLoading = useSelector(state => state.settings.isLoading);
 
   return (
     <View style={styles.container}>
@@ -64,7 +66,7 @@ export default function CreateProfileScreenUI(props) {
             title={LABELS.country}
             label={LABELS.select}
             mandatory
-            data={countryList}
+            data={Countries}
             onChangeText={props.handleChange}
             valueExtractor={item => item.label}
             labelExtractor={item => item.label}
@@ -73,12 +75,12 @@ export default function CreateProfileScreenUI(props) {
 
         <View style={{marginVertical: hp(1.5)}}>
           <CustomTextInput
-            name={'mobilenumber'}
+            name={'contactNumber'}
             label={LABELS.mobileNumber}
             inputStyle={{...styles.textInputStyle}}
             onChangeText={props?.handleChange}
             inputProps={{
-              value: props.mobilenumber,
+              value: props.contactNumber,
               placeholder: LABELS.mobilePlaceholder,
             }}
           />
@@ -89,28 +91,34 @@ export default function CreateProfileScreenUI(props) {
             name="DOB"
             mandatory={true}
             value={props.DOB}
-            onChangeText={(name, value) => props.handleChange(name , value)}
+            onChangeText={(name, value) => props.handleChange(name, value)}
           />
         </View>
       </View>
 
       <View
         style={{
-          marginVertical: hp(0.5),
           flexDirection: 'row',
           alignItems: 'center',
+          justifyContent: 'center',
         }}>
         <CheckBox
-          value={true}
-          tintColors={{true: '#4caf50', false: '#ccc'}}
+
+        checkedColor={Colors.primary}
+        uncheckedColor={Colors.primary}
+          checked={props.emailUpdateCheck}
+          onPress={() =>
+            props.handleChange('emailUpdateCheck', !props.emailUpdateCheck)
+          }
         />
-        <Text style={{width: wp(75)}}>{LABELS.signUpEmail}</Text>
+        <Text style={{ textAlign: 'center'}}>{LABELS.signUpEmail}</Text>
       </View>
       <View style={{marginTop: hp(0.5)}}>
         <CustomButton
+          name={'submit'}
           title={LABELS.createAccount}
-          name={''}
           onPress={props?.handleSubmit}
+          isLoading={isLoading}
           btnStyles={{
             ...styles.btnStyles,
             elevation: 5,
@@ -127,6 +135,7 @@ export default function CreateProfileScreenUI(props) {
           marginVertical: hp(1.5),
           flexDirection: 'row',
           flexWrap: 'wrap',
+          justifyContent: 'center',
         }}>
         <Text>{LABELS.termsPrefix}</Text>
         <Text style={{color: Colors.targetColor}}>{LABELS.terms}</Text>

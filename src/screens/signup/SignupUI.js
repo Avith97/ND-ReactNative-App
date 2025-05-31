@@ -13,8 +13,12 @@ import Colors from '../../utils/constants/Colors';
 
 // Labels object
 import {en as labels} from '../../utils/labels/en';
+import { useSelector } from 'react-redux';
 
 const SignupUI = props => {
+
+    const isLoading = useSelector(state => state.settings.isLoading);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{labels.title}</Text>
@@ -36,6 +40,7 @@ const SignupUI = props => {
         <CustomButton
           title={labels.sendOtp}
           name={'sendOTP'}
+          isLoading={isLoading}
           onPress={props?.handleSubmit}
           btnStyles={styles.btnStyles}
           btnTitleStyles={{
