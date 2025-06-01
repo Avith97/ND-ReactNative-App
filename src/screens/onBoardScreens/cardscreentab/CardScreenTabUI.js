@@ -22,17 +22,26 @@ export default function CardScreenTabUI(props) {
               position: 'absolute',
             }}
           />
-          <Image
-            source={Images.runner_female_bg_image} // <-- Replace with your image path
-            style={styles.image}
-            // resizeMode="contain"
-          />
+
+          {props?.card_image_path && (
+            <Image
+              source={props?.card_image_path} // <-- Replace with your image path
+              style={styles.image}
+              // resizeMode="contain"
+            />
+          )}
         </View>
 
         {/* Title & Description */}
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{labels.final_title}</Text>
-          <Text style={styles.description}>{labels.final_description}</Text>
+          {props?.options && (
+            <Text style={styles.title}>{props?.options?.[0]?.text}</Text>
+          )}
+          {props?.options && (
+            <Text style={styles.description}>
+              {props?.options?.[0]?.subText}
+            </Text>
+          )}
         </View>
       </View>
 

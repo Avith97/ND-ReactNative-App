@@ -9,8 +9,6 @@ import CardScreenTabUI from './CardScreenTabUI';
 import Strings from '../../../utils/constants/Strings';
 
 export default function CardScreenTab(props) {
-  const [state, setState] = useState({});
-  const [options] = useState({});
   const handleSubmit = () => {
     props.navigation.navigate(Strings.NAVIGATION.app, {
       isLoggedIn: true,
@@ -18,12 +16,7 @@ export default function CardScreenTab(props) {
   };
   return (
     <View style={styles.container}>
-      <CardScreenTabUI
-        {...props}
-        {...state}
-        {...options}
-        handleSubmit={handleSubmit}
-      />
+      <CardScreenTabUI {...props} handleSubmit={handleSubmit} />
     </View>
   );
 }

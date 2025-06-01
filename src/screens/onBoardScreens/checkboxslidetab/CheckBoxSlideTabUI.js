@@ -1,29 +1,31 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-
-const labels = {
-  heading: 'What motivates you to stay active?',
-  continue: 'Continue',
-};
+import {CheckBox} from 'react-native-elements';
+import Colors from '../../../utils/constants/Colors';
 
 export default function CheckBoxSlideTabUI(props) {
   return (
     <View style={props.childContainerStyle}>
       <View style={styles.ContentContainer}>
-        <Text style={styles.heading}>{labels.heading}</Text>
+        {props?.question && (
+          <Text style={styles.heading}>{props?.question}</Text>
+        )}
+        {props?.sub_text && (
+          <Text style={styles.subText}>{props?.sub_text}</Text>
+        )}
 
-        {props?.options.map((item, index) => (
+        {props?.options?.map((item, index) => (
           <TouchableOpacity
             key={index}
             style={styles.optionRow}
             onPress={() => props.handleChange('selectedMotivation', item)}>
-            <View
-              style={[
-                styles.checkbox,
-                props?.selectedMotivation.includes(item) && styles.checkedBox,
-              ]}
+            <CheckBox
+              checkedColor={Colors.primary}
+              uncheckedColor={Colors.primary}
+              // checked={props?.selectedMotivation.includes(item)}
+              onPress={() => props.handleChange('selectedMotivation', item)}
             />
-            <Text style={styles.optionText}>{item}</Text>
+            {item?.text && <Text style={styles.optionText}>{item?.text}</Text>}
           </TouchableOpacity>
         ))}
       </View>
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
   optionRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15,
+    // marginBottom: 15,
   },
   checkbox: {
     width: 22,

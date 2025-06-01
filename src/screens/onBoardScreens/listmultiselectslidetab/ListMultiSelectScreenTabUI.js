@@ -12,21 +12,50 @@ export default function ListMultiSelectScreenTabUI(props) {
     <View style={props.childContainerStyle}>
       <View style={styles.ContentContainer}>
         {/* === Screen 1: Exercise Type === */}
-        <Text style={styles.heading}>{labels.exerciseTypeHeading}</Text>
-        {props?.exerciseOptions?.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[
-              styles.optionBox,
-              props.selectedExercises.includes(item) && styles.optionSelected,
-            ]}
-            onPress={() => props.handleChange('selectedExercises', item)}>
-            <View style={{width: wp(10), alignItems: 'center'}}>
-              <Icons name={item.icon} size={30} color="#000" />
-            </View>
-            <Text>{item.name}</Text>
-          </TouchableOpacity>
-        ))}
+        {props?.question && (
+          <Text style={styles.heading}>{props?.question}</Text>
+        )}
+        {props?.sub_text && (
+          <Text style={styles.subText}>{props?.sub_text}</Text>
+        )}
+        {props?.options &&
+          props?.options?.map((option, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.optionBox,
+                // props.selectedExercises.includes(item) && styles.optionSelected,
+              ]}
+              onPress={() => props.handleChange('selectedExercises', item)}>
+              {/* left icon */}
+              {option?.icon && option?.iconPosition === 'left' && (
+                <View style={{width: wp(10)}}>
+                  <Icons name={option.icon} size={30} color="#000" />
+                </View>
+              )}
+
+              {/* content */}
+              <View style={{width: wp(55)}}>
+                {option?.text && (
+                  <Text numberOfLines={2} style={styles.activityTitle}>
+                    {option?.text}
+                  </Text>
+                )}
+                {option?.subText && (
+                  <Text numberOfLines={2} style={styles.activityDesc}>
+                    {option?.subText}
+                  </Text>
+                )}
+              </View>
+
+              {/* right icon */}
+              {option?.icon && option?.iconPosition === 'right' && (
+                <View style={{width: wp(10), marginLeft: wp(10)}}>
+                  <Icons name={option.icon} size={30} color="#000" />
+                </View>
+              )}
+            </TouchableOpacity>
+          ))}
       </View>
     </View>
   );

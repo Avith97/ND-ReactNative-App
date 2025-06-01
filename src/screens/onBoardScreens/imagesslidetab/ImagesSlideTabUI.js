@@ -1,12 +1,5 @@
 // React core +  react native components
-import {
- 
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import React, {useState} from 'react';
 
 // Utils function Dimensions
@@ -16,31 +9,32 @@ import {hp, wp} from '../../../common/functions/dimensions';
 import {en as LABELS} from '../../../utils/labels/en';
 
 export default function BellyConditionScreenUI(props) {
-  const [selectedBelly, setSelectedBelly] = useState(null);
-
   return (
     <View style={props.childContainerStyle}>
       <View style={styles.ContentContainer}>
         {/* === Belly Condition Section === */}
-        <Text style={[styles.heading]}>{LABELS.bellyConditionHeading}</Text>
-        <Text style={styles.subText}>{LABELS.bellyConditionSubText}</Text>
+        <Text style={[styles.heading]}>{props?.question}</Text>
+        <Text style={styles.subText}>{props?.sub_text}</Text>
 
         <View style={styles.bellyGrid}>
-          {props?.bellyOptions.map((belly, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => props.handleChange('selectedBelly', belly)}
-              style={[
-                styles.bellyBox,
-                props.selectedBelly?.title === belly.title &&
-                  styles.bellySelected,
-              ]}>
-              <Image
-                source={belly.ImageUrl}
-                style={{width: wp(35), height: hp(15), borderRadius: 10}}
-              />
-            </TouchableOpacity>
-          ))}
+          {props?.options &&
+            props?.options?.map((belly, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => props.handleChange('selectedBelly', belly)}
+                style={[
+                  styles.bellyBox,
+                  // props.selectedBelly?.title === belly.title &&
+                  //   styles.bellySelected,
+                ]}>
+                {belly?.imagePath && (
+                  <Image
+                    source={belly?.imagePath}
+                    style={{width: wp(35), height: hp(15), borderRadius: 10}}
+                  />
+                )}
+              </TouchableOpacity>
+            ))}
         </View>
       </View>
     </View>
@@ -48,7 +42,6 @@ export default function BellyConditionScreenUI(props) {
 }
 
 const styles = StyleSheet.create({
-  
   ContentContainer: {
     flex: 1,
     paddingTop: 20,

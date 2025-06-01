@@ -12,33 +12,59 @@ export default function ListSlideTabUI(props) {
     <View style={props.childContainerStyle}>
       <View style={styles.ContentContainer}>
         {/* === Activity Level Section === */}
-        <Text style={styles.heading}>{labels.activityLevelHeading}</Text>
-        <Text style={styles.subText}>{labels.activityLevelSubText}</Text>
+        {props.question && (
+          <Text style={styles.heading}>{props?.question}</Text>
+        )}
+        {props?.sub_text && (
+          <Text style={styles.subText}>{props?.sub_text}</Text>
+        )}
 
-        {props?.activityOptions.map((option, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[
-              styles.activityBox,
-              props.selectedActivity?.title === option.title &&
-                styles.activitySelected,
-            ]}
-            onPress={() => props.handleChange('selectedActivity', option)}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: wp(100),
-                gap: 10,
-              }}>
-              <Icons name={option.iconName} size={30} color="#000" />
-              <View>
-                <Text style={styles.activityTitle}>{option.title}</Text>
-                <Text style={styles.activityDesc}>{option.description}</Text>
+        {props?.options &&
+          props?.options?.map((option, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.activityBox,
+                // props.selectedActivity?.title === option.title &&
+                //   styles.activitySelected,
+              ]}
+              onPress={() => props.handleChange('selectedActivity', option)}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  width: wp(100),
+                  gap: 10,
+                }}>
+                {/* left icon */}
+                {option?.icon && option?.iconPosition === 'left' && (
+                  <View style={{width: wp(10)}}>
+                    <Icons name={option.icon} size={30} color="#000" />
+                  </View>
+                )}
+
+                <View style={{width: wp(55)}}>
+                  {option?.text && (
+                    <Text numberOfLines={2} style={styles.activityTitle}>
+                      {option?.text}
+                    </Text>
+                  )}
+                  {option?.subText && (
+                    <Text numberOfLines={2} style={styles.activityDesc}>
+                      {option?.subText}
+                    </Text>
+                  )}
+                </View>
+
+                {/* right icon */}
+                {option?.icon && option?.iconPosition === 'right' && (
+                  <View style={{width: wp(10), marginLeft: wp(10)}}>
+                    <Icons name={option.icon} size={30} color="#000" />
+                  </View>
+                )}
               </View>
-            </View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          ))}
       </View>
     </View>
   );

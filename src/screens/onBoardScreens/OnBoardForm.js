@@ -10,29 +10,32 @@ import ImagesSlideTab from './imagesslidetab/ImagesSlideTab';
 const OnBoardForm = props => {
   const {data} = props;
   useEffect(() => {
-    console.log('OnBoardForm data:', data?.questionType);
+    // console.log('OnBoardForm data:', data?.questionType);
   }, []);
 
   return (
     <View>
-      {data?.questionType === 'list' && <ListSlideTab {...props} {...styles} />}
+      {data?.questionType === 'list' && (
+        <ListSlideTab {...props} {...styles} {...data} />
+      )}
 
       {data?.questionType === 'images' && (
         <ImagesSlideTab
           {...props}
           // handleChange={handleChange}
           {...styles}
+          {...data}
         />
       )}
 
       {data?.questionType === 'list-multiselect' && (
-        <ListMultiSelectScreenTab {...props} {...styles} />
+        <ListMultiSelectScreenTab {...props} {...styles} {...data} />
       )}
       {data?.questionType === 'check-box' && (
-        <CheckBoxSlideTab {...props} {...styles} />
+        <CheckBoxSlideTab {...props} {...styles} {...data} />
       )}
 
-      {data?.questionType === 'card' && <CardScreenTab {...props} />}
+      {data?.questionType === 'card' && <CardScreenTab {...props} {...data} />}
     </View>
   );
 };

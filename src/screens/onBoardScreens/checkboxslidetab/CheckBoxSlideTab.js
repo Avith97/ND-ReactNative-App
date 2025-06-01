@@ -9,21 +9,8 @@ import Strings from '../../../utils/constants/Strings';
 import CheckBoxSlideTabUI from './CheckBoxSlideTabUI';
 
 export default function CheckBoxSlideTab(props) {
-  const [state, setState] = useState({
-    selectedMotivation: [],
-  });
-
-  const [options] = useState({
-    options: [
-      'Setting and achieving goals',
-      'Social accountability',
-      'Tracking progress',
-      'Competing with others',
-      'Enjoyment of the activity',
-    ],
-  });
-
   async function handleChange(params, item) {
+    return;
     const {selectedMotivation} = state;
     let updatedExercises;
 
@@ -32,11 +19,6 @@ export default function CheckBoxSlideTab(props) {
     } else {
       updatedExercises = [...selectedMotivation, item];
     }
-
-    setState(prevState => ({
-      ...prevState,
-      selectedMotivation: updatedExercises,
-    }));
   }
 
   const handleSubmit = () => {
@@ -47,8 +29,6 @@ export default function CheckBoxSlideTab(props) {
     <View style={styles.container}>
       <CheckBoxSlideTabUI
         {...props}
-        {...state}
-        {...options}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />

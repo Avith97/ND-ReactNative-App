@@ -12,7 +12,7 @@ export const onBoardingScreenData = {
       options: [
         {
           id: 1,
-          icon: 'Moderatly-active',
+          icon: 'very-active',
           iconPosition: 'left',
           text: 'Sedentary',
           subText: 'Little to almost no exercise',
@@ -28,10 +28,10 @@ export const onBoardingScreenData = {
         },
         {
           id: 3,
-          icon: 'Moderatly-active',
+          icon: 'very-active',
           iconPosition: 'left',
           text: 'Moderately Active',
-          subText: 'Little to almost no exercise',
+          subText: 'Little to almost no exercise ',
           imagePath: null,
         },
         {
@@ -103,7 +103,7 @@ export const onBoardingScreenData = {
         {
           id: 1,
           icon: 'Strwnght-training',
-          iconPosition: 'left',
+          iconPosition: 'right',
           text: 'Strength Training',
           subText: null,
           imagePath: null,
@@ -128,7 +128,7 @@ export const onBoardingScreenData = {
           id: 4,
           icon: 'Step',
           iconPosition: 'left',
-          text: 'HIIT (High-intensity interval training)',
+          text: 'HIIT (High-intensity interval training) ',
           subText: null,
           imagePath: null,
         },
