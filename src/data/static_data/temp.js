@@ -57,7 +57,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: null,
           subText: null,
-          imagePath: Images.bellyCondition1,
+          imagePath: Images.belly1,
         },
         {
           id: 2,
@@ -65,7 +65,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: null,
           subText: null,
-          imagePath: Images.bellyCondition2,
+          imagePath: Images.belly2,
         },
         {
           id: 3,
@@ -73,7 +73,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: null,
           subText: null,
-          imagePath: Images.bellyCondition3,
+          imagePath: Images.belly3,
         },
         {
           id: 4,
@@ -81,7 +81,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: null,
           subText: null,
-          imagePath: Images.bellyCondition4,
+          imagePath: Images.belly4,
         },
         {
           id: 5,
@@ -89,7 +89,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: null,
           subText: null,
-          imagePath: Images.bellyCondition5,
+          imagePath: Images.belly5,
         },
       ],
     },
