@@ -7,6 +7,7 @@ import ListSlideTabUI from './ListSlideTabUI';
 
 // string constants
 import Strings from '../../../utils/constants/Strings';
+import { store } from '../../../redux/store';
 
 export default function ListSlideTab(props) {
   global.CurentOnboardingScreen = "list"
@@ -15,6 +16,11 @@ export default function ListSlideTab(props) {
       ...global.OnboardingData,
       [params]: val,
     }
+
+    store.dispatch({
+      type: 'SET_ONBOARDING_DATA',
+      payload: global.OnboardingData
+    })
 
     return;
   }

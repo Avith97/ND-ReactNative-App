@@ -7,8 +7,16 @@ import {hp, wp} from '../../../common/functions/dimensions';
 
 // Define all static labels in a constants object
 import {en as LABELS} from '../../../utils/labels/en';
+import { useSelector } from 'react-redux';
 
 export default function BellyConditionScreenUI(props) {
+
+  function onClick(belly) {
+    props.handleChange('image', belly)
+  }
+
+  const onboard = useSelector(state => state.onboard)
+
   return (
     <View style={props.childContainerStyle}>
       <View style={styles.ContentContainer}>
@@ -21,11 +29,12 @@ export default function BellyConditionScreenUI(props) {
             props?.options?.map((belly, index) => (
               <TouchableOpacity
                 key={index}
-                onPress={() => props.handleChange('selectedBelly', belly)}
+                onPress={() => onClick(belly)}
                 style={[
                   styles.bellyBox,
-                  // props.selectedBelly?.title === belly.title &&
-                  //   styles.bellySelected,
+                  // props.selectedBelly?.title === belly.title &&styles.bellySelected,
+                  onboard?.image?.id === belly.id && styles.bellySelected
+
                 ]}>
                 {belly?.imagePath && (
                   <Image

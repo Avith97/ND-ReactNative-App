@@ -9,5 +9,5 @@ export default {
     SET_ENVIRONMENT: 'SET_ENVIRONMENT',
     // theme actions
     SET_THEME: 'SET_THEME',
-    
+    SET_ONBOARDING_DATA: 'SET_ONBOARDING_DATA',
 }

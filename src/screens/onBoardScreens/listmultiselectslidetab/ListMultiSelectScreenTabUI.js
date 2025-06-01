@@ -1,13 +1,20 @@
 // react core components + React Native components
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {wp} from '../../../common/functions/dimensions';
 import Icons from '../../../assets/icons/Icons';
 
 // labels for the screen
 import {en as labels} from '../../../utils/labels/en';
+import { useSelector } from 'react-redux';
 
 export default function ListMultiSelectScreenTabUI(props) {
+  const onboard = useSelector(state => state.onboard)
+
+  function onClick(item) {
+    props.handleChange("list-multiselect", item)
+  }
+
   return (
     <View style={props.childContainerStyle}>
       <View style={styles.ContentContainer}>
@@ -25,8 +32,10 @@ export default function ListMultiSelectScreenTabUI(props) {
               style={[
                 styles.optionBox,
                 // props.selectedExercises.includes(item) && styles.optionSelected,
+                onboard?.["list-multiselect"]?.id === option.id && styles.optionSelected,
               ]}
-              onPress={() => props.handleChange('selectedExercises', item)}>
+              onPress={() => onClick(option)}
+            >
               {/* left icon */}
               {option?.icon && option?.iconPosition === 'left' && (
                 <View style={{width: wp(10)}}>

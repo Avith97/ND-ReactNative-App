@@ -7,9 +7,19 @@ import Strings from '../../../utils/constants/Strings';
 
 // Custom UI component for this screen
 import CheckBoxSlideTabUI from './CheckBoxSlideTabUI';
+import { store } from '../../../redux/store';
 
 export default function CheckBoxSlideTab(props) {
   async function handleChange(params, item) {
+    global.OnboardingData = {
+      ...global.OnboardingData,
+      [params]: item,
+    }
+
+    store.dispatch({
+      type: 'SET_ONBOARDING_DATA',
+      payload: global.OnboardingData
+    })
     return;
     const {selectedMotivation} = state;
     let updatedExercises;

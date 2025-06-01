@@ -7,9 +7,19 @@ import ListMultiSelectScreenTabUI from './ListMultiSelectScreenTabUI';
 
 // constants strings
 import Strings from '../../../utils/constants/Strings';
+import { store } from '../../../redux/store';
 
 export default function ListMultiSelectScreenTab(props) {
   async function handleChange(params, item) {
+    global.OnboardingData = {
+      ...global.OnboardingData,
+      [params]: item,
+    }
+
+    store.dispatch({
+      type: 'SET_ONBOARDING_DATA',
+      payload: global.OnboardingData
+    })
     return;
   }
 

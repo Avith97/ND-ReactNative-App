@@ -2,8 +2,15 @@ import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {CheckBox} from 'react-native-elements';
 import Colors from '../../../utils/constants/Colors';
+import { useSelector } from 'react-redux';
 
 export default function CheckBoxSlideTabUI(props) {
+  const onboard = useSelector(state => state.onboard)
+
+  function onClick(item) {
+    props.handleChange("check-box", item)
+  }
+
   return (
     <View style={props.childContainerStyle}>
       <View style={styles.ContentContainer}>
@@ -18,12 +25,13 @@ export default function CheckBoxSlideTabUI(props) {
           <TouchableOpacity
             key={index}
             style={styles.optionRow}
-            onPress={() => props.handleChange('selectedMotivation', item)}>
+            onPress={() => onClick(item)}>
             <CheckBox
               checkedColor={Colors.primary}
               uncheckedColor={Colors.primary}
+              checked={onboard?.["check-box"]?.id === item.id}
               // checked={props?.selectedMotivation.includes(item)}
-              onPress={() => props.handleChange('selectedMotivation', item)}
+              onPress={() => onClick(item)}
             />
             {item?.text && <Text style={styles.optionText}>{item?.text}</Text>}
           </TouchableOpacity>

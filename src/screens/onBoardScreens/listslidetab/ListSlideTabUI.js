@@ -6,12 +6,18 @@ import Icons from '../../../assets/icons/Icons';
 
 // Centralized labels object
 import {en as labels} from '../../../utils/labels/en';
+import { useSelector } from 'react-redux';
 
 export default function ListSlideTabUI(props) {
-  const [state, setstate] = useState({ key: 0 })
+
+
+  const onboard = useSelector(state => state.onboard)
+
 
   function onClick(option) {
+    console.log('global --->', global.OnboardingData)
 
+    // setkey(nkey)
     props.handleChange?.('list', {
       option_id: option.id,
       "runnerId": 3675,
@@ -45,7 +51,8 @@ export default function ListSlideTabUI(props) {
               onPress={() => onClick(option)}
               style={[
                 styles.activityBox,
-                props?.list?.option_id === option.id && styles.activitySelected,
+                // props?.list?.option_id === option.id && styles.activitySelected,
+                onboard?.list?.option_id === option.id && styles.activitySelected,
                 // props.selectedActivity?.title === option.title &&
                 //   styles.activitySelected,
               ]}
