@@ -47,6 +47,7 @@ const OnBoardingScreenUI = props => {
           //   <FinalScreen {...state} handleChange={handleChange} {...styles} />
           // ),
         ]}
+        onNext={props.onNext}
         onSkip={() => console.log('Skipped')}
         onFinish={props.handleSubmit}
       />

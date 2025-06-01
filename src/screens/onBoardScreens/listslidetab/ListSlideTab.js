@@ -9,10 +9,17 @@ import ListSlideTabUI from './ListSlideTabUI';
 import Strings from '../../../utils/constants/Strings';
 
 export default function ListSlideTab(props) {
-  async function handleChange(params, item) {
+  global.CurentOnboardingScreen = "list"
+  async function handleChange(params, val) {
+    global.OnboardingData = {
+      ...global.OnboardingData,
+      [params]: val,
+    }
+
     return;
   }
   const handleSubmit = () => {
+    //not used
     console.log('Selected Activity:', state);
     props.navigation.navigate(Strings.NAVIGATION.imagesSlideTab);
   };

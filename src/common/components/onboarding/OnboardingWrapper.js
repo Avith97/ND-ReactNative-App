@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'; // Import useState
+import React, { useCallback, useEffect, useState } from 'react'; // Import useState
 import { Dimensions, View, TouchableOpacity, Text, StyleSheet, SafeAreaView } from 'react-native';
 import Animated, {
     useDerivedValue,
@@ -52,7 +52,7 @@ const MyOnboardingSlide = ({ index, x, SlideComponent }) => {
 };
 
 
-const OnboardingWrapper = ({ slides, onSkip, onFinish }) => {
+const OnboardingWrapper = ({ slides, onSkip, onFinish, ...props }) => {
     const x = useSharedValue(0);
     const flatListRef = useAnimatedRef();
 
@@ -82,6 +82,7 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish }) => {
     );
 
     const handleNext = () => {
+        console.log('handle next pressed')
         const nextIndex = Math.round(x.value / width) + 1;
         if (nextIndex < totalSteps) {
             flatListRef.current?.scrollToOffset({ offset: nextIndex * width, animated: true });
@@ -97,6 +98,14 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish }) => {
         }
     };
 
+    useEffect(() => {
+        setTimeout(() => {
+            global.myfunction = handleNext
+        }, 300);
+
+    }, [])
+
+
     const progressStyle = useAnimatedStyle(() => {
         return {
             width: `${((x.value / width + 1) / totalSteps) * 100}%`,
@@ -110,6 +119,14 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish }) => {
     ),
         [x]
     );
+
+    function onNext(params) {
+        if (props.onNext) {
+            props.onNext(handleNext)
+        } else {
+            handleNext()
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -147,7 +164,8 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish }) => {
                 paddingVertical: hp(2),
                 paddingHorizontal: wp(6),
             }}>
-                <TouchableOpacity style={styles.button} onPress={handleNext}>
+                <TouchableOpacity ref={(r) => { global.myref = r }}
+                    style={styles.button} onPress={onNext}>
                     <Text style={styles.buttonText}>{buttonLabel}</Text>
                 </TouchableOpacity>
             </View>

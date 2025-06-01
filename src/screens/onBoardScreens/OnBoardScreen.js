@@ -7,6 +7,8 @@ import {onBoardingScreenData} from '../../data/static_data/temp';
 import OnBoardForm from './OnBoardForm';
 
 export default function OnBoardScreen(props) {
+  global.OnboardingData = null
+  global.CurentOnboardingScreen = 'more_about'
   const [state, setState] = useState({
     onBoardQuestions: null,
     slides: [],
@@ -63,6 +65,12 @@ export default function OnBoardScreen(props) {
     });
   };
 
+  function onNext(e) {
+    console.log('onnext called')
+    global.CurentOnboardingScreen = 'more_about'
+    e?.()
+  }
+
   return (
     <View style={{flex: 1}}>
       <OnBoardingScreenUI
@@ -70,6 +78,7 @@ export default function OnBoardScreen(props) {
         {...props}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        onNext={onNext}
       />
     </View>
   );

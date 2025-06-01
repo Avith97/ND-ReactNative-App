@@ -1,5 +1,5 @@
 // react core components + React Native components
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {hp, wp} from '../../../common/functions/dimensions';
 import Icons from '../../../assets/icons/Icons';
@@ -8,6 +8,25 @@ import Icons from '../../../assets/icons/Icons';
 import {en as labels} from '../../../utils/labels/en';
 
 export default function ListSlideTabUI(props) {
+  const [state, setstate] = useState({ key: 0 })
+
+  function onClick(option) {
+
+    props.handleChange?.('list', {
+      option_id: option.id,
+      "runnerId": 3675,
+      // "runnerId": props.runnerId,
+      "eventId": props.eventId,
+      "onboardingQuestionId": props.id,
+      "response": option?.text
+    })
+  }
+
+  useEffect(() => {
+    console.log('list update --->', props.list)
+  }, [props.list])
+
+
   return (
     <View style={props.childContainerStyle}>
       <View style={styles.ContentContainer}>
@@ -23,12 +42,15 @@ export default function ListSlideTabUI(props) {
           props?.options?.map((option, index) => (
             <TouchableOpacity
               key={index}
+              onPress={() => onClick(option)}
               style={[
                 styles.activityBox,
+                props?.list?.option_id === option.id && styles.activitySelected,
                 // props.selectedActivity?.title === option.title &&
                 //   styles.activitySelected,
               ]}
-              onPress={() => props.handleChange('selectedActivity', option)}>
+
+            >
               <View
                 style={{
                   flexDirection: 'row',
