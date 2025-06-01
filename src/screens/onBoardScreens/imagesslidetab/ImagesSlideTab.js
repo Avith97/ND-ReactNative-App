@@ -1,10 +1,15 @@
+// react core + react native components
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import BellyConditionScreenUI from './BellyConditionScreenUI';
+
+// Custom UI component for this screen
+import ImagesSlideTabUI from './ImagesSlideTabUI';
+
+// string constants
 import Strings from '../../../utils/constants/Strings';
 import {Images} from '../../../utils/constants/Images';
 
-export default function BellyConditionScreen(props) {
+export default function ImagesSlideTab(props) {
   const [state, setState] = useState({
     selectedBelly: '',
   });
@@ -27,12 +32,12 @@ export default function BellyConditionScreen(props) {
   }
   const handleSubmit = () => {
     console.log('Selected Activity:', state);
-    props.navigation.navigate(Strings.NAVIGATION.exerciseType);
+    props.navigation.navigate(Strings.NAVIGATION.listMultiSelectScreen);
   };
 
   return (
     <View style={styles.container}>
-      <BellyConditionScreenUI
+      <ImagesSlideTabUI
         {...props}
         {...state}
         {...options}

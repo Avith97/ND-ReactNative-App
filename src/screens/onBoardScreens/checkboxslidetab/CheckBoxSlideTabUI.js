@@ -6,9 +6,9 @@ const labels = {
   continue: 'Continue',
 };
 
-export default function MotivationScreenUI(props) {
+export default function CheckBoxSlideTabUI(props) {
   return (
-    <View style={styles.container}>
+    <View style={props.childContainerStyle}>
       <View style={styles.ContentContainer}>
         <Text style={styles.heading}>{labels.heading}</Text>
 
@@ -27,9 +27,6 @@ export default function MotivationScreenUI(props) {
           </TouchableOpacity>
         ))}
       </View>
-      <TouchableOpacity style={styles.continueBtn} onPress={props.handleSubmit}>
-        <Text style={styles.continueText}>{labels.continue}</Text>
-      </TouchableOpacity>
     </View>
   );
 }

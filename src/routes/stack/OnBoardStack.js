@@ -3,13 +3,11 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Strings from '../../utils/constants/Strings';
 import OnBoardCustomHeader from '../../screens/onBoardScreens/OnBoardCustomHeader';
 
-
-import BellyConditionScreen from '../../screens/onBoardScreens/bellycondition/BellyConditionScreen';
-import MotivationScreen from '../../screens/onBoardScreens/motivation/MotivationScreen';
-import ExerciseScreen from '../../screens/onBoardScreens/exercisescreen/ExerciseScreen';
-import FinalScreen from '../../screens/onBoardScreens/finalscreen/FinalScreen';
+import imagesSlideTab from '../../screens/onBoardScreens/imagesslidetab/ImagesSlideTab';
+import CardScreenTab from '../../screens/onBoardScreens/cardscreentab/CardScreenTab';
 import MoreAboutScreen from '../../screens/onBoardScreens/MoreInfo/MoreAboutScreen';
-import ActivityLevelScreen from '../../screens/onBoardScreens/ActivityLevel/ActivityLevelScreen';
+import ActivityLevelScreen from '../../screens/onBoardScreens/listslidetab/ListSlideTab';
+import CheckBoxSlideTab from '../../screens/onBoardScreens/checkboxslidetab/CheckBoxSlideTab';
 
 const Stack = createStackNavigator();
 
@@ -22,23 +20,23 @@ export default function OnboardingStack(props) {
       screenOptions={({navigation, route}) => {
         const screens = [
           Strings.NAVIGATION.gender,
-          Strings.NAVIGATION.activityLevel,
-          Strings.NAVIGATION.bellyCondition,
-          Strings.NAVIGATION.exerciseType,
-          Strings.NAVIGATION.motivation,
-          // Strings.NAVIGATION.finalOnboard,
+          Strings.NAVIGATION.listSlideTab,
+          Strings.NAVIGATION.imagesSlideTab,
+          Strings.NAVIGATION.listMultiSelectScreen,
+          Strings.NAVIGATION.checkboxScreen,
+          // Strings.NAVIGATION.cardSlideScreen,
         ];
         const currentIndex = screens.indexOf(route.name);
-        const progress = (currentIndex+1 ) / screens?.length;
+        const progress = (currentIndex + 1) / screens?.length;
         return {
           header: () => (
             <OnBoardCustomHeader
               canGoBack={navigation.canGoBack()}
               onSkip={() =>
-                navigation.navigate(Strings.NAVIGATION.finalOnboard)
+                navigation.navigate(Strings.NAVIGATION.cardSlideScreen)
               }
               onBack={() => navigation.goBack()}
-              hideSkip={route.name === Strings.NAVIGATION.finalOnboard}
+              hideSkip={route.name === Strings.NAVIGATION.cardSlideScreen}
               progress={progress}
             />
           ),
@@ -50,25 +48,25 @@ export default function OnboardingStack(props) {
         // options={{headerShown: false}}
       />
       <Stack.Screen
-        name={Strings.NAVIGATION.activityLevel}
+        name={Strings.NAVIGATION.listSlideTab}
         component={ActivityLevelScreen}
       />
       <Stack.Screen
-        name={Strings.NAVIGATION.bellyCondition}
-        component={BellyConditionScreen}
+        name={Strings.NAVIGATION.imagesSlideTab}
+        component={imagesSlideTab}
       />
       <Stack.Screen
-        name={Strings.NAVIGATION.exerciseType}
-        component={ExerciseScreen}
+        name={Strings.NAVIGATION.listMultiSelectScreen}
+        component={ListMultiSelectScreenTab}
       />
       <Stack.Screen
-        name={Strings.NAVIGATION.motivation}
-        component={MotivationScreen}
+        name={Strings.NAVIGATION.checkboxScreen}
+        component={CheckBoxSlideTab}
       />
       <Stack.Screen
-        name={Strings.NAVIGATION.finalOnboard}
-        component={FinalScreen}
-           options={{headerShown: false}}
+        name={Strings.NAVIGATION.cardSlideScreen}
+        component={CardScreenTab}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

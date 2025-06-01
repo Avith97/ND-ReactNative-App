@@ -14,11 +14,11 @@ export default {
     // onboarding screens
     onboard: 'onboard',
     gender: 'gender',
-    activityLevel: 'activityLevel',
-    bellyCondition: 'bellyCondition',
-    exerciseType: 'exerciseType',
-    motivation: 'motivation',
-    finalOnboard: 'finalOnboard',
+    listSlideTab: 'listSlideTab',
+    imagesSlideTab: 'imagesSlideTab',
+    listMultiSelectScreen: 'listMultiSelectScreen',
+    checkboxScreen: 'checkboxScreen',
+    cardSlideScreen: 'cardSlideScreen',
 
     // main screen
     program: 'program',

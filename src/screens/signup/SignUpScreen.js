@@ -7,6 +7,8 @@ import {services} from '../../services/axios/services';
 import {URL} from '../../utils/constants/Urls';
 
 const SignUpScreen = props => {
+  const {isSignup} = props.route.params || {};
+
   const [state, setState] = useState({
     userName: 'laxmann@interfaceinfosoft.com',
   });
@@ -38,10 +40,10 @@ const SignUpScreen = props => {
 
   async function signup() {
     //
-     props.navigation.navigate(Strings.NAVIGATION.create_profile);
-     return;
+    // props.navigation.navigate(Strings.NAVIGATION.create_profile);
+    // return;
     try {
-      console.log("signup called with state -->", state);
+      console.log('signup called with state -->', state);
       const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       let syncObj = {
@@ -84,6 +86,7 @@ const SignUpScreen = props => {
       <SignupUI
         {...props}
         {...state}
+        isSignup={isSignup}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />

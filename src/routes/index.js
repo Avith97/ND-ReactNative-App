@@ -6,7 +6,7 @@ import AuthStack from './stack/AuthStack';
 import Strings from '../utils/constants/Strings';
 import SplashScreen from '../screens/splash/SplashScreen';
 import AppStack from './stack/AppStack';
-import OnboardingStack from './stack/OnBoardStack';
+import OnBoardScreen from '../screens/onBoardScreens/OnBoardScreen';
 
 
 const Navigator = (props) => {
@@ -28,7 +28,7 @@ const Navigator = (props) => {
             >
                 <Stack.Screen name={Strings.NAVIGATION.splash} component={SplashScreen} />
                 <Stack.Screen name={Strings.NAVIGATION.auth} component={AuthStack} />
-                <Stack.Screen name={Strings.NAVIGATION.onboard} component={OnboardingStack} />
+                <Stack.Screen name={Strings.NAVIGATION.onboard} component={OnBoardScreen} />
                 <Stack.Screen name={Strings.NAVIGATION.app} component={AppStack} />
             </Stack.Navigator>
         </NavigationContainer>

@@ -1,20 +1,25 @@
+// React Core + React Native components
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import ExerciseTypeScreenUI from './ExerciseTypeScreenUI';
+
+// Custom UI component for this screen
+import ListMultiSelectScreenTabUI from './ListMultiSelectScreenTabUI';
+
+// constants strings
 import Strings from '../../../utils/constants/Strings';
 
-export default function ExerciseScreen(props) {
+export default function ListMultiSelectScreenTab(props) {
   const [state, setState] = useState({
     selectedExercises: [],
   });
 
   const [options] = useState({
     exerciseOptions: [
-      'Strength Training',
-      'Yoga or Pilates',
-      'Cardio (Running, Cycling)',
-      'HIIT (High-intensity interval training)',
-      'Other',
+      {name: 'Strength Training', icon: 'Strwnght-training'},
+      {name: 'Yoga or Pilates', icon: 'Yoga-1'},
+      {name: 'Cardio (Running, Cycling)', icon: 'Cardio-1'},
+      {name: 'HIIT (High-intensity interval training)', icon: 'Cardio-1'},
+      {name: 'Other', icon: 'Other-icon'},
     ],
   });
 
@@ -35,12 +40,12 @@ export default function ExerciseScreen(props) {
   }
 
   const handleSubmit = () => {
-    props.navigation.navigate(Strings.NAVIGATION.motivation);
+    props.navigation.navigate(Strings.NAVIGATION.checkboxScreen);
   };
 
   return (
     <View style={styles.container}>
-      <ExerciseTypeScreenUI
+      <ListMultiSelectScreenTabUI
         {...props}
         {...state}
         {...options}

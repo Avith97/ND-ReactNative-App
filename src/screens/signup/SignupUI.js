@@ -13,15 +13,16 @@ import Colors from '../../utils/constants/Colors';
 
 // Labels object
 import {en as labels} from '../../utils/labels/en';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const SignupUI = props => {
-
-    const isLoading = useSelector(state => state.settings.isLoading);
+  const isLoading = useSelector(state => state.settings.isLoading);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{labels.title}</Text>
+      <Text style={styles.title}>
+        {props?.isSignup ? labels.title : labels?.loginTitle}
+      </Text>
       <View style={{flex: 1, alignItems: 'center'}}>
         <View>
           <CustomTextInput

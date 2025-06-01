@@ -16,7 +16,7 @@ export default function CreateProfileScreen(props) {
     contactNumber: null,
     DOB: null,
     isDatePickerVisible: false,
-    emailUpdateCheck:false
+    emailUpdateCheck: false,
   });
 
   const handleConfirm = date => {
@@ -58,8 +58,7 @@ export default function CreateProfileScreen(props) {
       err = {firstNameErr: true};
       console.log('invalid');
       appsnackbar.showErrMsg('Please enter valid first name');
-    } 
-    else if (!state.lastName?.length || !nameRegex.test(state.lastName)) {
+    } else if (!state.lastName?.length || !nameRegex.test(state.lastName)) {
       isValid = false;
       err = {lastNameErr: true};
       appsnackbar.showErrMsg('Please enter valid last name');
@@ -67,25 +66,20 @@ export default function CreateProfileScreen(props) {
       isValid = false;
       err = {emailErr: true};
       appsnackbar.showErrMsg('Please enter valid email');
-
-    } 
-    else if (!state.country?.trim()?.length) {
+    } else if (!state.country?.trim()?.length) {
       isValid = false;
       err = {countryErr: true};
       appsnackbar.showErrMsg('Please select country');
-    } 
-    else if (!mobileRegex.test(state.contactNumber)) {
+    } else if (!mobileRegex.test(state.contactNumber)) {
       isValid = false;
       err = {contactNumberErr: true};
       appsnackbar.showErrMsg('Please enter valid contact number');
-    } 
-    else if (!state.DOB) {
-      isValid = false;  
+    } else if (!state.DOB) {
+      isValid = false;
       err = {dobErr: true};
       appsnackbar.showErrMsg('Please select date of birth');
-    } 
+    }
 
-    
     seterr(err);
     setTimeout(() => {
       seterr(null);
@@ -95,11 +89,9 @@ export default function CreateProfileScreen(props) {
   }
 
   async function handleSubmit(params, value) {
-
     let isValid = validate();
     if (!isValid) return;
 
-return
     try {
       let syncObj = new FormData();
       let userObject = {
@@ -129,10 +121,10 @@ return
 
       let resp = await services._postFormData(URL.create_profile, syncObj);
 
-      if (resp.data?.type !== 'success') {
+      if (resp?.type !== 'success') {
         appsnackbar.showErrMsg(resp?.error_data || resp?.verbose);
         return;
-      } else {
+      } else if (resp?.type === 'success') {
         props.navigation.navigate(Strings.NAVIGATION.onboard);
       }
     } catch (error) {

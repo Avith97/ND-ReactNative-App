@@ -1,9 +1,14 @@
+// react core + react native components
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import Strings from '../../../utils/constants/Strings';
-import MotivationScreenUI from './MotivationScreenUI';
 
-export default function MotivationScreen(props) {
+// constants strings
+import Strings from '../../../utils/constants/Strings';
+
+// Custom UI component for this screen
+import CheckBoxSlideTabUI from './CheckBoxSlideTabUI';
+
+export default function CheckBoxSlideTab(props) {
   const [state, setState] = useState({
     selectedMotivation: [],
   });
@@ -35,11 +40,12 @@ export default function MotivationScreen(props) {
   }
 
   const handleSubmit = () => {
-    props.navigation.navigate(Strings.NAVIGATION.finalOnboard);
+    props.navigation.navigate(Strings.NAVIGATION.cardSlideScreen);
   };
+
   return (
     <View style={styles.container}>
-      <MotivationScreenUI
+      <CheckBoxSlideTabUI
         {...props}
         {...state}
         {...options}
