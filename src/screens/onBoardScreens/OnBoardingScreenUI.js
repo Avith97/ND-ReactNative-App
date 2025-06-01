@@ -7,7 +7,8 @@ import {hp, wp} from '../../common/functions/dimensions';
 const OnBoardingScreenUI = props => {
   return (
     <View style={{flex: 1}}>
-      <OnboardingWrapper
+      {props.slides?.length &&
+        <OnboardingWrapper
         slides={[
           () => (
             <MoreAboutScreen
@@ -16,41 +17,13 @@ const OnBoardingScreenUI = props => {
               {...styles}
             />
           ),
-
           ...props.slides,
-
-          // () => (
-          //   <ActivityLevelScreen
-          //     {...state}
-          //     handleChange={handleChange}
-          //     {...styles}
-          //   />
-          // ),
-          // () => (
-          //   <BellyConditionScreen
-          //     {...state}
-          //     handleChange={handleChange}
-          //     {...styles}
-          //   />
-          // ),
-          // () => (
-          //   <ExerciseScreen {...state} handleChange={handleChange} {...styles} />
-          // ),
-          // () => (
-          //   <MotivationScreen
-          //     {...state}
-          //     handleChange={handleChange}
-          //     {...styles}
-          //   />
-          // ),
-          // () => (
-          //   <FinalScreen {...state} handleChange={handleChange} {...styles} />
-          // ),
         ]}
         onNext={props.onNext}
         onSkip={() => console.log('Skipped')}
         onFinish={props.handleSubmit}
       />
+      }
     </View>
   );
 };
