@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Image, DevSettings } from 'react-native';
 import { Images } from '../../../utils/constants/Images';
 import CustomButton from '../buttons/CustomButton';
+import { hp } from '../../functions/dimensions';
+import Fonts, { fontSize } from '../../../utils/constants/Fonts';
 
 class ErrorBoundary extends Component {
     constructor(props) {
@@ -48,7 +50,7 @@ class ErrorBoundary extends Component {
                         }}
                         btnTitleStyles={{
                             // color: '#CF352E',
-                            fontFamily: Fonts.semiBold,
+                            fontFamily: Fonts.Black,
                             fontSize: fontSize.normal
                         }}
                     />
