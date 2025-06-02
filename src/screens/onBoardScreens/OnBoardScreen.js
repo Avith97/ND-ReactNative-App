@@ -7,9 +7,9 @@ import {onBoardingScreenData} from '../../data/static_data/temp';
 import OnBoardForm from './OnBoardForm';
 
 export default function OnBoardScreen(props) {
-  global.OnboardingData = null
-  global.CurentOnboardingScreen = 'more_about'
-  let key = 0
+  global.OnboardingData = null;
+  global.CurentOnboardingScreen = 'more_about';
+  let key = 0;
   const [state, setState] = useState({
     onBoardQuestions: null,
     slides: [],
@@ -18,8 +18,6 @@ export default function OnBoardScreen(props) {
   useEffect(() => {
     initiateScreen();
   }, []);
-
-
 
   async function initiateScreen() {
     let data = await getDetails();
@@ -62,20 +60,20 @@ export default function OnBoardScreen(props) {
   const handleSubmit = () => {
     console.log('Form submitted with state:', global.OnboardingData);
     // You can navigate to the next screen or perform any action here
-    return;
+    // return;
     props.navigation.navigate(Strings.NAVIGATION.app, {
       isLoggedIn: true,
     });
   };
 
   function onNext(e) {
-    console.log('onnext called')
-    global.CurentOnboardingScreen = 'more_about'
-    e?.()
+    console.log('onnext called');
+    global.CurentOnboardingScreen = 'more_about';
+    e?.();
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <OnBoardingScreenUI
         {...state}
         {...props}

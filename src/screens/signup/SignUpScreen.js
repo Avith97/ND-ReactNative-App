@@ -10,7 +10,7 @@ const SignUpScreen = props => {
   const {isSignup} = props.route.params || {};
 
   const [state, setState] = useState({
-    userName: 'laxmann@interfaceinfosoft.com',
+    userName: '',
   });
 
   function handleChange(params, val) {

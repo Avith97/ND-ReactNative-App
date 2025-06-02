@@ -26,8 +26,6 @@ const OtpScreen = props => {
     otpErr: false,
   });
 
-
-
   useEffect(() => {
     let msg = route.params.message;
     let userId = route.params.userId;
@@ -74,11 +72,9 @@ const OtpScreen = props => {
 
       let resp = await services._post(URL.otp_verify, syncObj); // verify otp request
 
-      console.log('otp ==>', resp);
+      // if (resp.type !== 'success') return;
 
-      if (resp.type !== 'success') return;
-
-      if (resp && resp?.error_data) {
+      if (resp && resp?.error_config) {
         appsnackbar.showErrMsg(resp?.error_data || resp?.verbose);
         seterr({otpErr: resp?.verbose});
         setTimeout(() => {
