@@ -20,7 +20,7 @@ const ProgramCard = ({
   minWidth,
   registered,
   program,
-
+  buttonName,
   ...props
 }) => {
   return (
@@ -33,17 +33,16 @@ const ProgramCard = ({
         <View
           style={{
             ...styles.statusTag,
-            backgroundColor: !registered ? '#EC6B47AB' : Colors.primary,
+            backgroundColor:
+              props.eventStatus == 'completed' ? '#EC6B47AB' : Colors.primary,
           }}>
-          <Text style={styles.statusText}>
-            {registered ? 'ongoing' : 'Not Registered'}
-          </Text>
+          <Text style={styles.statusText}>{props.eventStatus}</Text>
         </View>
 
         <Text style={styles.title}>{title}</Text>
 
         <CustomButton
-          title={registered ? 'View Result' : 'Register Now'}
+          title={buttonName}
           name={'register'}
           onPress={() => props?.handleNavigate(program, registered)}
           btnStyles={{
@@ -56,8 +55,10 @@ const ProgramCard = ({
           }}
         />
 
-        <View  >
-          <Text style={{color:Colors.white}}>🗓️  May 7,  2025 - June 6, 2025</Text>
+        <View>
+          <Text style={{color: Colors.white}}>
+            🗓️ {props.localStartDate} - {props.localEndDate}{' '}
+          </Text>
         </View>
 
         <View style={styles.detailsRow}>
