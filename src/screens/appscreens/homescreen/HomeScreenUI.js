@@ -97,7 +97,7 @@ export default function HomeScreenUI(props) {
         </>
       ) : (
         <>
-          <Text>Hello</Text>
+            <Text style={{ textAlign: 'center' }}>No data found !</Text>
         </>
         // <>
         //   {/* ongoing  events  */}
