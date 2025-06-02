@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, DevSettings } from 'react-native';
 import { Images } from '../../../utils/constants/Images';
+import CustomButton from '../buttons/CustomButton';
 
 class ErrorBoundary extends Component {
     constructor(props) {
@@ -31,6 +32,24 @@ class ErrorBoundary extends Component {
                             flex: 1,
                             // height: '',
                             width: '100%'
+                        }}
+                    />
+                    <CustomButton
+                        title={'Reload'}
+
+                        onPress={() => DevSettings.reload()}
+                        btnStyles={{
+                            // width: wp(70),
+                            height: hp(6),
+                            borderRadius: 0,
+                            // alignSelf: 'center'
+                            // backgroundColor: 'white',
+                            // elevation: 5
+                        }}
+                        btnTitleStyles={{
+                            // color: '#CF352E',
+                            fontFamily: Fonts.semiBold,
+                            fontSize: fontSize.normal
                         }}
                     />
                 </View>
