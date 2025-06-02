@@ -9,7 +9,7 @@ const FootPrintItem = ({
   iconName = 'hiking',
   steps = '1087',
   label = "Today's Steps",
-  day=0
+  day = 0,
 }) => (
   <View style={styles.centered}>
     <Icons
@@ -18,9 +18,19 @@ const FootPrintItem = ({
       size={20}
       color={Colors.primary}
     />
-    <Text style={{...styles.stepValue, fontSize:day===1 ? fontSize.l : fontSize.md}}>{steps}</Text>
     <Text
-      style={{...styles.title, fontSize:day ===1 ? fontSize.m : fontSize.normal, fontWeight:day ===1 ? '700': '400' }}>
+      style={{
+        ...styles.stepValue,
+        fontSize: day === 1 ? fontSize.l : fontSize.md,
+      }}>
+      {steps}
+    </Text>
+    <Text
+      style={{
+        ...styles.title,
+        fontSize: day === 1 ? fontSize.m : fontSize.normal,
+        fontWeight: day === 1 ? '700' : '400',
+      }}>
       {label}
     </Text>
   </View>
@@ -33,29 +43,28 @@ const DescriptionDetailItem = ({value, unit}) => (
   </View>
 );
 
-const EventCard = ({title}) => {
+const EventCard = ({title, ...props}) => {
   return (
     <View style={styles.card}>
       <Text style={styles.title}>{title}</Text>
 
       {/* Footprint Section */}
       <View style={styles.mainSection}>
-
-        <FootPrintItem day={1}   />
+        <FootPrintItem steps={props?.totalSteps} day={1} />
         <View style={styles.middleSection}>
           <View style={styles.dashedLine} />
           <View style={styles.row}>
-            <FootPrintItem  steps={1677} label={"Yesterday’s Steps "}  />
-            <FootPrintItem steps={23477} label={"Weekly Steps"} />
+            <FootPrintItem steps={1677} label={'Yesterday’s Steps '} />
+            <FootPrintItem steps={2677} label={'Weekly Steps'} />
           </View>
         </View>
       </View>
 
       {/* Description Metrics */}
       <View style={styles.detailSection}>
-        <DescriptionDetailItem value={1088} unit="Kcal" />
-        <DescriptionDetailItem value={12} unit="KM" />
-        <DescriptionDetailItem value={204} unit="Move Min" />
+        <DescriptionDetailItem value={80} unit="Kcal" />
+        <DescriptionDetailItem value={0.8} unit="KM" />
+        <DescriptionDetailItem value={20} unit="Duration" />
       </View>
     </View>
   );
@@ -63,12 +72,12 @@ const EventCard = ({title}) => {
 
 const styles = StyleSheet.create({
   card: {
-    marginVertical: hp(1),
+    marginTop: -hp(1.5),
   },
   title: {
     fontSize: fontSize.m,
     fontWeight: 'bold',
-    marginBottom: hp(0.5),
+    // marginBottom: hp(0.5),
   },
   centered: {
     alignItems: 'center',

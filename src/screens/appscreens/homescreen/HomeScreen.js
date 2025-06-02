@@ -1,39 +1,78 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, ScrollView, Platform } from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {StyleSheet, ScrollView, Platform} from 'react-native';
 import HomeScreenUI from './HomeScreenUI';
-import { Images } from '../../../utils/constants/Images';
-import { hp } from '../../../common/functions/dimensions';
-import ConsentScreen from '../../consentscreen/ConsentScreen';
+import {hp} from '../../../common/functions/dimensions';
 import Strings from '../../../utils/constants/Strings';
-import HealthScreen from '../../../../Healthconnect';
-import { initialize, requestPermission } from 'react-native-health-connect';
-import useHealthConnectData from '../../../common/functions/CustomHooks/HealthConnectData';
+import {services} from '../../../services/axios/services';
+import {store} from '../../../redux/store';
+import {Text} from 'react-native';
 
 export default function HomeScreen(props) {
-  const { isLoggedIn } = props.route.params;
+  const {isLoggedIn} = props.route.params;
 
   const [loading, setLoading] = useState(false);
+  // Custom hook to fetch health connect data
+  // const {healthConnectData, fetchAllData} = useHealthConnectData();
 
+  const [state, setState] = useState({
+    HomeScreenData: {
+      events: [],
+      progressBar: 0,
+    },
+  });
 
-
-// Custom hook to fetch health connect data
-  const  {healthConnectData , fetchAllData} = useHealthConnectData();
-
-// Initialize Health Connect and request permissions
-  const requestHealthPermissions = useCallback(async () => {
-    if (Platform.OS === 'ios') return;
-    await initialize();
-    try {
-      await requestPermission([
-        { accessType: 'read', recordType: 'Steps' },
-        { accessType: 'read', recordType: 'Distance' },
-        { accessType: 'read', recordType: 'ActiveCaloriesBurned' },
-      ]);
-      await fetchAllData();
-    } catch (error) {
-      console.error('Permission error:', error);
-    }
+  useEffect(() => {
+    initiateScreen();
+    // requestHealthPermissions();
   }, []);
+
+  async function initiateScreen() {
+    let data = await getDetails();
+
+    if (!data) {
+      console.log('No data received for onboarding screen');
+      return;
+    }
+
+    setState({...state, HomeScreenData: data});
+  }
+
+  async function getDetails() {
+    try {
+      // Simulate an API call or any async operation
+      let resp = await services._get(
+        `/health/summary/${store.getState().auth?.runnerId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${store.getState().auth.token}`,
+          },
+        },
+      );
+      console.log('Response:', resp.data);
+      // You can update the state with the response data if needed
+      // setState({...state, data: response.data});
+
+      return resp.data || []; // Assuming resp.data is an array
+    } catch (error) {
+      console.log('Error onboard screen get details', error);
+    }
+  }
+
+  // Initialize Health Connect and request permissions
+  // const requestHealthPermissions = useCallback(async () => {
+  //   if (Platform.OS === 'ios') return;
+  //   await initialize();
+  //   try {
+  //     await requestPermission([
+  //       {accessType: 'read', recordType: 'Steps'},
+  //       {accessType: 'read', recordType: 'Distance'},
+  //       {accessType: 'read', recordType: 'ActiveCaloriesBurned'},
+  //     ]);
+  //     await fetchAllData();
+  //   } catch (error) {
+  //     console.error('Permission error:', error);
+  //   }
+  // }, []);
 
   const handleNavigate = (isProgram, registered) => {
     if (!registered) {
@@ -55,63 +94,17 @@ export default function HomeScreen(props) {
     }
   };
 
-  // constant data
-  const [options] = useState({
-    ongoingEvents: true,
-    //  notResponding:true,
-    Challenges: [
-      {
-        title: 'Zero Sugar Challenge',
-        points: 180,
-        badge: 2,
-        responseReceived: [{}],
-      },
-    ],
-    Events: [
-      {
-        title: 'Step Challenge',
-        image: Images.runner_bg_image,
-        todayStepsCount: 1487,
-        yesterdayStepsCount: 1677,
-        weeklyStepsCount: 23477,
-        totalCalories: 1086,
-        distance: 12,
-        completionTime: 204,
-        registered: false,
-        started: false,
-        eventType: 'Public',
-        isEventEnd: false,
-
-      },
-    ],
-    sessions: [
-      {
-        time: ' 3:00 pm  to 4:00 pm',
-        facultyName: 'Dr.Jatin Shah',
-        mode: 'Online',
-        status: 'Yet to be started',
-      },
-    ],
-  });
-
-  function handleLoading(params) {
-    setLoading(params)
-  }
-
-
-  useEffect(() => {
-    requestHealthPermissions();
-  }, [requestHealthPermissions]);
-
+  // function handleLoading(params) {
+  //   setLoading(params);
+  // }
 
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: hp(5) }}
+      contentContainerStyle={{paddingBottom: hp(5)}}
       showsVerticalScrollIndicator={false}>
-      {/* <HealthScreen handleLoading={handleLoading} /> */}
       <HomeScreenUI
-        {...options}
+        {...state}
         isLoggedIn={isLoggedIn}
         handleNavigate={handleNavigate}
       />

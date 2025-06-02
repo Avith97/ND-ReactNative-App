@@ -16,7 +16,8 @@ const api = {
             Authorization: `Bearer ${store.getState().auth.token}`,
             Accept: 'application/json',
             'Content-Type': 'application/json'
-        }
+        },
+        timeout: 10000 // 10 seconds timeout
     }),
 
     //form request
@@ -26,7 +27,8 @@ const api = {
             Authorization: `Bearer ${store.getState().auth.token}`,
             Accept: 'application/json',
             'Content-Type': 'multipart/form-data'
-        }
+        },
+        timeout: 10000 // 10 seconds timeout
     }),
 
     refreshInstance: token => {
@@ -37,7 +39,8 @@ const api = {
                 Authorization: `Bearer ${token}`,
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
+            timeout: 10000 // 10 seconds timeout
         })
     },
 

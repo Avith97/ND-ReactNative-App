@@ -43,9 +43,14 @@ const LoginScreen = props => {
     return isValid;
   }
 
-  async function handleNavigate(params, val) {
-    props.navigation.navigate(Strings.NAVIGATION.signup);
-  }
+  const handleNavigate = async route => {
+    const isSignup = route === 'signup';
+    if (route === 'signup' || route === 'login') {
+      props.navigation.navigate(Strings.NAVIGATION.signup, {
+        isSignup: isSignup,
+      });
+    }
+  };
 
   async function handleSubmit(params) {
     if (params === 'signup') {

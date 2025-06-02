@@ -1,60 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import SessionCard from '../../../common/components/sessioncard/SessionCard';
 import PieProgressBar from '../../../common/components/progressbar/PieProgressBar';
-import {hp, wp} from '../../../common/functions/dimensions';
-import Fonts, { fontSize } from '../../../utils/constants/Fonts';
-import HealthScreen from '../../../../Healthconnect';
+import {hp} from '../../../common/functions/dimensions';
+import Fonts, {fontSize} from '../../../utils/constants/Fonts';
 import Colors from '../../../utils/constants/Colors';
 import EventCard from '../../../common/components/eventcard/EventCard';
-import ChallengeCard from '../../../common/components/challengecard/ChallengeCard';
-import ProgramCard from '../../../common/components/programcard/ProgramCard';
 import NotRespondingCard from '../../../common/components/notrespondingcard/NotRespondingCard';
 
 export default function HomeScreenUI(props) {
   let {isLoggedIn} = props;
 
   const [loading, setloading] = useState(false);
-  useEffect(() => {
-    initHealthConnect();
-    // setupBackgroundFetch(); // Initialize background fetch when the app loads
-
-    // // Listen to app state changes (foreground or background)
-    // const appStateListener = AppState.addEventListener("change", (state) => {
-    //   if (state === "active") { // If the app comes to the foreground
-    //     console.log("App in foreground, starting vibration.");
-    //     startVibrationLoop(); // Start the vibration loop
-    //   } else { // If the app moves to the background
-    //     console.log("App in background, stopping vibration.");
-    //     stopVibrationLoop(); // Stop the vibration loop
-    //   }
-    // });
-
-    // // Cleanup the event listener when the component unmounts
-    // return () => appStateListener.remove();
-  }, []);
-
-  const initHealthConnect = () => {
-    setloading(true);
-    // initialize()
-    setTimeout(() => {
-      setloading(false);
-    }, 200);
-  };
-
-  function handleLoading(params) {
-    setloading(params);
-  }
-
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={{paddingBottom: hp(5)}}
       showsVerticalScrollIndicator={false}>
       <View style={{paddingHorizontal: 5, marginBottom: hp(1)}}>
-        <Text style={styles.title}>
-          {isLoggedIn ? 'Welcome' : 'Welcome!'}
-        </Text>
+        <Text style={styles.title}>{isLoggedIn ? 'Welcome' : 'Welcome!'}</Text>
         <Text style={styles.subTitle}>
           {isLoggedIn
             ? "You're doing good today!"
@@ -62,7 +25,7 @@ export default function HomeScreenUI(props) {
         </Text>
       </View>
 
-      {props.ongoingEvents ? (
+      {props?.HomeScreenData && props?.HomeScreenData?.events ? (
         <>
           {/* progress card */}
           <View style={styles.progress_card_wrapper}>
@@ -83,32 +46,34 @@ export default function HomeScreenUI(props) {
               <Text style={styles.rangetitle}>To - 21/04/2025</Text>
             </View>
             <View>
-              <PieProgressBar />
+              <PieProgressBar percentage={props?.HomeScreenData?.progressBar} />
             </View>
           </View>
 
           {/* not responding challenge */}
 
-          {props.notResponding && <NotRespondingCard  handleNavigate={props.handleNavigate} />}
+          {/* {props?.notResponding && props?.notResponding && (
+            <NotRespondingCard handleNavigate={props.handleNavigate} />
+          )} */}
 
           {/* ongoing  events  */}
           <View style={{marginVertical: hp(1)}}>
-            {props.Events.map((item, index) => {
+            {props?.HomeScreenData?.events?.map((item, index) => {
               return (
                 <View key={index}>
+                  <Text style={styles?.title}>{item?.eventName}</Text>
                   <EventCard
                     key={index}
                     {...item}
                     handleNavigate={props.handleNavigate}
                   />
-                  {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
                 </View>
               );
             })}
           </View>
 
           {/* ongoing challenges */}
-          <View style={{marginVertical: hp(2)}}>
+          {/* <View style={{marginVertical: hp(2)}}>
             {props.Challenges?.map((item, index) => (
               <ChallengeCard
                 key={index}
@@ -116,38 +81,42 @@ export default function HomeScreenUI(props) {
                 handleNavigate={props.handleNavigate}
               />
             ))}
-          </View>
+          </View> */}
 
           {/* session */}
-          <View style={{marginVertical: hp(1)}}>
-            <Text style={{ ...styles.title, fontFamily: Fonts.BoldItalic }}>
+          {/* <View style={{marginVertical: hp(1)}}>
+            <Text style={{...styles.title, fontFamily: Fonts.BoldItalic}}>
               Planning Diet for Weight Management
             </Text>
             {props.sessions.map((item, index) => (
               <View key={index}>
-              <SessionCard key={index} {...item} />
+                <SessionCard key={index} {...item} />
               </View>
             ))}
-          </View>
+          </View> */}
         </>
       ) : (
         <>
-          {/* ongoing  events  */}
-          <View style={{marginVertical: hp(1)}}>
-            {props.Events.map((item, index) => {
-              return (
-                <>
-                  <ProgramCard
-                    key={index}
-                    {...item}
-                    handleNavigate={props.handleNavigate}
-                  />
-                  {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
-                </>
-              );
-            })}
-          </View>
+            <Text style={{ textAlign: 'center' }}>No data found !</Text>
         </>
+        // <>
+        //   {/* ongoing  events  */}
+        //   <View style={{marginVertical: hp(1)}}>
+        //     {props?.events ||
+        //       [].map((item, index) => {
+        //         return (
+        //           <>
+        //             <ProgramCard
+        //               key={index}
+        //               {...item}
+        //               handleNavigate={props.handleNavigate}
+        //             />
+        //             {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
+        //           </>
+        //         );
+        //       })}
+        //   </View>
+        // </>
       )}
     </ScrollView>
   );
@@ -161,14 +130,14 @@ const styles = StyleSheet.create({
     fontSize: fontSize.m,
     // fontFamily: 'Poppins-Black',
     fontFamily: Fonts.Italic,
-    // fontWeight: 'bold',
-    marginBottom: hp(0.5),
+    fontWeight: 'bold',
+    // marginBottom: hp(0.5),
   },
   subTitle: {
     fontFamily: Fonts.BoldItalic,
     fontSize: fontSize.normal,
     color: '#94AE27',
-    marginBottom: hp(1),
+    // marginBottom: hp(1),
   },
 
   progress_card_wrapper: {

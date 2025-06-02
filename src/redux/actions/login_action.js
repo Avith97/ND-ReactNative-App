@@ -1,4 +1,4 @@
-import AsyncStore from '../../data/Async/AsyncStore'
+import AsyncStore from '../../data/async/AsyncStore.js'
 import Strings from '../../utils/constants/Strings.js'
 import actions from '../action_types/actions'
 import { store } from '../store'

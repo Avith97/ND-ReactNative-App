@@ -1,35 +1,42 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {CheckBox} from 'react-native-elements';
+import Colors from '../../../utils/constants/Colors';
+import { useSelector } from 'react-redux';
 
-const labels = {
-  heading: 'What motivates you to stay active?',
-  continue: 'Continue',
-};
+export default function CheckBoxSlideTabUI(props) {
+  const onboard = useSelector(state => state.onboard)
 
-export default function MotivationScreenUI(props) {
+  function onClick(item) {
+    props.handleChange("check-box", item)
+  }
+
   return (
-    <View style={styles.container}>
+    <View style={props.childContainerStyle}>
       <View style={styles.ContentContainer}>
-        <Text style={styles.heading}>{labels.heading}</Text>
+        {props?.question && (
+          <Text style={styles.heading}>{props?.question}</Text>
+        )}
+        {props?.sub_text && (
+          <Text style={styles.subText}>{props?.sub_text}</Text>
+        )}
 
-        {props?.options.map((item, index) => (
+        {props?.options?.map((item, index) => (
           <TouchableOpacity
             key={index}
             style={styles.optionRow}
-            onPress={() => props.handleChange('selectedMotivation', item)}>
-            <View
-              style={[
-                styles.checkbox,
-                props?.selectedMotivation.includes(item) && styles.checkedBox,
-              ]}
+            onPress={() => onClick(item)}>
+            <CheckBox
+              checkedColor={Colors.primary}
+              uncheckedColor={Colors.primary}
+              checked={onboard?.["check-box"]?.id === item.id}
+              // checked={props?.selectedMotivation.includes(item)}
+              onPress={() => onClick(item)}
             />
-            <Text style={styles.optionText}>{item}</Text>
+            {item?.text && <Text style={styles.optionText}>{item?.text}</Text>}
           </TouchableOpacity>
         ))}
       </View>
-      <TouchableOpacity style={styles.continueBtn} onPress={props.handleSubmit}>
-        <Text style={styles.continueText}>{labels.continue}</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -46,7 +53,7 @@ const styles = StyleSheet.create({
   optionRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15,
+    // marginBottom: 15,
   },
   checkbox: {
     width: 22,

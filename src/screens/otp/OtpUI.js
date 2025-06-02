@@ -13,8 +13,11 @@ import Colors from '../../utils/constants/Colors';
 
 // Static labels object
 import {en as LABELS} from '../../utils/labels/en';
+import {useSelector} from 'react-redux';
 
 const OtpUI = props => {
+  const isLoading = useSelector(state => state.settings.isLoading);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{LABELS.enterOtp}</Text>
@@ -25,7 +28,7 @@ const OtpUI = props => {
           name={'otp'}
           codeLength={6}
           handleChange={props.handleChange}
-          onPinSubmit={props?.handleSubmit}
+          // onPinSubmit={props?.handleSubmit}
           pinErr={props.otpErr}
         />
       </View>
@@ -37,7 +40,7 @@ const OtpUI = props => {
           title={LABELS.submit}
           name={'submit'}
           onPress={props?.handleSubmit}
-          // isLoading={store.getState().settings.isLoading}
+          isLoading={isLoading}
           btnStyles={styles.btnStyles}
           btnTitleStyles={{
             ...styles.textStyle,

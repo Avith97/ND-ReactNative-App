@@ -13,6 +13,7 @@ export const en = {
 
   //signup screen
   title: 'Sign up',
+  loginTitle: 'Login',
   emailOrMobileLabel: 'Enter Email or Mobile Number',
   emailOrMobilePlaceholder: 'Enter Email/Mobile Number',
   sendOtp: 'Send OTP',
@@ -28,10 +29,10 @@ export const en = {
   enterOtp: 'Enter OTP',
   resendOtp: 'Resend OTP',
   submit: 'Submit',
-  otpSubTitle:'Enter OTP for authentication',
+  otpSubTitle: 'Enter OTP for authentication',
 
   // create profile screen
-   createProfile: 'Create Profile',
+  createProfile: 'Create Profile',
   firstName: 'First Name',
   lastName: 'Last Name',
   email: 'Email',
@@ -49,4 +50,43 @@ export const en = {
   terms: 'Terms of Services ',
   and: 'and',
   privacy: ' Privacy Policy',
+
+  // onboard screen
+
+  //more about you screen
+  more_about_title: 'Welcome!',
+  more_about_subtitle: 'Tell us more about you..',
+  more_about_genderLabel: 'Select your gender',
+  more_about_ageLabel: 'Age',
+  more_about_weightLabel: 'Weight',
+  more_about_heightLabel: 'Height',
+  more_about_continueText: 'Continue',
+
+  more_about_weightUnits: ['KG', 'LB'],
+  more_about_heightUnits: ['CM', 'FT'],
+  more_about_agePlaceholder: 'Enter age',
+  more_about_weightPlaceholder: 'Kg',
+  more_about_heightPlaceholder: 'Cm',
+
+  // activity level screen
+  activityLevelHeading: 'What is your activity level?',
+  activityLevelSubText:
+    'This helps us design your workouts to fit your lifestyle',
+
+  //belly
+  bellyConditionHeading: 'Choose your belly condition',
+  bellyConditionSubText: 'Knowing your goals helps us tailor your experience',
+
+  // exercise type screen
+  exerciseTypeHeading: 'What type of exercises do you enjoy?',
+  exerciseTypeSubText: 'This helps us understand your preferences better.',
+  medicalConditionsHeading:
+    'Do you have any medical conditions or physical limitations that we should be aware of?',
+  workoutEnvironmentHeading: 'What is your preferred workout environment?',
+
+  //  final screen
+  final_get_started: 'Get Started',
+  final_title: 'Find Your Work',
+  final_description:
+    'Discover and access a wide variety of workout routines, filter and sort them based on criteria like type, duration, and intensity, and often receive personalized recommendations to meet your fitness goals and preferences.',
 };

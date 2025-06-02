@@ -29,11 +29,16 @@
 
 // export default App;
 
-
-import React, { useEffect, useState } from "react";
-import { View, Text, AppState, Platform, Vibration, Button, Alert, ActivityIndicator } from "react-native";
-import BackgroundFetch from "react-native-background-fetch";
-import BackgroundTimer from "react-native-background-timer";
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Platform,
+  Vibration,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
+import BackgroundFetch from 'react-native-background-fetch';
+import BackgroundTimer from 'react-native-background-timer';
 // import HealthConnect, { initialize, openHealthConnectDataManagement, readRecord, readRecords, requestPermission, SdkAvailabilityStatus } from "react-native-health-connect";
 
 import {
@@ -41,26 +46,27 @@ import {
   getSdkStatus,
   requestPermission,
   readRecords,
-  openHealthConnectDataManagement,
-  openHealthConnectSettings
-} from "react-native-health-connect";
-import HealthScreen from "./Healthconnect";
-import ErrorBoundary from "./src/common/components/errorboundary/ErrorBoundary";
-import Navigator from "./src/routes";
-import CustomWebView from "./src/common/components/webview/CustomWebView";
-import OnboardingWrapper from "./src/common/components/onboarding/OnboardingWrapper";
-import SplashScreen from "./src/screens/splash/SplashScreen";
-import LoginScreen from "./src/screens/login/LoginScreen";
-import SignUpScreen from "./src/screens/signup/SignUpScreen";
+  openHealthConnectSettings,
+} from 'react-native-health-connect';
+import ErrorBoundary from './src/common/components/errorboundary/ErrorBoundary';
+import Navigator from './src/routes';
+import { store } from './src/redux/store';
+import { Provider } from 'react-redux'
+
+
+// import Toast from 'react-native-toast-message'
+// import { toast_config } from './src/common/components/toasts/toast_config'
+
 // Define a vibration pattern: vibrate for 500ms, pause for 1 second, then vibrate for 500ms again
 const VIBRATION_PATTERN = [500, 1000, 500];
 
 // Function to start vibration loop when the app is running in the foreground
 const startVibrationLoop = () => {
-  if (Platform.OS === "android") {  // Ensure this runs only on Android
+  if (Platform.OS === 'android') {
+    // Ensure this runs only on Android
     BackgroundTimer.runBackgroundTimer(() => {
       Vibration.vibrate(VIBRATION_PATTERN); // Trigger vibration based on the defined pattern
-      console.log("Vibrating...");
+      console.log('Vibrating...');
     }, 30000); // Repeat every 30 seconds
   }
 };
@@ -79,15 +85,15 @@ const setupBackgroundFetch = async () => {
       startOnBoot: true, // Ensures background fetch starts when the device boots up
       enableHeadless: true, // Allows background tasks to run even if the app is not active
     },
-    async (taskId) => {
-      console.log("Background fetch executed:", taskId); // Log when background fetch is executed
+    async taskId => {
+      console.log('Background fetch executed:', taskId); // Log when background fetch is executed
       Vibration.vibrate(VIBRATION_PATTERN); // Trigger vibration when the background fetch executes
       BackgroundFetch.finish(taskId); // Notify the system that the background task is complete
     },
-    async (taskId) => {
-      console.log("Background fetch timeout:", taskId); // Log if the task times out
+    async taskId => {
+      console.log('Background fetch timeout:', taskId); // Log if the task times out
       BackgroundFetch.finish(taskId); // Mark the background task as finished
-    }
+    },
   );
 };
 
@@ -110,7 +116,6 @@ const setupBackgroundFetch = async () => {
 //             return;
 //         } else {
 
-
 //           const stepsData = await readRecords("Steps", { timeRangeFilter: 'last24Hours' });
 //           console.log('steps data -->',stepsData)
 //         }
@@ -118,9 +123,7 @@ const setupBackgroundFetch = async () => {
 //     console.log('health err--->',error)
 //   }
 
-
 // };
-
 
 const vibrate = async () => {
   try {
@@ -128,36 +131,36 @@ const vibrate = async () => {
 
     try {
       const sdkStatus = await getSdkStatus();
-      console.log("Health Connect SDK Status -->", sdkStatus);
+      console.log('Health Connect SDK Status -->', sdkStatus);
 
       switch (sdkStatus) {
         case 0:
-          console.log("✅ Health Connect is available!");
+          console.log('✅ Health Connect is available!');
           break;
         case 1:
-          console.log("⚠️ Health Connect is not installed.");
+          console.log('⚠️ Health Connect is not installed.');
           openHealthConnectSettings();
           return;
         case 2:
-          console.log("⚠️ Health Connect is not up to date.");
+          console.log('⚠️ Health Connect is not up to date.');
           openHealthConnectSettings();
           return;
         case 3:
-          console.log("🚨 No permission to use Health Connect.");
+          console.log('🚨 No permission to use Health Connect.');
           return;
         case 4:
-          console.log("⚠️ Health Connect not supported on this device.");
+          console.log('⚠️ Health Connect not supported on this device.');
           return;
         default:
-          console.log("❌ Unknown Health Connect status.");
+          console.log('❌ Unknown Health Connect status.');
           return;
       }
 
       // Initialize Health Connect
       const initialized = await initialize();
-      console.log("Health Connect Initialized:", initialized);
+      console.log('Health Connect Initialized:', initialized);
     } catch (error) {
-      console.error("Error checking Health Connect:", error);
+      console.error('Error checking Health Connect:', error);
     }
     // ✅ Check SDK Status
     // const sdkStatus = await getSdkStatus();
@@ -171,14 +174,14 @@ const vibrate = async () => {
     // ✅ Initialize Health Connect
     const isInitialized = await initialize();
     if (!isInitialized) {
-      console.log("Health Connect initialization failed.");
+      console.log('Health Connect initialization failed.');
       return;
     }
 
     // ✅ Request necessary permissions
-    const grantedPermissions = await requestPermission(["steps", "heart_rate"]);
+    const grantedPermissions = await requestPermission(['steps', 'heart_rate']);
     if (grantedPermissions.length === 0) {
-      console.log("Health Connect permission denied.");
+      console.log('Health Connect permission denied.');
       return;
     }
 
@@ -188,23 +191,22 @@ const vibrate = async () => {
     startTime.setDate(endTime.getDate() - 1); // 24 hours ago
 
     // ✅ Read Step Data
-    const stepsData = await readRecords("Steps", {
-      timeRangeFilter: { startTime, endTime },
+    const stepsData = await readRecords('Steps', {
+      timeRangeFilter: {startTime, endTime},
     });
-    Alert.alert('msg', JSON.stringify(stepsData))
-    console.log("Steps Data:", stepsData);
-
+    Alert.alert('msg', JSON.stringify(stepsData));
+    console.log('Steps Data:', stepsData);
   } catch (error) {
-    console.log("Health Connect Error --->", error);
+    console.log('Health Connect Error --->', error);
   }
 };
 
 // initialize()
 // Main app component
 const App = () => {
-  const [loading, setloading] = useState(false)
+  const [loading, setloading] = useState(false);
   useEffect(() => {
-    initHealthConnect()
+    initHealthConnect();
     // setupBackgroundFetch(); // Initialize background fetch when the app loads
 
     // // Listen to app state changes (foreground or background)
@@ -223,50 +225,23 @@ const App = () => {
   }, []);
 
   const initHealthConnect = () => {
-    setloading(true)
+    setloading(true);
     // initialize()
     setTimeout(() => {
-      setloading(false)
-    }, 200)
-  }
+      setloading(false);
+    }, 200);
+  };
 
   function handleLoading(params) {
-    setloading(params)
+    setloading(params);
   }
 
   return (
     <ErrorBoundary>
-      {/* <CustomWebView
-        // URL={'https://reactnative.dev/'}
-        // URL={'https://necessarydevil.com/faq'}
-        // URL={'https://necessarydevil.com/terms'}
-        URL={'https://necessarydevil.com/privacy'}
-      /> */}
-      {/* <Navigator /> */}
-      <OnboardingWrapper
-        slides={[
-          () => <SplashScreen />,
-          () => <LoginScreen />,
-          () => <SignUpScreen />,
-          () => <LoginScreen />,
-        ]}
-        onSkip={() => console.log('Skipped')}
-        onFinish={() => console.log('Finished')}
-      />
-
-      {/* <View style={{ flex: 1 }}> */}
-      {/* <Text>Vibration Service Running</Text>
-      <Button title="Vibration" onPress={vibrate} /> */}
-      {loading &&
-        <View style={{ zIndex: 1, position: 'absolute', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <ActivityIndicator size="large" color="red" />
-        </View>
-      }
-      {/* <HealthScreen loading={loading} handleLoading={handleLoading} /> */}
-
-
-
-      {/* </View> */}
+      <Provider store={store}>
+        <Navigator />
+        {/* <Toast config={toast_config} autoHide visibilityTime={4000} /> */}
+      </Provider>
     </ErrorBoundary>
   );
 };

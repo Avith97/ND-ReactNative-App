@@ -1,6 +1,6 @@
 // react native components
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
 // common components
 import CustomButton from '../../common/components/buttons/CustomButton';
@@ -69,8 +69,8 @@ const LoginUI = props => {
 
         <CustomButton
           title={labels?.signUpWithEmail}
-          name={'sign_in_google'}
-          onPress={props?.handleNavigate}
+          name={'signup'}
+          onPress={() => props?.handleNavigate('signup')}
           // isLoading={store.getState().settings.isLoading}
           btnStyles={{
             ...styles.btnStyles,
@@ -88,7 +88,9 @@ const LoginUI = props => {
 
         <View style={{flexDirection: 'row'}}>
           <Text>{labels?.alreadyRegistered}</Text>{' '}
-          <Text style={{color: Colors.targetColor}}> {labels?.login}</Text>
+          <TouchableOpacity onPress={() => props?.handleNavigate('login')}>
+            <Text style={{color: Colors.targetColor}}> {labels?.login}</Text>
+          </TouchableOpacity>
         </View>
       </View>
       {/* </CustomImageBackground> */}

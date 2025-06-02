@@ -1,58 +1,48 @@
+// react native + react core components
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import CustomTextInput from '../../../common/components/textInput/CustomTextInput';
 import Colors from '../../../utils/constants/Colors';
 import {fontSize} from '../../../utils/constants/Fonts';
 import {hp, wp} from '../../../common/functions/dimensions';
-import {Images} from '../../../utils/constants/Images';
 
 // Centralized static labels
-const LABELS = {
-  title: 'Hello Lakhan!',
-  subtitle: 'Tell us more about you..',
-  genderLabel: 'Select your gender',
-  ageLabel: 'Age',
-  weightLabel: 'Weight',
-  heightLabel: 'Height',
-  continueText: 'Continue',
-  genderOptions: ['Male', 'Female'],
-  weightUnits: ['KG', 'LB'],
-  heightUnits: ['CM', 'FT'],
-  agePlaceholder: 'Enter age',
-  weightPlaceholder: 'Kg',
-  heightPlaceholder: 'Cm',
-};
+import {en as LABELS} from '../../../utils/labels/en';
+import Icons from '../../../assets/icons/Icons';
 
 export default function GenderScreenUI(props) {
-
   // UI
-  return (
-    <View style={styles.container}>
-      <View style={styles.ContentContainer}>
-        <Text style={styles.title}>{LABELS.title}</Text>
-        <Text style={styles.subtitle}>{LABELS.subtitle}</Text>
 
-        <Text style={styles.label}>{LABELS.genderLabel}</Text>
+  let genderOptions = ['Male', 'Female'];
+  return (
+    <View style={props.childContainerStyle}>
+      <View style={styles.ContentContainer}>
+        <Text style={styles.title}>{LABELS?.more_about_title}</Text>
+        <Text style={styles.subtitle}>{LABELS.more_about_subtitle}</Text>
+
+        <Text style={styles.label}>{LABELS.more_about_genderLabel}</Text>
         <View style={styles.genderContainer}>
-          {LABELS.genderOptions.map(g => (
+          {genderOptions.map(g => (
             <TouchableOpacity
               key={g}
-              style={[styles.genderBox, props?.gender === g && styles.genderSelected]}
-              onPress={() => props?.handleChange("gender" ,g)}>
-              <Image
-                source={
-                  g === 'Male'
-                    ? Images.select_gender_male_icon
-                    : Images.select_gender_female_icon
-                }
-                style={{width: 45, height: 45, marginRight: 8}}
-              />
+              style={[
+                styles.genderBox,
+                props?.gender === g && styles.genderSelected,
+              ]}
+              onPress={() => props?.handleChange('gender', g)}>
+              <View>
+                <Icons
+                  name={g === 'Male' ? 'Male' : 'Female'}
+                  size={40}
+                  color="#000"
+                />
+              </View>
               <Text style={{paddingTop: 5}}>{g}</Text>
             </TouchableOpacity>
           ))}
         </View>
 
-        <Text style={styles.label}>{LABELS.ageLabel}</Text>
+        <Text style={styles.label}>{LABELS.more_about_ageLabel}</Text>
         <View style={styles.row}>
           <CustomTextInput
             name={'age'}
@@ -61,12 +51,12 @@ export default function GenderScreenUI(props) {
             inputProps={{
               // flex: 1,
               value: props.age,
-              placeholder: LABELS.agePlaceholder,
+              placeholder: LABELS.more_about_agePlaceholder,
             }}
           />
         </View>
 
-        <Text style={styles.label}>{LABELS.weightLabel}</Text>
+        <Text style={styles.label}>{LABELS.more_about_weightLabel}</Text>
         <View style={styles.row}>
           <CustomTextInput
             name={'weight'}
@@ -75,26 +65,12 @@ export default function GenderScreenUI(props) {
             inputProps={{
               // flex: 1,
               value: props.weight,
-              placeholder: LABELS.weightPlaceholder,
+              placeholder: LABELS.more_about_weightPlaceholder,
             }}
           />
-
-          {/* <View style={styles.unitContainer}>
-            {LABELS.weightUnits?.map(unit => (
-              <TouchableOpacity
-                key={unit}
-                style={[
-                  styles.unitBtn,
-                  props.weightUnit === unit && styles.unitSelected,
-                ]}
-                onPress={() => props.handleChange('weightUnit', unit)}>
-                <Text>{unit}</Text>
-              </TouchableOpacity>
-            ))}
-          </View> */}
         </View>
 
-        <Text style={styles.label}>{LABELS.heightLabel}</Text>
+        <Text style={styles.label}>{LABELS.more_about_heightLabel}</Text>
         <View style={styles.row}>
           <CustomTextInput
             name={'height'}
@@ -103,35 +79,16 @@ export default function GenderScreenUI(props) {
             inputProps={{
               // flex: 1,
               value: props.height,
-              placeholder: LABELS.heightPlaceholder,
+              placeholder: LABELS.more_about_heightPlaceholder,
             }}
           />
-
-          {/* <View style={styles.unitContainer}>
-            {LABELS.heightUnits?.map(unit => (
-              <TouchableOpacity
-                key={unit}
-                style={[
-                  styles.unitBtn,
-                  props?.heightUnit === unit && styles.unitSelected,
-                ]}
-                onPress={() => props.handleChange('heightUnit', unit)}>
-                <Text>{unit}</Text>
-              </TouchableOpacity>
-            ))}
-          </View> */}
         </View>
       </View>
-
-      <TouchableOpacity style={styles.continueBtn} onPress={props.handleSubmit}>
-        <Text style={styles.continueText}>{LABELS.continueText}</Text>
-      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {padding: 20, backgroundColor: 'white', flex: 1},
   ContentContainer: {
     flex: 1,
     paddingTop: 20,
