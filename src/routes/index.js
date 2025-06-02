@@ -18,7 +18,7 @@ const Navigator = props => {
       }}
       linking={[]}>
       <Stack.Navigator
-        initialRouteName={Strings.NAVIGATION.onboard}
+        initialRouteName={Strings.NAVIGATION.splash}
         screenOptions={{
           headerShown: false,
           gestureEnabled: true,
