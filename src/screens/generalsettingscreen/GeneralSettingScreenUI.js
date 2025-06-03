@@ -7,6 +7,12 @@ import Colors from '../../utils/constants/Colors';
 import {hp, wp} from '../../common/functions/dimensions';
 import DialogBox from '../../common/components/Modal/DialogBox';
 import CustomButton from '../../common/components/buttons/CustomButton';
+import {store} from '../../redux/store';
+import {URL} from '../../utils/constants/Urls';
+import {services} from '../../services/axios/services';
+import Strings from '../../utils/constants/Strings';
+import {appsnackbar} from '../../common/functions/snackbar_actions';
+import {useNavigation} from '@react-navigation/native';
 
 export default function GeneralSettingScreenUI(props) {
   const renderItem = ({item}) => {
@@ -19,6 +25,46 @@ export default function GeneralSettingScreenUI(props) {
       </TouchableOpacity>
     );
   };
+
+  const navigation = useNavigation(); // Access navigation
+
+  const handleNavigate = () => {
+    navigation.navigate(Strings.NAVIGATION.auth); // Now works!
+  };
+
+  const handleDelete = async () => {
+    try {
+      const userId = store.getState().auth?.id;
+      const deleteUrl = [URL.delete_user, userId].join('/');
+
+      // Call the delete service correctly
+      const resp = await services._delete(
+        deleteUrl,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${store.getState().auth.token}`,
+          },
+        },
+      );
+
+      if (resp?.type === 'success') {
+        const message = resp?.data?.success?.verbose;
+        console.log('User deleted successfully:', message);
+
+        // ✅ Navigate to login screen
+        handleNavigate();
+      } else {
+        appsnackbar.showErrMsg('Something went wrong!');
+      }
+    } catch (error) {
+      console.log('Error delete screen get details', error);
+      appsnackbar.showErrMsg('Something went wrong!');
+    } finally {
+      props.setModalVisible(false);
+    }
+  };
+
   return (
     <View>
       {/* Custom Modal */}
@@ -47,8 +93,7 @@ export default function GeneralSettingScreenUI(props) {
           <View style={{flex: 1, alignItems: 'center'}}>
             <TouchableOpacity
               onPress={() => {
-                props.setModalVisible(false);
-                alert('Account deleted');
+                handleDelete();
               }}>
               <Text
                 style={{fontSize: 16, color: '#F55346', fontWeight: 'bold'}}>
