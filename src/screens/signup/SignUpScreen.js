@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import { Keyboard, View } from 'react-native';
 import React, {useState} from 'react';
 import SignupUI from './SignupUI';
 import {appsnackbar} from '../../common/functions/snackbar_actions';
@@ -72,6 +72,7 @@ const SignUpScreen = props => {
   }
 
   async function handleSubmit(params) {
+    Keyboard.dismiss()
     let isValid = validate();
     if (!isValid) return;
     // return;
