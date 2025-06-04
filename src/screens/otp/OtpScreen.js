@@ -83,6 +83,10 @@ const OtpScreen = props => {
       } else if (resp?.api_response?.status === 200) {
         // If new user, navigate to create profile screen (newUser === true)
         store.dispatch(set_user_details(resp?.api_response?.data));
+
+        console.log("token refreshed" , resp?.api_response?.data);
+        
+        services?.refreshInstance(resp?.api_response?.data?.token)
         if (resp?.api_response?.data?.newUser) {
           props.navigation.navigate(Strings.NAVIGATION.create_profile);
         } else {
