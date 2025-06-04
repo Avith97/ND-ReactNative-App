@@ -4,7 +4,7 @@ import AuthReducer from "./AuthReducer";
 import UserReducer from "./UserReducer";
 import ThemeReducer from "./ThemeReducer";
 import OnBoardingReducer from "./OnBoardingReducer";
-import eventReducer from "./eventReducer";
+import eventReducer from "./EventReducer";
 
 export const allReducers = combineReducers({
     auth: AuthReducer,

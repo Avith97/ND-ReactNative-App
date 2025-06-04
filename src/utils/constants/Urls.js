@@ -17,6 +17,12 @@ export const URL = {
     create_profile: 'signup',
 
     //Get All Event list
-    events: "3668/events",
-    upcomingEvents: "upcomingEvents/3668"
+    // my_events: "events",
+    my_events:"user_id/events",
+    upcoming_events: "upcomingEvents/user_id",
+    check_user_registered: 'event/registered/${event_id}/${user_id}' ,
+
+
+    get_event:"event/event_id",
+    register_event:"register",
 }
