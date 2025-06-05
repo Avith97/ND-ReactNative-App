@@ -1,4 +1,4 @@
-import {environment} from '../../../settings';
+import { environment } from '../../../settings';
 
 const SERVER = {
   LIVE: 'https://events.necessarydevil.com/api/v1/',
@@ -12,16 +12,23 @@ export const BASE_URL = SERVER[environment];
 export const URL = {
   google: 'www.google.in',
   otp: 'login/otp',
-  otp_verify: 'login/verify/otp', //{userName: "vinit@anssoft.in", otp: "122222", distKey: "TXK8vWYRPSXm08uXrZYV0g=="}//{code: "401", verbose: "Invalid OTP"}}
+  otp_verify: 'login/verify/otp', 
   create_profile: 'signup',
-
-  //Get All Event list
-  events: '3668/events',
-  upcomingEvents: 'upcomingEvents/3668',
 
   //delete user
   delete_user: 'delete/user',
 
+    //Get All Event list
+  // my_events: "events",
+  my_events: "user_id/events",
+  upcoming_events: "upcomingEvents/user_id",
+  check_user_registered: 'event/registered/${event_id}/${user_id}',
+
+  get_event: "event/event_id",
+  register_event: "register",
+  
   //Get leaderBoard Details
   leaderBoardDetails: 'public/leaderboard/2477?activity=STEPS&categoryId=4424&activityPriority=PRIMARY&limit=10',
 };
+
+

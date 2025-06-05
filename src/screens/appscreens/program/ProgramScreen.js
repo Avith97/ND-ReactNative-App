@@ -11,11 +11,18 @@ import ProgramScreenUI from './ProgramScreenUI';
 import {services} from '../../../services/axios/services';
 import {BASE_URL, URL} from '../../../utils/constants/Urls';
 import moment from 'moment';
+import {useSelector} from 'react-redux';
+import {store} from '../../../redux/store';
+import Loader from '../../../common/components/loader/Loader';
+import actions from '../../../redux/action_types/actions';
+import {TemplateService} from '../../../services/templates/TemplateService';
 
 export default function ProgramScreen(props) {
   const [state, setState] = useState({
     selectedTabID: 0,
   });
+
+  const userData = useSelector(state => state.auth);
 
   const [options, setOptions] = useState({
     programs: [],
@@ -27,14 +34,12 @@ export default function ProgramScreen(props) {
 
   // Fetch "My Programs"
   const fetchPrograms = async () => {
+    let url = TemplateService._userId(URL.my_events, userData?.runnerId);
     try {
-      const resp = await services._get(URL.events, {
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNzIyIiwiaWF0IjoxNzA5NzE3OTgzfQ.X2r3mkvbjWZ7a4ngv6cB8aO31HZcgAkpjtDigFXUhizqqhbyC7xkfx1-3vyLmLLpOZICgNXIl15GXObE7uli2g',
-        },
-      });
+      // api request
+      const resp = await services._get(url);
 
+      // response handle
       if (resp.type !== 'success') return;
 
       if (resp.api_response.status === 200) {
@@ -68,14 +73,16 @@ export default function ProgramScreen(props) {
 
   // Fetch "Upcoming Programs"
   const fetchUpcomingPrograms = async () => {
+    
+    // url
+    let url = TemplateService._userId(URL.upcoming_events, userData?.runnerId);
     try {
-      const resp = await services._get(URL.upcomingEvents, {
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzNzIyIiwiaWF0IjoxNzA5NzE3OTgzfQ.X2r3mkvbjWZ7a4ngv6cB8aO31HZcgAkpjtDigFXUhizqqhbyC7xkfx1-3vyLmLLpOZICgNXIl15GXObE7uli2g',
-        },
-      });
 
+      // API request
+      const resp = await services._get(url);
+
+
+      // response handle
       if (resp.type !== 'success') return;
 
       if (resp.api_response.status === 200) {
@@ -114,11 +121,16 @@ export default function ProgramScreen(props) {
       fetchUpcomingPrograms();
     }
   }, [state.selectedTabID]);
+
   const handleChange = tab => {
     setState(prev => ({...prev, selectedTabID: tab?.id}));
   };
 
-  const handleNavigate = () => {
+  const handleNavigate = data => {
+    store.dispatch({
+      type: actions.SET_EVENT_DETAILS,
+      payload: data || {},
+    });
     if (state.selectedTabID === 0) {
       props.navigation.navigate(Strings.NAVIGATION.dashboard);
     } else {
@@ -130,6 +142,7 @@ export default function ProgramScreen(props) {
 
   return (
     <View style={styles.container}>
+      <Loader />
       <ProgramScreenUI
         {...state}
         {...options}
