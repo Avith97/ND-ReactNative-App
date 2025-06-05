@@ -56,8 +56,8 @@ import { initiateApp } from './src/common/functions/initiate';
 import FirebasePushNotificationService from './src/services/firebase/FCM';
 
 
-// import Toast from 'react-native-toast-message'
-// import { toast_config } from './src/common/components/toasts/toast_config'
+import Toast from 'react-native-toast-message'
+import { toast_config } from './src/common/components/toasts/toast_config'
 
 // Define a vibration pattern: vibrate for 500ms, pause for 1 second, then vibrate for 500ms again
 const VIBRATION_PATTERN = [500, 1000, 500];
@@ -244,7 +244,7 @@ const App = () => {
     <ErrorBoundary>
       <Provider store={store}>
         <Navigator />
-        {/* <Toast config={toast_config} autoHide visibilityTime={4000} /> */}
+        <Toast config={toast_config} autoHide visibilityTime={4000} />
       </Provider>
     </ErrorBoundary>
   );
