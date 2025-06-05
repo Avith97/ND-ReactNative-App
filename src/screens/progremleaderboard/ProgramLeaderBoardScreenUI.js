@@ -2,7 +2,6 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 
-
 // common components
 import TabSelector from '../../common/components/tabselector/TabSelector';
 import UserLeaderBoardCard from '../../common/components/userleaderboardcard/UserLeaderBoardCard';
@@ -16,8 +15,9 @@ import {Image} from 'react-native';
 import Fonts, {fontSize} from '../../utils/constants/Fonts';
 import {hp, wp} from '../../common/functions/dimensions';
 import Icons, {iconType} from '../../assets/icons/Icons';
+import IndividualLeaderBoard from './IndividualLeaderBoard';
 
-export default function ProgramLeaderBoardScreenUI(props) {
+export default function ProgramLeaderBoardScreenUI({selectedTab, ...props}) {
   const TrophyIcon = () => (
     <Image
       source={{uri: 'https://img.icons8.com/3d-fluency/94/prize.png'}}
@@ -25,54 +25,48 @@ export default function ProgramLeaderBoardScreenUI(props) {
     />
   );
 
-  const LeaderboardItem = ({item}) => (
-    <View
-      style={[styles.itemContainer, {backgroundColor: item.backgroundColor}]}>
-      <Image source={{uri: item.avatar}} style={styles.avatar} />
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.score}>{item.score}</Text>
-      <TrophyIcon />
-    </View>
-  );
   return (
-    <View>
-      <View style={styles.headerIconTitle}>
-        <Text style={{fontSize: fontSize.m, fontWeight: 700}}>Leaderboard</Text>
-        <TouchableOpacity onPress={props.toggleDialog}>
-          <Icons name={'filter'} type={iconType.feather} size={20} />
-        </TouchableOpacity>
-      </View>
-      <View style={{marginBottom: hp(1.5)}}>
-        <CustomTextInput
-          name={'firstname'}
-          inputStyle={{...styles.textInputStyle}}
-          // onChangeText={props?.handleChange}
-          inputProps={{
-            // flex: 1,
-            //   value: props.firstname,
-            placeholder: 'Name / BIB no.',
-          }}
-          leftIcon={{
-            type: iconType.material,
-            name: 'Search',
-            size: fontSize.l,
-            // color: Colors.red,
-          }}
-        />
+    <>
+      <View style={{flex: 1}}>
+        <View style={styles.headerIconTitle}>
+          <Text style={{fontSize: fontSize.m, fontWeight: 700}}>
+            Leaderboard
+          </Text>
+          <TouchableOpacity onPress={props.toggleDialog}>
+            <Icons name={'filter'} type={iconType.feather} size={20} />
+          </TouchableOpacity>
+        </View>
+        <View style={{marginBottom: hp(1.5)}}>
+          <CustomTextInput
+            name={'firstname'}
+            inputStyle={{...styles.textInputStyle}}
+            // onChangeText={props?.handleChange}
+            inputProps={{
+              // flex: 1,
+              //   value: props.firstname,
+              placeholder: 'Name / BIB no.',
+            }}
+            leftIcon={{
+              type: iconType.material,
+              name: 'Search',
+              size: fontSize.l,
+              // color: Colors.red,
+            }}
+          />
+        </View>
+
+        <UserLeaderBoardCard />
+
+        <View style={{flex: 1}}>
+          <IndividualLeaderBoard
+            tabs={props.tabs}
+            onTabChange={props.handleChange}
+            selectedTab={selectedTab}
+            leaderBoardDetails={props.leaderBoardDetails}
+          />
+        </View>
       </View>
 
-      <UserLeaderBoardCard />
-
-      <View style={styles.dashboardData}>
-        <TabSelector tabs={props.tabs} onTabChange={props.handleChange} />
-
-        <FlatList
-          data={props.DATA}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => <LeaderboardItem item={item} />}
-          scrollEnabled={false} // FlatList won't scroll, only ScrollView will
-        />
-      </View>
       <DialogBox visible={props.dialogVisible} onClose={props.toggleDialog}>
         <View
           style={{
@@ -89,24 +83,49 @@ export default function ProgramLeaderBoardScreenUI(props) {
               justifyContent: 'space-between',
               alignContent: 'center',
             }}>
-            <Text>Week Filter</Text>
+            <Text>Participant</Text>
             <View style={{width: '50%'}}>
               <CustomDropdown
-                name="weekFilter"
+                name="participant"
                 label="Select"
                 data={[
-                  {weekFilter: '1 May - 7 May'},
-                  {weekFilter: '8 May - 14 May'},
-                  {weekFilter: '15 May - 21 May'},
+                  {type: 'individual', label: 'Individual'},
+                  {type: 'team', label: 'Team'},
+                  {type: 'ageGroup', label: 'AgeGroup'},
                 ]}
                 onChangeText={props.handleDropdownChange}
-                valueExtractor={item => item.weekFilter}
-                labelExtractor={item => item.weekFilter}
+                valueExtractor={item => item.participant}
+                labelExtractor={item => item.participant}
               />
             </View>
           </View>
 
           {/* Row 2 */}
+          <View
+            style={{
+              flexDirection: 'row',
+              marginBottom: hp(1),
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              alignContent: 'center',
+            }}>
+            <Text>Week Filter</Text>
+            <View style={{width: '50%'}}>
+              <CustomDropdown
+                name="weekFilter"
+                label="Select Week"
+                data={props.customDatesOptions}
+                value={props.dropDownValue?.weekFilter?.label}
+                onChangeText={(value, index, data) => {
+                  props.handleDropdownChange('weekFilter', index);
+                }}
+                valueExtractor={item => item}
+                labelExtractor={item => item.label}
+              />
+            </View>
+          </View>
+
+          {/* Row 3 */}
           <View
             style={{
               flexDirection: 'row',
@@ -121,13 +140,16 @@ export default function ProgramLeaderBoardScreenUI(props) {
                 name="topParticipant"
                 label="Select"
                 data={[
-                  {topParticipant: '5'},
-                  {topParticipant: '10'},
-                  {topParticipant: '15'},
+                  {value: 5, label: '5'},
+                  {value: 10, label: '10'},
+                  {value: 15, label: '15'},
                 ]}
-                onChangeText={props.handleDropdownChange}
-                valueExtractor={item => item.topParticipant}
-                labelExtractor={item => item.topParticipant}
+                value={props.dropDownValue.topParticipant?.label}
+                onChangeText={(name, value, data) => {
+                  props.handleDropdownChange(name, value);
+                }}
+                valueExtractor={item => item}
+                labelExtractor={item => item.label}
               />
             </View>
           </View>
@@ -137,7 +159,7 @@ export default function ProgramLeaderBoardScreenUI(props) {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: "flex-end",
+            justifyContent: 'flex-end',
             width: '100%',
             gap: 10,
           }}>
@@ -155,7 +177,10 @@ export default function ProgramLeaderBoardScreenUI(props) {
           <CustomButton
             title={'Apply'}
             name={'apply'}
-            onPress={props?.toggleDialog}
+            onPress={() => {
+              props?.toggleDialog();
+              props?.onApplyFilters(); // trigger apply flag
+            }}
             minWidth={wp('30')}
             btnStyles={styles.btnStylesApply}
             btnTitleStyles={{
@@ -165,7 +190,7 @@ export default function ProgramLeaderBoardScreenUI(props) {
           />
         </View>
       </DialogBox>
-    </View>
+    </>
   );
 }
 

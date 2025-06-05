@@ -21,4 +21,7 @@ export const URL = {
 
   //delete user
   delete_user: 'delete/user',
+
+  //Get leaderBoard Details
+  leaderBoardDetails: 'public/leaderboard/2477?activity=STEPS&categoryId=4424&activityPriority=PRIMARY&limit=10',
 };
