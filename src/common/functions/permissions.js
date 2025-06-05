@@ -1,7 +1,10 @@
-import { PermissionsAndroid } from 'react-native'
+import { PermissionsAndroid, Platform } from 'react-native'
 
 const AndroidPermissions = {
   requestPermission: async permission => {
+    if (Platform.OS !== 'android') {
+      return
+    }
     try {
       const granted = await PermissionsAndroid.request(permission, {
         title: `${permission} Permission`,
