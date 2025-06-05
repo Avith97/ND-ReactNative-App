@@ -21,7 +21,7 @@ export default function UpComingsTab(props) {
             {...item}
             buttonName = "Register"
             minWidth={'100%'}
-            handleNavigate={props?.handleNavigate}
+            handleNavigate={()=>props?.handleNavigate(item)}
           />
         </View>
       ))}

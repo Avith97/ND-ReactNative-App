@@ -7,6 +7,7 @@ import {hp, wp} from '../../common/functions/dimensions';
 import CustomButton from '../../common/components/buttons/CustomButton';
 
 export default function EventStartedScreenUI(props) {
+
   return (
     <View style={styles.container}>
       <CustomImageBackground
@@ -20,13 +21,11 @@ export default function EventStartedScreenUI(props) {
         <View style={styles.contentContainer}>
           {/* Overlay content */}
           <View style={styles.overlay}>
-            <Text style={styles.title}>Step Challenge</Text>
-            <Text style={styles.subtitle}>
-              Walking once a day, keeps the doctor away!!. Indeed walking helps
-              you in weight loss, relieving anxiety, fighting diabetes and so
-              many other health-related things. Lets "step with a smile" for
-              next seven days
-            </Text>
+            {props?.eventDetail && <Text style={styles.title}>{props?.eventDetail?.title}</Text>}
+            {props?.eventDetail?.program && <Text style={styles.subtitle}>
+             {props?.eventDetail?.program?.description}
+            </Text> }
+            
           </View>
 
           {/* Get Started Button */}

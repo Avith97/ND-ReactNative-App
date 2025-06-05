@@ -16,7 +16,7 @@ export default function MyProgramTab(props) {
           <ProgramCard
             {...item}
             minWidth={'100%'}
-            handleNavigate={props.handleNavigate}
+            handleNavigate={() =>props.handleNavigate(item)}
           />
         </View>
       ))}

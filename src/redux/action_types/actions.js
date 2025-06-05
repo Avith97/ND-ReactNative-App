@@ -10,4 +10,8 @@ export default {
     // theme actions
     SET_THEME: 'SET_THEME',
     SET_ONBOARDING_DATA: 'SET_ONBOARDING_DATA',
+
+    // event
+
+    SET_EVENT_DETAILS:"SET_EVENT_DETAILS"
 }
