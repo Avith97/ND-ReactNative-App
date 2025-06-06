@@ -1,11 +1,11 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {hp, wp} from '../../functions/dimensions'; // Adjust if you use another method for responsive units
-import Icons, {iconType} from '../../../assets/icons/Icons';
-import CustomButton from '../buttons/CustomButton';
-import Strings from '../../../utils/constants/Strings';
+import React from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { hp, wp } from '../../functions/dimensions' // Adjust if you use another method for responsive units
+import Icons, { iconType } from '../../../assets/icons/Icons'
+import CustomButton from '../buttons/CustomButton'
+import Strings from '../../../utils/constants/Strings'
 
-const NotRespondingCard = ({onClose, handleNavigate}) => {
+const NotRespondingCard = ({ onClose, handleNavigate }) => {
   return (
     <View style={styles.cardContainer}>
       <TouchableOpacity style={styles.closeIcon} onPress={onClose}>
@@ -26,16 +26,16 @@ const NotRespondingCard = ({onClose, handleNavigate}) => {
         name={Strings.NAVIGATION.submitresponse}
         btnStyles={{
           ...styles.submitButton,
-          elevation: 5,
+          elevation: 5
         }}
         onPress={handleNavigate}
         btnTitleStyles={styles.submitText}
       />
     </View>
-  );
-};
+  )
+}
 
-export default NotRespondingCard;
+export default NotRespondingCard
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -45,29 +45,29 @@ const styles = StyleSheet.create({
     marginVertical: hp(2),
     position: 'relative',
     flexDirection: 'column',
-    gap: 12,
+    gap: 12
   },
   closeIcon: {
     position: 'absolute',
     top: 12,
     right: 12,
-    padding: 4,
+    padding: 4
   },
   messageText: {
     color: '#E17B73',
     fontSize: 14,
-    fontWeight: '500',
+    fontWeight: '500'
   },
   submitButton: {
     alignSelf: 'flex-start',
     backgroundColor: '#E17B73',
     paddingVertical: 8,
     paddingHorizontal: 14,
-    borderRadius: 8,
+    borderRadius: 8
   },
   submitText: {
     color: '#ffffff',
     fontWeight: 'bold',
-    fontSize: 13,
-  },
-});
+    fontSize: 13
+  }
+})

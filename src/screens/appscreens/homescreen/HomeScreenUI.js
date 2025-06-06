@@ -1,22 +1,22 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import PieProgressBar from '../../../common/components/progressbar/PieProgressBar';
-import {hp} from '../../../common/functions/dimensions';
-import Fonts, {fontSize} from '../../../utils/constants/Fonts';
-import Colors from '../../../utils/constants/Colors';
-import EventCard from '../../../common/components/eventcard/EventCard';
-import NotRespondingCard from '../../../common/components/notrespondingcard/NotRespondingCard';
+import React, { useState } from 'react'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import PieProgressBar from '../../../common/components/progressbar/PieProgressBar'
+import { hp } from '../../../common/functions/dimensions'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
+import Colors from '../../../utils/constants/Colors'
+import EventCard from '../../../common/components/eventcard/EventCard'
+import NotRespondingCard from '../../../common/components/notrespondingcard/NotRespondingCard'
 
 export default function HomeScreenUI(props) {
-  let {isLoggedIn} = props;
+  let { isLoggedIn } = props
 
-  const [loading, setloading] = useState(false);
+  const [loading, setloading] = useState(false)
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{paddingBottom: hp(5)}}
+      contentContainerStyle={{ paddingBottom: hp(5) }}
       showsVerticalScrollIndicator={false}>
-      <View style={{paddingHorizontal: 5, marginBottom: hp(1)}}>
+      <View style={{ paddingHorizontal: 5, marginBottom: hp(1) }}>
         <Text style={styles.title}>{isLoggedIn ? 'Welcome' : 'Welcome!'}</Text>
         <Text style={styles.subTitle}>
           {isLoggedIn
@@ -30,7 +30,7 @@ export default function HomeScreenUI(props) {
           {/* progress card */}
           <View style={styles.progress_card_wrapper}>
             <View>
-              <Text style={{...styles.title, color: Colors.smoky_white}}>
+              <Text style={{ ...styles.title, color: Colors.smoky_white }}>
                 Your daily progress
               </Text>
               <Text style={styles.subTitle}>Wellness Program</Text>
@@ -38,7 +38,7 @@ export default function HomeScreenUI(props) {
                 style={{
                   ...styles.subTitle,
                   color: Colors.smoky_white,
-                  opacity: 0.5,
+                  opacity: 0.5
                 }}>
                 Accumulating daily report
               </Text>
@@ -57,7 +57,7 @@ export default function HomeScreenUI(props) {
           )} */}
 
           {/* ongoing  events  */}
-          <View style={{marginVertical: hp(1)}}>
+          <View style={{ marginVertical: hp(1) }}>
             {props?.HomeScreenData?.events?.map((item, index) => {
               return (
                 <View key={index}>
@@ -68,7 +68,7 @@ export default function HomeScreenUI(props) {
                     handleNavigate={props.handleNavigate}
                   />
                 </View>
-              );
+              )
             })}
           </View>
 
@@ -97,7 +97,7 @@ export default function HomeScreenUI(props) {
         </>
       ) : (
         <>
-            <Text style={{ textAlign: 'center' }}>No data found !</Text>
+          <Text style={{ textAlign: 'center' }}>No data found !</Text>
         </>
         // <>
         //   {/* ongoing  events  */}
@@ -119,24 +119,24 @@ export default function HomeScreenUI(props) {
         // </>
       )}
     </ScrollView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   title: {
     fontSize: fontSize.m,
     // fontFamily: 'Poppins-Black',
     fontFamily: Fonts.Italic,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
     // marginBottom: hp(0.5),
   },
   subTitle: {
     fontFamily: Fonts.BoldItalic,
     fontSize: fontSize.normal,
-    color: '#94AE27',
+    color: '#94AE27'
     // marginBottom: hp(1),
   },
 
@@ -147,12 +147,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
 
   rangetitle: {
     color: '#ffffff',
     fontSize: fontSize.s,
-    opacity: 0.8,
-  },
-});
+    opacity: 0.8
+  }
+})

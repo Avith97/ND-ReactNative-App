@@ -1,30 +1,28 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import moment from 'moment';
-import {getMonthRange, getWeekRange} from '../../functions/dateUtils';
-import {wp} from '../../functions/dimensions';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import moment from 'moment'
+import { getMonthRange, getWeekRange } from '../../functions/dateUtils'
+import { wp } from '../../functions/dimensions'
 
 export default function CustomWeekAndMonth(props) {
-
-  const [currentDate, setCurrentDate] = useState(moment());
+  const [currentDate, setCurrentDate] = useState(moment())
 
   const handlePrev = () => {
     setCurrentDate(prev =>
-      moment(prev).subtract(1, props.mode === 'Week' ? 'weeks' : 'months'),
-    );
-  };
+      moment(prev).subtract(1, props.mode === 'Week' ? 'weeks' : 'months')
+    )
+  }
 
   const handleNext = () => {
     setCurrentDate(prev =>
-      moment(prev).add(1, props.mode === 'Week' ? 'weeks' : 'months'),
-    );
-  };
-
+      moment(prev).add(1, props.mode === 'Week' ? 'weeks' : 'months')
+    )
+  }
 
   const dateDisplay =
     props.mode === 'Week'
       ? getWeekRange(currentDate)
-      : getMonthRange(currentDate);
+      : getMonthRange(currentDate)
   return (
     <View style={styles.container}>
       <View style={styles.dateBox}>
@@ -39,33 +37,33 @@ export default function CustomWeekAndMonth(props) {
 
       <Text style={styles.steps}>👟 21487 steps</Text>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'black',
     borderRadius: 10,
-    padding: 10,
+    padding: 10
   },
   dateBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   arrow: {
     color: 'white',
     fontSize: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 10
   },
   dateText: {
     color: 'white',
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   steps: {
     color: 'white',
     textAlign: 'center',
-    opacity: 0.7,
-  },
-});
+    opacity: 0.7
+  }
+})

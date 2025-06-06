@@ -2,7 +2,6 @@ import Toast from 'react-native-toast-message'
 import { toast_types } from './toast_types'
 import { toast_styles } from './toast_styles'
 
-
 export const toast_success = params => {
   Toast.show({
     type: 'success',

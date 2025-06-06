@@ -1,20 +1,20 @@
 // react + react native core components
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import { StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
 
 //  Custom UI component for this screen
-import ListSlideTabUI from './ListSlideTabUI';
+import ListSlideTabUI from './ListSlideTabUI'
 
 // string constants
-import Strings from '../../../utils/constants/Strings';
-import { store } from '../../../redux/store';
+import Strings from '../../../utils/constants/Strings'
+import { store } from '../../../redux/store'
 
 export default function ListSlideTab(props) {
-  global.CurentOnboardingScreen = "list"
+  global.CurentOnboardingScreen = 'list'
   async function handleChange(params, val) {
     global.OnboardingData = {
       ...global.OnboardingData,
-      [params]: val,
+      [params]: val
     }
 
     store.dispatch({
@@ -22,13 +22,13 @@ export default function ListSlideTab(props) {
       payload: global.OnboardingData
     })
 
-    return;
+    return
   }
   const handleSubmit = () => {
     //not used
-    console.log('Selected Activity:', state);
-    props.navigation.navigate(Strings.NAVIGATION.imagesSlideTab);
-  };
+    console.log('Selected Activity:', state)
+    props.navigation.navigate(Strings.NAVIGATION.imagesSlideTab)
+  }
 
   return (
     <View style={styles.container}>
@@ -38,11 +38,11 @@ export default function ListSlideTab(props) {
         handleSubmit={handleSubmit}
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-});
+    flex: 1
+  }
+})

@@ -1,4 +1,4 @@
-import {Images} from '../../utils/constants/Images';
+import { Images } from '../../utils/constants/Images'
 
 //  constants for temporary data storage
 export const onBoardingScreenData = {
@@ -16,7 +16,7 @@ export const onBoardingScreenData = {
           iconPosition: 'left',
           text: 'Sedentary',
           subText: 'Little to almost no exercise',
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 2,
@@ -24,7 +24,7 @@ export const onBoardingScreenData = {
           iconPosition: 'left',
           text: 'Slightly Active',
           subText: 'Little to almost no exercise',
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 3,
@@ -32,7 +32,7 @@ export const onBoardingScreenData = {
           iconPosition: 'left',
           text: 'Moderately Active',
           subText: 'Little to almost no exercise ',
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 4,
@@ -40,9 +40,9 @@ export const onBoardingScreenData = {
           iconPosition: 'left',
           text: 'Very Active',
           subText: 'Little to almost no exercise',
-          imagePath: null,
-        },
-      ],
+          imagePath: null
+        }
+      ]
     },
     {
       id: 2,
@@ -57,7 +57,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: null,
           subText: null,
-          imagePath: Images.belly1,
+          imagePath: Images.belly1
         },
         {
           id: 2,
@@ -65,7 +65,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: null,
           subText: null,
-          imagePath: Images.belly2,
+          imagePath: Images.belly2
         },
         {
           id: 3,
@@ -73,7 +73,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: null,
           subText: null,
-          imagePath: Images.belly3,
+          imagePath: Images.belly3
         },
         {
           id: 4,
@@ -81,7 +81,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: null,
           subText: null,
-          imagePath: Images.belly4,
+          imagePath: Images.belly4
         },
         {
           id: 5,
@@ -89,9 +89,9 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: null,
           subText: null,
-          imagePath: Images.belly5,
-        },
-      ],
+          imagePath: Images.belly5
+        }
+      ]
     },
     {
       id: 3,
@@ -106,7 +106,7 @@ export const onBoardingScreenData = {
           iconPosition: 'right',
           text: 'Strength Training',
           subText: null,
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 2,
@@ -114,7 +114,7 @@ export const onBoardingScreenData = {
           iconPosition: 'left',
           text: 'Yoga or Pilates',
           subText: null,
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 3,
@@ -122,7 +122,7 @@ export const onBoardingScreenData = {
           iconPosition: 'left',
           text: 'Cardio (Running, Cycling)',
           subText: null,
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 4,
@@ -130,7 +130,7 @@ export const onBoardingScreenData = {
           iconPosition: 'left',
           text: 'HIIT (High-intensity interval training) ',
           subText: null,
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 5,
@@ -138,9 +138,9 @@ export const onBoardingScreenData = {
           iconPosition: 'left',
           text: 'Other',
           subText: null,
-          imagePath: null,
-        },
-      ],
+          imagePath: null
+        }
+      ]
     },
     {
       id: 4,
@@ -155,7 +155,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: 'Setting and achieving goals',
           subText: null,
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 2,
@@ -163,7 +163,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: 'Social accountability',
           subText: null,
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 3,
@@ -171,7 +171,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: 'Tracking progress',
           subText: null,
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 4,
@@ -179,7 +179,7 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: 'Competing with others',
           subText: null,
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 5,
@@ -187,9 +187,9 @@ export const onBoardingScreenData = {
           iconPosition: null,
           text: 'Enjoyment of the activity',
           subText: null,
-          imagePath: null,
-        },
-      ],
+          imagePath: null
+        }
+      ]
     },
     {
       id: 5,
@@ -206,7 +206,7 @@ export const onBoardingScreenData = {
           text: 'Find Your Workout',
           subText:
             'Discover and access a wide variety of workout routines, filter and sort them based on criteria like type, duration, and intensity, and often receive personalized recommendations to meet your fitness goals and preferences.',
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 2,
@@ -215,7 +215,7 @@ export const onBoardingScreenData = {
           text: 'Find Your Workout',
           subText:
             'Discover and access a wide variety of workout routines, filter and sort them based on criteria like type, duration, and intensity, and often receive personalized recommendations to meet your fitness goals and preferences.',
-          imagePath: null,
+          imagePath: null
         },
         {
           id: 3,
@@ -224,9 +224,9 @@ export const onBoardingScreenData = {
           text: 'Find Your Workout',
           subText:
             'Discover and access a wide variety of workout routines, filter and sort them based on criteria like type, duration, and intensity, and often receive personalized recommendations to meet your fitness goals and preferences.',
-          imagePath: null,
-        },
-      ],
-    },
-  ],
-};
+          imagePath: null
+        }
+      ]
+    }
+  ]
+}

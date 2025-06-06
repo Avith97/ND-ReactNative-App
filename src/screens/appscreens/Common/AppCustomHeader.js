@@ -1,20 +1,20 @@
-import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
-import React from 'react';
-import {useNavigation} from '@react-navigation/native'; // ✅ Add this
-import {Images} from '../../../utils/constants/Images';
-import {hp, wp} from '../../../common/functions/dimensions';
-import Icons, {iconType} from '../../../assets/icons/Icons';
-import Strings from '../../../utils/constants/Strings';
-import CustomButton from '../../../common/components/buttons/CustomButton';
+import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import React from 'react'
+import { useNavigation } from '@react-navigation/native' // ✅ Add this
+import { Images } from '../../../utils/constants/Images'
+import { hp, wp } from '../../../common/functions/dimensions'
+import Icons, { iconType } from '../../../assets/icons/Icons'
+import Strings from '../../../utils/constants/Strings'
+import CustomButton from '../../../common/components/buttons/CustomButton'
 
 export default function AppCustomHeader(props) {
-  const navigation = useNavigation(); // ✅ Access navigation
+  const navigation = useNavigation() // ✅ Access navigation
 
-  const {isLoggedIn} = props.isLoggedIn;
+  const { isLoggedIn } = props.isLoggedIn
 
   const handleNavigate = name => {
-    navigation.navigate(name);
-  };
+    navigation.navigate(name)
+  }
 
   return (
     <View style={styles.headerContainer}>
@@ -32,10 +32,10 @@ export default function AppCustomHeader(props) {
           onPress={handleNavigate}
           btnStyles={{
             ...styles.btnStyles,
-            elevation: 1,
+            elevation: 1
           }}
           btnTitleStyles={{
-            ...styles.textStyle,
+            ...styles.textStyle
           }}
         />
       ) : (
@@ -51,7 +51,7 @@ export default function AppCustomHeader(props) {
         </View>
       )}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -62,30 +62,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(5),
     paddingVertical: 10,
     backgroundColor: '#fff',
-    elevation: 2,
+    elevation: 2
   },
   logo: {
     width: wp(15),
-    height: 40,
+    height: 40
   },
   rightIcons: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 15,
+    gap: 15
   },
   icon: {
     width: 24,
     height: 24,
-    marginRight: 10,
+    marginRight: 10
   },
   avatar: {
     width: 36,
     height: 36,
-    borderRadius: 18,
+    borderRadius: 18
   },
   btnStyles: {
     // width: wp(2),
     height: hp(4.5),
-    borderRadius: 8,
-  },
-});
+    borderRadius: 8
+  }
+})

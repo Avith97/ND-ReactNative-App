@@ -1,13 +1,12 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React from 'react';
-import CustomImageBackground from '../../common/components/background/CustomImageBackground';
-import {Images} from '../../utils/constants/Images';
-import Colors from '../../utils/constants/Colors';
-import {hp, wp} from '../../common/functions/dimensions';
-import CustomButton from '../../common/components/buttons/CustomButton';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React from 'react'
+import CustomImageBackground from '../../common/components/background/CustomImageBackground'
+import { Images } from '../../utils/constants/Images'
+import Colors from '../../utils/constants/Colors'
+import { hp, wp } from '../../common/functions/dimensions'
+import CustomButton from '../../common/components/buttons/CustomButton'
 
 export default function EventStartedScreenUI(props) {
-
   return (
     <View style={styles.container}>
       <CustomImageBackground
@@ -21,11 +20,14 @@ export default function EventStartedScreenUI(props) {
         <View style={styles.contentContainer}>
           {/* Overlay content */}
           <View style={styles.overlay}>
-            {props?.eventDetail && <Text style={styles.title}>{props?.eventDetail?.title}</Text>}
-            {props?.eventDetail?.program && <Text style={styles.subtitle}>
-             {props?.eventDetail?.program?.description}
-            </Text> }
-            
+            {props?.eventDetail && (
+              <Text style={styles.title}>{props?.eventDetail?.title}</Text>
+            )}
+            {props?.eventDetail?.program && (
+              <Text style={styles.subtitle}>
+                {props?.eventDetail?.program?.description}
+              </Text>
+            )}
           </View>
 
           {/* Get Started Button */}
@@ -37,16 +39,16 @@ export default function EventStartedScreenUI(props) {
         </View>
       </CustomImageBackground>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   bgImage: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   badgeContainer: {
     alignSelf: 'flex-end',
@@ -54,36 +56,36 @@ const styles = StyleSheet.create({
     backgroundColor: 'orange',
     paddingHorizontal: wp(3),
     paddingVertical: hp(0.5),
-    borderRadius: 15,
+    borderRadius: 15
   },
   badgeText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: 12
   },
   contentContainer: {
     gap: hp(5),
     paddingBottom: hp(15),
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: wp(5),
+    padding: wp(5)
   },
   title: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: hp(1),
+    marginBottom: hp(1)
   },
   subtitle: {
     color: 'white',
     fontSize: 14,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   btnStyle: {
-    width: wp(60),
-  },
-});
+    width: wp(60)
+  }
+})

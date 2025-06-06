@@ -1,7 +1,7 @@
 import actions from '../action_types/actions'
 
 const initialState = {
-  eventData : null
+  eventData: null
 }
 
 export default EventReducer = (state = initialState, action) => {
@@ -9,7 +9,6 @@ export default EventReducer = (state = initialState, action) => {
     case actions.SET_EVENT_DETAILS:
       return { ...state, ...action.payload }
 
-   
     default:
       return state
   }

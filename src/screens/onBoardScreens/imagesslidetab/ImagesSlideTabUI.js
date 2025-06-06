@@ -1,16 +1,15 @@
 // React core +  react native components
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
-import React, {useState} from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
+import React, { useState } from 'react'
 
 // Utils function Dimensions
-import {hp, wp} from '../../../common/functions/dimensions';
+import { hp, wp } from '../../../common/functions/dimensions'
 
 // Define all static labels in a constants object
-import {en as LABELS} from '../../../utils/labels/en';
-import { useSelector } from 'react-redux';
+import { en as LABELS } from '../../../utils/labels/en'
+import { useSelector } from 'react-redux'
 
 export default function BellyConditionScreenUI(props) {
-
   function onClick(belly) {
     props.handleChange('image', belly)
   }
@@ -34,12 +33,11 @@ export default function BellyConditionScreenUI(props) {
                   styles.bellyBox,
                   // props.selectedBelly?.title === belly.title &&styles.bellySelected,
                   onboard?.image?.id === belly.id && styles.bellySelected
-
                 ]}>
                 {belly?.imagePath && (
                   <Image
                     source={belly?.imagePath}
-                    style={{width: wp(35), height: hp(15), borderRadius: 10}}
+                    style={{ width: wp(35), height: hp(15), borderRadius: 10 }}
                   />
                 )}
               </TouchableOpacity>
@@ -47,29 +45,29 @@ export default function BellyConditionScreenUI(props) {
         </View>
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   ContentContainer: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 20
   },
-  heading: {fontSize: 20, fontWeight: 'bold', marginTop: 20},
-  subText: {fontSize: 14, color: '#666', marginBottom: 15},
+  heading: { fontSize: 20, fontWeight: 'bold', marginTop: 20 },
+  subText: { fontSize: 14, color: '#666', marginBottom: 15 },
   continueBtn: {
     backgroundColor: '#BFFF00',
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 20
   },
   bellyGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginTop: 10,
-    gap: 10,
+    gap: 10
   },
   bellyBox: {
     width: '45%',
@@ -80,10 +78,10 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     paddingVertical: 8,
     alignItems: 'center',
-    backgroundColor: '#d9d9d9',
+    backgroundColor: '#d9d9d9'
   },
   bellySelected: {
     borderColor: '#00cc00',
-    backgroundColor: '#eaffea',
-  },
-});
+    backgroundColor: '#eaffea'
+  }
+})

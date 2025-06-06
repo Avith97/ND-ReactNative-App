@@ -1,16 +1,16 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {wp, hp} from '../../functions/dimensions';
-import Dropdown from './DropDown';
-import {fontSize} from '../../../utils/constants/Fonts';
-import Colors from '../../../utils/constants/Colors';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { wp, hp } from '../../functions/dimensions'
+import Dropdown from './DropDown'
+import { fontSize } from '../../../utils/constants/Fonts'
+import Colors from '../../../utils/constants/Colors'
 
 const CustomDropdown = (props = cd_default_props) => {
   return (
     <View>
       <Text style={styles.title}>
         {props.title}
-        {props?.mandatory && <Text style={{color: 'red'}}> *</Text>}
+        {props?.mandatory && <Text style={{ color: 'red' }}> *</Text>}
       </Text>
       <Dropdown
         data={props.data}
@@ -30,13 +30,13 @@ const CustomDropdown = (props = cd_default_props) => {
         {...props}
       />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   title: {
-    fontSize:fontSize.normal,
-    marginBottom:hp(0.5)
+    fontSize: fontSize.normal,
+    marginBottom: hp(0.5)
   },
 
   container: {
@@ -45,27 +45,27 @@ const styles = StyleSheet.create({
     // backgroundColor: 'cyan',
     borderWidth: 0.7,
     borderColor: 'grey',
-    borderRadius: 8,
+    borderRadius: 8
     // minHeight: hp(5)
   },
   inputContainer: {
     borderBottomWidth: 0,
-    backgroundColor: 'red',
+    backgroundColor: 'red'
   },
   overlay: {
-    backgroundColor: 'rgba(0,0,0,0)',
+    backgroundColor: 'rgba(0,0,0,0)'
   },
   picker: {
-    width: wp(90),
+    width: wp(90)
     // marginTop: hp('5'),
   },
   cd_style: {
     paddingLeft: 5,
     paddingVertical: 0,
     // backgroundColor: 'lightblue',
-    justifyContent: 'center',
-  },
-});
+    justifyContent: 'center'
+  }
+})
 
 const cd_default_props = {
   name: 'dropdown',
@@ -92,7 +92,7 @@ const cd_default_props = {
   propsExtractor: () => null,
   onChangeText: () => {},
   showTriangle: true,
-  style: {},
-};
+  style: {}
+}
 
-export default CustomDropdown;
+export default CustomDropdown

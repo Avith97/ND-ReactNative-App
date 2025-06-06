@@ -1,18 +1,18 @@
 // react core components + React Native components
-import React, { useEffect, useState } from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {wp} from '../../../common/functions/dimensions';
-import Icons from '../../../assets/icons/Icons';
+import React, { useEffect, useState } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { wp } from '../../../common/functions/dimensions'
+import Icons from '../../../assets/icons/Icons'
 
 // labels for the screen
-import {en as labels} from '../../../utils/labels/en';
-import { useSelector } from 'react-redux';
+import { en as labels } from '../../../utils/labels/en'
+import { useSelector } from 'react-redux'
 
 export default function ListMultiSelectScreenTabUI(props) {
   const onboard = useSelector(state => state.onboard)
 
   function onClick(item) {
-    props.handleChange("list-multiselect", item)
+    props.handleChange('list-multiselect', item)
   }
 
   return (
@@ -32,19 +32,19 @@ export default function ListMultiSelectScreenTabUI(props) {
               style={[
                 styles.optionBox,
                 // props.selectedExercises.includes(item) && styles.optionSelected,
-                onboard?.["list-multiselect"]?.id === option.id && styles.optionSelected,
+                onboard?.['list-multiselect']?.id === option.id &&
+                  styles.optionSelected
               ]}
-              onPress={() => onClick(option)}
-            >
+              onPress={() => onClick(option)}>
               {/* left icon */}
               {option?.icon && option?.iconPosition === 'left' && (
-                <View style={{width: wp(10)}}>
+                <View style={{ width: wp(10) }}>
                   <Icons name={option.icon} size={30} color="#000" />
                 </View>
               )}
 
               {/* content */}
-              <View style={{width: wp(55)}}>
+              <View style={{ width: wp(55) }}>
                 {option?.text && (
                   <Text numberOfLines={2} style={styles.activityTitle}>
                     {option?.text}
@@ -59,7 +59,7 @@ export default function ListMultiSelectScreenTabUI(props) {
 
               {/* right icon */}
               {option?.icon && option?.iconPosition === 'right' && (
-                <View style={{width: wp(10), marginLeft: wp(10)}}>
+                <View style={{ width: wp(10), marginLeft: wp(10) }}>
                   <Icons name={option.icon} size={30} color="#000" />
                 </View>
               )}
@@ -67,17 +67,17 @@ export default function ListMultiSelectScreenTabUI(props) {
           ))}
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   ContentContainer: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 20
     // width: wp(100),
     // flexWrap: 'wrap',
   },
-  heading: {fontSize: 18, fontWeight: 'bold', marginBottom: 10},
+  heading: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
   optionBox: {
     flexDirection: 'row',
     // width: wp(80),
@@ -89,17 +89,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   optionSelected: {
     borderColor: '#00cc00',
-    backgroundColor: '#eaffea',
+    backgroundColor: '#eaffea'
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
     padding: 10,
     borderRadius: 10,
-    marginTop: 10,
-  },
-});
+    marginTop: 10
+  }
+})

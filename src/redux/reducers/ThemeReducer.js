@@ -1,4 +1,4 @@
-import actions from "../action_types/actions";
+import actions from '../action_types/actions'
 
 const initialState = {
   //   text
@@ -11,14 +11,14 @@ const initialState = {
   backgroundSecondary: '#F0F0F0',
   backgroundTertiary: '#E0E0E0',
 
-  isDarkModeEnable: false, 
-};
+  isDarkModeEnable: false
+}
 
-export default (state = initialState, {type, payload}) => {
+export default (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.SET_THEME:
-      return {...state, ...payload};
+      return { ...state, ...payload }
     default:
-      return state;
+      return state
   }
-};
+}

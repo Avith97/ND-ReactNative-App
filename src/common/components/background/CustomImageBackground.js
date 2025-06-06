@@ -10,7 +10,7 @@ const CustomImageBackground = props => {
       style={{ ...styles.bgImage, ...props.style }}
       resizeMode="cover"
       imageStyle={{
-        opacity: 0.7,
+        opacity: 0.7
       }}
       {...props.ImageBackgroundProps}>
       {/* <Loader /> */}
@@ -23,7 +23,7 @@ export default CustomImageBackground
 
 const styles = StyleSheet.create({
   bgImage: {
-    flex: 1,
+    flex: 1
     // justifyContent: 'center',
     // alignItems: 'center',
   }

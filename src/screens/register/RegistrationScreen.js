@@ -3,54 +3,52 @@ import React, { useEffect, useState } from 'react'
 import RegistrationUI from './RegistrationUI'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 
-const RegistrationScreen = (props) => {
-    const [state, setstate] = useState({})
-    const [options, setoptions] = useState({})
-    const [err, seterr] = useState(null)
+const RegistrationScreen = props => {
+  const [state, setstate] = useState({})
+  const [options, setoptions] = useState({})
+  const [err, seterr] = useState(null)
 
-    useEffect(() => {
-        console.log('state render-->', state)
-    }, [state])
+  useEffect(() => {
+    console.log('state render-->', state)
+  }, [state])
 
+  function handleChange(params, val) {
+    console.log('params', params)
+    console.log('val', val)
+    setstate({
+      ...state,
+      [params]: val
+    })
+  }
 
-    function handleChange(params, val) {
-        console.log('params', params)
-        console.log('val', val)
-        setstate({
-            ...state,
-            [params]: val
-        })
+  function validation(params) {
+    let isValid = true
+    let err = {}
+
+    return isValid
+  }
+
+  function handleSubmit(params) {
+    let valid = validation()
+    if (!valid) {
+      return
     }
-
-    function validation(params) {
-        let isValid = true;
-        let err = {}
-
-        return isValid
-
+    try {
+    } catch (error) {
+      appsnackbar.showErrMsg('Something went wrong')
     }
+  }
 
-    function handleSubmit(params) {
-        let valid = validation()
-        if (!valid) { return }
-        try {
-
-        } catch (error) {
-            appsnackbar.showErrMsg('Something went wrong')
-        }
-    }
-
-
-    return (
-        <View style={{ flex: 1 }}>
-            <RegistrationUI
-                {...props}
-                {...state}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-            />
-        </View>
-    )
+  return (
+    <View style={{ flex: 1 }}>
+      <RegistrationUI
+        {...props}
+        {...state}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
+    </View>
+  )
 }
 
 export default RegistrationScreen

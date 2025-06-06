@@ -1,18 +1,18 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native'
 // import ViewPropTypes from 'deprecated-react-native-prop-types';
-import React, {useState} from 'react';
-import Colors from '../../../utils/constants/Colors';
-import {hp, wp} from '../../functions/dimensions';
-import {fontSize} from '../../../utils/constants/Fonts';
+import React, { useState } from 'react'
+import Colors from '../../../utils/constants/Colors'
+import { hp, wp } from '../../functions/dimensions'
+import { fontSize } from '../../../utils/constants/Fonts'
 
 const CustomTextInput = props => {
-  const [focused, setfocused] = useState(false);
+  const [focused, setfocused] = useState(false)
   return (
     <>
       {props.label && (
-        <Text style={{...style.label, ...props?.labelStyle}}>
+        <Text style={{ ...style.label, ...props?.labelStyle }}>
           {props?.label}
-          {props?.mandatory && <Text style={{color: 'red'}}> *</Text>}
+          {props?.mandatory && <Text style={{ color: 'red' }}> *</Text>}
         </Text>
       )}
       <TextInput
@@ -24,22 +24,22 @@ const CustomTextInput = props => {
           style.textInputStyle,
           focused && {
             borderWidth: 2,
-            borderColor: Colors.color3,
+            borderColor: Colors.color3
           },
-          {...props?.inputStyle},
+          { ...props?.inputStyle }
         ]}
         {...props?.inputProps}
       />
     </>
-  );
-};
+  )
+}
 
-export default CustomTextInput;
+export default CustomTextInput
 
 const style = StyleSheet.create({
   label: {
     fontSize: fontSize.normal,
-    marginBottom: hp(0.5),
+    marginBottom: hp(0.5)
   },
   textInputStyle: {
     paddingVertical: hp(1.3),
@@ -48,6 +48,6 @@ const style = StyleSheet.create({
     // elevation: 9,
     borderColor: 'grey',
     borderRadius: 6,
-    backgroundColor: 'white',
-  },
-});
+    backgroundColor: 'white'
+  }
+})
