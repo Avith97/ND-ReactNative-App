@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react'
 import {
   FlatList,
   Modal,
@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
-  SectionList,
-} from 'react-native';
-import Colors from '../../../utils/constants/Colors';
-import {hp, wp} from '../../functions/dimensions';
-import Icons, {iconType} from '../../../assets/icons/Icons';
-import {fontSize} from '../../../utils/constants/Fonts';
-import {color} from 'react-native-elements/dist/helpers';
+  SectionList
+} from 'react-native'
+import Colors from '../../../utils/constants/Colors'
+import { hp, wp } from '../../functions/dimensions'
+import Icons, { iconType } from '../../../assets/icons/Icons'
+import { fontSize } from '../../../utils/constants/Fonts'
+import { color } from 'react-native-elements/dist/helpers'
 // import { Ionicons } from '@expo/vector-icons';
 
 const MultiSelectDropdown = ({
@@ -26,44 +26,44 @@ const MultiSelectDropdown = ({
   name = '',
   ...props
 }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false)
+  const [selectedItems, setSelectedItems] = useState([])
 
   const handleSelect = item => {
-    const itemValue = valueExtractor(item);
+    const itemValue = valueExtractor(item)
     const isSelected = selectedItems.some(
-      selected => valueExtractor(selected) === itemValue,
-    );
+      selected => valueExtractor(selected) === itemValue
+    )
 
-    let updatedSelected;
+    let updatedSelected
     if (multiSelect) {
       if (isSelected) {
         updatedSelected = selectedItems.filter(
-          selected => valueExtractor(selected) !== itemValue,
-        );
+          selected => valueExtractor(selected) !== itemValue
+        )
       } else {
-        updatedSelected = [...selectedItems, item];
+        updatedSelected = [...selectedItems, item]
       }
     } else {
-      updatedSelected = [item];
-      setModalVisible(false); // Close modal on single select
+      updatedSelected = [item]
+      setModalVisible(false) // Close modal on single select
     }
 
-    setSelectedItems(updatedSelected);
+    setSelectedItems(updatedSelected)
     // onChange(name, updatedSelected);
-    onChange(name, updatedSelected.map(valueExtractor));
-  };
+    onChange(name, updatedSelected.map(valueExtractor))
+  }
 
   const isSelected = item =>
     selectedItems.some(
-      selected => valueExtractor(selected) === valueExtractor(item),
-    );
+      selected => valueExtractor(selected) === valueExtractor(item)
+    )
 
   return (
     <>
       <Text style={styles.title}>
         {props.title}
-        {props?.mandatory && <Text style={{color: 'red'}}> *</Text>}
+        {props?.mandatory && <Text style={{ color: 'red' }}> *</Text>}
       </Text>
       <TouchableOpacity
         onPress={() => setModalVisible(true)}
@@ -99,15 +99,15 @@ const MultiSelectDropdown = ({
             <SectionList
               sections={data}
               keyExtractor={(item, index) => valueExtractor(item) + index}
-              renderSectionHeader={({section: {title}}) =>
+              renderSectionHeader={({ section: { title } }) =>
                 title && <Text style={styles.groupTitle}>{title}</Text>
               }
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() => handleSelect(item)}
                   style={[
                     styles.option,
-                    isSelected(item) && styles.optionSelected,
+                    isSelected(item) && styles.optionSelected
                   ]}>
                   <Text
                     style={
@@ -129,8 +129,8 @@ const MultiSelectDropdown = ({
         </TouchableOpacity>
       </Modal>
     </>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -141,30 +141,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(3),
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: hp(6),
+    height: hp(6)
   },
   title: {
     fontSize: fontSize.normal,
-    marginBottom: hp(0.5),
+    marginBottom: hp(0.5)
   },
   textInput: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 16
   },
   icon: {
-    marginLeft: 8,
+    marginLeft: 8
   },
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#00000055',
+    backgroundColor: '#00000055'
   },
   modalContent: {
     maxHeight: '70%',
     backgroundColor: '#fff',
     margin: 20,
     borderRadius: 8,
-    padding: 10,
+    padding: 10
   },
   groupTitle: {
     //group header
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 8,
     paddingHorizontal: 10,
-    backgroundColor: '',
+    backgroundColor: ''
   },
   option: {
     // option
@@ -181,33 +181,33 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderBottomWidth: 0.5,
-    borderColor: '#ddd',
+    borderColor: '#ddd'
   },
   optionSelected: {
-    backgroundColor: '#f6fee0',
+    backgroundColor: '#f6fee0'
   },
   optionText: {
-    fontSize: 16,
+    fontSize: 16
   },
   selectedText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: Colors?.primary,
+    color: Colors?.primary
   },
   doneButton: {
     marginTop: 10,
     padding: 12,
     backgroundColor: Colors?.primary,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   doneText: {
     color: '#fff',
-    fontSize: 16,
-  },
-});
+    fontSize: 16
+  }
+})
 
-export default MultiSelectDropdown;
+export default MultiSelectDropdown
 
 {
   /* <MultiSelectDropdown

@@ -1,39 +1,39 @@
 // react-native components
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
 // common components
-import CustomButton from '../../common/components/buttons/CustomButton';
-import CustomTextInput from '../../common/components/textInput/CustomTextInput';
+import CustomButton from '../../common/components/buttons/CustomButton'
+import CustomTextInput from '../../common/components/textInput/CustomTextInput'
 
 // constants assets & dimensions
-import {hp, wp} from '../../common/functions/dimensions';
-import Fonts, {fontSize} from '../../utils/constants/Fonts';
-import Colors from '../../utils/constants/Colors';
+import { hp, wp } from '../../common/functions/dimensions'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
+import Colors from '../../utils/constants/Colors'
 
 // Labels object
-import {en as labels} from '../../utils/labels/en';
-import {useSelector} from 'react-redux';
+import { en as labels } from '../../utils/labels/en'
+import { useSelector } from 'react-redux'
 
 const SignupUI = props => {
-  const isLoading = useSelector(state => state.settings.isLoading);
+  const isLoading = useSelector(state => state.settings.isLoading)
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
         {props?.isSignup ? labels.title : labels?.loginTitle}
       </Text>
-      <View style={{flex: 1, alignItems: 'center'}}>
+      <View style={{ flex: 1, alignItems: 'center' }}>
         <View>
           <CustomTextInput
             name={'userName'}
             label={labels.emailOrMobileLabel}
-            inputStyle={{...styles.textInputStyle}}
+            inputStyle={{ ...styles.textInputStyle }}
             onChangeText={props?.handleChange}
             inputProps={{
               editable: props.showOtp ? false : true,
               value: props.userName,
-              placeholder: labels.emailOrMobilePlaceholder,
+              placeholder: labels.emailOrMobilePlaceholder
             }}
           />
         </View>
@@ -46,44 +46,44 @@ const SignupUI = props => {
           btnStyles={styles.btnStyles}
           btnTitleStyles={{
             ...styles.textStyle,
-            ...styles.btnTextStyle,
+            ...styles.btnTextStyle
           }}
         />
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 20,
+    padding: 20
   },
   textInputStyle: {
     fontSize: fontSize.normal,
     elevation: 5,
     height: hp('6'),
     width: wp('90'),
-    color: Colors.text_black,
+    color: Colors.text_black
   },
   title: {
     marginBottom: 20,
     fontSize: fontSize.l,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   textStyle: {
     fontSize: fontSize.normal,
     fontFamily: Fonts.medium,
-    color: 'black',
+    color: 'black'
   },
   btnStyles: {
     width: wp('90'),
-    marginVertical: hp(2),
+    marginVertical: hp(2)
   },
   btnTextStyle: {
-    color: 'white',
-  },
-});
+    color: 'white'
+  }
+})
 
-export default SignupUI;
+export default SignupUI

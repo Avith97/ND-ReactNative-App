@@ -1,12 +1,12 @@
 // react native imports
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
 
 // common components
-import ProgramCard from '../../../../common/components/programcard/ProgramCard';
+import ProgramCard from '../../../../common/components/programcard/ProgramCard'
 
 // constants utils
-import {hp} from '../../../../common/functions/dimensions';
+import { hp } from '../../../../common/functions/dimensions'
 
 export default function MyProgramTab(props) {
   return (
@@ -16,19 +16,19 @@ export default function MyProgramTab(props) {
           <ProgramCard
             {...item}
             minWidth={'100%'}
-            handleNavigate={() =>props.handleNavigate(item)}
+            handleNavigate={() => props.handleNavigate(item)}
           />
         </View>
       ))}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   programList: {
-    gap: hp(2), // vertical space between cards
+    gap: hp(2) // vertical space between cards
   },
   cardSpacing: {
-    width: '100%',
-  },
-});
+    width: '100%'
+  }
+})

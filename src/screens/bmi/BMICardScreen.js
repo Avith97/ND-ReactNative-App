@@ -4,7 +4,7 @@ import BMICardScreenUI from './BMICardScreenUI'
 
 export default function BMICardScreen() {
   return (
-    <View style={{flex:1, padding:20 , backgroundColor: '#fff'}}>
+    <View style={{ flex: 1, padding: 20, backgroundColor: '#fff' }}>
       <BMICardScreenUI />
     </View>
   )

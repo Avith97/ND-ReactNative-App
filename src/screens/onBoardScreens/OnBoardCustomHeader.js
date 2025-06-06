@@ -1,14 +1,14 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React from 'react';
-import Icons, {iconType} from '../../assets/icons/Icons';
-import NormalProgressBar from '../../common/components/progressbar/NormalProgressBar';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React from 'react'
+import Icons, { iconType } from '../../assets/icons/Icons'
+import NormalProgressBar from '../../common/components/progressbar/NormalProgressBar'
 
 export default function OnBoardCustomHeader({
   canGoBack,
   onBack,
   onSkip,
   hideSkip,
-  progress,
+  progress
 }) {
   return (
     <View style={styles.headerContainer}>
@@ -23,22 +23,21 @@ export default function OnBoardCustomHeader({
           />
         </TouchableOpacity>
       ) : (
-        <View style={{width: 24}} /> // Empty spacer when back is hidden
+        <View style={{ width: 24 }} /> // Empty spacer when back is hidden
       )}
 
       {/* Normal Progress Bar */}
-      {progress &&  <NormalProgressBar progress={progress} />}
-     
+      {progress && <NormalProgressBar progress={progress} />}
 
       {!hideSkip ? (
         <TouchableOpacity onPress={onSkip}>
           <Text style={styles.skipText}>Skip</Text>
         </TouchableOpacity>
       ) : (
-        <View style={{width: 40}} /> // empty space for alignment
+        <View style={{ width: 40 }} /> // empty space for alignment
       )}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -54,16 +53,16 @@ const styles = StyleSheet.create({
 
     shadowColor: 'transparent',
     elevation: 0,
-    borderBottomWidth: 0,
+    borderBottomWidth: 0
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#000',
+    color: '#000'
   },
   skipText: {
     fontSize: 16,
     color: '#8CC63F',
-    fontWeight: '500',
-  },
-});
+    fontWeight: '500'
+  }
+})

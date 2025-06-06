@@ -1,17 +1,17 @@
-import {View, StyleSheet} from 'react-native';
-import React, {useEffect} from 'react';
-import {hp, wp} from '../../common/functions/dimensions';
-import ListSlideTab from './listslidetab/ListSlideTab';
-import CheckBoxSlideTab from './checkboxslidetab/CheckBoxSlideTab';
-import ListMultiSelectScreenTab from './listmultiselectslidetab/ListMultiSelectScreenTab';
-import CardScreenTab from './cardscreentab/CardScreenTab';
-import ImagesSlideTab from './imagesslidetab/ImagesSlideTab';
+import { View, StyleSheet } from 'react-native'
+import React, { useEffect } from 'react'
+import { hp, wp } from '../../common/functions/dimensions'
+import ListSlideTab from './listslidetab/ListSlideTab'
+import CheckBoxSlideTab from './checkboxslidetab/CheckBoxSlideTab'
+import ListMultiSelectScreenTab from './listmultiselectslidetab/ListMultiSelectScreenTab'
+import CardScreenTab from './cardscreentab/CardScreenTab'
+import ImagesSlideTab from './imagesslidetab/ImagesSlideTab'
 
 const OnBoardForm = props => {
-  const {data} = props;
+  const { data } = props
   useEffect(() => {
     // console.log('OnBoardForm data:', data?.questionType);
-  }, []);
+  }, [])
 
   return (
     <View>
@@ -37,8 +37,8 @@ const OnBoardForm = props => {
 
       {data?.questionType === 'card' && <CardScreenTab {...props} {...data} />}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   childContainerStyle: {
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: wp(100),
     paddingVertical: hp(2),
-    paddingHorizontal: wp(6),
-  },
-});
+    paddingHorizontal: wp(6)
+  }
+})
 
-export default OnBoardForm;
+export default OnBoardForm

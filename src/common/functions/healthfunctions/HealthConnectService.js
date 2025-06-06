@@ -3,16 +3,16 @@ import HealthConnect, {
   requestPermission,
   readRecords,
   getGrantedPermissions,
-  deleteRecords,
-} from 'react-native-health-connect';
+  deleteRecords
+} from 'react-native-health-connect'
 
 const permissions = [
-  {accessType: 'read', recordType: 'Steps'},
-  {accessType: 'read', recordType: 'HeartRate'},
-  {accessType: 'read', recordType: 'SleepSession'},
-  {accessType: 'read', recordType: 'Distance'},
-  {accessType: 'read', recordType: 'ActiveCaloriesBurned'},
-];
+  { accessType: 'read', recordType: 'Steps' },
+  { accessType: 'read', recordType: 'HeartRate' },
+  { accessType: 'read', recordType: 'SleepSession' },
+  { accessType: 'read', recordType: 'Distance' },
+  { accessType: 'read', recordType: 'ActiveCaloriesBurned' }
+]
 
 const HealthConnectService = {
   /**
@@ -20,10 +20,10 @@ const HealthConnectService = {
    */
   checkAvailability: async () => {
     try {
-      return await isAvailable();
+      return await isAvailable()
     } catch (error) {
-      console.error('HealthConnect availability error:', error);
-      return false;
+      console.error('HealthConnect availability error:', error)
+      return false
     }
   },
 
@@ -32,11 +32,11 @@ const HealthConnectService = {
    */
   requestPermissions: async () => {
     try {
-      await requestPermission(permissions);
-      return true;
+      await requestPermission(permissions)
+      return true
     } catch (error) {
-      console.error('HealthConnect permission error:', error);
-      return false;
+      console.error('HealthConnect permission error:', error)
+      return false
     }
   },
 
@@ -45,10 +45,10 @@ const HealthConnectService = {
    */
   getGrantedPermissions: async () => {
     try {
-      return await getGrantedPermissions();
+      return await getGrantedPermissions()
     } catch (error) {
-      console.error('HealthConnect getGrantedPermissions error:', error);
-      return null;
+      console.error('HealthConnect getGrantedPermissions error:', error)
+      return null
     }
   },
 
@@ -59,12 +59,12 @@ const HealthConnectService = {
     try {
       const data = await readRecords('Steps', {
         startTime: startDate,
-        endTime: endDate,
-      });
-      return data;
+        endTime: endDate
+      })
+      return data
     } catch (error) {
-      console.error('getSteps error:', error);
-      return [];
+      console.error('getSteps error:', error)
+      return []
     }
   },
 
@@ -75,12 +75,12 @@ const HealthConnectService = {
     try {
       const data = await readRecords('HeartRate', {
         startTime: startDate,
-        endTime: endDate,
-      });
-      return data;
+        endTime: endDate
+      })
+      return data
     } catch (error) {
-      console.error('getHeartRate error:', error);
-      return [];
+      console.error('getHeartRate error:', error)
+      return []
     }
   },
 
@@ -91,12 +91,12 @@ const HealthConnectService = {
     try {
       const data = await readRecords('SleepSession', {
         startTime: startDate,
-        endTime: endDate,
-      });
-      return data;
+        endTime: endDate
+      })
+      return data
     } catch (error) {
-      console.error('getSleepData error:', error);
-      return [];
+      console.error('getSleepData error:', error)
+      return []
     }
   },
 
@@ -107,12 +107,12 @@ const HealthConnectService = {
     try {
       const data = await readRecords('Distance', {
         startTime: startDate,
-        endTime: endDate,
-      });
-      return data;
+        endTime: endDate
+      })
+      return data
     } catch (error) {
-      console.error('getDistance error:', error);
-      return [];
+      console.error('getDistance error:', error)
+      return []
     }
   },
 
@@ -123,12 +123,12 @@ const HealthConnectService = {
     try {
       const data = await readRecords('ActiveCaloriesBurned', {
         startTime: startDate,
-        endTime: endDate,
-      });
-      return data;
+        endTime: endDate
+      })
+      return data
     } catch (error) {
-      console.error('getActiveCaloriesBurned error:', error);
-      return [];
+      console.error('getActiveCaloriesBurned error:', error)
+      return []
     }
   },
 
@@ -139,14 +139,14 @@ const HealthConnectService = {
     try {
       await deleteRecords(recordType, {
         startTime: startDate,
-        endTime: endDate,
-      });
-      return true;
+        endTime: endDate
+      })
+      return true
     } catch (error) {
-      console.error('deleteRecords error:', error);
-      return false;
+      console.error('deleteRecords error:', error)
+      return false
     }
-  },
-};
+  }
+}
 
-export default HealthConnectService;
+export default HealthConnectService

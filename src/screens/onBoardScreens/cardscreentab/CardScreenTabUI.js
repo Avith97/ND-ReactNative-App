@@ -1,12 +1,12 @@
 // react core components + React Native components
-import {StyleSheet, Text, View, Image} from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native'
+import React from 'react'
 
 // constants utils functions & assets
-import {hp, wp} from '../../../common/functions/dimensions';
-import {Images} from '../../../utils/constants/Images';
+import { hp, wp } from '../../../common/functions/dimensions'
+import { Images } from '../../../utils/constants/Images'
 
-import {en as labels} from '../../../utils/labels/en';
+import { en as labels } from '../../../utils/labels/en'
 export default function CardScreenTabUI(props) {
   return (
     <View style={styles.container}>
@@ -19,7 +19,7 @@ export default function CardScreenTabUI(props) {
               zIndex: 1,
               height: hp(40),
               width: wp(100),
-              position: 'absolute',
+              position: 'absolute'
             }}
           />
 
@@ -48,13 +48,13 @@ export default function CardScreenTabUI(props) {
       {/* Continue Button */}
       <View style={styles.buttonContainer}></View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#fff'},
+  container: { flex: 1, backgroundColor: '#fff' },
   contentContainer: {
-    flex: 1,
+    flex: 1
   },
   image: {
     width: wp(100),
@@ -62,31 +62,31 @@ const styles = StyleSheet.create({
     // backgroundColor: 'rgba(0, 0, 0, 0.7)',
     marginBottom: 20,
     resizeMode: 'cover',
-    opacity: 1,
+    opacity: 1
   },
   textContainer: {
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 10
   },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   description: {
     fontSize: 14,
     textAlign: 'center',
-    color: '#444',
+    color: '#444'
   },
   buttonContainer: {
-    padding: 20,
+    padding: 20
   },
   continueBtn: {
     backgroundColor: '#BFFF00',
     paddingVertical: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: 'center'
   },
-  continueText: {fontWeight: 'bold'},
-});
+  continueText: { fontWeight: 'bold' }
+})

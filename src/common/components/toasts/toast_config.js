@@ -41,8 +41,5 @@ export const toast_config = {
 
   bottom_sheet: props => <CustomBottomSheet {...props} />,
 
-  logout_bottomsheet: props => <LogoutBottomSheet {...props} />,
-
-
-
+  logout_bottomsheet: props => <LogoutBottomSheet {...props} />
 }

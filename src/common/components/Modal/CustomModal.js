@@ -1,5 +1,5 @@
-import React from 'react';
-import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import React from 'react'
+import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 
 const CustomModal = ({ visible, onClose, children }) => {
   return (
@@ -22,36 +22,36 @@ const CustomModal = ({ visible, onClose, children }) => {
         </View>
       </View>
     </Modal>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Transparent background overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.5)' // Transparent background overlay
   },
   modalContent: {
     width: 300,
     padding: 20,
     backgroundColor: 'white',
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   closeButton: {
-    marginTop: 20,
+    marginTop: 20
   },
   button: {
     paddingVertical: 10,
     paddingHorizontal: 20,
     backgroundColor: '#007BFF',
-    borderRadius: 5,
+    borderRadius: 5
   },
   buttonText: {
     color: 'white',
-    fontWeight: 'bold',
-  },
-});
+    fontWeight: 'bold'
+  }
+})
 
-export default CustomModal;
+export default CustomModal

@@ -1,14 +1,14 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {CheckBox} from 'react-native-elements';
-import Colors from '../../../utils/constants/Colors';
-import { useSelector } from 'react-redux';
+import React from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { CheckBox } from 'react-native-elements'
+import Colors from '../../../utils/constants/Colors'
+import { useSelector } from 'react-redux'
 
 export default function CheckBoxSlideTabUI(props) {
   const onboard = useSelector(state => state.onboard)
 
   function onClick(item) {
-    props.handleChange("check-box", item)
+    props.handleChange('check-box', item)
   }
 
   return (
@@ -29,7 +29,7 @@ export default function CheckBoxSlideTabUI(props) {
             <CheckBox
               checkedColor={Colors.primary}
               uncheckedColor={Colors.primary}
-              checked={onboard?.["check-box"]?.id === item.id}
+              checked={onboard?.['check-box']?.id === item.id}
               // checked={props?.selectedMotivation.includes(item)}
               onPress={() => onClick(item)}
             />
@@ -38,21 +38,21 @@ export default function CheckBoxSlideTabUI(props) {
         ))}
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: '#fff', padding: 20},
+  container: { flex: 1, backgroundColor: '#fff', padding: 20 },
   ContentContainer: {
     flex: 1,
-    paddingTop: 20,
+    paddingTop: 20
     // padding:4
   },
   // scrollContent: { padding: 20 },
-  heading: {fontSize: 18, fontWeight: 'bold', marginBottom: 20},
+  heading: { fontSize: 18, fontWeight: 'bold', marginBottom: 20 },
   optionRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
     // marginBottom: 15,
   },
   checkbox: {
@@ -61,18 +61,18 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: '#ccc',
     borderRadius: 4,
-    marginRight: 12,
+    marginRight: 12
   },
   checkedBox: {
     backgroundColor: '#BFFF00',
-    borderColor: '#BFFF00',
+    borderColor: '#BFFF00'
   },
-  optionText: {fontSize: 16},
+  optionText: { fontSize: 16 },
   continueBtn: {
     backgroundColor: '#BFFF00',
     paddingVertical: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: 'center'
   },
-  continueText: {fontWeight: 'bold'},
-});
+  continueText: { fontWeight: 'bold' }
+})

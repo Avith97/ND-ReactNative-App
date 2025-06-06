@@ -1,19 +1,19 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import Icons, {iconType} from '../../../assets/icons/Icons';
-import {fontSize} from '../../../utils/constants/Fonts';
-import Colors from '../../../utils/constants/Colors';
-import {hp, wp} from '../../functions/dimensions';
-import CustomButton from '../buttons/CustomButton';
-import Strings from '../../../utils/constants/Strings';
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import Icons, { iconType } from '../../../assets/icons/Icons'
+import { fontSize } from '../../../utils/constants/Fonts'
+import Colors from '../../../utils/constants/Colors'
+import { hp, wp } from '../../functions/dimensions'
+import CustomButton from '../buttons/CustomButton'
+import Strings from '../../../utils/constants/Strings'
 
 const ChallengeCard = ({
   title = 'Zero Sugar Challenge',
   points = 180,
-  handleNavigate,
+  handleNavigate
 }) => {
-  const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-  const completedDays = [0, 1, 2]; // Example: 1st, 2nd, 3rd days completed (0-based)
+  const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+  const completedDays = [0, 1, 2] // Example: 1st, 2nd, 3rd days completed (0-based)
 
   return (
     <View style={styles.container}>
@@ -36,7 +36,7 @@ const ChallengeCard = ({
               name="info-outline"
               size={12}
               color={Colors.black}
-              style={{marginLeft: 4}}
+              style={{ marginLeft: 4 }}
             />
           </View>
         </View>
@@ -48,7 +48,7 @@ const ChallengeCard = ({
               type={iconType?.material}
               name="spa"
               size={30}
-              style={{marginRight: 8}}
+              style={{ marginRight: 8 }}
             />
             <Icons type={iconType?.material} name="spa" size={30} />
           </View>
@@ -60,7 +60,7 @@ const ChallengeCard = ({
             name={Strings.NAVIGATION.submitresponse}
             btnStyles={{
               ...styles.btnStyles,
-              elevation: 5,
+              elevation: 5
             }}
             onPress={handleNavigate}
             btnTitleStyles={styles.textStyle}
@@ -76,12 +76,12 @@ const ChallengeCard = ({
             <View key={index} style={styles.dayCircle}>
               <View
                 style={[
-                  styles.pendingCircle, // completedDays.includes(index) && styles.filledDot,
+                  styles.pendingCircle // completedDays.includes(index) && styles.filledDot,
                 ]}>
                 <View
                   style={[
                     styles.pendingInsideCircle,
-                    completedDays.includes(index) && styles.filledDot,
+                    completedDays.includes(index) && styles.filledDot
                   ]}
                 />
               </View>
@@ -91,17 +91,17 @@ const ChallengeCard = ({
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: hp(2),
+    marginBottom: hp(2)
   },
   cardTitle: {
     fontSize: fontSize.m,
     fontWeight: 'bold',
-    marginBottom: hp(1),
+    marginBottom: hp(1)
   },
   card: {
     backgroundColor: '#E1FB98',
@@ -111,40 +111,40 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 16,
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'flex-start'
   },
   leftSection: {
     alignItems: 'center',
-    maxWidth: '40%',
+    maxWidth: '40%'
   },
   pointsText: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginVertical: 4,
+    marginVertical: 4
   },
   subtitle: {
-    fontSize: fontSize.normal,
+    fontSize: fontSize.normal
   },
   row: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   rightContent: {
     flex: 1,
     marginLeft: wp(4),
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-start'
   },
   rightSection: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    marginBottom: hp(1.5),
+    marginBottom: hp(1.5)
   },
   dashedDivider: {
     borderBottomWidth: 1,
     borderColor: '#000',
     opacity: 0.4,
     borderStyle: 'dashed',
-    marginVertical: hp(2),
+    marginVertical: hp(2)
   },
   weekCard: {
     backgroundColor: '#E1FB98',
@@ -152,20 +152,20 @@ const styles = StyleSheet.create({
     borderColor: '#B2DB03',
     borderRadius: 16,
     marginTop: hp(1.5),
-    padding: 16,
+    padding: 16
   },
   weekLabel: {
     textAlign: 'center',
     fontSize: fontSize.normal,
     color: '#555',
-    marginBottom: 12,
+    marginBottom: 12
   },
   weekRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   dayCircle: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   pendingCircle: {
     width: 19,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: 4
   },
 
   pendingInsideCircle: {
@@ -184,27 +184,27 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 2,
     borderColor: '#000',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   filledDot: {
-    backgroundColor: '#000',
+    backgroundColor: '#000'
   },
   dayText: {
     fontSize: fontSize.s,
     textAlign: 'center',
-    fontWeight: '800',
+    fontWeight: '800'
   },
   btnStyles: {
     paddingVertical: hp(1),
     paddingHorizontal: wp(4),
     borderRadius: 10,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.primary
   },
   textStyle: {
     fontSize: fontSize.normal,
     color: Colors.gray_03,
-    fontWeight: 'bold',
-  },
-});
+    fontWeight: 'bold'
+  }
+})
 
-export default ChallengeCard;
+export default ChallengeCard

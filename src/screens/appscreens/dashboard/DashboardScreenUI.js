@@ -1,26 +1,24 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import StepsGraph from '../../../common/components/Charts/StepsGraph';
-import CustomButton from '../../../common/components/buttons/CustomButton';
-import { hp, wp } from '../../../common/functions/dimensions';
-import { useNavigation } from '@react-navigation/native';
-import Strings from '../../../utils/constants/Strings';
-import CalendarComponent from '../../../common/components/datepicker/CalenderComponent';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import StepsGraph from '../../../common/components/Charts/StepsGraph'
+import CustomButton from '../../../common/components/buttons/CustomButton'
+import { hp, wp } from '../../../common/functions/dimensions'
+import { useNavigation } from '@react-navigation/native'
+import Strings from '../../../utils/constants/Strings'
+import CalendarComponent from '../../../common/components/datepicker/CalenderComponent'
 
 export default function DashboardScreenUI() {
- const navigation = useNavigation(); // ✅ Access navigation
+  const navigation = useNavigation() // ✅ Access navigation
 
   const handleNavigate = () => {
-    navigation.navigate(Strings.NAVIGATION.leaderboard); // ✅ Now works!
-  };
+    navigation.navigate(Strings.NAVIGATION.leaderboard) // ✅ Now works!
+  }
   return (
     <View style={styles.container}>
-
-      <View style={{marginVertical:hp(1.5)}}>
-      <CalendarComponent>
-
-        <StepsGraph/>
-      </CalendarComponent>
+      <View style={{ marginVertical: hp(1.5) }}>
+        <CalendarComponent>
+          <StepsGraph />
+        </CalendarComponent>
       </View>
 
       <View style={styles.buttonContainer}>
@@ -30,10 +28,10 @@ export default function DashboardScreenUI() {
           onPress={handleNavigate}
           btnStyles={{
             ...styles.btnStyles,
-            elevation: 5,
+            elevation: 5
           }}
           btnTitleStyles={{
-            ...styles.textStyle,
+            ...styles.textStyle
           }}
         />
 
@@ -43,31 +41,31 @@ export default function DashboardScreenUI() {
           onPress={handleNavigate}
           btnStyles={{
             ...styles.btnStyles,
-            elevation: 5,
+            elevation: 5
           }}
           btnTitleStyles={{
-            ...styles.textStyle,
+            ...styles.textStyle
           }}
         />
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   buttonContainer: {
     marginVertical: hp(2),
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   btnStyles: {
     width: wp(60),
-    marginVertical: hp(1),
+    marginVertical: hp(1)
   },
   plusbtnStyle: {
-    width: wp(10),
-  },
-});
+    width: wp(10)
+  }
+})

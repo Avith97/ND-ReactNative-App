@@ -1,91 +1,100 @@
-import { Platform } from 'react-native';
-import HealthConnectService from './HealthConnectService';
-import moment from 'moment';
+import { Platform } from 'react-native'
+import HealthConnectService from './HealthConnectService'
+import moment from 'moment'
 
 export const healthService = {
   init: async () => {
-    console.log('Health Service Initialized');
+    console.log('Health Service Initialized')
   },
 
   getHealthStatus: async () => {
-    return { status: 'Healthy' };
+    return { status: 'Healthy' }
   },
 
   getSteps: async (startDate, endDate) => {
     if (Platform.OS === 'android') {
-      const resp = await HealthConnectService.getSteps(startDate, endDate);
+      const resp = await HealthConnectService.getSteps(startDate, endDate)
       return {
         steps: resp?.steps || 0,
         startDate: startDate,
         endDate: endDate || moment().toISOString(),
-        extraData: { ...resp },
-      };
+        extraData: { ...resp }
+      }
     } else {
-      console.warn('📱 iOS: getSteps not implemented');
-      return;
+      console.warn('📱 iOS: getSteps not implemented')
+      return
     }
   },
 
   getDistance: async (startDate, endDate) => {
     if (Platform.OS === 'android') {
-      const resp = await HealthConnectService.getDistance(startDate, endDate);
+      const resp = await HealthConnectService.getDistance(startDate, endDate)
       return {
         distance: resp?.distance || 0,
         startDate,
-        endDate,
-      };
+        endDate
+      }
     } else {
-      console.warn('📱 iOS: getDistance not implemented');
-      return;
+      console.warn('📱 iOS: getDistance not implemented')
+      return
     }
   },
 
   getActiveCalories: async (startDate, endDate) => {
     if (Platform.OS === 'android') {
-      const resp = await HealthConnectService.getActiveCalories(startDate, endDate);
+      const resp = await HealthConnectService.getActiveCalories(
+        startDate,
+        endDate
+      )
       return {
         activeCalories: resp?.calories || 0,
         startDate,
-        endDate,
-      };
+        endDate
+      }
     } else {
-      console.warn('📱 iOS: getActiveCalories not implemented');
-      return;
+      console.warn('📱 iOS: getActiveCalories not implemented')
+      return
     }
   },
 
   getYesterdaySteps: async () => {
-    const today = moment();
-    const yesterday = moment().subtract(1, 'day');
+    const today = moment()
+    const yesterday = moment().subtract(1, 'day')
 
     if (Platform.OS === 'android') {
-      const result = await healthService.getSteps(yesterday.toISOString(), today.toISOString());
+      const result = await healthService.getSteps(
+        yesterday.toISOString(),
+        today.toISOString()
+      )
       return {
         ...result,
         label: 'Yesterday',
-        date: yesterday.format('YYYY-MM-DD'),
-      };
+        date: yesterday.format('YYYY-MM-DD')
+      }
     } else {
-      console.warn('📱 iOS: getYesterdaySteps not implemented');
-      return;
+      console.warn('📱 iOS: getYesterdaySteps not implemented')
+      return
     }
   },
 
   getWeeklySteps: async () => {
-    const weekStart = moment().startOf('isoWeek'); // Monday
-    const weekEnd = moment().endOf('isoWeek');
+    const weekStart = moment().startOf('isoWeek') // Monday
+    const weekEnd = moment().endOf('isoWeek')
 
     if (Platform.OS === 'android') {
-      const result = await healthService.getSteps(weekStart.toISOString(), weekEnd.toISOString());
+      const result = await healthService.getSteps(
+        weekStart.toISOString(),
+        weekEnd.toISOString()
+      )
       return {
         ...result,
         label: 'This Week',
         startDateFormatted: weekStart.format('YYYY-MM-DD'),
-        endDateFormatted: weekEnd.format('YYYY-MM-DD'),
-      };
+        endDateFormatted: weekEnd.format('YYYY-MM-DD')
+      }
     } else {
-      console.warn('📱 iOS: getWeeklySteps not implemented');
-      return;
+      console.warn('📱 iOS: getWeeklySteps not implemented')
+      return
     }
-  },
-};
+  }
+}

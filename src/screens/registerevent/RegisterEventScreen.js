@@ -1,13 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import RegisterEventScreenUI from './RegisterEventScreenUI';
-import Strings from '../../utils/constants/Strings';
-import {appsnackbar} from '../../common/functions/snackbar_actions';
-import {URL} from '../../utils/constants/Urls';
-import {services} from '../../services/axios/services';
-import Loader from '../../common/components/loader/Loader';
-import {useSelector} from 'react-redux';
-import {TemplateService} from '../../services/templates/TemplateService';
+import { StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import RegisterEventScreenUI from './RegisterEventScreenUI'
+import Strings from '../../utils/constants/Strings'
+import { appsnackbar } from '../../common/functions/snackbar_actions'
+import { URL } from '../../utils/constants/Urls'
+import { services } from '../../services/axios/services'
+import Loader from '../../common/components/loader/Loader'
+import { useSelector } from 'react-redux'
+import { TemplateService } from '../../services/templates/TemplateService'
 
 export default function RegisterEventScreen(props) {
   const [state, setState] = useState({
@@ -21,21 +21,21 @@ export default function RegisterEventScreen(props) {
     selectedCustomFields: [],
     setMultiSelectCustom: null,
     setSingleSelectCustom: null,
-    selectedRunnerGroup: null,
-  });
+    selectedRunnerGroup: null
+  })
 
-  const {eventData, auth} = useSelector(store => store);
+  const { eventData, auth } = useSelector(store => store)
 
   useEffect(() => {
-    initiateScreen();
-  }, []);
+    initiateScreen()
+  }, [])
 
   async function initiateScreen() {
-    let resp = await getDetails();
+    let resp = await getDetails()
     if (resp) {
       // setting here response in state
       // setState(resp);
-      setState({...state, eventData: resp});
+      setState({ ...state, eventData: resp })
     }
   }
 
@@ -43,72 +43,72 @@ export default function RegisterEventScreen(props) {
     try {
       // join like event/2481
 
-      let url = TemplateService?._eventID(
-        URL.get_event,
-        eventData?.program?.id,
-      );
+      let url = TemplateService?._eventID(URL.get_event, eventData?.program?.id)
       let resp = await services?._get(url, {
-        params: {requestView: 'REGISTER_EVENT'},
-      });
+        params: { requestView: 'REGISTER_EVENT' }
+      })
 
       if (resp?.type === 'success') {
-        return resp?.data;
+        return resp?.data
       } else
-        appsnackbar.showErrMsg('Something went wrong, please try again later.');
+        appsnackbar.showErrMsg('Something went wrong, please try again later.')
     } catch (error) {
-      appsnackbar.showErrMsg('Something went wrong, please try again later.');
-      return;
+      appsnackbar.showErrMsg('Something went wrong, please try again later.')
+      return
     }
   }
 
   async function handleChange(params, val, index) {
     if (index !== undefined && index !== null) {
       setState(prev => {
-        const updatedArray = [...(prev[params] || [])];
-        updatedArray[index] = val;
+        const updatedArray = [...(prev[params] || [])]
+        updatedArray[index] = val
         return {
           ...prev,
-          [params]: updatedArray,
-        };
-      });
+          [params]: updatedArray
+        }
+      })
     } else {
       setState({
         ...state,
-        [params]: val,
-      });
+        [params]: val
+      })
     }
   }
 
   function validate(params) {
-    let err = {};
-    let isValid = true;
+    let err = {}
+    let isValid = true
 
     // 1. Check if registration is closed
     if (!state?.eventData?.isRegistrationOpen) {
-      isValid = false;
-      appsnackbar.showErrMsg('Registration is not open.');
-      return isValid;
+      isValid = false
+      appsnackbar.showErrMsg('Registration is not open.')
+      return isValid
     }
 
     // 3. Check if an activity is selected
     if (!state?.selectedActivity) {
-      isValid = false;
-      appsnackbar.showErrMsg('Please select an activity.');
-      return isValid;
+      isValid = false
+      appsnackbar.showErrMsg('Please select an activity.')
+      return isValid
     }
 
     // 4. Check if event category is selected
-    if (state?.eventData?.showCategoryOnRegistration && !state?.selectedEventCategory) {
-      isValid = false;
-      appsnackbar.showErrMsg('Please select an event category.');
-      return isValid;
+    if (
+      state?.eventData?.showCategoryOnRegistration &&
+      !state?.selectedEventCategory
+    ) {
+      isValid = false
+      appsnackbar.showErrMsg('Please select an event category.')
+      return isValid
     }
 
     // 5. Check if age group is selected
     if (state?.eventData?.showAgeGroup && !state?.selectedAgeGroup) {
-      isValid = false;
-      appsnackbar.showErrMsg('Please select an age group.');
-      return isValid;
+      isValid = false
+      appsnackbar.showErrMsg('Please select an age group.')
+      return isValid
     }
 
     // 6. Check if custom fields are provided (optional depending on use case)
@@ -116,26 +116,25 @@ export default function RegisterEventScreen(props) {
       !state?.selectedCustomFields ||
       state.selectedCustomFields.length === 0
     ) {
-      isValid = false;
-      appsnackbar.showErrMsg('Please complete the required custom fields.');
-      return isValid;
+      isValid = false
+      appsnackbar.showErrMsg('Please complete the required custom fields.')
+      return isValid
     }
 
     // 2. Check if Terms & Conditions are accepted
     if (!state?.isTermsAndCondition) {
-      isValid = false;
-      appsnackbar.showErrMsg('Please accept the Terms and Conditions.');
-      return isValid;
+      isValid = false
+      appsnackbar.showErrMsg('Please accept the Terms and Conditions.')
+      return isValid
     }
 
-    return isValid;
+    return isValid
   }
 
   async function handleSubmit(params, value) {
-    let isValid = validate();
-    if (!isValid) return;
-    let transformed = [];
-
+    let isValid = validate()
+    if (!isValid) return
+    let transformed = []
 
     try {
       transformed =
@@ -144,94 +143,86 @@ export default function RegisterEventScreen(props) {
             return [
               {
                 fieldId: entry.fieldId,
-                fieldValue: entry.value,
-              },
-            ];
+                fieldValue: entry.value
+              }
+            ]
           } else {
             return Object.keys(entry)
               .filter(key => !isNaN(key))
               .map(key => ({
                 fieldId: entry.fieldId,
                 fieldOptionId: entry[key].id,
-                fieldValue: entry[key].optionValue,
-              }));
+                fieldValue: entry[key].optionValue
+              }))
           }
-        }) || [];
+        }) || []
     } catch (error) {
       console.error(
         'Error during field transformation:',
         error,
-        state?.selectedCustomFields,
-      );
+        state?.selectedCustomFields
+      )
     }
-
-    
 
     let syncObj = {
       userId: auth?.id || null,
       eventId: eventData?.program?.id || null,
       ...(state?.eventData?.showCategoryOnRegistration && {
-        categoryId: state?.selectedEventCategory?.id || null,
+        categoryId: state?.selectedEventCategory?.id || null
       }),
       isTermsNcondition: state?.isTermsAndCondition,
       ...(state?.eventData?.fields?.customFields?.length > 0 && {
         fieldValues: {
           runnerId: auth?.runnerId || null,
           eventId: eventData?.program?.id || null,
-          fields: transformed || [],
-        },
+          fields: transformed || []
+        }
       }),
       ...(props?.eventData?.showRunnerGroup && {
         groupDetails: state?.selectedRunnerGroup?.[0],
         runnerGroup: state?.selectedRunnerGroup?.[0]?.name,
-        runnerGroupCity: state?.selectedRunnerGroup?.[0]?.city,
+        runnerGroupCity: state?.selectedRunnerGroup?.[0]?.city
       }),
       ...(props?.eventData?.showAgeGroup && {
-        ageGroupId: state?.selectedAgeGroup?.id || null,
+        ageGroupId: state?.selectedAgeGroup?.id || null
       }),
       items: [],
       employeeCode: '',
       paymentStatus: 'SUCCESS',
-      paymentMode: 'NOT_APPLICABLE',
-    };
+      paymentMode: 'NOT_APPLICABLE'
+    }
 
     try {
-
-
-
-
-      
-
       // API request
-      let resp = await services._post(URL.register_event, syncObj );
+      let resp = await services._post(URL.register_event, syncObj)
 
-      console.log(resp?.type);
-      
+      console.log(resp?.type)
+
       // Response Handle
 
-      if(resp?.status === "error"){
-        appsnackbar.showErrMsg(resp?.error_data?.verbose || "Something went wrong")
-      }else 
-      if (resp?.type === 'success') {
-        appsnackbar.showSuccessMsg(resp?.data?.success?.verbose || "Thank you for registering.")
-        props.navigation.navigate(Strings.NAVIGATION.eventdetail ,  {
-          isRegistered: true,
-        });
+      if (resp?.status === 'error') {
+        appsnackbar.showErrMsg(
+          resp?.error_data?.verbose || 'Something went wrong'
+        )
+      } else if (resp?.type === 'success') {
+        appsnackbar.showSuccessMsg(
+          resp?.data?.success?.verbose || 'Thank you for registering.'
+        )
+        props.navigation.navigate(Strings.NAVIGATION.eventdetail, {
+          isRegistered: true
+        })
 
-        return resp.data;
+        return resp.data
       } else {
-       
-        appsnackbar.showErrMsg('Something went wrong, please try again later.');
+        appsnackbar.showErrMsg('Something went wrong, please try again later.')
 
-        return;
+        return
       }
     } catch (error) {}
   }
 
-  
-
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Loader />
       <RegisterEventScreenUI
         {...state}
@@ -239,7 +230,7 @@ export default function RegisterEventScreen(props) {
         handleChange={handleChange}
       />
     </View>
-  );
+  )
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})

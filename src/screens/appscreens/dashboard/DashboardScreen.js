@@ -7,26 +7,28 @@ import Colors from '../../../utils/constants/Colors'
 import ProgramDashboardScreen from '../../programdashboard/ProgramDashboardScreen'
 
 export default function DashboardScreen() {
-
-  const [state , setState] = useState({
-    isVisibleProgramDashboard:true
+  const [state, setState] = useState({
+    isVisibleProgramDashboard: true
   })
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{paddingBottom: hp(5)}}
+      contentContainerStyle={{ paddingBottom: hp(5) }}
       showsVerticalScrollIndicator={false}>
-        {state.isVisibleProgramDashboard ? <ProgramDashboardScreen /> :  <DashboardScreenUI />}
-   
+      {state.isVisibleProgramDashboard ? (
+        <ProgramDashboardScreen />
+      ) : (
+        <DashboardScreenUI />
+      )}
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        // padding: 20,
-        backgroundColor:Colors.white,
-        paddingBottom: hp(10),
-      },
+  container: {
+    flex: 1,
+    // padding: 20,
+    backgroundColor: Colors.white,
+    paddingBottom: hp(10)
+  }
 })

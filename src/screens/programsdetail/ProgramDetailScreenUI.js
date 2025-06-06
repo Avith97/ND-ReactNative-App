@@ -1,21 +1,20 @@
-import React from 'react';
+import React from 'react'
 import {
   View,
   Text,
   Image,
   ScrollView,
   TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
-import {Images} from '../../utils/constants/Images';
-import {hp, wp} from '../../common/functions/dimensions';
-import Colors from '../../utils/constants/Colors';
-import Fonts, {fontSize} from '../../utils/constants/Fonts';
-import CustomButton from '../../common/components/buttons/CustomButton';
-import Icons, {iconType} from '../../assets/icons/Icons';
+  StyleSheet
+} from 'react-native'
+import { Images } from '../../utils/constants/Images'
+import { hp, wp } from '../../common/functions/dimensions'
+import Colors from '../../utils/constants/Colors'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
+import CustomButton from '../../common/components/buttons/CustomButton'
+import Icons, { iconType } from '../../assets/icons/Icons'
 
 const ProgramDetailUI = props => {
-  
   return (
     <ScrollView style={styles.container}>
       {/* Banner */}
@@ -71,7 +70,11 @@ const ProgramDetailUI = props => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Program Challenges</Text>
           <Text
-            style={{fontSize: fontSize.m, fontWeight: '700', marginBottom: 10}}>
+            style={{
+              fontSize: fontSize.m,
+              fontWeight: '700',
+              marginBottom: 10
+            }}>
             {' '}
             1. Zero Sugar Challenge{' '}
           </Text>
@@ -130,20 +133,20 @@ const ProgramDetailUI = props => {
         </View>
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.white,
-    flex: 1,
+    flex: 1
   },
   bannerWrapper: {
-    position: 'relative',
+    position: 'relative'
   },
   banner: {
     width: wp(100),
-    height: hp(30),
+    height: hp(30)
   },
   statusTag: {
     position: 'absolute',
@@ -152,26 +155,26 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.app_primary,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    borderRadius: 8,
+    borderRadius: 8
   },
   statusText: {
     color: Colors.white,
     fontWeight: 'bold',
     fontSize: fontSize.s,
-    fontFamily: Fonts.bold,
+    fontFamily: Fonts.bold
   },
   content: {
-    padding: 20,
+    padding: 20
   },
   title: {
     fontSize: fontSize.l,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
   description: {
     fontSize: fontSize.md,
     color: Colors.gray_02,
-    marginBottom: hp(2),
+    marginBottom: hp(2)
   },
   dateContainer: {
     backgroundColor: Colors.backgroundLight,
@@ -180,31 +183,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     width: wp(56),
-    marginBottom: hp(2),
+    marginBottom: hp(2)
   },
   dateText: {
     fontSize: fontSize.s,
     color: Colors.gray_02,
-    fontWeight: '600',
+    fontWeight: '600'
   },
   buttonContainer: {
-    marginBottom: hp(3),
+    marginBottom: hp(3)
   },
   registerButton: {
     width: wp(57),
     backgroundColor: Colors.primary,
-    padding: 0,
+    padding: 0
   },
   section: {
-    marginBottom: hp(3),
+    marginBottom: hp(3)
   },
   sectionTitle: {
     fontSize: fontSize.l,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
   bulletList: {
-    marginVertical: hp(1),
+    marginVertical: hp(1)
   },
   challengeCard: {
     backgroundColor: Colors.dayBackground,
@@ -212,30 +215,30 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginVertical: hp(1),
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   challengeText: {
     color: Colors.gray_02,
     fontSize: fontSize.normal,
-    width: wp(60),
+    width: wp(60)
   },
   link: {
-    color: Colors.targetColor,
+    color: Colors.targetColor
   },
   organizerInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 10
   },
   logo: {
     width: wp(22),
     height: hp(10),
-    resizeMode: 'contain',
+    resizeMode: 'contain'
   },
   orgName: {
     fontWeight: 'bold',
-    fontSize: fontSize.l,
-  },
-});
+    fontSize: fontSize.l
+  }
+})
 
-export default ProgramDetailUI;
+export default ProgramDetailUI

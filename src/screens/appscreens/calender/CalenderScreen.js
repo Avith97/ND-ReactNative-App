@@ -1,14 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
-import {hp} from '../../../common/functions/dimensions';
-import Colors from '../../../utils/constants/Colors';
-import {ScrollView} from 'react-native-gesture-handler';
-import CalenderScreenUI from './CalenderScreenUI';
+import { StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import { hp } from '../../../common/functions/dimensions'
+import Colors from '../../../utils/constants/Colors'
+import { ScrollView } from 'react-native-gesture-handler'
+import CalenderScreenUI from './CalenderScreenUI'
 
 export default function CalenderScreen(props) {
-
-  const [state , setState] = useState({
-    selectedTab:"Day"
+  const [state, setState] = useState({
+    selectedTab: 'Day'
   })
   const [options] = useState({
     tabs: ['Day', 'Week', 'Month'],
@@ -22,7 +21,7 @@ export default function CalenderScreen(props) {
         color: '#1ABC9C',
         bgColor: '#84BAFF',
         borderColor: 'transparent',
-        button2: 'Submit Response',
+        button2: 'Submit Response'
       },
 
       {
@@ -34,25 +33,29 @@ export default function CalenderScreen(props) {
         color: '#3498DB',
         bgColor: '#85E3FF',
         borderColor: 'transparent',
-        button2: 'Submit Response',
-      },
-    ],
-  });
+        button2: 'Submit Response'
+      }
+    ]
+  })
 
-
-  const handleChange =(tab)=>{
-    setState((prev)=>({...prev , selectedTab:tab}))
+  const handleChange = tab => {
+    setState(prev => ({ ...prev, selectedTab: tab }))
   }
 
-  //api call 
+  //api call
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{paddingBottom: hp(5)}}
+      contentContainerStyle={{ paddingBottom: hp(5) }}
       showsVerticalScrollIndicator={false}>
-      <CalenderScreenUI {...state} {...options} {...props} handleChange={handleChange} />
+      <CalenderScreenUI
+        {...state}
+        {...options}
+        {...props}
+        handleChange={handleChange}
+      />
     </ScrollView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -60,6 +63,6 @@ const styles = StyleSheet.create({
     flex: 1,
     // padding: 20,
     backgroundColor: Colors.white,
-    paddingBottom: hp(10),
-  },
-});
+    paddingBottom: hp(10)
+  }
+})
