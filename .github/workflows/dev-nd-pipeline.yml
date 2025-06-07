@@ -27,10 +27,11 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Run Prettier
+      - name: Run Prettier Check
         run: npm run format -- --check
 
       - name: Run Tests
         run: npm test
 
-      - name: npm run build
+      - name: Build Project
+        run: npm run build
