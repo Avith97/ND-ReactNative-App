@@ -6,6 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
+    "format": "prettier --write \"src/**/*.js\"",
+    "format:check": "prettier --check \"src/**/*.js\"",
     "start": "react-native start",
     "bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "clear": "cd android && ./gradlew clean && cd ../",
@@ -78,7 +80,6 @@
   },
   "packageManager": "yarn@3.6.4",
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown",
-    "*.js": "eslint --fix"
+    "*.js": "prettier --write --ignore-unknown"
   }
 }
