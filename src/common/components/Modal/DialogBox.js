@@ -1,5 +1,6 @@
 import React from 'react'
 import { Modal, View, StyleSheet, Text } from 'react-native'
+import { wp } from '../../functions/dimensions'
 
 const DialogBox = ({ visible, onClose, children, title }) => {
   if (!visible) return null
@@ -34,8 +35,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)'
   },
   dialog: {
-    width: 350,
-    padding: 20,
+    width: wp(90),
+    // padding: 10,
+    paddingHorizontal:wp(10),
     backgroundColor: '#f3f3f3',
     borderRadius: 10,
     alignItems: 'center'

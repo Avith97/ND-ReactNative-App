@@ -1,9 +1,12 @@
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-function TeamLeaderBoard() {
+export default function TeamLeaderBoard() {
   return (
-    <div>TeamLeaderBoard</div>
+    <View>
+      <Text>TeamLeaderBoard</Text>
+    </View>
   )
 }
 
-export default TeamLeaderBoard
+const styles = StyleSheet.create({})

@@ -21,8 +21,19 @@ import { Image } from 'react-native'
 import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import { hp, wp } from '../../common/functions/dimensions'
 import Icons, { iconType } from '../../assets/icons/Icons'
+import { open_logout_bottom_sheet } from '../../common/components/toasts/handleToasts'
+import IndividualLeaderBoard from './IndividualTab/IndividualLeaderBoard'
+import TeamTab from './teamtab/TeamTab'
+import AgeGroupTab from './agegrouptab/AgeGroupTab'
+import SearchBar from '../../common/components/searchbar/Searchbar'
+import Colors from '../../utils/constants/Colors'
 
-export default function ProgramLeaderBoardScreenUI({selectedTab, ...props}) {
+export default function ProgramLeaderBoardScreenUI({
+  selectedTab,
+  eventData,
+  filters,
+  ...props
+}) {
   const TrophyIcon = () => (
     <Image
       source={{ uri: 'https://img.icons8.com/3d-fluency/94/prize.png' }}
@@ -39,55 +50,124 @@ export default function ProgramLeaderBoardScreenUI({selectedTab, ...props}) {
       <TrophyIcon />
     </View>
   )
+
+  const searchListItem = ({ item }) => {
+    return (
+      <TouchableOpacity
+        style={styles.resultRow}
+        onPress={() => props?.handleSearchedItemPress(item)}
+        activeOpacity={0.7}>
+        {/* Step Icon */}
+        <View style={{ marginRight: wp(2) }}>
+          <Icons name="Step" size={30} color={Colors.gray_01} />
+        </View>
+
+        {/* Name and Bib */}
+        <View style={styles.textContainer}>
+          <Text style={styles.nameText}>
+            {item.firstName} {item.lastName}
+          </Text>
+          <Text style={styles.bibText}>Bib: {item.bibNumber}</Text>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
   return (
-    <View>
-      <View style={styles.headerIconTitle}>
-        <Text style={{ fontSize: fontSize.m, fontWeight: 700 }}>
-          Leaderboard
-        </Text>
-        <TouchableOpacity onPress={props.toggleDialog}>
-          <Icons name={'filter'} type={iconType.feather} size={20} />
-        </TouchableOpacity>
-      </View>
-      <View style={{ marginBottom: hp(1.5) }}>
-        <CustomTextInput
-          name={'firstname'}
-          inputStyle={{ ...styles.textInputStyle }}
-          // onChangeText={props?.handleChange}
-          inputProps={{
-            // flex: 1,
-            //   value: props.firstname,
-            placeholder: 'Name / BIB no.'
-          }}
-          leftIcon={{
-            type: iconType.material,
-            name: 'Search',
-            size: fontSize.l
-            // color: Colors.red,
-          }}
+    <>
+      <View style={{ flex: 1 }}>
+        {/* title and filter icon */}
+        <View style={styles.headerIconTitle}>
+          <Text style={{ fontSize: fontSize.m, fontWeight: 700 }}>
+            Leaderboard
+          </Text>
+
+          <TouchableOpacity
+            onPress={() => props.handleChange('showModal', !props?.showModal)}>
+            <View
+              style={{
+                position: 'absolute',
+                height: hp(1.5),
+                width: wp(3),
+                backgroundColor: 'red',
+                borderRadius: 10,
+                right: -3,
+                top: -5
+              }}
+            />
+            <Icons name={'filter'} type={iconType.feather} size={20} />
+          </TouchableOpacity>
+        </View>
+
+        {/* individual user card  and searchbar*/}
+        <View style={{ marginBottom: hp(1.5) }}>
+          <SearchBar
+            name="search"
+            {...props}
+            // label="Search Participants"
+            onChangeText={(name, value) => props?.handleChange(name, value)}
+          />
+
+          {/* search result  */}
+          {/* {props?.searchResultData?.length > 0 && (
+            <View style={{
+              backgroundColor:"#dccbf8",
+              maxHeight:hp(40) , 
+              minHeight:hp(21),
+              // position:"absolute",
+              // top:hp
+              }} >
+              <View style={{ marginTop: hp(2), zIndex: 1 }}>
+                <FlatList
+                  data={props.searchResultData}
+                  keyExtractor={(item, index) =>
+                    item.runnerId?.toString() || index.toString()
+                  }
+                  ItemSeparatorComponent={()=><View style={{  height:hp(1)}} />}
+                  contentContainerStyle={{paddingHorizontal:wp(1.5) }}
+                  renderItem={searchListItem}
+                />
+              </View>
+            </View>
+          )} */}
+        </View>
+
+        <UserLeaderBoardCard
+          runnerActivityDetail={props?.runnerActivityDetail}
         />
+
+        {/* individual leaderboard */}
+        {filters?.selectedParticipated?.value === 'individual' && (
+          <View style={{ flex: 1 }}>
+            <IndividualLeaderBoard
+              {...props}
+              eventData={props?.eventData}
+              filters={filters}
+
+            />
+          </View>
+        )}
+
+        {filters?.selectedParticipated?.value === 'team' && (
+          <TeamTab eventData={props?.eventData} filters={filters} />
+        )}
+        {filters?.selectedParticipated?.value === 'ageGroup' && (
+          <AgeGroupTab eventData={props?.eventData} filters={filters} />
+        )}
       </View>
 
-      <UserLeaderBoardCard />
-
-      <View style={styles.dashboardData}>
-        <TabSelector tabs={props.tabs} onTabChange={props.handleChange} />
-
-        <FlatList
-          data={props.DATA}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => <LeaderboardItem item={item} />}
-          scrollEnabled={false} // FlatList won't scroll, only ScrollView will
-        />
-      </View>
-      <DialogBox visible={props.dialogVisible} onClose={props.toggleDialog}>
+      {/* filter box */}
+      <DialogBox
+        visible={props?.showModal}
+        onClose={() => props.handleChange('showModal', !props?.showModal)}>
+        {/* participate type */}
         <View
           style={{
-            marginVertical: hp(1),
-            flexDirection: 'column',
-            width: '100%'
+            paddingHorizontal: wp(3),
+            width: wp(90),
+            paddingTop: hp(3)
           }}>
-          {/* Row 1 */}
+          {/* participated menu */}
           <View
             style={{
               flexDirection: 'row',
@@ -96,70 +176,72 @@ export default function ProgramLeaderBoardScreenUI({selectedTab, ...props}) {
               justifyContent: 'space-between',
               alignContent: 'center'
             }}>
-            <Text>Week Filter</Text>
-            <View style={{ width: '50%' }}>
+            <Text>Participated</Text>
+            <View style={styles.dropdownStyle}>
               <CustomDropdown
-                name="participant"
+                name="selectedParticipated"
                 label="Select"
-                data={[
-                  { weekFilter: '1 May - 7 May' },
-                  { weekFilter: '8 May - 14 May' },
-                  { weekFilter: '15 May - 21 May' }
-                ]}
-                onChangeText={props.handleDropdownChange}
-                valueExtractor={item => item.participant}
-                labelExtractor={item => item.participant}
-              />
-            </View>
-          </View>
-
-          {/* Row 2 */}
-          <View
-            style={{
-              flexDirection: 'row',
-              marginBottom: hp(1),
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              alignContent: 'center'
-            }}>
-            <Text>Week Filter</Text>
-            <View style={{width: '50%'}}>
-              <CustomDropdown
-                name="weekFilter"
-                label="Select Week"
-                data={props.customDatesOptions}
-                value={props.dropDownValue?.weekFilter?.label}
-                onChangeText={(value, index, data) => {
-                  props.handleDropdownChange('weekFilter', index);
-                }}
+                data={props?.formattedParticipatedLabel || []}
+                value={props?.selectedParticipated}
+                onChangeText={props.handleChange}
                 valueExtractor={item => item}
-                labelExtractor={item => item.label}
+                labelExtractor={item => item?.label}
               />
             </View>
           </View>
 
-          {/* Row 3 */}
+          {/* week dropdown */}
+          {props?.selectedParticipated?.value !== 'team' && (
+            <View
+              style={{
+                flexDirection: 'row',
+                marginBottom: hp(1),
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                alignContent: 'center'
+              }}>
+              <Text>Week Filter</Text>
+              <View style={styles.dropdownStyle}>
+                <CustomDropdown
+                  name="selectedWeekRange"
+                  label="Select Week"
+                  data={
+                    props.weekDropdowns || [
+                      {
+                        label: 'Overall',
+                        value: ''
+                      }
+                    ]
+                  }
+                  value={props.selectedWeekRange}
+                  onChangeText={(name, value, data) => {
+                    props.handleChange(name, value)
+                  }}
+                  valueExtractor={item => item}
+                  labelExtractor={item => item.label}
+                />
+              </View>
+            </View>
+          )}
+
+          {/* Top participant logic*/}
           <View
             style={{
               flexDirection: 'row',
               marginBottom: hp(1),
               alignItems: 'center',
-              justifyContent: 'space-between',
-              alignContent: 'center',
+              justifyContent: 'space-between'
+              // alignContent: 'center',
             }}>
             <Text>Top Participant</Text>
-            <View style={{ width: '50%' }}>
+            <View style={styles.dropdownStyle}>
               <CustomDropdown
-                name="topParticipant"
+                name="selectedLimit"
                 label="Select"
-                data={[
-                  { topParticipant: '5' },
-                  { topParticipant: '10' },
-                  { topParticipant: '15' }
-                ]}
-                value={props.dropDownValue.topParticipant?.label}
-                onChangeText={(name, value, data) => {
-                  props.handleDropdownChange(name, value);
+                data={props?.limit}
+                value={props?.selectedLimit} // Pre-selected value
+                onChangeText={(name, value) => {
+                  props.handleChange(name, value)
                 }}
                 valueExtractor={item => item}
                 labelExtractor={item => item.label}
@@ -168,19 +250,24 @@ export default function ProgramLeaderBoardScreenUI({selectedTab, ...props}) {
           </View>
         </View>
 
+        {/* action types */}
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'flex-end',
-            width: '100%',
-            gap: 10
+            // justifyContent: 'space-between',
+            // backgroundColor:"red",
+            paddingHorizontal: wp(2),
+            // width: wp(50),
+            gap: wp(5),
+            paddingVertical: hp(1),
+            paddingBottom: hp(2)
           }}>
           <CustomButton
             title={'Cancel'}
             name={'cancel'}
-            onPress={props?.toggleDialog}
-            btnStyles={styles.btnStyles}
+            onPress={() => props.handleChange('showModal', !props?.showModal)}
+            btnStyles={{ backgroundColor: 'transparent', borderWidth: 0.9 }}
             minWidth={wp('30')}
             btnTitleStyles={{
               ...styles.textStyle,
@@ -189,13 +276,10 @@ export default function ProgramLeaderBoardScreenUI({selectedTab, ...props}) {
           />
           <CustomButton
             title={'Apply'}
-            name={'apply'}
-            onPress={() => {
-              props?.toggleDialog();
-              props?.onApplyFilters(); // trigger apply flag
-            }}
+            name={'submit'}
+            onPress={props?.handleSubmit}
             minWidth={wp('30')}
-            btnStyles={styles.btnStylesApply}
+            // btnStyles={styles.btnStylesApply}
             btnTitleStyles={{
               ...styles.textStyle,
               ...styles.btnTextStyleApply
@@ -203,7 +287,7 @@ export default function ProgramLeaderBoardScreenUI({selectedTab, ...props}) {
           />
         </View>
       </DialogBox>
-    </View>
+    </>
   )
 }
 
@@ -249,8 +333,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: hp('1'),
-    height: hp('6'),
+    // paddingVertical: hp(''),
+    height: hp('5'),
     borderWidth: 1,
     marginVertical: hp(1)
   },
@@ -268,5 +352,14 @@ const styles = StyleSheet.create({
   },
   btnTextStyleApply: {
     color: 'black'
-  }
+  },
+
+  // dropwdown style
+
+  dropdownStyle: {
+    width: '62%',
+    right: wp(2)
+    // left:
+  },
+
 })

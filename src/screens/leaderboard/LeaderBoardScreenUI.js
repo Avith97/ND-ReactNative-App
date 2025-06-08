@@ -1,15 +1,16 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import CustomTextInput from '../../common/components/textInput/CustomTextInput'
-import { iconType } from '../../assets/icons/Icons'
-import { fontSize } from '../../utils/constants/Fonts'
-import Colors from '../../utils/constants/Colors'
-import { hp, wp } from '../../common/functions/dimensions'
-import { Avatar } from 'react-native-elements'
-import PieProgressBar from '../../common/components/progressbar/PieProgressBar'
-import { ScrollView } from 'react-native-gesture-handler'
-import { Image } from 'react-native'
-import TabSelector from '../../common/components/tabselector/TabSelector'
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import CustomTextInput from '../../common/components/textInput/CustomTextInput';
+import {iconType} from '../../assets/icons/Icons';
+import {fontSize} from '../../utils/constants/Fonts';
+import Colors from '../../utils/constants/Colors';
+import {hp, wp} from '../../common/functions/dimensions';
+import {Avatar} from 'react-native-elements';
+import PieProgressBar from '../../common/components/progressbar/PieProgressBar';
+import {ScrollView} from 'react-native-gesture-handler';
+import {Image} from 'react-native';
+import TabSelector from '../../common/components/tabselector/TabSelector';
+import UserLeaderBoardCard from '../../common/components/userleaderboardcard/UserLeaderBoardCard';
 
 export default function LeaderBoardScreenUI(props) {
   const TrophyIcon = () => (

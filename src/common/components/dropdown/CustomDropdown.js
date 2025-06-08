@@ -8,10 +8,13 @@ import Colors from '../../../utils/constants/Colors'
 const CustomDropdown = (props = cd_default_props) => {
   return (
     <View>
-      <Text style={styles.title}>
+      {props?.title && 
+        <Text style={styles.title}>
         {props.title}
         {props?.mandatory && <Text style={{ color: 'red' }}> *</Text>}
       </Text>
+      }
+    
       <Dropdown
         data={props.data}
         value={props.value}

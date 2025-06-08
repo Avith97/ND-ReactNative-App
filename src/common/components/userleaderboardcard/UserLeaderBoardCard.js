@@ -4,7 +4,7 @@ import { hp, wp } from '../../functions/dimensions'
 import { fontSize } from '../../../utils/constants/Fonts'
 import { Avatar } from 'react-native-elements'
 
-export default function UserLeaderBoardCard() {
+export default function UserLeaderBoardCard(props) {
   return (
     <View style={styles.userCard}>
       <Avatar
@@ -15,8 +15,8 @@ export default function UserLeaderBoardCard() {
         }}
         avatarStyle={styles.avatarImage}></Avatar>
       <View>
-        <Text style={styles.nameTitle}>Lakhan Mahadu Nemane</Text>
-        <Text>BIB no: 1628</Text>
+        {props?.runnerActivityDetail?.firstName && <Text style={styles.nameTitle}>{props?.runnerActivityDetail?.firstName} {props?.runnerActivityDetail?.lastName}</Text>}
+       {props?.runnerActivityDetail?.bibNumber  && <Text>BIB no: {props?.runnerActivityDetail?.bibNumber}</Text>}
       </View>
     </View>
   )
