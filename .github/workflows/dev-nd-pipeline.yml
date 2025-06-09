@@ -37,6 +37,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Build Android AAB
+        working-directory: android
         run: ./gradlew bundleRelease
 
       - name: Upload AAB Artifact
