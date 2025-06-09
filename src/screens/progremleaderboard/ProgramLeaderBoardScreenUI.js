@@ -73,7 +73,6 @@ export default function ProgramLeaderBoardScreenUI({
     )
   }
 
-
   return (
     <>
       <View style={{ flex: 1 }}>

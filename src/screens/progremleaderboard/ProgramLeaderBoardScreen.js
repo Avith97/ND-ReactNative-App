@@ -19,7 +19,6 @@ import Loader from '../../common/components/loader/Loader'
 export default function ProgramLeaderBoardScreen(props) {
   let { eventID } = props?.route?.params
 
-
   const { auth } = useSelector(store => store)
 
   const [state, setState] = useState({
@@ -57,8 +56,8 @@ export default function ProgramLeaderBoardScreen(props) {
       label: 'overAll',
       value: ''
     },
-    activity:null,
-    category:null
+    activity: null,
+    category: null
   })
 
   useEffect(() => {
@@ -70,16 +69,9 @@ export default function ProgramLeaderBoardScreen(props) {
     const participated = []
 
     const type = event.challengeType
-    const id = event.id
+    // const id = event.id
     const showRunnerGroupGraph = event.showRunnerGroupGraph
     const showAgeGroup = event.showAgeGroup
-    const showIndividual = event.showIndividual
-
-    const getChallengeLabel = id => {
-      if ([507, 508, 515].includes(id)) return 'Corporate'
-      if (id === 2473) return 'Location'
-      return 'Team'
-    }
 
     // ✅ Individual condition
     if (
@@ -101,7 +93,7 @@ export default function ProgramLeaderBoardScreen(props) {
     ) {
       participated.push({
         value: 'team',
-        label: getChallengeLabel(id)
+        label: 'Team'
       })
     }
 
@@ -114,7 +106,7 @@ export default function ProgramLeaderBoardScreen(props) {
     }
 
     // ✅ Age Group condition
-    if (showAgeGroup && showIndividual) {
+    if (showAgeGroup) {
       participated.push({
         value: 'ageGroup',
         label: 'Age Group'
@@ -158,13 +150,10 @@ export default function ProgramLeaderBoardScreen(props) {
     let weekStart = initialDate.clone()
     const formattedWeeks = []
 
-    
-
     // const isLiveEvent = now.isBetween(initialDate, endDate, undefined, '[]')
 
     if (totalDays > 10) {
       for (let i = 1; i <= totalWeeks; i++) {
-        
         const start = weekStart.clone()
         const endCandidate = start.clone().add(6, 'days')
         const end = endCandidate.isAfter(endDate)
@@ -173,8 +162,6 @@ export default function ProgramLeaderBoardScreen(props) {
 
         const isCurrentWeek = now.isBetween(start, end, undefined, '[]')
         const checkDays = end.diff(start, 'days')
-
-        
 
         if (checkDays <= 3 && formattedWeeks.length > 0) {
           const last = formattedWeeks[formattedWeeks.length - 1]
@@ -197,10 +184,6 @@ export default function ProgramLeaderBoardScreen(props) {
           if (isCurrentWeek) break
           formattedWeeks.push(weekOption)
         }
-
-
-        
-        
 
         weekStart = end.clone().add(1, 'days')
       }
@@ -276,7 +259,6 @@ export default function ProgramLeaderBoardScreen(props) {
     // getting Event Detail
     let res = await getEventDetail()
 
-
     // getting all Runners data, it will work like suggestion list
     let runnerData = await getAllRunnerData()
 
@@ -287,7 +269,6 @@ export default function ProgramLeaderBoardScreen(props) {
 
     // formatted week data
     let weeksData = await generateWeekFilterOptions(res, eventID)
-
 
     // get activity option
     let getActivities = await getActivityOptions(res) // activites not set how can I set
@@ -315,7 +296,6 @@ export default function ProgramLeaderBoardScreen(props) {
       let url = TemplateService?._eventID(URL.get_event, eventID)
 
       let resp = await services?._get(url)
-
 
       if (resp?.type === 'success') {
         return resp?.data
@@ -444,8 +424,8 @@ export default function ProgramLeaderBoardScreen(props) {
       selectedWeek: state?.selectedWeekRange,
       selectLimit: state?.selectedLimit,
       selectedParticipated: state?.selectedParticipated,
-      activity:state?.selectedActivity,
-      category:state?.selectedCategory
+      activity: state?.selectedActivity,
+      category: state?.selectedCategory
     })
     setState(prev => ({
       ...prev,
@@ -465,6 +445,7 @@ export default function ProgramLeaderBoardScreen(props) {
     })
   }
 
+  console.log(state?.eventData)
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white, padding: 20 }}>
