@@ -35,7 +35,7 @@ export default function ProgramLeaderBoardScreen(props) {
     },
     selectedWeekRange: {
       label: 'overAll',
-      value: ''
+      value: 'overAll'
     },
     selectedLimit: { label: '5', value: '5' },
     showModal: false,
@@ -54,7 +54,7 @@ export default function ProgramLeaderBoardScreen(props) {
     selectLimit: { label: '5', value: '5' },
     selectedWeek: {
       label: 'overAll',
-      value: ''
+      value: 'overAll'
     },
     activity: null,
     category: null
@@ -444,8 +444,6 @@ export default function ProgramLeaderBoardScreen(props) {
       searchResultData: []
     })
   }
-
-  console.log(state?.eventData)
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white, padding: 20 }}>

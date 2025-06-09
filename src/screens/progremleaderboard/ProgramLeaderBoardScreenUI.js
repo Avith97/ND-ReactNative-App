@@ -27,6 +27,7 @@ import TeamTab from './teamtab/TeamTab'
 import AgeGroupTab from './agegrouptab/AgeGroupTab'
 import SearchBar from '../../common/components/searchbar/Searchbar'
 import Colors from '../../utils/constants/Colors'
+import RunnerGroupTab from './runnergroup/RunnerGroupTab'
 
 export default function ProgramLeaderBoardScreenUI({
   selectedTab,
@@ -162,6 +163,14 @@ export default function ProgramLeaderBoardScreenUI({
             eventID={props?.eventID}
           />
         )}
+
+        {filters?.selectedParticipated?.value === 'runnerGroup' && (
+          <RunnerGroupTab
+            eventData={props?.eventData}
+            filters={filters}
+            eventID={props?.eventID}
+          />
+        )}
       </View>
 
       {/* filter box */}
@@ -233,61 +242,64 @@ export default function ProgramLeaderBoardScreenUI({
           )}
 
           {/* activity type */}
-          {props?.eventActivities?.activity?.length > 1 && (
-            <View
-              style={{
-                flexDirection: 'row',
-                marginBottom: hp(1),
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                alignContent: 'center'
-              }}>
-              <Text>Activity Types</Text>
-              <View style={styles.dropdownStyle}>
-                <CustomDropdown
-                  name="selectedWeekRange"
-                  label="Select Activity Types"
-                  data={props?.eventActivities?.activity}
-                  value={props.selectedActivity}
-                  onChangeText={(name, value, data) => {
-                    props.handleChange(name, value)
-                  }}
-                  valueExtractor={item => item}
-                  labelExtractor={item => item.type}
-                />
+          {props?.eventActivities?.activity?.length > 1 &&
+            props?.selectedParticipated?.value === 'individual' && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginBottom: hp(1),
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  alignContent: 'center'
+                }}>
+                <Text>Activity Types</Text>
+                <View style={styles.dropdownStyle}>
+                  <CustomDropdown
+                    name="selectedActivity"
+                    label="Select Activity Types"
+                    data={props?.eventActivities?.activity}
+                    value={props.selectedActivity}
+                    onChangeText={(name, value, data) => {
+                      props.handleChange(name, value)
+                    }}
+                    valueExtractor={item => item}
+                    labelExtractor={item => item.type}
+                  />
+                </View>
               </View>
-            </View>
-          )}
+            )}
 
           {/* category type */}
-          {props?.eventActivities?.category?.length > 1 && (
-            <View
-              style={{
-                flexDirection: 'row',
-                marginBottom: hp(1),
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                alignContent: 'center'
-              }}>
-              <Text>Category Types</Text>
-              <View style={styles.dropdownStyle}>
-                <CustomDropdown
-                  name="selectedWeekRange"
-                  label="Select Category Types"
-                  data={props?.eventActivities?.category}
-                  value={props.selectedCategory}
-                  onChangeText={(name, value, data) => {
-                    props.handleChange(name, value)
-                  }}
-                  valueExtractor={item => item}
-                  labelExtractor={item => item.label}
-                />
+          {props?.eventActivities?.category?.length > 1 &&
+            props?.selectedParticipated?.value === 'individual' && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginBottom: hp(1),
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  alignContent: 'center'
+                }}>
+                <Text>Category Types</Text>
+                <View style={styles.dropdownStyle}>
+                  <CustomDropdown
+                    name="selectedCategory"
+                    label="Select Category Types"
+                    data={props?.eventActivities?.category}
+                    value={props.selectedCategory}
+                    onChangeText={(name, value, data) => {
+                      props.handleChange(name, value)
+                    }}
+                    valueExtractor={item => item}
+                    labelExtractor={item => item.label}
+                  />
+                </View>
               </View>
-            </View>
-          )}
+            )}
 
           {/* Top participant logic*/}
-          {props?.selectedParticipated?.value !== 'ageGroup' && (
+          {(props?.selectedParticipated?.value === 'team' ||
+            props?.selectedParticipated?.value === 'individual') && (
             <View
               style={{
                 flexDirection: 'row',

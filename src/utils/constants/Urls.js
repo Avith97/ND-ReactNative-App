@@ -48,5 +48,8 @@ export const URL = {
   get_runner_detail: 'public/activity/event_id/user_id',
 
   // get single event
-  get_event: 'event/event_id'
+  get_event: 'event/event_id',
+
+  runner_group: 'public/runner/groupDetails/leaderboard/event_id',
+  get_runner_group: 'public/groupRunner/leaderboard/event_id'
 }

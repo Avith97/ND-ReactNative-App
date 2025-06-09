@@ -5,8 +5,11 @@ import axios from 'axios'
 import { TemplateService } from '../../../services/templates/TemplateService'
 import { URL } from '../../../utils/constants/Urls'
 import { services } from '../../../services/axios/services'
+import { useSelector } from 'react-redux'
 
 export default function IndividualLeaderBoard(props) {
+  let { eventData } = useSelector(store => store)
+
   const [state, setState] = useState({
     selectedTab: 'Male',
     MaleParticipant: null,
@@ -25,9 +28,10 @@ export default function IndividualLeaderBoard(props) {
   }, [
     props?.filters?.selectedWeek?.toDate,
     props?.filters?.selectedWeek?.fromDate,
-    props?.filters?.selectLimit?.value
+    props?.filters?.selectLimit?.value,
+    props?.filters?.activity,
+    props?.filters?.category
   ])
-
 
   async function formatData(data = []) {
     return data?.map((item, index) => ({
@@ -68,9 +72,10 @@ export default function IndividualLeaderBoard(props) {
           activity:
             props?.filters?.activity?.type ||
             props?.selectedActivity?.type ||
+            eventData?.program?.result?.activityList?.[0]?.subActivityType ||
             'STEPS',
           categoryId:
-            props?.filters?.category?.id || props?.selectedCategory?.id,
+            props?.filters?.category?.id || props?.selectedCategory?.id || 4417,
           activityPriority: 'PRIMARY',
           ...(props?.filters?.selectedWeek?.fromDate && {
             fromDate: props?.filters.selectedWeek?.fromDate
