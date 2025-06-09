@@ -50,7 +50,11 @@ export const URL = {
 
   // inidivdual data
   get_all_runners:"search/event_id",
-  get_runner_detail:"public/activity/event_id/user_id"
+  get_runner_detail:"public/activity/event_id/user_id",
+
+
+  // get single event
+  get_event:"event/event_id"
 
   
 };

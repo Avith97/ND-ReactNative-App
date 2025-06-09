@@ -32,6 +32,7 @@ export default function DashboardScreenUI(props) {
     </View>
   );
 
+ 
   
 
   return (
@@ -66,7 +67,7 @@ export default function DashboardScreenUI(props) {
         <CustomButton
           title={'Show Leaderboard'}
           name={'leaderboard'}
-          onPress={props.handleNavigate}
+          onPress={()=>props.handleNavigate(props.eventGraphData?.graphDTO?.[0]?.eventId)}
           btnStyles={{
             ...styles.btnStyles,
             elevation: 5

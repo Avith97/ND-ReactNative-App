@@ -94,11 +94,6 @@ export default function DashboardScreen() {
       let url = TemplateService._userId(URL.dashboard_detail, auth?.runner?.id);
 
       let resp = await services._get(url);
-
-      // 
-      console.log("get dashboard detail data" ,resp);
-      
-
       if (resp?.type === 'success') {
         let data = prepareWeeklySteps(resp.data?.graphDTO?.[0]);
 
@@ -125,14 +120,15 @@ export default function DashboardScreen() {
       {id: 7, dayTitle: 'day7', response: true},
     ],
   });
-  const handleNavigate = () => {
-    navigation.navigate(Strings.NAVIGATION.programleaderboard);
+  const handleNavigate = (eventID) => {
+    navigation.navigate(Strings.NAVIGATION.programleaderboard , {eventID :eventID});
   };
 
   const handleChange = tab => {
     setState(prev => ({...prev, selectedTab: tab}));
   };
 
+  
 
   return (
     <ScrollView

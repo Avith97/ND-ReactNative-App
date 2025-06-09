@@ -13,8 +13,13 @@ import { URL } from '../../utils/constants/Urls'
 import { TemplateService } from '../../services/templates/TemplateService'
 import { services } from '../../services/axios/services'
 import { useSelector } from 'react-redux'
+import { appsnackbar } from '../../common/functions/snackbar_actions'
+import Loader from '../../common/components/loader/Loader'
 
-export default function ProgramLeaderBoardScreen() {
+export default function ProgramLeaderBoardScreen(props) {
+  let { eventID } = props?.route?.params
+
+
   const { auth } = useSelector(store => store)
 
   const [state, setState] = useState({
@@ -26,10 +31,13 @@ export default function ProgramLeaderBoardScreen() {
       { label: '15', value: '15' }
     ],
     selectedParticipated: {
-      value: 'ageGroup',
-      label: 'AgeGroup'
+      value: 'individual',
+      label: 'Individual'
     },
-    selectedWeekRange: null,
+    selectedWeekRange: {
+      label: 'overAll',
+      value: ''
+    },
     selectedLimit: { label: '5', value: '5' },
     showModal: false,
     searchResultData: null,
@@ -48,7 +56,9 @@ export default function ProgramLeaderBoardScreen() {
     selectedWeek: {
       label: 'overAll',
       value: ''
-    }
+    },
+    activity:null,
+    category:null
   })
 
   useEffect(() => {
@@ -73,12 +83,9 @@ export default function ProgramLeaderBoardScreen() {
 
     // ✅ Individual condition
     if (
-      (type === 'BOTH' ||
-        type === 'TEAM_RELAY' ||
-        (['INDIVIDUAL', 'RELAY'].includes(type) &&
-          showRunnerGroupGraph === true) ||
-        showAgeGroup) &&
-      showIndividual
+      type === 'BOTH' ||
+      type === 'TEAM_RELAY' ||
+      ['INDIVIDUAL', 'RELAY'].includes(type)
     ) {
       participated.push({
         value: 'individual',
@@ -118,10 +125,10 @@ export default function ProgramLeaderBoardScreen() {
   }
 
   async function generateWeekFilterOptions(eventData, eventId) {
-    const DATE_FORMAT = 'DD-MM-YYYY HH:mm:ss'
+    const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
     const dropdownDates = [
       {
-        label: 'Overall',
+        label: 'OverAll',
         value: ''
       }
     ]
@@ -136,18 +143,12 @@ export default function ProgramLeaderBoardScreen() {
       toDate: todayFormatted
     }
 
-    const parseDate = (dateStr, fallbackFormat = 'YYYY-MM-DD') =>
-      dateStr ? moment(dateStr, fallbackFormat) : null
+    const parseDate = (dateStr, format = 'YYYY-MM-DD') =>
+      dateStr ? moment(dateStr, format) : null
 
-    const initialDate =
-      parseDate(eventData?.eventLocalStartDate) ||
-      parseDate(eventData?.localStartDate) ||
-      parseDate(eventData?.eventDate)
-
-    const endDate =
-      parseDate(eventData?.eventLocalEndDate) ||
-      parseDate(eventData?.localEndDate) ||
-      parseDate(eventData?.eventEndDate, 'DD-MM-YYYY HH:mm:ss')
+    // Correct parsing based on your data
+    const initialDate = parseDate(eventData?.localStartDate) // "2025-06-01"
+    const endDate = parseDate(eventData?.localEndDate) // "2025-06-21"
 
     if (!initialDate || !endDate) return dropdownDates
 
@@ -157,10 +158,13 @@ export default function ProgramLeaderBoardScreen() {
     let weekStart = initialDate.clone()
     const formattedWeeks = []
 
-    const isLiveEvent = now.isBetween(initialDate, endDate, undefined, '[]')
+    
+
+    // const isLiveEvent = now.isBetween(initialDate, endDate, undefined, '[]')
 
     if (totalDays > 10) {
       for (let i = 1; i <= totalWeeks; i++) {
+        
         const start = weekStart.clone()
         const endCandidate = start.clone().add(6, 'days')
         const end = endCandidate.isAfter(endDate)
@@ -169,6 +173,8 @@ export default function ProgramLeaderBoardScreen() {
 
         const isCurrentWeek = now.isBetween(start, end, undefined, '[]')
         const checkDays = end.diff(start, 'days')
+
+        
 
         if (checkDays <= 3 && formattedWeeks.length > 0) {
           const last = formattedWeeks[formattedWeeks.length - 1]
@@ -188,9 +194,13 @@ export default function ProgramLeaderBoardScreen() {
             toDate: toDateStr
           }
 
-          if (isLiveEvent && !isCurrentWeek) break
+          if (isCurrentWeek) break
           formattedWeeks.push(weekOption)
         }
+
+
+        
+        
 
         weekStart = end.clone().add(1, 'days')
       }
@@ -265,16 +275,19 @@ export default function ProgramLeaderBoardScreen() {
   async function InitiateScreen() {
     // getting Event Detail
     let res = await getEventDetail()
+
+
     // getting all Runners data, it will work like suggestion list
     let runnerData = await getAllRunnerData()
 
     // runner activity detail
-    let runnerActivityDetail = await getRunnerDetail(auth?.id)
+    let runnerActivityDetail = await getRunnerDetail(auth?.runner?.id)
 
     let formattedParticipatedLabel = await getParticipatedOptions(res)
 
     // formatted week data
-    let weeksData = await generateWeekFilterOptions(res)
+    let weeksData = await generateWeekFilterOptions(res, eventID)
+
 
     // get activity option
     let getActivities = await getActivityOptions(res) // activites not set how can I set
@@ -299,11 +312,16 @@ export default function ProgramLeaderBoardScreen() {
 
   async function getEventDetail() {
     try {
-      const response = await axios.get(
-        'https://mocki.io/v1/3e8553f3-5f72-4b79-a9ac-66cb517d0e5c'
-      )
+      let url = TemplateService?._eventID(URL.get_event, eventID)
 
-      return response.data
+      let resp = await services?._get(url)
+
+
+      if (resp?.type === 'success') {
+        return resp?.data
+      } else {
+        appsnackbar.showErrMsg('Something went wrong')
+      }
     } catch (error) {
       console.error('Error fetching data:', error)
       return null
@@ -315,7 +333,8 @@ export default function ProgramLeaderBoardScreen() {
   async function getAllRunnerData() {
     try {
       // /public/leaderboard
-      let url = TemplateService._eventID(URL?.get_all_runners, 2477)
+
+      let url = TemplateService._eventID(URL?.get_all_runners, eventID)
 
       const resp = await services._get(url, { params: { searchString: '' } })
 
@@ -334,8 +353,8 @@ export default function ProgramLeaderBoardScreen() {
     try {
       let url = TemplateService._userIDAndEventID(
         URL?.get_runner_detail,
-        userId || 3675,
-        2477
+        userId,
+        eventID
       )
 
       const resp = await services._get(url)
@@ -385,7 +404,7 @@ export default function ProgramLeaderBoardScreen() {
   async function searchResult(searchQuery) {
     if (!searchQuery?.trim()) return []
 
-    const  runnerData  = state?.runnerData 
+    const runnerData = state?.runnerData
 
     const searchTerms = searchQuery.trim().toLowerCase().split(' ')
 
@@ -402,15 +421,14 @@ export default function ProgramLeaderBoardScreen() {
   }
 
   async function handleChange(params, val) {
-
     if (params === 'search') {
       let searchResultData = await searchResult(val)
 
       // if (searchResultData?.length > 0) {
-        setState({
-          ...state,
-          searchResultData: searchResultData
-        })
+      setState({
+        ...state,
+        searchResultData: searchResultData
+      })
       // }
     } else {
       setState({
@@ -425,7 +443,9 @@ export default function ProgramLeaderBoardScreen() {
       ...filters,
       selectedWeek: state?.selectedWeekRange,
       selectLimit: state?.selectedLimit,
-      selectedParticipated: state?.selectedParticipated
+      selectedParticipated: state?.selectedParticipated,
+      activity:state?.selectedActivity,
+      category:state?.selectedCategory
     })
     setState(prev => ({
       ...prev,
@@ -438,12 +458,18 @@ export default function ProgramLeaderBoardScreen() {
 
     let runnerActivityDetail = await getRunnerDetail(runnerID?.runnerId)
 
-    setState({ ...state, runnerActivityDetail: runnerActivityDetail , searchResultData:[] })
+    setState({
+      ...state,
+      runnerActivityDetail: runnerActivityDetail,
+      searchResultData: []
+    })
   }
+
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white, padding: 20 }}>
       {/* <Prg {...state}  /> */}
+      {/* <Loader /> */}
 
       <ProgramLeaderBoardScreenUI
         {...state}
@@ -454,6 +480,7 @@ export default function ProgramLeaderBoardScreen() {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handleSearchedItemPress={handleSearchedItemPress}
+        eventID={eventID}
       />
     </View>
   )

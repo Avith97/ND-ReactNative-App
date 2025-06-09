@@ -35,7 +35,7 @@ export default function TeamTab({ ...props }) {
       // url
       let url = TemplateService?._eventID(
         URL.get_teams_url,
-        props?.eventData?.id || 2477
+        props?.eventID || 2477
       )
 
       // API request for fetch ALl teams
@@ -59,7 +59,7 @@ export default function TeamTab({ ...props }) {
 
     try {
       // Replace these with actual IDs if needed
-      const programId = 2477
+      const programId = props?.eventID
 
         // API request for fetch single teams
       const response = await services._get(

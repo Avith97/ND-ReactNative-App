@@ -73,6 +73,7 @@ export default function ProgramLeaderBoardScreenUI({
     )
   }
 
+
   return (
     <>
       <View style={{ flex: 1 }}>
@@ -143,16 +144,24 @@ export default function ProgramLeaderBoardScreenUI({
               {...props}
               eventData={props?.eventData}
               filters={filters}
-
+              eventID={props?.eventID}
             />
           </View>
         )}
 
         {filters?.selectedParticipated?.value === 'team' && (
-          <TeamTab eventData={props?.eventData} filters={filters} />
+          <TeamTab
+            eventData={props?.eventData}
+            filters={filters}
+            eventID={props?.eventID}
+          />
         )}
         {filters?.selectedParticipated?.value === 'ageGroup' && (
-          <AgeGroupTab eventData={props?.eventData} filters={filters} />
+          <AgeGroupTab
+            eventData={props?.eventData}
+            filters={filters}
+            eventID={props?.eventID}
+          />
         )}
       </View>
 
@@ -191,7 +200,7 @@ export default function ProgramLeaderBoardScreenUI({
           </View>
 
           {/* week dropdown */}
-          {props?.selectedParticipated?.value !== 'team' && (
+          {props?.selectedParticipated?.value === 'individual' && (
             <View
               style={{
                 flexDirection: 'row',
@@ -224,30 +233,86 @@ export default function ProgramLeaderBoardScreenUI({
             </View>
           )}
 
-          {/* Top participant logic*/}
-          <View
-            style={{
-              flexDirection: 'row',
-              marginBottom: hp(1),
-              alignItems: 'center',
-              justifyContent: 'space-between'
-              // alignContent: 'center',
-            }}>
-            <Text>Top Participant</Text>
-            <View style={styles.dropdownStyle}>
-              <CustomDropdown
-                name="selectedLimit"
-                label="Select"
-                data={props?.limit}
-                value={props?.selectedLimit} // Pre-selected value
-                onChangeText={(name, value) => {
-                  props.handleChange(name, value)
-                }}
-                valueExtractor={item => item}
-                labelExtractor={item => item.label}
-              />
+          {/* activity type */}
+          {props?.eventActivities?.activity?.length > 1 && (
+            <View
+              style={{
+                flexDirection: 'row',
+                marginBottom: hp(1),
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                alignContent: 'center'
+              }}>
+              <Text>Activity Types</Text>
+              <View style={styles.dropdownStyle}>
+                <CustomDropdown
+                  name="selectedWeekRange"
+                  label="Select Activity Types"
+                  data={props?.eventActivities?.activity}
+                  value={props.selectedActivity}
+                  onChangeText={(name, value, data) => {
+                    props.handleChange(name, value)
+                  }}
+                  valueExtractor={item => item}
+                  labelExtractor={item => item.type}
+                />
+              </View>
             </View>
-          </View>
+          )}
+
+          {/* category type */}
+          {props?.eventActivities?.category?.length > 1 && (
+            <View
+              style={{
+                flexDirection: 'row',
+                marginBottom: hp(1),
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                alignContent: 'center'
+              }}>
+              <Text>Category Types</Text>
+              <View style={styles.dropdownStyle}>
+                <CustomDropdown
+                  name="selectedWeekRange"
+                  label="Select Category Types"
+                  data={props?.eventActivities?.category}
+                  value={props.selectedCategory}
+                  onChangeText={(name, value, data) => {
+                    props.handleChange(name, value)
+                  }}
+                  valueExtractor={item => item}
+                  labelExtractor={item => item.label}
+                />
+              </View>
+            </View>
+          )}
+
+          {/* Top participant logic*/}
+          {props?.selectedParticipated?.value !== 'ageGroup' && (
+            <View
+              style={{
+                flexDirection: 'row',
+                marginBottom: hp(1),
+                alignItems: 'center',
+                justifyContent: 'space-between'
+                // alignContent: 'center',
+              }}>
+              <Text>Top Participant</Text>
+              <View style={styles.dropdownStyle}>
+                <CustomDropdown
+                  name="selectedLimit"
+                  label="Select"
+                  data={props?.limit}
+                  value={props?.selectedLimit} // Pre-selected value
+                  onChangeText={(name, value) => {
+                    props.handleChange(name, value)
+                  }}
+                  valueExtractor={item => item}
+                  labelExtractor={item => item.label}
+                />
+              </View>
+            </View>
+          )}
         </View>
 
         {/* action types */}
@@ -360,6 +425,5 @@ const styles = StyleSheet.create({
     width: '62%',
     right: wp(2)
     // left:
-  },
-
+  }
 })

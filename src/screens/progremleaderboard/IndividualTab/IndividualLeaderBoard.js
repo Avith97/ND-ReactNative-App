@@ -22,12 +22,12 @@ export default function IndividualLeaderBoard(props) {
 
   useEffect(() => {
     InitiateScreen()
-  }, [props?.filters])
+  }, [
+    props?.filters?.selectedWeek?.toDate,
+    props?.filters?.selectedWeek?.fromDate,
+    props?.filters?.selectLimit?.value
+  ])
 
-  // useEffect(()=>{
-  //   console.log("filters" ,props?.filters);
-
-  // },[props?.filters])
 
   async function formatData(data = []) {
     return data?.map((item, index) => ({
@@ -56,37 +56,33 @@ export default function IndividualLeaderBoard(props) {
   }
 
   async function getIndividualDetail() {
-
-    
-    
     try {
       // /public/leaderboard
       let url = TemplateService._eventID(
         URL?.get_individual_url,
-        props?.eventData?.id || 2477
+        props?.eventID
       )
 
-      
-      
-   
       const resp = await services._get(url, {
         params: {
-          activity: props?.selectedActivity?.type || "STEPS",
-          categoryId: props?.selectedCategory?.id,
+          activity:
+            props?.filters?.activity?.type ||
+            props?.selectedActivity?.type ||
+            'STEPS',
+          categoryId:
+            props?.filters?.category?.id || props?.selectedCategory?.id,
           activityPriority: 'PRIMARY',
-        ...(props?.filters?.selectedWeek?.fromDate && {
-            fromDate: props?.filters.selectedWeek.fromDate
+          ...(props?.filters?.selectedWeek?.fromDate && {
+            fromDate: props?.filters.selectedWeek?.fromDate
           }),
           ...(props?.filters?.selectedWeek?.toDate && {
-            toDate: props?.filters?.selectedWeek.toDate
+            toDate: props?.filters?.selectedWeek?.toDate
           }),
           ...(props?.filters?.selectLimit?.value && {
             limit: props?.filters?.selectLimit.value
           })
         }
       })
-   
-      
 
       if (resp?.type === 'success') {
         return resp?.data
@@ -108,9 +104,9 @@ export default function IndividualLeaderBoard(props) {
         {...options}
         {...state}
         data={
-          state?.selectedTab?.title === 'Male'
-            ? state.MaleParticipant
-            : state?.FemaleParticipant
+          state?.selectedTab?.title === 'Female'
+            ? state.FemaleParticipant
+            : state?.MaleParticipant
         }
         onTabChange={onTabChange}
       />
