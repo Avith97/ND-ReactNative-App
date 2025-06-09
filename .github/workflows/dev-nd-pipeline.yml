@@ -1,4 +1,4 @@
-name: CI - DEV-ND Pipeline
+name: Pipeline - Create APK
 
 on:
   push:
@@ -36,12 +36,15 @@ jobs:
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Build Android AAB
-        working-directory: android
-        run: ./gradlew bundleRelease
+      - name: Run JS Bundle Script
+        run: npm run bundle
 
-      - name: Upload AAB Artifact
+      - name: Build Android APK
+        working-directory: android
+        run: ./gradlew assembleRelease
+
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: android/app/build/outputs/bundle/release/app-release.aab
+          path: android/app/build/outputs/apk/release/app-release.apk
