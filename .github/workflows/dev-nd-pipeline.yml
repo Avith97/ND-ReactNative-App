@@ -1,12 +1,7 @@
 name: Pipeline - Create APK
 
 on:
-  push:
-    branches:
-      - DEV-ND
-  pull_request:
-    branches:
-      - DEV-ND
+  workflow_dispatch:
 
 jobs:
   build:
