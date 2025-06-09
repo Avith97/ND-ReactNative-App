@@ -11,6 +11,8 @@ buildscript {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.google.com' }          // image crop picker
+        // maven { url "https://www.jitpack.io" }          // image crop picker
     }
     dependencies {
         classpath("com.android.tools.build:gradle")

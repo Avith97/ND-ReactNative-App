@@ -31,9 +31,9 @@
 		AB3E19D7AE0347BB94066679 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B315281A565D4B188EFE2A50 /* Poppins-ExtraLight.ttf */; };
 		C9FCAC8AE7D5476A967928F3 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDC254A3AF394A2BBEC481C9 /* Poppins-Bold.ttf */; };
 		D989CC202D2649F9AB34C0C5 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 00B65D8EFBA84DC4ADD7B242 /* Poppins-Black.ttf */; };
+		E131BE4F670D478E9D7A445E /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E36FB2782C54A2981396C50 /* icomoon.ttf */; };
 		F537FCABF067476E9C86AEE3 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A8B50E380416476FB7A42A11 /* Poppins-Light.ttf */; };
 		F5583ABD08C844DF96F68F70 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5EEC74C1E374682934B0141 /* Poppins-Medium.ttf */; };
-		E131BE4F670D478E9D7A445E /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E36FB2782C54A2981396C50 /* icomoon.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +64,7 @@
 		1A8B510B30E249E68D985F40 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Thin.ttf"; path = "../src/assets/fonts/Poppins-Thin.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-healthconnectapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthconnectapp.debug.xcconfig"; path = "Target Support Files/Pods-healthconnectapp/Pods-healthconnectapp.debug.xcconfig"; sourceTree = "<group>"; };
 		3DED14CE25B346D0B59D21CA /* Poppins-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Italic.ttf"; path = "../src/assets/fonts/Poppins-Italic.ttf"; sourceTree = "<group>"; };
+		3E36FB2782C54A2981396C50 /* icomoon.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = icomoon.ttf; path = ../src/assets/icons/icomoon.ttf; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-healthconnectapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthconnectapp.release.xcconfig"; path = "Target Support Files/Pods-healthconnectapp/Pods-healthconnectapp.release.xcconfig"; sourceTree = "<group>"; };
 		59B948AA45BB4A7EB068FF5F /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBold.ttf"; path = "../src/assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-healthconnectapp-healthconnectappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthconnectapp-healthconnectappTests.debug.xcconfig"; path = "Target Support Files/Pods-healthconnectapp-healthconnectappTests/Pods-healthconnectapp-healthconnectappTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -83,7 +84,6 @@
 		EDC254A3AF394A2BBEC481C9 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../src/assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		F36F3850A7104C46ADF09447 /* Poppins-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLightItalic.ttf"; path = "../src/assets/fonts/Poppins-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		F55BDA4EE6D34178A111EA8A /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraBold.ttf"; path = "../src/assets/fonts/Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
-		3E36FB2782C54A2981396C50 /* icomoon.ttf */ = {isa = PBXFileReference; name = "icomoon.ttf"; path = "../src/assets/icons/icomoon.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
