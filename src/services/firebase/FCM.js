@@ -3,8 +3,7 @@ import messaging, { requestPermission } from '@react-native-firebase/messaging'
 import { Alert, Platform } from 'react-native'
 import AndroidPermissions from '../../common/functions/permissions'
 import { toast_success } from '../../common/components/toasts/handleToasts'
-// import Toast from 'react-native-toast-message'
-// import notifee, { AndroidStyle, EventType } from '@notifee/react-native'
+import { BackSync } from '../../common/functions/BackSync'
 
 const FirebasePushNotificationService = {
   // Initialize the service
@@ -13,7 +12,7 @@ const FirebasePushNotificationService = {
     await AndroidPermissions.requestPermission(AndroidPermissions.RECEIVE_PUSH_NOTIFICATIONS)
     await FirebasePushNotificationService.checkPermission()
     messaging().setOpenSettingsForNotificationsHandler()
-    FirebasePushNotificationService.createNotificationListeners()
+    // FirebasePushNotificationService.createNotificationListeners()
   },
 
   // requestUserPermission: async () => {
@@ -88,6 +87,7 @@ const FirebasePushNotificationService = {
     messaging().setBackgroundMessageHandler(async remoteMessage => {
       console.log('Message handled in the background!', remoteMessage)
       // You can handle background messages here
+      BackSync.syncData(remoteMessage)
     })
 
     messaging()
@@ -108,6 +108,7 @@ const FirebasePushNotificationService = {
           'onNotificationOpenedApp: Notification caused app to open from background:',
           remoteMessage.notification
         )
+        BackSync.syncData(remoteMessage)
         toast_success({
           text1: 'app open through notification click!!',
           text2: remoteMessage.notification?.body
