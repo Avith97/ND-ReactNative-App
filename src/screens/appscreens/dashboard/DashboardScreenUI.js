@@ -1,20 +1,19 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, { useState } from 'react';
-import StepsGraph from '../../../common/components/Charts/StepsGraph';
-import CustomButton from '../../../common/components/buttons/CustomButton';
-import {hp, wp} from '../../../common/functions/dimensions';
-import {useNavigation} from '@react-navigation/native';
-import Strings from '../../../utils/constants/Strings';
-import CalendarComponent from '../../../common/components/datepicker/CalenderComponent';
-import PieProgressBar from '../../../common/components/progressbar/PieProgressBar';
-import CustomWeekAndMonth from '../../../common/components/customweekandmonth/CustomWeekAndMonth';
-import BarChart from '../../../common/components/Charts/BarChart';
-import Colors from '../../../utils/constants/Colors';
-import {fontSize} from '../../../utils/constants/Fonts';
+import { StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import StepsGraph from '../../../common/components/Charts/StepsGraph'
+import CustomButton from '../../../common/components/buttons/CustomButton'
+import { hp, wp } from '../../../common/functions/dimensions'
+import { useNavigation } from '@react-navigation/native'
+import Strings from '../../../utils/constants/Strings'
+import CalendarComponent from '../../../common/components/datepicker/CalenderComponent'
+import PieProgressBar from '../../../common/components/progressbar/PieProgressBar'
+import CustomWeekAndMonth from '../../../common/components/customweekandmonth/CustomWeekAndMonth'
+import BarChart from '../../../common/components/Charts/BarChart'
+import Colors from '../../../utils/constants/Colors'
+import { fontSize } from '../../../utils/constants/Fonts'
 
 export default function DashboardScreenUI(props) {
-
-   const [weekIndex, setWeekIndex] = useState(0);
+  const [weekIndex, setWeekIndex] = useState(0)
 
   // const data = [
   //   {day: 'Mon', steps: 4000},
@@ -25,15 +24,12 @@ export default function DashboardScreenUI(props) {
   //   {day: 'Sat', steps: 7000},
   //   {day: 'Sun', steps: 7050},
   // ];
-  const DescriptionDetailItem = ({value, unit}) => (
+  const DescriptionDetailItem = ({ value, unit }) => (
     <View style={styles.centered}>
       <Text style={styles.metricValue}>{value}</Text>
       <Text style={styles.unitLabel}>{unit}</Text>
     </View>
-  );
-
- 
-  
+  )
 
   return (
     <View>
@@ -43,7 +39,7 @@ export default function DashboardScreenUI(props) {
             color: Colors.white,
             paddingBottom: hp(1),
             fontSize: fontSize.m,
-            fontWeight: 700,
+            fontWeight: 700
           }}>
           Personal Progress
         </Text>
@@ -67,7 +63,9 @@ export default function DashboardScreenUI(props) {
         <CustomButton
           title={'Show Leaderboard'}
           name={'leaderboard'}
-          onPress={()=>props.handleNavigate(props.eventGraphData?.graphDTO?.[0]?.eventId)}
+          onPress={() =>
+            props.handleNavigate(props.eventGraphData?.graphDTO?.[0]?.eventId)
+          }
           btnStyles={{
             ...styles.btnStyles,
             elevation: 5
@@ -83,7 +81,12 @@ export default function DashboardScreenUI(props) {
         {/* tabbar */}
 
         {/* week and month View */}
-        <CustomWeekAndMonth {...props} weekIndex={weekIndex} setWeekIndex={setWeekIndex}  currentWeek={props.eventGraphData?.daysData[weekIndex]} />
+        <CustomWeekAndMonth
+          {...props}
+          weekIndex={weekIndex}
+          setWeekIndex={setWeekIndex}
+          currentWeek={props.eventGraphData?.daysData[weekIndex]}
+        />
 
         <BarChart
           data={props.eventGraphData?.daysData[weekIndex]?.days || []}
@@ -107,7 +110,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: hp(4),
     borderRadius: 10,
-    marginVertical: hp(1),
+    marginVertical: hp(1)
   },
 
   //
@@ -120,7 +123,7 @@ const styles = StyleSheet.create({
     marginRight: hp(1),
     marginVertical: hp(1),
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
   buttonContainer: {
@@ -130,10 +133,10 @@ const styles = StyleSheet.create({
   },
   btnStyles: {
     width: wp(90),
-    marginVertical: hp(1),
+    marginVertical: hp(1)
   },
   plusbtnStyle: {
-    width: wp(10),
+    width: wp(10)
   },
 
   detailSection: {
@@ -143,17 +146,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     // marginVertical: hp(1),
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-evenly'
   },
   metricValue: {
     fontSize: fontSize.m,
     fontWeight: 'bold',
     color: Colors.white,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   unitLabel: {
     fontSize: fontSize.normal,
     color: Colors.white,
-    textAlign: 'center',
-  },
-});
+    textAlign: 'center'
+  }
+})
