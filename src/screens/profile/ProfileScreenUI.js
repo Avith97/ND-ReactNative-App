@@ -16,17 +16,17 @@ export default function ProfileScreenUI(props) {
       label: 'Profile Settings',
       link: Strings.NAVIGATION.editprofile
     },
-    {
-      id: '2',
-      icon: 'bell',
-      label: 'Notification Settings',
-      link: Strings.NAVIGATION.notificationsetting
-    },
+    // {
+    //   id: '2',
+    //   icon: 'bell',
+    //   label: 'Notification Settings',
+    //   link: Strings.NAVIGATION.notificationsetting,
+    // },
     {
       id: '3',
       icon: 'sliders',
       label: 'General Settings',
-      link: Strings.NAVIGATION.generalsetting
+      link: Strings.NAVIGATION.generalsetting,
     },
     {
       id: '4',
@@ -57,8 +57,9 @@ export default function ProfileScreenUI(props) {
         </View>
         <Icon name="chevron-right" size={20} color="#000" />
       </TouchableOpacity>
-    )
-  }
+    );
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ alignItems: 'center' }}>
@@ -84,9 +85,23 @@ export default function ProfileScreenUI(props) {
           />
         </Avatar>
 
-        <Text style={styles.title}>Lakhan Nemane</Text>
-        <Text style={styles.numberText}>{maskNumber(9834201623)}</Text>
-        <Text style={styles.emailText}>lnemane7@gmail.com</Text>
+        {(props?.userDetails?.user?.firstName ||
+          props?.userDetails?.user?.lastName) && (
+          <Text
+            style={
+              styles.title
+            }>{`${props?.userDetails?.user?.firstName} ${props?.userDetails?.user?.lastName}`}</Text>
+        )}
+        {props?.userDetails && (
+          <Text style={styles.numberText}>
+            {maskNumber(props?.userDetails?.user?.contactNumber)}
+          </Text>
+        )}
+        {props?.userDetails && (
+          <Text style={styles.emailText}>
+            {props?.userDetails?.user?.email}
+          </Text>
+        )}
         <CustomButton title="Check BMI Score" onPress={props?.handleNavigate} />
       </View>
 
@@ -154,6 +169,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     fontSize: fontSize.md,
     color: '#000',
-    fontWeight: 600
-  }
-})
+    fontWeight: 600,
+  },
+});
+

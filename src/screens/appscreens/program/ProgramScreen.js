@@ -129,7 +129,9 @@ export default function ProgramScreen(props) {
       payload: data || {}
     })
     if (state.selectedTabID === 0) {
-      props.navigation.navigate(Strings.NAVIGATION.dashboard)
+      props.navigation.navigate(Strings.NAVIGATION.programleaderboard, {
+        eventID: data?.program.id
+      })
     } else {
       props.navigation.navigate(Strings.NAVIGATION.eventstarted, {
         isRegistered: false

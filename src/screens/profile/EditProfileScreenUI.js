@@ -3,21 +3,24 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
-} from 'react-native'
-import React from 'react'
-import { Avatar } from 'react-native-elements'
-import CustomButton from '../../common/components/buttons/CustomButton'
-import { hp, wp } from '../../common/functions/dimensions'
-import { maskNumber } from '../../common/functions/masknumber'
-import CustomTextInput from '../../common/components/textInput/CustomTextInput'
-import CustomDateTimePicker from '../../common/components/datepicker/CustomDateTimePicker'
-import CustomDropdown from '../../common/components/dropdown/CustomDropdown'
-import Icons, { iconType } from '../../assets/icons/Icons'
-import Colors from '../../utils/constants/Colors'
-import { fontSize } from '../../utils/constants/Fonts'
+  View,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Avatar} from 'react-native-elements';
+import CustomButton from '../../common/components/buttons/CustomButton';
+import {hp, wp} from '../../common/functions/dimensions';
+import {maskNumber} from '../../common/functions/masknumber';
+import CustomTextInput from '../../common/components/textInput/CustomTextInput';
+import CustomDateTimePicker from '../../common/components/datepicker/CustomDateTimePicker';
+import CustomDropdown from '../../common/components/dropdown/CustomDropdown';
+import Icons, {iconType} from '../../assets/icons/Icons';
+import Colors from '../../utils/constants/Colors';
+import {fontSize} from '../../utils/constants/Fonts';
+import { Countries } from '../../data/static_data/countries';
 
 export default function EditProfileScreenUI(props) {
+
+
   return (
     <ScrollView
       contentContainerStyle={styles.scrollContainer}
@@ -84,6 +87,9 @@ export default function EditProfileScreenUI(props) {
               name="firstName"
               mandatory
               inputStyle={styles.textInputStyle}
+              inputProps={{
+                value: props?.formState?.firstName,
+              }}
               onChangeText={props.handleChange}
             />
           </View>
@@ -92,6 +98,9 @@ export default function EditProfileScreenUI(props) {
               label="Last name"
               name="lastName"
               mandatory
+              inputProps={{
+                value: props?.formState?.lastName,
+              }}
               inputStyle={styles.textInputStyle}
               onChangeText={props.handleChange}
             />
@@ -104,6 +113,7 @@ export default function EditProfileScreenUI(props) {
             <CustomDateTimePicker
               label="DOB"
               name="dob"
+              value={props?.formState?.dob}
               onChangeText={props.handleChange}
             />
           </View>
@@ -113,10 +123,11 @@ export default function EditProfileScreenUI(props) {
               title="Country"
               label="Select"
               mandatory
-              data={[{ country: 'India' }, { country: 'Australia' }]}
+              value= {"91"}
+              data={Countries}
               onChangeText={props.handleChange}
-              valueExtractor={item => item.country}
-              labelExtractor={item => item.country}
+              valueExtractor={item => item.value}
+              labelExtractor={item => item.label}
             />
           </View>
         </View>
@@ -128,6 +139,9 @@ export default function EditProfileScreenUI(props) {
               label="Age"
               name="age"
               mandatory
+              inputProps={{
+                value: props?.formState?.age,
+              }}
               inputStyle={styles.textInputStyle}
               onChangeText={props.handleChange}
             />
@@ -137,6 +151,9 @@ export default function EditProfileScreenUI(props) {
               label="Weight"
               name="weight"
               mandatory
+              inputProps={{
+                value: props?.formState?.weight,
+              }}
               inputStyle={styles.textInputStyle}
               onChangeText={props.handleChange}
             />
@@ -144,91 +161,35 @@ export default function EditProfileScreenUI(props) {
         </View>
 
         {/* Gender & Height */}
-        <View style={styles.row}>
-          <View style={styles.halfWidth}>
-            <CustomDropdown
-              name="gender"
-              title="Gender"
-              label="Select"
-              mandatory
-              data={[
-                { gender: 'Male' },
-                { gender: 'Female' },
-                { gender: 'Other' }
-              ]}
-              onChangeText={props.handleChange}
-              valueExtractor={item => item.gender}
-              labelExtractor={item => item.gender}
-            />
-          </View>
-          <View style={styles.halfWidth}>
-            <CustomTextInput
-              label="Height"
-              name="height"
-              mandatory
-              inputStyle={styles.textInputStyle}
-              onChangeText={props.handleChange}
-            />
-          </View>
-        </View>
 
-        {/* Language */}
         <View style={styles.fullWidth}>
           <CustomDropdown
-            name="language"
-            title="Language"
+            name="gender"
+            title="Gender"
             label="Select"
             mandatory
-            data={[
-              { language: 'English' },
-              { language: 'Hindi' },
-              { language: 'Marathi' }
-            ]}
+            value={props?.formState?.gender}
+            data={[{gender: 'Male'}, {gender: 'Female'}, {gender: 'Other'}]}
             onChangeText={props.handleChange}
-            valueExtractor={item => item.language}
-            labelExtractor={item => item.language}
+            valueExtractor={item => item.gender}
+            labelExtractor={item => item.gender}
           />
         </View>
 
-        {/* Activity Level */}
         <View style={styles.fullWidth}>
-          <CustomDropdown
-            name="activitylevel"
-            title="Activity Level"
-            label="Select"
+          <CustomTextInput
+            label="Height"
+            name="height"
             mandatory
-            data={[
-              { activitylevel: 'Sedentary' },
-              { activitylevel: 'Slightly Active' },
-              { activitylevel: 'Moderately Active' },
-              { activitylevel: 'Very Active' }
-            ]}
+            inputProps={{
+              value: props?.formState?.height,
+            }}
+            inputStyle={styles.textInputStyle}
             onChangeText={props.handleChange}
-            valueExtractor={item => item.activitylevel}
-            labelExtractor={item => item.activitylevel}
           />
         </View>
 
-        {/* Motivation */}
-        <View style={styles.fullWidth}>
-          <CustomDropdown
-            name="motivateyou"
-            title="Motivation to stay Active"
-            label="Select"
-            mandatory
-            data={[
-              { motivateyou: 'Sedentary' },
-              { motivateyou: 'Slightly Active' },
-              { motivateyou: 'Moderately Active' },
-              { motivateyou: 'Very Active' }
-            ]}
-            onChangeText={props.handleChange}
-            valueExtractor={item => item.motivateyou}
-            labelExtractor={item => item.motivateyou}
-          />
-        </View>
-
-        <CustomButton title={'Save Changes'} btnStyles={styles.btnStyles} />
+        <CustomButton title={'Save Changes'} btnStyles={styles.btnStyles} onPress={props?.handleSubmit} />
       </View>
     </ScrollView>
   )

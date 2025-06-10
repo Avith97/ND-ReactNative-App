@@ -8,10 +8,13 @@ import Colors from '../../../utils/constants/Colors'
 const CustomDropdown = (props = cd_default_props) => {
   return (
     <View>
-      <Text style={styles.title}>
+      {props?.title && 
+        <Text style={styles.title}>
         {props.title}
         {props?.mandatory && <Text style={{ color: 'red' }}> *</Text>}
       </Text>
+      }
+    
       <Dropdown
         data={props.data}
         value={props.value}
@@ -26,7 +29,8 @@ const CustomDropdown = (props = cd_default_props) => {
         inputContainerStyle={styles.inputContainer}
         style={styles.cd_style}
         valueExtractor={props.valueExtractor}
-        labelExtractor={props.valueExtractor}
+        // labelExtractor={props.valueExtractor}
+        labelExtractor={props?.labelExtractor}
         {...props}
       />
     </View>
@@ -85,7 +89,7 @@ const cd_default_props = {
   // dropdownOffset: { top: 100, left: 0 },
   // dropdownMargins: { min: 8, max: 16 },
   data: [],
-  value: '',
+  // value: '',
   shadeOpacity: 0.4,
   valueExtractor: item => item.value,
   labelExtractor: item => item.label,
