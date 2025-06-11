@@ -57,6 +57,7 @@ const FirebasePushNotificationService = {
   // Get the device token
   getToken: async () => {
     const token = await messaging().getToken()
+    global.fcm_token = token // Store the token globally if needed
     console.log('Device FCM Token:----> ', token)
     // Store or send this token to your server for push notifications
   },

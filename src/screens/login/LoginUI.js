@@ -1,6 +1,6 @@
 // react native components
 import React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Clipboard } from 'react-native';
 
 // common components
 import CustomButton from '../../common/components/buttons/CustomButton';
@@ -14,6 +14,7 @@ import {Images} from '../../utils/constants/Images';
 
 // Labels object for all static text
 import {en as labels} from '../../utils/labels/en';
+import { appsnackbar } from '../../common/functions/snackbar_actions';
 
 const LoginUI = props => {
   return (
@@ -71,6 +72,27 @@ const LoginUI = props => {
           title={labels?.signUpWithEmail}
           name={'signup'}
           onPress={() => props?.handleNavigate('signup')}
+          // isLoading={store.getState().settings.isLoading}
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 1,
+            backgroundColor: Colors.white,
+            borderWidth: 1,
+            borderColor: `#1D1D1DB2`,
+            borderRadius: 8,
+          }}
+          btnTitleStyles={{
+            ...styles.textStyle,
+            marginLeft: wp(5),
+          }}
+        />
+        <CustomButton
+          title={'Copy FCM Token'}
+          name={'signup'}
+          onPress={() => {
+            Clipboard.setString(global.fcm_token);
+            appsnackbar.showSuccessMsg('FCM Token copied to clipboard');
+          }}
           // isLoading={store.getState().settings.isLoading}
           btnStyles={{
             ...styles.btnStyles,
