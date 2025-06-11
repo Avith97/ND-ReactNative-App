@@ -14,8 +14,12 @@ import { Images } from '../../utils/constants/Images'
 
 // Labels object for all static text
 import { en as labels } from '../../utils/labels/en'
+import { show_web_view_toast } from '../../common/components/toasts/handleToasts'
 
 const LoginUI = props => {
+  function seeFaq() {
+    show_web_view_toast(true, { url: 'https://necessarydevil.com/faq' })
+  }
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
       {/* <CustomImageBackground> */}
@@ -92,6 +96,13 @@ const LoginUI = props => {
             <Text style={{ color: Colors.targetColor }}> {labels?.login}</Text>
           </TouchableOpacity>
         </View>
+      </View>
+
+      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        <Text>SEE FAQ</Text>{' '}
+        <TouchableOpacity onPress={() => seeFaq()}>
+          <Text style={{ color: Colors.targetColor }}> Click here</Text>
+        </TouchableOpacity>
       </View>
       {/* </CustomImageBackground> */}
     </View>

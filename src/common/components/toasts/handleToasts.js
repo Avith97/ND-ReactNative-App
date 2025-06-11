@@ -75,3 +75,20 @@ export const open_logout_bottom_sheet = hide => {
     topOffset: 0
   })
 }
+
+export const show_web_view_toast = (show, params = {}) => {
+  if (!show) {
+    Toast.hide()
+    return
+  }
+
+  Toast.show({
+    props: { ...params },
+    type: toast_types.web_view,
+    autoHide: true,
+    visibilityTime: 10 * 1000,
+    // position: 'top',
+    bottomOffset: 20,
+    topOffset: 0
+  })
+}

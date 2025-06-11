@@ -3,6 +3,7 @@ import { BaseToast, ErrorToast } from 'react-native-toast-message'
 import { fontSize } from '../../../utils/constants/Fonts'
 import CustomBottomSheet from '../bottomsheet/CustomBottomSheet'
 import LogoutBottomSheet from '../bottomsheet/LogoutBottomSheet'
+import WebViewToast from '../policy/WebViewToast'
 
 export const toast_config = {
   success: props => (
@@ -41,5 +42,7 @@ export const toast_config = {
 
   bottom_sheet: props => <CustomBottomSheet {...props} />,
 
-  logout_bottomsheet: props => <LogoutBottomSheet {...props} />
+  logout_bottomsheet: props => <LogoutBottomSheet {...props} />,
+
+  web_view: props => <WebViewToast {...props} />
 }
