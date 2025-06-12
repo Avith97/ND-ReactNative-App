@@ -40,10 +40,10 @@ class MainApplication : Application(), ReactApplication {
     SoLoader.init(this, OpenSourceMergedSoMapping)
 
     // 👇 Set the custom OkHttpClient factory here
-   //  OkHttpClientProvider.setOkHttpClientFactory(IgnoreSSLFactory())  // qa purpose(testing)
-    if (BuildConfig.DEBUG) {
-      OkHttpClientProvider.setOkHttpClientFactory(IgnoreSSLFactory()) 
-    }
+    OkHttpClientProvider.setOkHttpClientFactory(IgnoreSSLFactory())  // qa purpose(testing)
+    // if (BuildConfig.DEBUG) {
+    //   OkHttpClientProvider.setOkHttpClientFactory(IgnoreSSLFactory()) 
+    // }
 
     if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
       load()
