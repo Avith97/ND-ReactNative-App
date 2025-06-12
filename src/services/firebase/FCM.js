@@ -94,16 +94,21 @@ const FirebasePushNotificationService = {
     messaging()
       .getInitialNotification()
       .then(remoteMessage => {
+        //called when app is in kill state and user clicks on notification
+        // not work in background state
         if (remoteMessage) {
           console.log(
             'getInitialNotification: Notification caused app to open from quit state:',
             remoteMessage.notification
           )
+          BackSync.syncData(remoteMessage)
         }
       })
 
     // When a notification is opened from the background
     messaging().onNotificationOpenedApp(remoteMessage => {
+      //called when app is in inavctive state and user clicks on notification 
+      // not work in kill state
       if (remoteMessage) {
         console.log(
           'onNotificationOpenedApp: Notification caused app to open from background:',

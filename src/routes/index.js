@@ -7,6 +7,7 @@ import Strings from '../utils/constants/Strings';
 import SplashScreen from '../screens/splash/SplashScreen';
 import AppStack from './stack/AppStack';
 import OnBoardScreen from '../screens/onBoardScreens/OnBoardScreen';
+import Loader from '../common/components/loader/Loader';
 
 const Navigator = props => {
   const Stack = createStackNavigator();
@@ -16,7 +17,13 @@ const Navigator = props => {
       ref={r => {
         global.navigation = r;
       }}
-      linking={[]}>
+      linking={[]}
+      // fallback={<Loader isLoading={true} />}
+      onReady={() => {
+        console.log('nav container ready')
+        global.navigateTo?.()
+      }}
+    >
       <Stack.Navigator
         initialRouteName={Strings.NAVIGATION.splash}
         screenOptions={{
