@@ -40,10 +40,10 @@ export default function AppCustomHeader(props) {
         />
       ) : (
         <View style={styles.rightIcons}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => handleNavigate(Strings.NAVIGATION.notificationlist)}>
             <Icons name="bell" type={iconType.feather} size={20} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={() => handleNavigate(Strings.NAVIGATION.profile)}>
             <Icons name="user" type={iconType.feather} size={20} />

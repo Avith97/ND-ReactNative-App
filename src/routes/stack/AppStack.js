@@ -106,7 +106,7 @@ const TabNavigator = props => {
         }}
       />
 
-      <Tab.Screen
+      {/* <Tab.Screen
         name={Strings.NAVIGATION.calender}
         component={CalenderScreen}
         options={{
@@ -125,7 +125,7 @@ const TabNavigator = props => {
             />
           )
         }}
-      />
+      /> */}
     </Tab.Navigator>
   )
 }
