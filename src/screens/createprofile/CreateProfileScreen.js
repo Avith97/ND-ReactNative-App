@@ -6,14 +6,18 @@ import moment from 'moment'
 import { services } from '../../services/axios/services'
 import { URL } from '../../utils/constants/Urls'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
+import { useSelector } from 'react-redux'
 
 export default function CreateProfileScreen(props) {
+  const { email, contactNumber } = useSelector(state => state.user)
+
   const [state, setstate] = useState({
     firstName: null,
     lastName: '',
-    email: '',
+    email: email || '',
     country: null,
-    contactNumber: null,
+    contactNumber: contactNumber || null,
+    countryCode: null,
     DOB: null,
     isDatePickerVisible: false,
     emailUpdateCheck: false
@@ -38,11 +42,18 @@ export default function CreateProfileScreen(props) {
   const [err, seterr] = useState(null)
 
   async function handleChange(params, val) {
-    console.log('handleChange-->', params, val)
-    setstate({
-      ...state,
-      [params]: val
-    })
+    if (params === 'country') {
+      setstate({
+        ...state,
+        country: val?.label?.trim(),
+        countryCode: val?.value?.trim()
+      })
+    } else {
+      setstate({
+        ...state,
+        [params]: val
+      })
+    }
   }
 
   function validate(params) {
@@ -56,7 +67,6 @@ export default function CreateProfileScreen(props) {
     if (!state.firstName?.length || !nameRegex.test(state.firstName)) {
       isValid = false
       err = { firstNameErr: true }
-      console.log('invalid')
       appsnackbar.showErrMsg('Please enter valid first name')
     } else if (!state.lastName?.length || !nameRegex.test(state.lastName)) {
       isValid = false
@@ -105,7 +115,7 @@ export default function CreateProfileScreen(props) {
           dob: moment(state.DOB).format('DD-MM-yyyy'),
           email: state.email,
           contactNumber: state.contactNumber,
-          countryCode: '91',
+          countryCode: state.countryCode,
           timezone: 'Asia/Calcutta'
         },
         profilePicture: null // or a File object
@@ -125,6 +135,13 @@ export default function CreateProfileScreen(props) {
         appsnackbar.showErrMsg(resp?.error_data || resp?.verbose)
         return
       } else if (resp?.type === 'success') {
+        const successCode = resp?.data?.success?.code
+        const message = resp?.data?.success?.verbose
+
+        if (successCode === '409') {
+          appsnackbar.showErrMsg(message || 'Something went wrong')
+          return
+        }
         props.navigation.navigate(Strings.NAVIGATION.onboard)
       }
     } catch (error) {

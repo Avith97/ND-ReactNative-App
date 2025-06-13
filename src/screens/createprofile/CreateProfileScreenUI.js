@@ -68,7 +68,7 @@ export default function CreateProfileScreenUI(props) {
             mandatory
             data={Countries}
             onChangeText={props.handleChange}
-            valueExtractor={item => item.label}
+            valueExtractor={item => item}
             labelExtractor={item => item.label}
           />
         </View>
