@@ -1,7 +1,7 @@
 buildscript {
     ext {
         buildToolsVersion = "35.0.0"
-        minSdkVersion = 29
+        minSdkVersion = 28   // lower version support
         compileSdkVersion = 35
         targetSdkVersion = 34
         ndkVersion = "26.1.10909125"
@@ -12,6 +12,8 @@ buildscript {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.google.com' }          // image crop picker
+        // maven { url "https://www.jitpack.io" }          // image crop picker
     }
     dependencies {
         classpath("com.android.tools.build:gradle")

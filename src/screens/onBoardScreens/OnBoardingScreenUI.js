@@ -1,9 +1,9 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React, { useEffect, useState } from 'react';
-import OnboardingWrapper from '../../common/components/onboarding/OnboardingWrapper';
-import MoreAboutScreen from './MoreInfo/MoreAboutScreen';
-import {hp, wp} from '../../common/functions/dimensions';
-import Loader from '../../common/components/loader/Loader';
+import { View, Text, StyleSheet } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import OnboardingWrapper from '../../common/components/onboarding/OnboardingWrapper'
+import MoreAboutScreen from './MoreInfo/MoreAboutScreen'
+import { hp, wp } from '../../common/functions/dimensions'
+import Loader from '../../common/components/loader/Loader'
 
 const OnBoardingScreenUI = props => {
   const [key, setkey] = useState(0)
@@ -18,10 +18,9 @@ const OnBoardingScreenUI = props => {
   ])
 
   useEffect(() => {
-    setkey(key + 1);
+    setkey(key + 1)
     setslides([...slides, ...props?.slides])
   }, [props?.slides])
-
 
   return (
     <View key={key} style={{ flex: 1 }}>
@@ -35,8 +34,8 @@ const OnBoardingScreenUI = props => {
       />
       {/* } */}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   childContainerStyle: {
@@ -44,8 +43,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: wp(100),
     paddingVertical: hp(2),
-    paddingHorizontal: wp(6),
-  },
-});
+    paddingHorizontal: wp(6)
+  }
+})
 
-export default OnBoardingScreenUI;
+export default OnBoardingScreenUI

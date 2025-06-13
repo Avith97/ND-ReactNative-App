@@ -2,7 +2,6 @@ import Toast from 'react-native-toast-message'
 import { toast_types } from './toast_types'
 import { toast_styles } from './toast_styles'
 
-
 export const toast_success = params => {
   Toast.show({
     type: 'success',
@@ -72,6 +71,23 @@ export const open_logout_bottom_sheet = hide => {
     type: toast_types.logout_bottomsheet,
     autoHide: true,
     position: 'bottom',
+    bottomOffset: 20,
+    topOffset: 0
+  })
+}
+
+export const show_web_view_toast = (show, params = {}) => {
+  if (!show) {
+    Toast.hide()
+    return
+  }
+
+  Toast.show({
+    props: { ...params },
+    type: toast_types.web_view,
+    autoHide: true,
+    visibilityTime: 10 * 1000,
+    // position: 'top',
     bottomOffset: 20,
     topOffset: 0
   })

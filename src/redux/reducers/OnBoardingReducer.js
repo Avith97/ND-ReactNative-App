@@ -1,20 +1,18 @@
-import actions from "../action_types/actions"
+import actions from '../action_types/actions'
 
 const initialState = {
-    list: [],
-    image: [],
-    "list-multiselect": [],
-    "check-box": []
-
+  list: [],
+  image: [],
+  'list-multiselect': [],
+  'check-box': []
 }
 
 export default (state = initialState, { type, payload }) => {
-    switch (type) {
+  switch (type) {
+    case actions.SET_ONBOARDING_DATA:
+      return { ...state, ...payload }
 
-        case actions.SET_ONBOARDING_DATA:
-            return { ...state, ...payload }
-
-        default:
-            return state
-    }
+    default:
+      return state
+  }
 }

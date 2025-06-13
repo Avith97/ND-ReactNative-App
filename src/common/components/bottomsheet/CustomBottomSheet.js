@@ -60,9 +60,7 @@ const CustomBottomSheet = ({ props, ...params }) => {
             // data={['Accept','Cancel']}
             // data={[{title:'Accept'}, {title:'Cancel'}]}
             renderItem={renderOptions}
-            ItemSeparatorComponent={() => (
-              <View style={styles.ItemSeparator} />
-            )}
+            ItemSeparatorComponent={() => <View style={styles.ItemSeparator} />}
           />
         </>
       </View>

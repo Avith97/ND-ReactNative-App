@@ -1,10 +1,10 @@
 // React core components + React Native components
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import { StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
 // Custom UI component for this screen
-import MoreAboutYouUI from './MoreAboutYouUI';
+import MoreAboutYouUI from './MoreAboutYouUI'
 // string constants
-import Strings from '../../../utils/constants/Strings';
+import Strings from '../../../utils/constants/Strings'
 
 export default function MoreAboutScreen(props) {
   //  user input
@@ -14,22 +14,22 @@ export default function MoreAboutScreen(props) {
     weight: null,
     height: null,
     weightUnit: 'KG',
-    heightUnit: 'CM',
-  });
+    heightUnit: 'CM'
+  })
 
   // Handles changes in input fields
   async function handleChange(params, val) {
     setState({
       ...state,
-      [params]: val,
-    });
+      [params]: val
+    })
   }
 
   // Handles form submission
   const handleSubmit = () => {
-    console.log(state);
-    props.navigation.navigate(Strings.NAVIGATION.listSlideTab);
-  };
+    console.log(state)
+    props.navigation.navigate(Strings.NAVIGATION.listSlideTab)
+  }
 
   return (
     <View style={styles.container}>
@@ -40,11 +40,11 @@ export default function MoreAboutScreen(props) {
         handleSubmit={handleSubmit}
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-});
+    flex: 1
+  }
+})

@@ -1,17 +1,20 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {wp, hp} from '../../functions/dimensions';
-import Dropdown from './DropDown';
-import {fontSize} from '../../../utils/constants/Fonts';
-import Colors from '../../../utils/constants/Colors';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { wp, hp } from '../../functions/dimensions'
+import Dropdown from './DropDown'
+import { fontSize } from '../../../utils/constants/Fonts'
+import Colors from '../../../utils/constants/Colors'
 
 const CustomDropdown = (props = cd_default_props) => {
   return (
     <View>
-      <Text style={styles.title}>
-        {props.title}
-        {props?.mandatory && <Text style={{color: 'red'}}> *</Text>}
-      </Text>
+      {props?.title && (
+        <Text style={styles.title}>
+          {props.title}
+          {props?.mandatory && <Text style={{ color: 'red' }}> *</Text>}
+        </Text>
+      )}
+
       <Dropdown
         data={props.data}
         value={props.value}
@@ -26,17 +29,18 @@ const CustomDropdown = (props = cd_default_props) => {
         inputContainerStyle={styles.inputContainer}
         style={styles.cd_style}
         valueExtractor={props.valueExtractor}
-        labelExtractor={props.valueExtractor}
+        // labelExtractor={props.valueExtractor}
+        labelExtractor={props?.labelExtractor}
         {...props}
       />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   title: {
-    fontSize:fontSize.normal,
-    marginBottom:hp(0.5)
+    fontSize: fontSize.normal,
+    marginBottom: hp(0.5)
   },
 
   container: {
@@ -45,27 +49,27 @@ const styles = StyleSheet.create({
     // backgroundColor: 'cyan',
     borderWidth: 0.7,
     borderColor: 'grey',
-    borderRadius: 8,
+    borderRadius: 8
     // minHeight: hp(5)
   },
   inputContainer: {
     borderBottomWidth: 0,
-    backgroundColor: 'red',
+    backgroundColor: 'red'
   },
   overlay: {
-    backgroundColor: 'rgba(0,0,0,0)',
+    backgroundColor: 'rgba(0,0,0,0)'
   },
   picker: {
-    width: wp(90),
+    width: wp(90)
     // marginTop: hp('5'),
   },
   cd_style: {
     paddingLeft: 5,
     paddingVertical: 0,
     // backgroundColor: 'lightblue',
-    justifyContent: 'center',
-  },
-});
+    justifyContent: 'center'
+  }
+})
 
 const cd_default_props = {
   name: 'dropdown',
@@ -85,14 +89,14 @@ const cd_default_props = {
   // dropdownOffset: { top: 100, left: 0 },
   // dropdownMargins: { min: 8, max: 16 },
   data: [],
-  value: '',
+  // value: '',
   shadeOpacity: 0.4,
   valueExtractor: item => item.value,
   labelExtractor: item => item.label,
   propsExtractor: () => null,
   onChangeText: () => {},
   showTriangle: true,
-  style: {},
-};
+  style: {}
+}
 
-export default CustomDropdown;
+export default CustomDropdown

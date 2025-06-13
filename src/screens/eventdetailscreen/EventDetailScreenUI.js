@@ -1,15 +1,15 @@
-import {Image, StyleSheet, Text, View, ScrollView} from 'react-native';
-import React from 'react';
-import {Images} from '../../utils/constants/Images';
-import Icons, {iconType} from '../../assets/icons/Icons';
-import CustomButton from '../../common/components/buttons/CustomButton';
-import {hp, wp} from '../../common/functions/dimensions';
-import {fontSize} from '../../utils/constants/Fonts';
-import Colors from '../../utils/constants/Colors';
+import { Image, StyleSheet, Text, View, ScrollView } from 'react-native'
+import React from 'react'
+import { Images } from '../../utils/constants/Images'
+import Icons, { iconType } from '../../assets/icons/Icons'
+import CustomButton from '../../common/components/buttons/CustomButton'
+import { hp, wp } from '../../common/functions/dimensions'
+import { fontSize } from '../../utils/constants/Fonts'
+import Colors from '../../utils/constants/Colors'
 
 export default function EventDetailScreenUI(props) {
   return (
-    <View style={{flex: 1, backgroundColor: Colors.white}}>
+    <View style={{ flex: 1, backgroundColor: Colors.white }}>
       {/* Image with Badge */}
       <View>
         <Image
@@ -46,14 +46,14 @@ export default function EventDetailScreenUI(props) {
         </View>
 
         {/* Organizer Section */}
-        <Text style={[styles.title, {marginTop: hp(2)}]}>Organized By</Text>
+        <Text style={[styles.title, { marginTop: hp(2) }]}>Organized By</Text>
         <View style={styles.orgContainer}>
           <Image
             source={Images.app_logo} // <-- Replace with organizer logo
             style={styles.orgLogo}
             resizeMode="contain"
           />
-          <View style={{flex: 1, marginLeft: wp(3)}}>
+          <View style={{ flex: 1, marginLeft: wp(3) }}>
             <Text style={styles.orgName}>Interface </Text>
             <Text style={styles.orgSubtitle}>
               Lorem ipsum dolor sit amet, consectetur
@@ -73,14 +73,14 @@ export default function EventDetailScreenUI(props) {
         </View>
       )}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   bannerImage: {
     width: '100%',
     height: hp(35),
-    opacity: 0.6,
+    opacity: 0.6
   },
   badgeContainer: {
     position: 'absolute',
@@ -89,26 +89,26 @@ const styles = StyleSheet.create({
     backgroundColor: 'orange',
     paddingHorizontal: wp(3),
     paddingVertical: hp(0.5),
-    borderRadius: 15,
+    borderRadius: 15
   },
   badgeText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: 12
   },
   contentContainer: {
     padding: wp(5),
-    paddingBottom: hp(12), // space for floating button
+    paddingBottom: hp(12) // space for floating button
   },
   title: {
     fontSize: fontSize.l,
     fontWeight: '600',
-    marginBottom: hp(1),
+    marginBottom: hp(1)
   },
   description: {
     fontSize: fontSize.normal,
     color: '#444',
-    marginBottom: hp(2),
+    marginBottom: hp(2)
   },
   dateRangeContainer: {
     flexDirection: 'row',
@@ -116,38 +116,38 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.app_primary,
     padding: hp(1.5),
     borderRadius: 10,
-    width: wp(65),
+    width: wp(65)
   },
   dateText: {
     marginLeft: wp(3),
-    fontSize: fontSize.normal,
+    fontSize: fontSize.normal
   },
   orgContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: hp(1.5),
+    marginTop: hp(1.5)
   },
   orgLogo: {
     width: wp(15),
-    height: hp(6),
+    height: hp(6)
   },
   orgName: {
     fontSize: fontSize.m,
-    fontWeight: '600',
+    fontWeight: '600'
   },
   orgSubtitle: {
     fontSize: fontSize.s,
-    color: '#666',
+    color: '#666'
   },
   buttonWrapper: {
     position: 'absolute',
     bottom: hp(3),
-    left: wp(30),
+    left: wp(30)
   },
   btnStyle: {
     width: wp(40),
     paddingVertical: hp(1.5),
     backgroundColor: '#C3E458',
-    borderRadius: 10,
-  },
-});
+    borderRadius: 10
+  }
+})

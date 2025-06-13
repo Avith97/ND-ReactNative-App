@@ -70,19 +70,18 @@ export default {
   backgroundMuted: '#F9FAFB',
   cardBackground: '#E5F9FF',
   dateBackground: '#ECFCCB',
-  dayBackground:"#FFEDE5",
-  secondary_btn:"#51D7FF",
+  dayBackground: '#FFEDE5',
+  secondary_btn: '#51D7FF',
 
-  // background 
+  // background
 
-  dangerBackground:"#EF8989",
-  borderColor :"#E0E0E0",
+  dangerBackground: '#EF8989',
+  borderColor: '#E0E0E0',
 
   // Primary / Action
   primary: '#BCD64E',
   primaryDark: '#AFEA0D',
   registerButton: '#C5F73D',
-
 
   // Accent / Alert
   danger: '#F87171',
@@ -102,17 +101,15 @@ export default {
   // Tags & Status
   tagNotRegistered: '#F87171',
   tagRegistered: '#34D399',
-  targetColor:"#0076B8",
-
-
+  targetColor: '#0076B8',
 
   // shade of gray secondary color
-  gray_01:"#000000",
-  gray_02:"#1C1B1C",
-  gray_03:"#313030",
-  gray_04:"#484646",
-  gray_05:"#605E5E",
-  gray_06: "#797676",
+  gray_01: '#000000',
+  gray_02: '#1C1B1C',
+  gray_03: '#313030',
+  gray_04: '#484646',
+  gray_05: '#605E5E',
+  gray_06: '#797676',
 
   font: '#1D1D1D'
-};
+}

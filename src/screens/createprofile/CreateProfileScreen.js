@@ -1,99 +1,109 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
-import CreateProfileScreenUI from './CreateProfileScreenUI';
-import Strings from '../../utils/constants/Strings';
-import moment from 'moment';
-import { services } from '../../services/axios/services';
-import { URL } from '../../utils/constants/Urls';
-import { appsnackbar } from '../../common/functions/snackbar_actions';
+import { StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import CreateProfileScreenUI from './CreateProfileScreenUI'
+import Strings from '../../utils/constants/Strings'
+import moment from 'moment'
+import { services } from '../../services/axios/services'
+import { URL } from '../../utils/constants/Urls'
+import { appsnackbar } from '../../common/functions/snackbar_actions'
+import { useSelector } from 'react-redux'
 
 export default function CreateProfileScreen(props) {
+  const { email, contactNumber } = useSelector(state => state.user)
+
   const [state, setstate] = useState({
     firstName: null,
     lastName: '',
-    email: '',
+    email: email || '',
     country: null,
-    contactNumber: null,
+    contactNumber: contactNumber || null,
+    countryCode: null,
     DOB: null,
     isDatePickerVisible: false,
-    emailUpdateCheck: false,
-  });
+    emailUpdateCheck: false
+  })
 
   const handleConfirm = date => {
     setstate({
       ...state,
-      [params]: val,
-    });
-  };
+      [params]: val
+    })
+  }
 
   const [options, setOptions] = useState({
     countryData: [
       {
         country: 'India',
-        code: '+91',
-      },
-    ],
-  });
+        code: '+91'
+      }
+    ]
+  })
 
-  const [err, seterr] = useState(null);
+  const [err, seterr] = useState(null)
 
   async function handleChange(params, val) {
-    console.log('handleChange-->', params, val);
-    setstate({
-      ...state,
-      [params]: val,
-    });
+    if (params === 'country') {
+      setstate({
+        ...state,
+        country: val?.label?.trim(),
+        countryCode: val?.value?.trim()
+      })
+    } else {
+      setstate({
+        ...state,
+        [params]: val
+      })
+    }
   }
 
   function validate(params) {
-    let err = {};
-    let isValid = true;
+    let err = {}
+    let isValid = true
 
-    const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const mobileRegex = /^[6-9]\d{9}$/;
-    const nameRegex = /^[A-Za-z]+$/;
+    const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const mobileRegex = /^[6-9]\d{9}$/
+    const nameRegex = /^[A-Za-z]+$/
 
     if (!state.firstName?.length || !nameRegex.test(state.firstName)) {
-      isValid = false;
-      err = { firstNameErr: true };
-      console.log('invalid');
-      appsnackbar.showErrMsg('Please enter valid first name');
+      isValid = false
+      err = { firstNameErr: true }
+      appsnackbar.showErrMsg('Please enter valid first name')
     } else if (!state.lastName?.length || !nameRegex.test(state.lastName)) {
-      isValid = false;
-      err = { lastNameErr: true };
-      appsnackbar.showErrMsg('Please enter valid last name');
+      isValid = false
+      err = { lastNameErr: true }
+      appsnackbar.showErrMsg('Please enter valid last name')
     } else if (!checkEmail.test(state.email)) {
-      isValid = false;
-      err = { emailErr: true };
-      appsnackbar.showErrMsg('Please enter valid email');
+      isValid = false
+      err = { emailErr: true }
+      appsnackbar.showErrMsg('Please enter valid email')
     } else if (!state.country?.trim()?.length) {
-      isValid = false;
-      err = { countryErr: true };
-      appsnackbar.showErrMsg('Please select country');
+      isValid = false
+      err = { countryErr: true }
+      appsnackbar.showErrMsg('Please select country')
     } else if (!mobileRegex.test(state.contactNumber)) {
-      isValid = false;
-      err = { contactNumberErr: true };
-      appsnackbar.showErrMsg('Please enter valid contact number');
+      isValid = false
+      err = { contactNumberErr: true }
+      appsnackbar.showErrMsg('Please enter valid contact number')
     } else if (!state.DOB) {
-      isValid = false;
-      err = { dobErr: true };
-      appsnackbar.showErrMsg('Please select date of birth');
+      isValid = false
+      err = { dobErr: true }
+      appsnackbar.showErrMsg('Please select date of birth')
     }
 
-    seterr(err);
+    seterr(err)
     setTimeout(() => {
-      seterr(null);
-    }, 1000 * 5);
+      seterr(null)
+    }, 1000 * 5)
 
-    return isValid;
+    return isValid
   }
 
   async function handleSubmit(params, value) {
-    let isValid = validate();
-    if (!isValid) return;
+    let isValid = validate()
+    if (!isValid) return
 
     try {
-      let syncObj = new FormData();
+      let syncObj = new FormData()
       let userObject = {
         userRequest: {
           firstName: state.firstName,
@@ -105,30 +115,37 @@ export default function CreateProfileScreen(props) {
           dob: moment(state.DOB).format('DD-MM-yyyy'),
           email: state.email,
           contactNumber: state.contactNumber,
-          countryCode: '91',
-          timezone: 'Asia/Calcutta',
+          countryCode: state.countryCode,
+          timezone: 'Asia/Calcutta'
         },
-        profilePicture: null, // or a File object
-      };
+        profilePicture: null // or a File object
+      }
 
       // Append userRequest as a JSON string
-      syncObj.append('userRequest', JSON.stringify(userObject.userRequest));
+      syncObj.append('userRequest', JSON.stringify(userObject.userRequest))
 
       // Optionally append file if it exists
       if (userObject.profilePicture) {
-        syncObj.append('profilePicture', userObject.profilePicture);
+        syncObj.append('profilePicture', userObject.profilePicture)
       }
 
-      let resp = await services._postFormData(URL.create_profile, syncObj);
+      let resp = await services._postFormData(URL.create_profile, syncObj)
 
       if (resp?.type !== 'success') {
-        appsnackbar.showErrMsg(resp?.error_data || resp?.verbose);
-        return;
+        appsnackbar.showErrMsg(resp?.error_data || resp?.verbose)
+        return
       } else if (resp?.type === 'success') {
-        props.navigation.navigate(Strings.NAVIGATION.onboard);
+        const successCode = resp?.data?.success?.code
+        const message = resp?.data?.success?.verbose
+
+        if (successCode === '409') {
+          appsnackbar.showErrMsg(message || 'Something went wrong')
+          return
+        }
+        props.navigation.navigate(Strings.NAVIGATION.onboard)
       }
     } catch (error) {
-      console.log('Error in handleSubmit:', error);
+      console.log('Error in handleSubmit:', error)
     }
   }
   return (
@@ -142,11 +159,11 @@ export default function CreateProfileScreen(props) {
         handleConfirm={handleConfirm}
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-});
+    flex: 1
+  }
+})

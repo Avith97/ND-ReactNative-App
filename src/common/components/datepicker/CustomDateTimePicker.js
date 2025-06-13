@@ -1,46 +1,46 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
 import DateTimePicker, {
   CancelButton,
-  ConfirmButton,
-} from 'react-native-modal-datetime-picker';
-import moment from 'moment';
-import {hp, wp} from '../../functions/dimensions';
-import Icons, {iconType} from '../../../assets/icons/Icons';
-import {fontSize} from '../../../utils/constants/Fonts';
-import Colors from '../../../utils/constants/Colors';
+  ConfirmButton
+} from 'react-native-modal-datetime-picker'
+import moment from 'moment'
+import { hp, wp } from '../../functions/dimensions'
+import Icons, { iconType } from '../../../assets/icons/Icons'
+import { fontSize } from '../../../utils/constants/Fonts'
+import Colors from '../../../utils/constants/Colors'
 
 const CustomDateTimePicker = (props = defaultProps) => {
-  const [selectedDate, setselectedDate] = useState(new Date());
-  const [show, setshow] = useState(false);
+  const [selectedDate, setselectedDate] = useState(new Date())
+  const [show, setshow] = useState(false)
 
   function handleConfirm(params) {
-    setselectedDate(params);
+    setselectedDate(params)
     // props.handleConfirm(params)
-    setshow(false);
+    setshow(false)
   }
 
   function hideDatePicker(params) {
     // props.hideDatePicker(params)
-    setshow(false);
+    setshow(false)
   }
 
   return (
     <View style={styles.wrapper}>
       {props.label && (
-        <Text style={{...styles.label, ...props.labelStyle}}>
+        <Text style={{ ...styles.label, ...props.labelStyle }}>
           {props.label}
-          {props.mandatory && <Text style={{color: 'red'}}> *</Text>}
+          {props.mandatory && <Text style={{ color: 'red' }}> *</Text>}
         </Text>
       )}
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => setshow(true)}
         style={styles.container}>
-        <View style={{flex: 0.9}}>
+        <View style={{ flex: 0.9 }}>
           <Text
             onPress={() => setshow(true)}
-            style={{textAlignVertical: 'center', marginTop: hp(0.5)}}>
+            style={{ textAlignVertical: 'center', marginTop: hp(0.5) }}>
             {moment(selectedDate).format('DD/MM/YYYY')}
           </Text>
         </View>
@@ -49,7 +49,7 @@ const CustomDateTimePicker = (props = defaultProps) => {
             style={{
               flex: 0.1,
               justifyContent: 'center',
-              alignItems: 'flex-end',
+              alignItems: 'flex-end'
             }}>
             <Icons
               type={iconType.fa}
@@ -71,15 +71,15 @@ const CustomDateTimePicker = (props = defaultProps) => {
             <ConfirmButton label='open' /> */}
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
 const defaultProps = {
   handleConfirm: () => {},
   hideDatePicker: () => {},
   date: new Date(),
-  mode: 'date' | 'datetime' | 'time',
-};
+  mode: 'date' | 'datetime' | 'time'
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -90,11 +90,11 @@ const styles = StyleSheet.create({
     // elevation: 9,
     borderColor: Colors.red,
     borderRadius: 6,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   label: {
-    fontSize: fontSize.normal,
-  },
-});
+    fontSize: fontSize.normal
+  }
+})
 
-export default CustomDateTimePicker;
+export default CustomDateTimePicker

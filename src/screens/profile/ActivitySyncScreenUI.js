@@ -1,12 +1,12 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
-import {Image} from 'react-native';
-import {Images} from '../../utils/constants/Images';
-import {hp, wp} from '../../common/functions/dimensions';
-import CustomButton from '../../common/components/buttons/CustomButton';
-import {fontSize} from '../../utils/constants/Fonts';
-import Icons, {iconType} from '../../assets/icons/Icons';
-import Colors from '../../utils/constants/Colors';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React from 'react'
+import { Image } from 'react-native'
+import { Images } from '../../utils/constants/Images'
+import { hp, wp } from '../../common/functions/dimensions'
+import CustomButton from '../../common/components/buttons/CustomButton'
+import { fontSize } from '../../utils/constants/Fonts'
+import Icons, { iconType } from '../../assets/icons/Icons'
+import Colors from '../../utils/constants/Colors'
 
 export default function ActivitySyncScreenUI() {
   return (
@@ -35,18 +35,18 @@ export default function ActivitySyncScreenUI() {
       <CustomButton
         title={'Disconnect'}
         btnStyles={{
-          ...styles.btnStyles,
+          ...styles.btnStyles
         }}
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 10
   },
   logoContainer: {
     alignItems: 'center',
@@ -55,24 +55,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#9CBF0621',
     width: wp(80),
     height: hp(30),
-    borderRadius: 10,
+    borderRadius: 10
   },
   logo: {
     width: wp(30),
-    height: hp(30),
+    height: hp(30)
   },
   statusContainer: {
     justifyContent: 'center',
     alignItems: 'center', // this centers the icon/text horizontally
-    gap: 5,
+    gap: 5
   },
   statusText: {
     fontSize: fontSize.md,
     fontWeight: '600',
-    color: '#444',
+    color: '#444'
   },
   btnStyles: {
     marginVertical: hp(3),
-    width: wp(80),
-  },
-});
+    width: wp(80)
+  }
+})

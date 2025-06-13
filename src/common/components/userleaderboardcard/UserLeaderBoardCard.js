@@ -1,25 +1,32 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {hp, wp} from '../../functions/dimensions';
-import {fontSize} from '../../../utils/constants/Fonts';
-import {Avatar} from 'react-native-elements';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import { hp, wp } from '../../functions/dimensions'
+import { fontSize } from '../../../utils/constants/Fonts'
+import { Avatar } from 'react-native-elements'
 
-export default function UserLeaderBoardCard() {
+export default function UserLeaderBoardCard(props) {
   return (
     <View style={styles.userCard}>
       <Avatar
         rounded
         size={'large'}
         source={{
-          uri: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp',
+          uri: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp'
         }}
         avatarStyle={styles.avatarImage}></Avatar>
       <View>
-        <Text style={styles.nameTitle}>Lakhan Mahadu Nemane</Text>
-        <Text>BIB no: 1628</Text>
+        {props?.runnerActivityDetail?.firstName && (
+          <Text style={styles.nameTitle}>
+            {props?.runnerActivityDetail?.firstName}{' '}
+            {props?.runnerActivityDetail?.lastName}
+          </Text>
+        )}
+        {props?.runnerActivityDetail?.bibNumber && (
+          <Text>BIB no: {props?.runnerActivityDetail?.bibNumber}</Text>
+        )}
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -31,10 +38,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
-    marginBottom: hp(2),
+    marginBottom: hp(2)
   },
   nameTitle: {
     fontSize: fontSize.md,
-    fontWeight: 800,
-  },
-});
+    fontWeight: 800
+  }
+})

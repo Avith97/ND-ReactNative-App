@@ -1,50 +1,51 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import CustomTextInput from '../../common/components/textInput/CustomTextInput';
-import {iconType} from '../../assets/icons/Icons';
-import {fontSize} from '../../utils/constants/Fonts';
-import Colors from '../../utils/constants/Colors';
-import {hp, wp} from '../../common/functions/dimensions';
-import {Avatar} from 'react-native-elements';
-import PieProgressBar from '../../common/components/progressbar/PieProgressBar';
-import {ScrollView} from 'react-native-gesture-handler';
-import {Image} from 'react-native';
-import TabSelector from '../../common/components/tabselector/TabSelector';
+import { FlatList, StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import CustomTextInput from '../../common/components/textInput/CustomTextInput'
+import { iconType } from '../../assets/icons/Icons'
+import { fontSize } from '../../utils/constants/Fonts'
+import Colors from '../../utils/constants/Colors'
+import { hp, wp } from '../../common/functions/dimensions'
+import { Avatar } from 'react-native-elements'
+import PieProgressBar from '../../common/components/progressbar/PieProgressBar'
+import { ScrollView } from 'react-native-gesture-handler'
+import { Image } from 'react-native'
+import TabSelector from '../../common/components/tabselector/TabSelector'
+import UserLeaderBoardCard from '../../common/components/userleaderboardcard/UserLeaderBoardCard'
 
 export default function LeaderBoardScreenUI(props) {
   const TrophyIcon = () => (
     <Image
-      source={{uri: 'https://img.icons8.com/3d-fluency/94/prize.png'}}
-      style={{width: 24, height: 24}}
+      source={{ uri: 'https://img.icons8.com/3d-fluency/94/prize.png' }}
+      style={{ width: 24, height: 24 }}
     />
-  );
+  )
 
-  const LeaderboardItem = ({item}) => (
+  const LeaderboardItem = ({ item }) => (
     <View
-      style={[styles.itemContainer, {backgroundColor: item.backgroundColor}]}>
-      <Image source={{uri: item.avatar}} style={styles.avatar} />
+      style={[styles.itemContainer, { backgroundColor: item.backgroundColor }]}>
+      <Image source={{ uri: item.avatar }} style={styles.avatar} />
       <Text style={styles.name}>{item.name}</Text>
       <Text style={styles.score}>{item.score}</Text>
       <TrophyIcon />
     </View>
-  );
+  )
   return (
-    <View style={{flex: 1}}>
-      <View style={{marginBottom: hp(1.5)}}>
+    <View style={{ flex: 1 }}>
+      <View style={{ marginBottom: hp(1.5) }}>
         <CustomTextInput
           name={'firstname'}
-          inputStyle={{...styles.textInputStyle}}
+          inputStyle={{ ...styles.textInputStyle }}
           // onChangeText={props?.handleChange}
           inputProps={{
             // flex: 1,
             //   value: props.firstname,
-            placeholder: 'Name / BIB no.',
+            placeholder: 'Name / BIB no.'
           }}
           leftIcon={{
             type: iconType.feather,
             name: 'search',
             size: fontSize.l,
-            color: Colors.red,
+            color: Colors.red
           }}
         />
       </View>
@@ -68,7 +69,7 @@ export default function LeaderBoardScreenUI(props) {
         </View>
       </View>
 
-      <View style={{width: wp(90)}}>
+      <View style={{ width: wp(90) }}>
         <TabSelector tabs={props.tabs} onTabChange={props.handleChange} />
 
         {props.selectedTab === 'Male' ? (
@@ -76,7 +77,7 @@ export default function LeaderBoardScreenUI(props) {
             <FlatList
               data={props.DATA}
               keyExtractor={item => item.id}
-              renderItem={({item}) => <LeaderboardItem item={item} />}
+              renderItem={({ item }) => <LeaderboardItem item={item} />}
               scrollEnabled={false} // FlatList won't scroll, only ScrollView will
             />
           </ScrollView>
@@ -85,14 +86,14 @@ export default function LeaderBoardScreenUI(props) {
             style={{
               textAlign: 'center',
               color: Colors.gray_06,
-              marginVertical: hp(3),
+              marginVertical: hp(3)
             }}>
             No Data
           </Text>
         )}
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -100,16 +101,16 @@ const styles = StyleSheet.create({
     width: wp(100),
     marginVertical: hp(2),
     flexDirection: 'row',
-    gap: 10,
+    gap: 10
   },
   resultContainer: {
     backgroundColor: Colors.gray_01,
     width: wp(43),
     borderRadius: 8,
-    paddingVertical: hp(2),
+    paddingVertical: hp(2)
   },
   rankContainer: {
-    gap: 10,
+    gap: 10
   },
   cardItem: {
     backgroundColor: Colors.gray_01,
@@ -117,25 +118,25 @@ const styles = StyleSheet.create({
     height: hp(13),
     borderRadius: 8,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   resultTitle: {
     color: Colors.white,
     fontSize: fontSize.m,
     textAlign: 'center',
-    fontWeight: 600,
+    fontWeight: 600
   },
   resultSubTitle: {
     color: Colors.primary,
     fontSize: fontSize.l,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   tabSelection_container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     backgroundColor: '#F5F4F4',
     paddingVertical: 10,
-    borderRadius: 10,
+    borderRadius: 10
   },
 
   // /
@@ -145,24 +146,24 @@ const styles = StyleSheet.create({
     padding: 16,
     // marginHorizontal: 16,
     marginVertical: 8,
-    borderRadius: 12,
+    borderRadius: 12
   },
   avatar: {
     width: 40,
     height: 40,
     borderRadius: 25,
-    marginRight: 12,
+    marginRight: 12
   },
   name: {
     flex: 1,
     fontSize: fontSize.md,
     fontWeight: '600',
-    color: '#333',
+    color: '#333'
   },
   score: {
     fontSize: fontSize.md,
     fontWeight: '600',
     marginRight: 8,
-    color: '#333',
-  },
-});
+    color: '#333'
+  }
+})

@@ -1,15 +1,15 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {fontSize} from '../../../utils/constants/Fonts';
-import {hp} from '../../functions/dimensions';
-import Icons, {iconType} from '../../../assets/icons/Icons';
-import Colors from '../../../utils/constants/Colors';
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
+import { fontSize } from '../../../utils/constants/Fonts'
+import { hp } from '../../functions/dimensions'
+import Icons, { iconType } from '../../../assets/icons/Icons'
+import Colors from '../../../utils/constants/Colors'
 
 const FootPrintItem = ({
   iconName = 'hiking',
   steps = '1087',
   label = "Today's Steps",
-  day = 0,
+  day = 0
 }) => (
   <View style={styles.centered}>
     <Icons
@@ -21,7 +21,7 @@ const FootPrintItem = ({
     <Text
       style={{
         ...styles.stepValue,
-        fontSize: day === 1 ? fontSize.l : fontSize.md,
+        fontSize: day === 1 ? fontSize.l : fontSize.md
       }}>
       {steps}
     </Text>
@@ -29,21 +29,21 @@ const FootPrintItem = ({
       style={{
         ...styles.title,
         fontSize: day === 1 ? fontSize.m : fontSize.normal,
-        fontWeight: day === 1 ? '700' : '400',
+        fontWeight: day === 1 ? '700' : '400'
       }}>
       {label}
     </Text>
   </View>
-);
+)
 
-const DescriptionDetailItem = ({value, unit}) => (
+const DescriptionDetailItem = ({ value, unit }) => (
   <View style={styles.centered}>
     <Text style={styles.metricValue}>{value}</Text>
     <Text style={styles.unitLabel}>{unit}</Text>
   </View>
-);
+)
 
-const EventCard = ({title, ...props}) => {
+const EventCard = ({ title, ...props }) => {
   return (
     <View style={styles.card}>
       <Text style={styles.title}>{title}</Text>
@@ -67,25 +67,25 @@ const EventCard = ({title, ...props}) => {
         <DescriptionDetailItem value={20} unit="Duration" />
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   card: {
-    marginTop: -hp(1.5),
+    marginTop: -hp(1.5)
   },
   title: {
     fontSize: fontSize.m,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
     // marginBottom: hp(0.5),
   },
   centered: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   stepValue: {
     fontSize: fontSize.m,
     fontWeight: 'bold',
-    marginVertical: 4,
+    marginVertical: 4
   },
   mainSection: {
     flexDirection: 'row',
@@ -95,23 +95,23 @@ const styles = StyleSheet.create({
     borderColor: '#B2DB03',
     borderRadius: 20,
     padding: 6,
-    paddingVertical: hp(3),
+    paddingVertical: hp(3)
   },
   middleSection: {
     flex: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 10
   },
   dashedLine: {
     borderBottomWidth: 1,
     borderStyle: 'dashed',
     borderColor: '#000',
     opacity: 0.4,
-    marginBottom: 12,
+    marginBottom: 12
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    gap: 10,
+    gap: 10
   },
   detailSection: {
     flexDirection: 'row',
@@ -121,15 +121,15 @@ const styles = StyleSheet.create({
     borderColor: '#B2DB03',
     borderRadius: 20,
     paddingVertical: hp(2.5),
-    marginTop: hp(1),
+    marginTop: hp(1)
   },
   metricValue: {
     fontSize: fontSize.m,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   unitLabel: {
-    fontSize: fontSize.normal,
-  },
-});
+    fontSize: fontSize.normal
+  }
+})
 
-export default EventCard;
+export default EventCard

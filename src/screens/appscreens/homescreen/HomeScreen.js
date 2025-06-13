@@ -1,40 +1,40 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {StyleSheet, ScrollView, Platform} from 'react-native';
-import HomeScreenUI from './HomeScreenUI';
-import {hp} from '../../../common/functions/dimensions';
-import Strings from '../../../utils/constants/Strings';
-import {services} from '../../../services/axios/services';
-import {store} from '../../../redux/store';
-import {Text} from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react'
+import { StyleSheet, ScrollView, Platform } from 'react-native'
+import HomeScreenUI from './HomeScreenUI'
+import { hp } from '../../../common/functions/dimensions'
+import Strings from '../../../utils/constants/Strings'
+import { services } from '../../../services/axios/services'
+import { store } from '../../../redux/store'
+import { Text } from 'react-native'
 
 export default function HomeScreen(props) {
-  const {isLoggedIn} = props.route.params;
+  const { isLoggedIn } = props.route.params
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
   // Custom hook to fetch health connect data
   // const {healthConnectData, fetchAllData} = useHealthConnectData();
 
   const [state, setState] = useState({
     HomeScreenData: {
       events: [],
-      progressBar: 0,
-    },
-  });
+      progressBar: 0
+    }
+  })
 
   useEffect(() => {
-    initiateScreen();
+    initiateScreen()
     // requestHealthPermissions();
-  }, []);
+  }, [])
 
   async function initiateScreen() {
-    let data = await getDetails();
+    let data = await getDetails()
 
     if (!data) {
-      console.log('No data received for onboarding screen');
-      return;
+      console.log('No data received for onboarding screen')
+      return
     }
 
-    setState({...state, HomeScreenData: data});
+    setState({ ...state, HomeScreenData: data })
   }
 
   async function getDetails() {
@@ -44,17 +44,17 @@ export default function HomeScreen(props) {
         `/health/summary/${store.getState().auth?.runnerId}`,
         {
           headers: {
-            Authorization: `Bearer ${store.getState().auth.token}`,
-          },
-        },
-      );
-      console.log('Response:', resp.data);
+            Authorization: `Bearer ${store.getState().auth.token}`
+          }
+        }
+      )
+      console.log('Response:', resp.data)
       // You can update the state with the response data if needed
       // setState({...state, data: response.data});
 
-      return resp.data || []; // Assuming resp.data is an array
+      return resp.data || [] // Assuming resp.data is an array
     } catch (error) {
-      console.log('Error onboard screen get details', error);
+      console.log('Error onboard screen get details', error)
     }
   }
 
@@ -77,22 +77,22 @@ export default function HomeScreen(props) {
   const handleNavigate = (isProgram, registered) => {
     if (!registered) {
       props.navigation.navigate(Strings.NAVIGATION.eventstarted, {
-        IsRegistered: registered,
-      });
+        IsRegistered: registered
+      })
     } else {
       if (isProgram === Strings.NAVIGATION.submitresponse) {
-        props.navigation.navigate(Strings.NAVIGATION.submitresponse);
+        props.navigation.navigate(Strings.NAVIGATION.submitresponse)
       } else if (isProgram) {
         props.navigation.navigate(Strings.NAVIGATION.programdetail, {
-          IsRegistered: registered,
-        });
+          IsRegistered: registered
+        })
       } else {
         props.navigation.navigate(Strings.NAVIGATION.eventstarted, {
-          IsRegistered: registered,
-        });
+          IsRegistered: registered
+        })
       }
     }
-  };
+  }
 
   // function handleLoading(params) {
   //   setLoading(params);
@@ -101,7 +101,7 @@ export default function HomeScreen(props) {
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{paddingBottom: hp(5)}}
+      contentContainerStyle={{ paddingBottom: hp(5) }}
       showsVerticalScrollIndicator={false}>
       <HomeScreenUI
         {...state}
@@ -109,7 +109,7 @@ export default function HomeScreen(props) {
         handleNavigate={handleNavigate}
       />
     </ScrollView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -117,6 +117,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 12,
     backgroundColor: '#fff',
-    paddingBottom: hp(10),
-  },
-});
+    paddingBottom: hp(10)
+  }
+})

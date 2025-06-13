@@ -5,17 +5,16 @@ import Colors from '../../../utils/constants/Colors'
 import { hp, wp } from '../../functions/dimensions'
 import { fontSize } from '../../../utils/constants/Fonts'
 
-
-const CustomTextInput = (props) => {
+const CustomTextInput = props => {
   const [focused, setfocused] = useState(false)
   return (
     <>
-      {props.label &&
+      {props.label && (
         <Text style={{ ...style.label, ...props?.labelStyle }}>
           {props?.label}
           {props?.mandatory && <Text style={{ color: 'red' }}> *</Text>}
         </Text>
-      }
+      )}
       <TextInput
         onFocus={() => setfocused(true)}
         onBlur={() => setfocused(false)}
@@ -25,7 +24,7 @@ const CustomTextInput = (props) => {
           style.textInputStyle,
           focused && {
             borderWidth: 2,
-            borderColor: Colors.color3,
+            borderColor: Colors.color3
           },
           { ...props?.inputStyle }
         ]}
@@ -39,11 +38,11 @@ export default CustomTextInput
 
 const style = StyleSheet.create({
   label: {
-    fontSize:fontSize.normal,
-    marginBottom:hp(0.5)
+    fontSize: fontSize.normal,
+    marginBottom: hp(0.5)
   },
   textInputStyle: {
-    paddingVertical: hp(1),
+    paddingVertical: hp(1.3),
     paddingHorizontal: wp(3),
     borderWidth: 0.7,
     // elevation: 9,

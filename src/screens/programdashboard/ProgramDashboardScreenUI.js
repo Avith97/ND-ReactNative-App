@@ -1,38 +1,46 @@
 // react native imports
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
 // constants utils & assets
-import {fontSize} from '../../utils/constants/Fonts';
-import Colors from '../../utils/constants/Colors';
-import {hp, wp} from '../../common/functions/dimensions';
+import { fontSize } from '../../utils/constants/Fonts'
+import Colors from '../../utils/constants/Colors'
+import { hp, wp } from '../../common/functions/dimensions'
 
 // common components
-import PieProgressBar from '../../common/components/progressbar/PieProgressBar';
-import CustomButton from '../../common/components/buttons/CustomButton';
-import BarChart from '../../common/components/Charts/BarChart';
-import CustomWeekAndMonth from '../../common/components/customweekandmonth/CustomWeekAndMonth';
+import PieProgressBar from '../../common/components/progressbar/PieProgressBar'
+import CustomButton from '../../common/components/buttons/CustomButton'
+import BarChart from '../../common/components/Charts/BarChart'
+import CustomWeekAndMonth from '../../common/components/customweekandmonth/CustomWeekAndMonth'
 
 export default function ProgramDashboardScreenUI(props) {
   const data = [
-    {day: 'Mon', steps: 4000},
-    {day: 'Tue', steps: 7000},
-    {day: 'Wen', steps: 5000},
-    {day: 'Thu', steps: 10000},
-    {day: 'Fri', steps: 5000},
-    {day: 'Sat', steps: 7000},
-    {day: 'Sun', steps: 7050},
-  ];
-  const DescriptionDetailItem = ({value, unit}) => (
+    { day: 'Mon', steps: 4000 },
+    { day: 'Tue', steps: 7000 },
+    { day: 'Wen', steps: 5000 },
+    { day: 'Thu', steps: 10000 },
+    { day: 'Fri', steps: 5000 },
+    { day: 'Sat', steps: 7000 },
+    { day: 'Sun', steps: 7050 }
+  ]
+  const DescriptionDetailItem = ({ value, unit }) => (
     <View style={styles.centered}>
       <Text style={styles.metricValue}>{value}</Text>
       <Text style={styles.unitLabel}>{unit}</Text>
     </View>
-  );
+  )
 
   return (
     <View>
       <View style={styles.progressContainer}>
-        <Text style={{color:Colors.white ,paddingBottom:hp(1) , fontSize:fontSize.m, fontWeight:700}}>Personal Progress</Text>
+        <Text
+          style={{
+            color: Colors.white,
+            paddingBottom: hp(1),
+            fontSize: fontSize.m,
+            fontWeight: 700
+          }}>
+          Personal Progress
+        </Text>
         <PieProgressBar program />
       </View>
 
@@ -51,10 +59,10 @@ export default function ProgramDashboardScreenUI(props) {
           onPress={props.handleNavigate}
           btnStyles={{
             ...styles.btnStyles,
-            elevation: 5,
+            elevation: 5
           }}
           btnTitleStyles={{
-            ...styles.textStyle,
+            ...styles.textStyle
           }}
         />
       </View>
@@ -63,7 +71,6 @@ export default function ProgramDashboardScreenUI(props) {
       <View style={styles.barChartSection}>
         {/* tabbar */}
 
-      
         {/* week and month View */}
 
         <CustomWeekAndMonth mode={props.selectedTab} />
@@ -80,7 +87,7 @@ export default function ProgramDashboardScreenUI(props) {
         />
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -90,7 +97,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: hp(4),
     borderRadius: 10,
-    marginVertical: hp(1),
+    marginVertical: hp(1)
   },
 
   //
@@ -103,20 +110,20 @@ const styles = StyleSheet.create({
     marginRight: hp(1),
     marginVertical: hp(1),
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 
   buttonContainer: {
     marginVertical: hp(2),
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   btnStyles: {
     width: wp(90),
-    marginVertical: hp(1),
+    marginVertical: hp(1)
   },
   plusbtnStyle: {
-    width: wp(10),
+    width: wp(10)
   },
 
   detailSection: {
@@ -126,17 +133,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     // marginVertical: hp(1),
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-evenly'
   },
   metricValue: {
     fontSize: fontSize.m,
     fontWeight: 'bold',
     color: Colors.white,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   unitLabel: {
     fontSize: fontSize.normal,
     color: Colors.white,
-    textAlign: 'center',
-  },
-});
+    textAlign: 'center'
+  }
+})
