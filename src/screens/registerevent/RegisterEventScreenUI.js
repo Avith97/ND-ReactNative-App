@@ -66,6 +66,7 @@ export default function RegisterEventScreenUI(props) {
                 name="selectedActivity"
                 title="Activity Type"
                 label="Select"
+                mandatory
                 value={props?.selectedActivity?.displayName || ''}
                 data={props?.eventData?.activities || []}
                 onChangeText={(name, value) => props.handleChange(name, value)}
@@ -114,6 +115,7 @@ export default function RegisterEventScreenUI(props) {
             name="selectedEventCategory"
             title="Event Category"
             label="Select"
+            mandatory
             data={props?.eventData?.eventRunCategories || []}
             value={props?.selectedEventCategory?.category || ''}
             onChangeText={(name, value) => props.handleChange(name, value)}
@@ -177,7 +179,7 @@ export default function RegisterEventScreenUI(props) {
                   <CustomTextInput
                     label={groupField?.displayName}
                     name={fieldKey}
-                    mandatory
+                    mandatory={groupField?.requiredField}
                     inputStyle={styles.textInputStyle}
                     onChangeText={(name, value) =>
                       props.handleChange(
@@ -198,7 +200,6 @@ export default function RegisterEventScreenUI(props) {
                     name={fieldKey}
                     title={groupField?.displayName || ''}
                     onChange={(name, value) => {
-                      console.log(name)
                       props.handleChange(
                         name,
                         { ...value, fieldId: groupField?.customFieldId },
@@ -206,7 +207,7 @@ export default function RegisterEventScreenUI(props) {
                       )
                     }}
                     label="Select"
-                    mandatory
+                    mandatory={groupField?.requiredField}
                     data={[{ title: '', data: groupField?.fieldOptions || [] }]}
                     multiSelect={false}
                     value={props?.setSingleSelectCustom?.optionValue || ''}
@@ -235,6 +236,7 @@ export default function RegisterEventScreenUI(props) {
                       []
                     }
                     multiSelect={true}
+                    mandatory={groupField?.requiredField}
                     // value={props?.eventData?.selectedCustomFields?.optionValue || ''}
                     valueExtractor={item => item}
                     labelExtractor={item =>
@@ -271,7 +273,12 @@ export default function RegisterEventScreenUI(props) {
         btnStyles={styles.primaryBtn}
         onPress={props.handleSubmit}
       />
-      <CustomButton title="Cancel" btnStyles={styles.secondaryBtn} />
+      <CustomButton
+        title="Cancel"
+        name="cancel"
+        btnStyles={styles.secondaryBtn}
+        onPress={props.handleChange}
+      />
     </ScrollView>
   )
 }

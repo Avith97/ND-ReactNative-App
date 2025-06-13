@@ -59,6 +59,9 @@ export default function RegisterEventScreen(props) {
   }
 
   async function handleChange(params, val, index) {
+    if (params === 'cancel') {
+      props.navigation.goBack()
+    }
     if (index !== undefined && index !== null) {
       setState(prev => {
         const updatedArray = [...(prev[params] || [])]
@@ -77,7 +80,8 @@ export default function RegisterEventScreen(props) {
   }
 
   function validate(params) {
-    let err = {}
+    const customFields = state?.eventData?.fields?.customFields || []
+    const selectedFields = state?.selectedCustomFields || []
     let isValid = true
 
     // 1. Check if registration is closed
@@ -87,14 +91,14 @@ export default function RegisterEventScreen(props) {
       return isValid
     }
 
-    // 3. Check if an activity is selected
+    // 2. Check if an activity is selected
     if (!state?.selectedActivity) {
       isValid = false
       appsnackbar.showErrMsg('Please select an activity.')
       return isValid
     }
 
-    // 4. Check if event category is selected
+    // 3. Check if event category is selected
     if (
       state?.eventData?.showCategoryOnRegistration &&
       !state?.selectedEventCategory
@@ -104,24 +108,74 @@ export default function RegisterEventScreen(props) {
       return isValid
     }
 
-    // 5. Check if age group is selected
+    // 4. Check if age group is selected
     if (state?.eventData?.showAgeGroup && !state?.selectedAgeGroup) {
       isValid = false
       appsnackbar.showErrMsg('Please select an age group.')
       return isValid
     }
 
-    // 6. Check if custom fields are provided (optional depending on use case)
-    if (
-      !state?.selectedCustomFields ||
-      state.selectedCustomFields.length === 0
-    ) {
-      isValid = false
-      appsnackbar.showErrMsg('Please complete the required custom fields.')
-      return isValid
+    // 5. Validate dynamic custom fields
+
+    if (customFields.length > 0) {
+      for (let i = 0; i < customFields.length; i++) {
+        const field = customFields[i]
+        if (!field.requiredField) continue
+
+        const selected = selectedFields[i]
+
+        if (!selected) {
+          appsnackbar.showErrMsg(
+            `Please fill required field: ${field.displayName}`
+          )
+          isValid = false
+          return isValid
+        }
+
+        // Handle TEXT / NUMBER fields
+        if (
+          field.fieldType.name === 'TEXT' ||
+          field.fieldType.name === 'NUMBER'
+        ) {
+          const val = selected?.value
+          if (!val || val.trim?.() === '') {
+            appsnackbar.showErrMsg(
+              `Please fill required field ${field.displayName}`
+            )
+            isValid = false
+            return isValid
+          }
+        }
+
+        // Handle MULTI_SELECT fields
+        else if (field.fieldType.name === 'MULTI_SELECT') {
+          const options = Object.values(selected).filter(
+            v => typeof v === 'object'
+          )
+          if (!options.length) {
+            appsnackbar.showErrMsg(
+              `Please select at least one option for ${field.displayName}`
+            )
+            isValid = false
+            return isValid
+          }
+        }
+
+        // Handle SINGLE_SELECT fields
+        else if (field.fieldType.name === 'SINGLE_SELECT') {
+          const option = selected?.[0]
+          if (!option || !option.optionValue) {
+            appsnackbar.showErrMsg(
+              `Please select an option for ${field.displayName}`
+            )
+            isValid = false
+            return isValid
+          }
+        }
+      }
     }
 
-    // 2. Check if Terms & Conditions are accepted
+    // 6. Check if Terms & Conditions are accepted
     if (!state?.isTermsAndCondition) {
       isValid = false
       appsnackbar.showErrMsg('Please accept the Terms and Conditions.')
@@ -195,8 +249,6 @@ export default function RegisterEventScreen(props) {
     try {
       // API request
       let resp = await services._post(URL.register_event, syncObj)
-
-      console.log(resp?.type)
 
       // Response Handle
 
