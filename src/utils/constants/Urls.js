@@ -51,5 +51,7 @@ export const URL = {
   get_event: 'event/event_id',
 
   runner_group: 'public/runner/groupDetails/leaderboard/event_id',
-  get_runner_group: 'public/groupRunner/leaderboard/event_id'
+  get_runner_group: 'public/groupRunner/leaderboard/event_id',
+
+  save_health_data: 'save/health/connect/user/activity'
 }

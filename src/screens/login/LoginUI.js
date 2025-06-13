@@ -1,6 +1,13 @@
 // react native components
 import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Clipboard
+} from 'react-native'
 
 // common components
 import CustomButton from '../../common/components/buttons/CustomButton'
@@ -15,6 +22,7 @@ import { Images } from '../../utils/constants/Images'
 // Labels object for all static text
 import { en as labels } from '../../utils/labels/en'
 import { show_web_view_toast } from '../../common/components/toasts/handleToasts'
+import { appsnackbar } from '../../common/functions/snackbar_actions'
 
 const LoginUI = props => {
   function seeFaq() {
