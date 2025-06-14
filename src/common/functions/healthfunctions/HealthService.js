@@ -96,5 +96,28 @@ export const healthService = {
       console.warn('📱 iOS: getWeeklySteps not implemented')
       return
     }
+  },
+  getData: async (startDate, endDate) => {
+    if (Platform.OS === 'android') {
+      const [steps, distance, toCalories] = await Promise.all([
+        HealthConnectService.getSteps(),
+        HealthConnectService.getDistance(),
+        HealthConnectService.getCaloriesBurned()
+      ])
+      console.log(
+        'data in health service',
+        '\n',
+        steps,
+        '\n',
+        distance,
+        '\n',
+        toCalories
+      )
+
+      return { steps, distance, toCalories }
+    } else {
+      console.warn('📱 iOS: getAggregateData not implemented')
+      return
+    }
   }
 }

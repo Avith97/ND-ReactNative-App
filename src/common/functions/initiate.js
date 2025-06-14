@@ -1,5 +1,7 @@
-import { initiateFirebaseService } from "../../services/firebase"
+import { initiateFirebaseService } from '../../services/firebase'
+import HealthConnectService from './healthfunctions/HealthConnectService'
 
 export const initiateApp = async () => {
-    initiateFirebaseService()
+  initiateFirebaseService()
+  HealthConnectService.init()
 }

@@ -20,7 +20,7 @@ const Navigator = props => {
       // fallback={<Loader isLoading={true} />}
       onReady={() => {
         console.log('nav container ready')
-        global.navigateTo?.()
+        global.navready = true
       }}>
       <Stack.Navigator
         initialRouteName={Strings.NAVIGATION.splash}
