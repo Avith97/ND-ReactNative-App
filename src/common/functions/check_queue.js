@@ -26,7 +26,7 @@ export const waitUntilNavigationReady = (getState, timeout = 10000) => {
     const startTime = Date.now()
 
     const interval = setInterval(() => {
-      if (global.navigation) {
+      if (global.navigation?.isReady()) {
         clearInterval(interval)
         global.navigation.navigate(Strings.NAVIGATION.auth, {
           screen: Strings.NAVIGATION.signup
