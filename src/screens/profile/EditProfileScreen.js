@@ -7,6 +7,7 @@ import { URL } from '../../utils/constants/Urls'
 import { services } from '../../services/axios/services'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import moment from 'moment'
+import { store } from '../../redux/store'
 
 export default function EditProfileScreen(props) {
   const [err, seterr] = useState(null)
@@ -14,7 +15,7 @@ export default function EditProfileScreen(props) {
   const [formState, setFormState] = useState({
     firstName: '',
     lastName: '',
-    dob: '',
+    dob: null,
     country: '',
     age: '',
     weight: '',
@@ -29,21 +30,48 @@ export default function EditProfileScreen(props) {
 
   useEffect(() => {
     if (auth) {
+      const countryObj = {
+        label: auth.country,
+        value: ` ${auth.countryCode}`,
+        code: auth.country?.slice(0, 2).toUpperCase() || ''
+      }
+
+      console.log('date of birth', auth)
+
       setFormState({
         firstName: auth.firstName || '',
         lastName: auth.lastName || '',
-        dob: moment(auth.dateOfBirth).format('DD-MM-YYYY') || '',
-        country: auth.country || '',
+        dob: auth?.dateOfBirth
+          ? moment(auth?.dateOfBirth, 'YYYY-MM-DD').toDate()
+          : null,
+        country: countryObj || '',
         age: auth.age?.toString() || '',
         weight: auth.weight?.toString() || '',
-        gender: auth.gender || '',
+        gender: { label: auth.gender, value: auth.gender } || '',
         height: auth.height?.toString() || '',
         email: auth?.email || '',
-        contactNumber: auth.contactNumber || '',
-        countryCode: '91'
+        contactNumber: auth.contactNumber || ''
       })
     }
   }, [])
+
+  async function getDetails() {
+    // Simulate an API call to fetch user details
+    try {
+      let url = TemplateService?._userId(URL?.get_profile, auth?.id)
+      let resp = await services?._get(url)
+
+      if (resp?.api_response?.data) {
+        store.dispatch(set_user_details(resp?.data))
+        return resp?.data
+      } else {
+        throw new Error('Failed to fetch user details')
+      }
+    } catch (error) {
+      console.error('Error fetching user details:', error)
+      return null
+    }
+  }
 
   function handleChange(params, val) {
     console.log('params', params)
@@ -77,7 +105,11 @@ export default function EditProfileScreen(props) {
       isValid = false
       err = { emailErr: true }
       appsnackbar.showErrMsg('Please enter valid email')
-    } else if (!formState.country?.trim()?.length) {
+    } else if (!formState.country?.label?.trim()?.length) {
+      isValid = false
+      err = { countryErr: true }
+      appsnackbar.showErrMsg('Please select country')
+    } else if (!formState.gender?.label?.trim()?.length) {
       isValid = false
       err = { countryErr: true }
       appsnackbar.showErrMsg('Please select country')
@@ -100,11 +132,32 @@ export default function EditProfileScreen(props) {
 
     try {
       let url = TemplateService._userId(URL.update_profile, auth?.id)
-      let resp = await services._put(url, formState)
+
+      let resp = await services._put(url, {
+        ...formState,
+        country: formState?.country?.label,
+        countryCode: formState?.country?.value,
+        gender: formState?.gender?.value,
+        dob: moment(formState.dob).format('DD-MM-yyyy')
+      })
+
+      console.log(formState?.dob, 'datr')
+
+      console.log('payload', {
+        ...formState,
+        country: formState?.country?.label,
+        countryCode: formState?.country?.value,
+        gender: formState?.gender?.value,
+        dob: formState?.dob
+      })
+
+      console.log(resp)
 
       if (resp?.status === 'success') {
         appsnackbar.showSuccessMsg('Profile Updated successfully')
+        await getDetails()
       } else {
+        await getDetails()
         appsnackbar.showSuccessMsg(
           resp?.data?.success?.verbose || 'User updated successfully.'
         )
