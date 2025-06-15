@@ -15,16 +15,27 @@ import Strings from '../../../../utils/constants/Strings'
 export default function UpComingsTab(props) {
   return (
     <View style={styles.programList}>
-      {props.programs.map((item, index) => (
-        <View key={index} style={styles.cardSpacing}>
-          <ProgramCard
-            {...item}
-            buttonName="Register"
-            minWidth={'100%'}
-            handleNavigate={() => props?.handleNavigate(item)}
-          />
-        </View>
-      ))}
+      {props?.programs > 0 ? (
+        props?.programs?.map((item, index) => (
+          <View key={index} style={styles.cardSpacing}>
+            <ProgramCard
+              {...item}
+              buttonName="Register"
+              minWidth={'100%'}
+              handleNavigate={() => props?.handleNavigate(item)}
+            />
+          </View>
+        ))
+      ) : (
+        <Text
+          style={{
+            textAlign: 'center',
+            paddingVertical: hp(2),
+            color: Colors?.gray_05
+          }}>
+          No data found
+        </Text>
+      )}
     </View>
     // <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
     //   <Text style={styles.noFoundTitle}>No Record Found</Text>
