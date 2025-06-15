@@ -1,36 +1,55 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { fontSize } from '../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
 
-export default function BMICardScreenUI() {
+export default function BMICardScreenUI({ BMISummery, ...props }) {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.title}>Your BMI:</Text>
-        <Text style={styles.bmiValue}>22.5</Text>
+        {BMISummery?.bmi && (
+          <Text style={styles.bmiValue}>{BMISummery?.bmi}</Text>
+        )}
 
         {/* Color Scale + Label */}
         <View style={styles.progressWrapper}>
-          <Text style={styles.bmiLabel}>Normal</Text>
+          {BMISummery?.category && (
+            <Text style={styles.bmiLabel}>{BMISummery?.category}</Text>
+          )}
           <View style={styles.barRow}>{generateBars(30)}</View>
         </View>
 
         {/* Details Row */}
         <View style={styles.detailsRow}>
-          <InfoItem label="Weight" value="65 kg" />
-          <InfoItem label="Height" value="170 cm" />
-          <InfoItem label="Age" value="26" />
-          <InfoItem label="Gender" value="male" />
+          {BMISummery?.weight && (
+            <InfoItem label="Weight" value={`${BMISummery?.weight} KG`} />
+          )}
+
+          {BMISummery?.height && (
+            <InfoItem label="Height" value={`${BMISummery?.height} CM`} />
+          )}
+          {BMISummery?.height && (
+            <InfoItem label="age" value={`${BMISummery?.age} `} />
+          )}
+
+          {BMISummery?.gender && (
+            <InfoItem label="Gender" value={`${BMISummery?.gender}`} />
+          )}
         </View>
 
         {/* Normal Weight Range */}
-        <View style={styles.rangeBox}>
-          <Text style={styles.rangeText}>
-            Normal weight for the height:
-            {'\n'}
-            <Text style={styles.rangeHighlight}>53.5 kg – 72.3 kg</Text>
-          </Text>
-        </View>
+        {BMISummery?.normalWeightRange && (
+          <View style={styles.rangeBox}>
+            <Text style={styles.rangeText}>
+              Normal weight for the height:
+              {'\n'}
+              <Text style={styles.rangeHighlight}>
+                {BMISummery?.normalWeightRange?.min} kg –{' '}
+                {BMISummery?.normalWeightRange?.max} kg
+              </Text>
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   )
@@ -85,7 +104,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fontSize.l,
     color: '#444',
-    fontWeight: '500'
+    fontFamily: Fonts?.Bold
   },
   bmiValue: {
     fontSize: fontSize.xl,
@@ -148,13 +167,12 @@ const styles = StyleSheet.create({
   },
   rangeText: {
     textAlign: 'center',
-    fontWeight: '500',
+    fontFamily: Fonts?.SemiBold,
     color: '#222',
     fontSize: fontSize.md
   },
   rangeHighlight: {
     color: '#7fbf3f',
-    fontWeight: 'bold',
     fontSize: fontSize.l
   }
 })
