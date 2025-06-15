@@ -32,42 +32,7 @@ const HealthConnectService = {
       console.error('HealthConnect initialization error:', error)
     }
   },
-  // init: async () => {
-  //   try {
-  //     console.log('HealthConnect initialized successfully')
-  //     const sdkStatus = await getSdkStatus();
-  //     console.log('Health Connect SDK Status -->', sdkStatus);
 
-  //     switch (sdkStatus) {
-  //       case 0:
-  //         console.log('✅ Health Connect is available!');
-  //         initialize()
-  //         return;
-  //       case 1:
-  //         console.log('⚠️ Health Connect is not installed.');
-  //         Linking.openURL('https://play.google.com/store/apps/details?id=com.google.android.apps.healthdata');
-  //         return;
-  //       case 2:
-  //         console.log('⚠️ Health Connect is not up to date.');
-  //         return;
-  //       case 3:
-  //         openHealthConnectSettings();
-  //         console.log('🚨 No permission to use Health Connect.');
-  //         return;
-  //       case 4:
-  //         console.log('⚠️ Health Connect not supported on this device.');
-  //         return;
-  //       default:
-  //         console.log('❌ Unknown Health Connect status.');
-  //         return;
-  //     }
-  //   } catch (error) {
-  //     console.error('HealthConnect initialization error:', error)
-  //   }
-  // },
-  /**
-   * Check if Health Connect is available on the device
-   */
   checkAvailability: async () => {
     try {
       return await isAvailable()

@@ -30,7 +30,7 @@ export const BackSync = {
       if (store.getState().settings.isLoading) {
         await waitUntilNotSyncing()
       }
-
+      //make your changes here for health_data_sync
       let resp = await services._post(URL.otp, {
         userName: 'vinit@anssoft.in',
         byEmail: true,
