@@ -24,6 +24,8 @@ import { en as labels } from '../../utils/labels/en'
 import { show_web_view_toast } from '../../common/components/toasts/handleToasts'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import { healthService } from '../../common/functions/healthfunctions/HealthService'
+import AsyncStore from '../../data/async/AsyncStore'
+import Strings from '../../utils/constants/Strings'
 
 const LoginUI = props => {
   function seeFaq() {
@@ -105,6 +107,7 @@ const LoginUI = props => {
             Clipboard.setString(global.fcm_token)
             appsnackbar.showSuccessMsg('FCM Token copied to clipboard')
             healthService.getData()
+            // AsyncStore.clearData(Strings.ASYNC_KEY.offline, { username: "vinit@anssoft.in" })
           }}
           // isLoading={store.getState().settings.isLoading}
           btnStyles={{

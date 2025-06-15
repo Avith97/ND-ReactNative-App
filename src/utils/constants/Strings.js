@@ -1,5 +1,7 @@
 export default {
-  ASYNC_KEY: {},
+  ASYNC_KEY: {
+    offline: 'offline'
+  },
   NAVIGATION: {
     auth: 'auth',
     app: 'app',
