@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import SplashUI from './SplashUI'
 import Strings from '../../utils/constants/Strings'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
+import { useSelector } from 'react-redux'
 
 const SplashScreen = props => {
   const [state, setState] = useState({
@@ -17,13 +18,23 @@ const SplashScreen = props => {
         //   isLoggedIn:false,
         // });
       }
-      props.navigation.replace(Strings.NAVIGATION.auth)
+      // props.navigation.replace(Strings.NAVIGATION.auth)
     }, 5000)
     return () => {
       console.log('first unmount')
       Linking.removeAllListeners('url')
     }
   }, [])
+
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+
+  useEffect(() => {
+    console.log('user login status ---->', isLoggedIn)
+    if (isLoggedIn) {
+      props.navigation.navigate(Strings.NAVIGATION.app)
+    } else {
+    }
+  }, [isLoggedIn])
 
   async function checkAppLaunch(params) {
     try {

@@ -29,6 +29,7 @@ import GeneralSettingScreen from '../../screens/generalsettingscreen/GeneralSett
 import LanguageSettingScreen from '../../screens/generalsettingscreen/langaugesetting/LanguageSettingScreen'
 import UnitSettingsScreen from '../../screens/generalsettingscreen/unitsettingScreen/UnitSettingsScreen'
 import ProgramLeaderBoardScreen from '../../screens/progremleaderboard/ProgramLeaderBoardScreen'
+import { useSelector } from 'react-redux'
 
 const TabNavigator = props => {
   const Tab = createBottomTabNavigator()
@@ -134,9 +135,11 @@ const AppStack = props => {
   // const Drawer = createDrawerNavigator();
 
   const Stack = createStackNavigator()
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
 
   return (
     <Stack.Navigator
+      initialRouteName={Strings.NAVIGATION.home}
       screenOptions={({ navigation, route }) => {
         const customHeaderScreens = [
           Strings.NAVIGATION.home,
@@ -152,7 +155,10 @@ const AppStack = props => {
           return {
             header: () => (
               <AppCustomHeader
-                isLoggedIn={{ isLoggedIn: props.route.params.isLoggedIn }}
+                isLoggedIn={{
+                  // isLoggedIn: props.route.params.isLoggedIn
+                  isLoggedIn: isLoggedIn
+                }}
               />
             )
           }
@@ -165,7 +171,10 @@ const AppStack = props => {
       <Stack.Screen
         name={Strings.NAVIGATION.home}
         component={TabNavigator}
-        initialParams={{ isLoggedIn: props.route.params.isLoggedIn }}
+        initialParams={{
+          // isLoggedIn: props.route.params.isLoggedIn
+          isLoggedIn: isLoggedIn
+        }}
       />
       <Stack.Screen
         name={Strings.NAVIGATION.profile}
