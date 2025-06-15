@@ -55,7 +55,7 @@ const LoginUI = props => {
         <CustomButton
           title={labels?.signUpWithGoogle}
           name={'sign_in_google'}
-          // onPress={props?.handleSubmit}
+          onPress={props?.signUpWithGoogle}
           // isLoading={store.getState().settings.isLoading}
           btnStyles={{
             ...styles.btnStyles,
