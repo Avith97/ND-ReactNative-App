@@ -93,9 +93,9 @@ const OtpScreen = props => {
         services?.refreshInstance(resp?.api_response?.data?.token)
         // return
         if (resp?.api_response?.data?.newUser) {
-          props.navigation.navigate(Strings.NAVIGATION.create_profile)
+          props.navigation.replace(Strings.NAVIGATION.create_profile)
         } else {
-          props.navigation.navigate(Strings.NAVIGATION.app, {
+          props.navigation.replace(Strings.NAVIGATION.app, {
             isLoggedIn: true
           })
         }

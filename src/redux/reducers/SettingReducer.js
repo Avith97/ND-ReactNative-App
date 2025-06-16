@@ -3,13 +3,16 @@ import actions from '../action_types/actions'
 
 const initialState = {
   environment: 'LIVE', //ignore
-  isLoading: false
+  isLoading: false,
+  isInitiating: true
 }
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case actions.HANDLE_SYNC:
       return { ...state, isLoading: payload }
+    case actions.HANDLE_INIT:
+      return { ...state, isInitiating: payload }
 
     case actions.SET_ENVIRONMENT:
       // api.refreshInstance()

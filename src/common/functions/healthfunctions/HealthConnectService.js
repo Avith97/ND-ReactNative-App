@@ -28,6 +28,7 @@ const HealthConnectService = {
     try {
       const sdkStatus = await getSdkStatus()
       await sort_status(sdkStatus)
+      return
     } catch (error) {
       console.error('HealthConnect initialization error:', error)
     }
@@ -87,11 +88,9 @@ const HealthConnectService = {
           operator: 'between',
           ...dates
         },
-        dataOriginFilter: [
-          'com.google.android.apps.fitness',
-          'com.fitbit.FitbitMobile'
-        ]
+        dataOriginFilter: ['com.google.android.apps.fitness']
       })
+
       return steps
     } catch (error) {
       console.error('getSteps error:', error)

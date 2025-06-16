@@ -26,16 +26,19 @@ const SplashScreen = props => {
     }
   }, [])
 
+  const isInitiating = useSelector(state => state.settings.isInitiating)
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
 
   useEffect(() => {
     console.log('user login status ---->', isLoggedIn)
-    if (isLoggedIn) {
-      props.navigation.navigate(Strings.NAVIGATION.app)
-    } else {
-      props.navigation.navigate(Strings.NAVIGATION.auth)
+    if (!isInitiating) {
+      if (isLoggedIn) {
+        props.navigation.replace(Strings.NAVIGATION.app)
+      } else {
+        props.navigation.replace(Strings.NAVIGATION.auth)
+      }
     }
-  }, [isLoggedIn])
+  }, [isInitiating])
 
   async function checkAppLaunch(params) {
     try {

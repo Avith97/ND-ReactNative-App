@@ -6,3 +6,9 @@ export const handleSync = payload => {
     payload
   }
 }
+export const handleInit = payload => {
+  return {
+    type: actions.HANDLE_INIT,
+    payload
+  }
+}
