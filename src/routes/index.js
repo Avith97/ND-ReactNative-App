@@ -17,7 +17,12 @@ const Navigator = props => {
       ref={r => {
         global.navigation = r
       }}
-      linking={[]}>
+      linking={[]}
+      // fallback={<Loader isLoading={true} />}
+      onReady={() => {
+        console.log('nav container ready')
+        global.navready = true
+      }}>
       <Stack.Navigator
         initialRouteName={Strings.NAVIGATION.splash}
         screenOptions={{

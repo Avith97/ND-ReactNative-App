@@ -1,6 +1,13 @@
 // react native components
 import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Clipboard
+} from 'react-native'
 
 // common components
 import CustomButton from '../../common/components/buttons/CustomButton'
@@ -50,7 +57,7 @@ const LoginUI = props => {
         <CustomButton
           title={labels?.signUpWithGoogle}
           name={'sign_in_google'}
-          // onPress={props?.handleSubmit}
+          onPress={props?.signUpWithGoogle}
           // isLoading={store.getState().settings.isLoading}
           btnStyles={{
             ...styles.btnStyles,

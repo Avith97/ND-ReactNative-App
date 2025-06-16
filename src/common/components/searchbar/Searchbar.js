@@ -76,7 +76,7 @@ const SearchBar = props => {
 
       <View
         ref={drpRef}
-        style={[ 
+        style={[
           styles.inputWrapper,
           focused && {
             borderColor: Colors.primary,
@@ -85,7 +85,8 @@ const SearchBar = props => {
           },
           // props.wrapperStyle,
           {
-          backgroundColor:"#FFFAEB"},
+            backgroundColor: '#FFFAEB'
+          }
         ]}>
         <Icons
           name="search"
@@ -112,18 +113,16 @@ const SearchBar = props => {
       {/* search result  */}
       {props?.searchResultData?.length > 0 && (
         <View
-        
           style={{
             backgroundColor: 'rgba(0,0,0,0.8)',
             maxHeight: hp(40),
             minHeight: hp(21),
-            width:wp(90),
-            position:"absolute",
+            width: wp(90),
+            position: 'absolute',
             // top:hp,
-             top: drpPosition.y + hp(6) ,
-                //   left: drpPosition.pageX / 1 ,
-                zIndex:1,
-
+            top: drpPosition.y + hp(6),
+            //   left: drpPosition.pageX / 1 ,
+            zIndex: 1
           }}>
           <View style={{ marginTop: hp(2), zIndex: 1 }}>
             <FlatList

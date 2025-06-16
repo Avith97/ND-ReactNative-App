@@ -31,7 +31,6 @@ export default function TeamTab({ ...props }) {
 
   async function getAllTeams(params) {
     try {
-
       // url
       let url = TemplateService?._eventID(
         URL.get_teams_url,
@@ -39,13 +38,14 @@ export default function TeamTab({ ...props }) {
       )
 
       // API request for fetch ALl teams
-      const response = await services._get(url, { params: { view: 'TEAMS' , limit:props?.filters?.selectLimit?.value } })
-      
+      const response = await services._get(url, {
+        params: { view: 'TEAMS', limit: props?.filters?.selectLimit?.value }
+      })
+
       if (response?.type === 'success') {
         return response?.data
       } else {
-        appsnackbar.showErrMsg("Something went wrong!")
-        
+        appsnackbar.showErrMsg('Something went wrong!')
       }
     } catch (error) {
       console.error('Error fetching teams:', error)
@@ -61,16 +61,15 @@ export default function TeamTab({ ...props }) {
       // Replace these with actual IDs if needed
       const programId = props?.eventID
 
-        // API request for fetch single teams
+      // API request for fetch single teams
       const response = await services._get(
         `${URL.get_single_team}/${programId}/${teamId}?leaderboard=true&teamId=${teamId}`
       )
 
-       if (response?.type === 'success') {
-         setTeamParticipant(response.data)
+      if (response?.type === 'success') {
+        setTeamParticipant(response.data)
         setExpandedTeamId(prev => (prev === teamId ? null : teamId))
-      }
-       else {
+      } else {
         appsnackbar.showErrMsg('Something went wrong')
       }
     } catch (error) {
@@ -105,7 +104,7 @@ export default function TeamTab({ ...props }) {
         renderItem={renderTeam}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingHorizontal:wp(1.5)}}
+        contentContainerStyle={{ paddingHorizontal: wp(1.5) }}
       />
     </>
   )

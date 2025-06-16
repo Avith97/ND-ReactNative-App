@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   dialog: {
     width: wp(90),
     // padding: 10,
-    paddingHorizontal:wp(10),
+    paddingHorizontal: wp(10),
     backgroundColor: '#f3f3f3',
     borderRadius: 10,
     alignItems: 'center'

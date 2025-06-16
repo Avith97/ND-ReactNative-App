@@ -43,7 +43,14 @@ function IndividualLeaderBoardUI({ ...props }) {
           />
         </View>
       ) : (
-        <Text style={{textAlign:"center" , paddingVertical:hp(2), color:Colors?.gray_05}}>No data found</Text>
+        <Text
+          style={{
+            textAlign: 'center',
+            paddingVertical: hp(2),
+            color: Colors?.gray_05
+          }}>
+          No data found
+        </Text>
       )}
     </View>
   )

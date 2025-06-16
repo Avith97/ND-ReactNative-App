@@ -61,15 +61,15 @@ const Dropdown = props => {
   const [drpPosition, setdrpPosition] = useState(0)
   const drpRef = useRef(null)
 
-
-   useEffect(() => {
+  useEffect(() => {
     if (data.length > 0 && !selectedItem && typeof value === 'object') {
-      const initialItem = data.find(item => JSON.stringify(item) === JSON.stringify(value))
+      const initialItem = data.find(
+        item => JSON.stringify(item) === JSON.stringify(value)
+      )
       setSelectedItem(initialItem)
     }
-    }, [value])
+  }, [value])
   // }, [value, data, selectedItem, valueExtractor])
-
 
   const toggleDropdown = () => {
     Animated.timing(fadeAnim, {
@@ -86,12 +86,13 @@ const Dropdown = props => {
   }
 
   const renderItem = ({ item, index }) => {
-    const isSelected = typeof value === 'object' ?
-      JSON.stringify(item) === JSON.stringify(value)
-      : selectedItem && valueExtractor(item) === valueExtractor(selectedItem)
+    const isSelected =
+      typeof value === 'object'
+        ? JSON.stringify(item) === JSON.stringify(value)
+        : selectedItem && valueExtractor(item) === valueExtractor(selectedItem)
 
-  //   const isSelected =
-  //     selectedItem && valueExtractor(item) === valueExtractor(selectedItem)
+    //   const isSelected =
+    //     selectedItem && valueExtractor(item) === valueExtractor(selectedItem)
 
     return (
       <TouchableOpacity
@@ -137,7 +138,6 @@ const Dropdown = props => {
     getPosition()
   }, [isVisible])
 
- 
   const getPosition = () => {
     drpRef?.current?.measure((x, y, width, height, pageX, pageY) => {
       // console.log('Local X:', x);
@@ -186,8 +186,7 @@ const Dropdown = props => {
             }
           ]}
           // value={value ? value : selectedItem  ? labelExtractor(selectedItem) : ''}
-            value={selectedItem  ? labelExtractor(selectedItem) : ''}
-
+          value={selectedItem ? labelExtractor(selectedItem) : ''}
           placeholder={label}
           editable={false}
           placeholderTextColor={placeholderTextColor}
@@ -308,7 +307,7 @@ Dropdown.defaultProps = {
   textColor: 'rgba(0, 0, 0, .87)',
   itemColor: 'rgba(0, 0, 0, .54)',
   // selectedItemColor: 'rgba(0, 0, 0, .87)',
-  selectedItemColor: Colors.primary,  
+  selectedItemColor: Colors.primary,
   placeholderTextColor: 'rgba(0, 0, 0, .38)',
   itemCount: 4,
   itemPadding: 8,
