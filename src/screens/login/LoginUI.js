@@ -100,7 +100,7 @@ const LoginUI = props => {
             marginLeft: wp(5)
           }}
         />
-        {/* <CustomButton
+        <CustomButton
           title={'Copy FCM Token'}
           name={'signup'}
           onPress={async () => {
@@ -123,7 +123,7 @@ const LoginUI = props => {
             ...styles.textStyle,
             marginLeft: wp(5)
           }}
-        /> */}
+        />
 
         <View style={{ flexDirection: 'row' }}>
           <Text>{labels?.alreadyRegistered}</Text>{' '}
