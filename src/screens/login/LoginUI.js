@@ -103,10 +103,11 @@ const LoginUI = props => {
         {/* <CustomButton
           title={'Copy FCM Token'}
           name={'signup'}
-          onPress={() => {
+          onPress={async () => {
             Clipboard.setString(global.fcm_token)
             appsnackbar.showSuccessMsg('FCM Token copied to clipboard')
-            healthService.getData()
+            let x = await healthService.getData()
+            console.log('final health data --->>', x)
             // AsyncStore.clearData(Strings.ASYNC_KEY.offline, { username: "vinit@anssoft.in" })
           }}
           // isLoading={store.getState().settings.isLoading}

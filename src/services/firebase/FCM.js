@@ -4,6 +4,8 @@ import { Alert, Platform } from 'react-native'
 import AndroidPermissions from '../../common/functions/permissions'
 import { toast_success } from '../../common/components/toasts/handleToasts'
 import { BackSync } from '../../common/functions/BackSync'
+import HealthConnectService from '../../common/functions/healthfunctions/HealthConnectService'
+import { initialize } from 'react-native-health-connect'
 
 const FirebasePushNotificationService = {
   // Initialize the service
@@ -80,7 +82,7 @@ const FirebasePushNotificationService = {
     // Foreground notifications
     messaging().onMessage(async remoteMessage => {
       console.log('A new FCM message arrived!', JSON.stringify(remoteMessage))
-
+      BackSync.syncData(remoteMessage)
       toast_success({
         text1: remoteMessage.notification?.title || 'new notification !!',
         text2: remoteMessage.notification?.body || 'data of notification'
