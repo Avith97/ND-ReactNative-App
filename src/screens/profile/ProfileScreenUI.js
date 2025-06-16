@@ -26,7 +26,7 @@ export default function ProfileScreenUI(props) {
       id: '3',
       icon: 'sliders',
       label: 'General Settings',
-      link: Strings.NAVIGATION.generalsetting,
+      link: Strings.NAVIGATION.generalsetting
     },
     {
       id: '4',
@@ -34,8 +34,8 @@ export default function ProfileScreenUI(props) {
       label: 'Activity Sync',
       link: Strings.NAVIGATION.activitysync
     },
-    { id: '5', icon: 'file-text', label: 'Terms & Conditions' },
-    { id: '6', icon: 'help-circle', label: 'Support' }
+    { id: '5', icon: 'file-text', label: 'Terms & Conditions', link: 'ok' },
+    { id: '6', icon: 'help-circle', label: 'Support', link: 'ok' }
   ]
 
   const renderItem = ({ item, index }) => {
@@ -57,8 +57,8 @@ export default function ProfileScreenUI(props) {
         </View>
         <Icon name="chevron-right" size={20} color="#000" />
       </TouchableOpacity>
-    );
-  };
+    )
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -67,14 +67,16 @@ export default function ProfileScreenUI(props) {
           rounded
           size={'xlarge'}
           source={{
-            uri: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp'
+            uri: props?.AvatarURl
+              ? props?.AvatarURl
+              : 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp'
           }}
           avatarStyle={styles.avatarImage}
           //   avatarStyle={{shadowOffset: {width: 10, height: 10}}}
         >
           <Avatar.Accessory
             size={hp(4)}
-            onPress={() => console.log('clicked on profile pic')}
+            onPress={() => props?.handleUploadImage()}
             iconProps={{
               name: 'edit',
               size: hp(2),
@@ -169,7 +171,6 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     fontSize: fontSize.md,
     color: '#000',
-    fontWeight: 600,
-  },
-});
-
+    fontWeight: 600
+  }
+})
