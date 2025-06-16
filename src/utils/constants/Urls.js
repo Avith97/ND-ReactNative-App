@@ -51,5 +51,7 @@ export const URL = {
   get_event: 'event/event_id',
 
   runner_group: 'public/runner/groupDetails/leaderboard/event_id',
-  get_runner_group: 'public/groupRunner/leaderboard/event_id'
+  get_runner_group: 'public/groupRunner/leaderboard/event_id',
+
+  user_profile_pic_upload: '/user/profilePicture/upload/user_id'
 }

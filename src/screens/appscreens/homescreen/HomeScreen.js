@@ -48,7 +48,7 @@ export default function HomeScreen(props) {
           }
         }
       )
-      console.log('Response:', resp.data)
+      // console.log('Response:', resp)
       // You can update the state with the response data if needed
       // setState({...state, data: response.data});
 
@@ -105,6 +105,7 @@ export default function HomeScreen(props) {
       showsVerticalScrollIndicator={false}>
       <HomeScreenUI
         {...state}
+        progressEvent={state?.HomeScreenData?.events?.[0]}
         isLoggedIn={isLoggedIn}
         handleNavigate={handleNavigate}
       />

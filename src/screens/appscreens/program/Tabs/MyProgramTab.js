@@ -8,6 +8,7 @@ import ProgramCard from '../../../../common/components/programcard/ProgramCard'
 // constants utils
 import { hp } from '../../../../common/functions/dimensions'
 import Colors from '../../../../utils/constants/Colors'
+import { Images } from '../../../../utils/constants/Images'
 
 export default function MyProgramTab(props) {
   return (
@@ -17,6 +18,7 @@ export default function MyProgramTab(props) {
           <View key={index} style={styles.cardSpacing}>
             <ProgramCard
               {...item}
+              image={Images?.program_card_bg_image}
               minWidth={'100%'}
               handleNavigate={() => props.handleNavigate(item)}
             />
