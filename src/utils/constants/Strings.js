@@ -39,7 +39,7 @@ export default {
     programdetail: 'programdetail',
     submitresponse: 'submitresponse',
     programleaderboard: 'programleaderboard',
-
+    home_tab_nav: 'home_tab_nav',
     // app screens
     home: 'home',
     profile: 'profile',

@@ -91,11 +91,11 @@ const OtpScreen = props => {
         console.log('token refreshed', resp?.api_response?.data)
         await set_data_storage(resp?.api_response?.data)
         services?.refreshInstance(resp?.api_response?.data?.token)
-        return
+        // return
         if (resp?.api_response?.data?.newUser) {
-          props.navigation.navigate(Strings.NAVIGATION.create_profile)
+          props.navigation.replace(Strings.NAVIGATION.create_profile)
         } else {
-          props.navigation.navigate(Strings.NAVIGATION.app, {
+          props.navigation.replace(Strings.NAVIGATION.app, {
             isLoggedIn: true
           })
         }
