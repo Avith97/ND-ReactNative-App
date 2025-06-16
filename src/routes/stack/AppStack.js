@@ -30,106 +30,108 @@ import LanguageSettingScreen from '../../screens/generalsettingscreen/langaugese
 import UnitSettingsScreen from '../../screens/generalsettingscreen/unitsettingScreen/UnitSettingsScreen'
 import ProgramLeaderBoardScreen from '../../screens/progremleaderboard/ProgramLeaderBoardScreen'
 import { useSelector } from 'react-redux'
+import OnBoardScreen from '../../screens/onBoardScreens/OnBoardScreen'
+import HomeTabBottomNav from '../tab/HomeTabBottomNav'
 
-const TabNavigator = props => {
-  const Tab = createBottomTabNavigator()
+// const TabNavigator = props => {
+//   const Tab = createBottomTabNavigator()
 
-  return (
-    <Tab.Navigator
-      initialRouteName={Strings.NAVIGATION.home}
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: Colors.primary,
-        tabBarInactiveTintColor: Colors.gray_03
-      }}>
-      {/* <Tab.Screen name={Strings.NAVIGATION.health} component={HealthScreen} /> */}
-      <Tab.Screen
-        name={Strings.NAVIGATION.home}
-        component={HomeScreen}
-        initialParams={{ isLoggedIn: true }}
-        options={{
-          title: 'Home',
-          headerTitleStyle: {
-            // fontSize: 20,
-            fontWeight: '600'
-            // color: 'black',
-          },
-          tabBarIcon: ({ color, size }) => (
-            <Icons
-              type={iconType.feather}
-              name="home"
-              color={color}
-              size={20}
-            />
-          )
-        }}
-      />
+//   return (
+//     <Tab.Navigator
+//       initialRouteName={Strings.NAVIGATION.home}
+//       screenOptions={{
+//         headerShown: false,
+//         tabBarActiveTintColor: Colors.primary,
+//         tabBarInactiveTintColor: Colors.gray_03
+//       }}>
+//       {/* <Tab.Screen name={Strings.NAVIGATION.health} component={HealthScreen} /> */}
+//       <Tab.Screen
+//         name={Strings.NAVIGATION.home}
+//         component={HomeScreen}
+//         initialParams={{ isLoggedIn: true }}
+//         options={{
+//           title: 'Home',
+//           headerTitleStyle: {
+//             // fontSize: 20,
+//             fontWeight: '600'
+//             // color: 'black',
+//           },
+//           tabBarIcon: ({ color, size }) => (
+//             <Icons
+//               type={iconType.feather}
+//               name="home"
+//               color={color}
+//               size={20}
+//             />
+//           )
+//         }}
+//       />
 
-      <Tab.Screen
-        name={Strings.NAVIGATION.program}
-        component={ProgramScreen}
-        options={{
-          title: 'Program',
-          headerTitleStyle: {
-            // fontSize: 20,
-            fontWeight: '600'
-            // color: 'black',
-          },
-          tabBarIcon: ({ color, size }) => (
-            <Icons
-              type={iconType.feather}
-              name="align-justify"
-              color={color}
-              size={20}
-            />
-          )
-        }}
-      />
+//       <Tab.Screen
+//         name={Strings.NAVIGATION.program}
+//         component={ProgramScreen}
+//         options={{
+//           title: 'Program',
+//           headerTitleStyle: {
+//             // fontSize: 20,
+//             fontWeight: '600'
+//             // color: 'black',
+//           },
+//           tabBarIcon: ({ color, size }) => (
+//             <Icons
+//               type={iconType.feather}
+//               name="align-justify"
+//               color={color}
+//               size={20}
+//             />
+//           )
+//         }}
+//       />
 
-      <Tab.Screen
-        name={Strings.NAVIGATION.dashboard}
-        component={DashboardScreen}
-        options={{
-          title: 'Dashboard',
-          headerTitleStyle: {
-            // fontSize: 20,
-            fontWeight: '600'
-            // color: 'black',
-          },
-          tabBarIcon: ({ color, size }) => (
-            <Icons
-              type={iconType.feather}
-              name="bar-chart-2"
-              color={color}
-              size={20}
-            />
-          )
-        }}
-      />
+//       <Tab.Screen
+//         name={Strings.NAVIGATION.dashboard}
+//         component={DashboardScreen}
+//         options={{
+//           title: 'Dashboard',
+//           headerTitleStyle: {
+//             // fontSize: 20,
+//             fontWeight: '600'
+//             // color: 'black',
+//           },
+//           tabBarIcon: ({ color, size }) => (
+//             <Icons
+//               type={iconType.feather}
+//               name="bar-chart-2"
+//               color={color}
+//               size={20}
+//             />
+//           )
+//         }}
+//       />
 
-      {/* <Tab.Screen
-        name={Strings.NAVIGATION.calender}
-        component={CalenderScreen}
-        options={{
-          title: 'Calendar',
-          headerTitleStyle: {
-            // fontSize: 20,
-            fontWeight: '600'
-            // color: 'black',
-          },
-          tabBarIcon: ({ color, size }) => (
-            <Icons
-              type={iconType.feather}
-              name="calendar"
-              color={color}
-              size={20}
-            />
-          )
-        }}
-      /> */}
-    </Tab.Navigator>
-  )
-}
+//       {/* <Tab.Screen
+//         name={Strings.NAVIGATION.calender}
+//         component={CalenderScreen}
+//         options={{
+//           title: 'Calendar',
+//           headerTitleStyle: {
+//             // fontSize: 20,
+//             fontWeight: '600'
+//             // color: 'black',
+//           },
+//           tabBarIcon: ({ color, size }) => (
+//             <Icons
+//               type={iconType.feather}
+//               name="calendar"
+//               color={color}
+//               size={20}
+//             />
+//           )
+//         }}
+//       /> */}
+//     </Tab.Navigator>
+//   )
+// }
 
 const AppStack = props => {
   // const Drawer = createDrawerNavigator();
@@ -140,37 +142,26 @@ const AppStack = props => {
   return (
     <Stack.Navigator
       initialRouteName={Strings.NAVIGATION.home}
-      screenOptions={({ navigation, route }) => {
-        const customHeaderScreens = [
-          Strings.NAVIGATION.home,
-          Strings.NAVIGATION.eventdetail,
-          Strings.NAVIGATION.eventstarted,
-          Strings.NAVIGATION.eventregister,
-          Strings.NAVIGATION.consent,
-          Strings.NAVIGATION.leaderboard,
-          Strings.NAVIGATION.programdetail
-        ]
-
-        if (customHeaderScreens.includes(route.name)) {
-          return {
-            header: () => (
-              <AppCustomHeader
-                isLoggedIn={{
-                  // isLoggedIn: props.route.params.isLoggedIn
-                  isLoggedIn: isLoggedIn
-                }}
-              />
-            )
-          }
-        }
-
-        return {
-          headerShown: true // default header for all other screens
-        }
+      screenOptions={{
+        headerShown: true,
+        header: props => (
+          <AppCustomHeader
+            {...props}
+            isLoggedIn={{
+              // isLoggedIn: props.route.params.isLoggedIn
+              isLoggedIn: isLoggedIn
+            }}
+          />
+        )
       }}>
       <Stack.Screen
+        name={Strings.NAVIGATION.onboard}
+        component={OnBoardScreen}
+      />
+
+      <Stack.Screen
         name={Strings.NAVIGATION.home}
-        component={TabNavigator}
+        component={HomeTabBottomNav}
         initialParams={{
           // isLoggedIn: props.route.params.isLoggedIn
           isLoggedIn: isLoggedIn
@@ -295,3 +286,35 @@ const AppStack = props => {
 }
 
 export default AppStack
+
+// previous code
+//  <Stack.Navigator
+//       initialRouteName={Strings.NAVIGATION.home}
+//       screenOptions={({ navigation, route }) => {
+//         const customHeaderScreens = [
+//           Strings.NAVIGATION.home,
+//           Strings.NAVIGATION.eventdetail,
+//           Strings.NAVIGATION.eventstarted,
+//           Strings.NAVIGATION.eventregister,
+//           Strings.NAVIGATION.consent,
+//           Strings.NAVIGATION.leaderboard,
+//           Strings.NAVIGATION.programdetail
+//         ]
+
+//         if (customHeaderScreens.includes(route.name)) {
+//           return {
+//             header: () => (
+//               <AppCustomHeader
+//                 isLoggedIn={{
+//                   // isLoggedIn: props.route.params.isLoggedIn
+//                   isLoggedIn: isLoggedIn
+//                 }}
+//               />
+//             )
+//           }
+//         }
+
+//         return {
+//           headerShown: true // default header for all other screens
+//         }
+//       }}>

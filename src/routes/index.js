@@ -6,7 +6,7 @@ import AuthStack from './stack/AuthStack'
 import Strings from '../utils/constants/Strings'
 import SplashScreen from '../screens/splash/SplashScreen'
 import AppStack from './stack/AppStack'
-import OnBoardScreen from '../screens/onBoardScreens/OnBoardScreen'
+// import OnBoardScreen from '../screens/onBoardScreens/OnBoardScreen'
 import { useSelector } from 'react-redux'
 
 const Navigator = props => {
@@ -34,10 +34,10 @@ const Navigator = props => {
         )}
         {isLoggedIn && (
           <>
-            <Stack.Screen
+            {/* <Stack.Screen
               name={Strings.NAVIGATION.onboard}
               component={OnBoardScreen}
-            />
+            /> */}
             <Stack.Screen name={Strings.NAVIGATION.app} component={AppStack} />
           </>
         )}
