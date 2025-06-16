@@ -71,7 +71,8 @@ const HealthConnectService = {
   // Read Steps dataOriginFilter
   getSteps: async (startDate, endDate, format) => {
     try {
-      await HealthConnectService.requestPermissions()
+      // await HealthConnectService.init()
+      // await HealthConnectService.requestPermissions()
 
       const dates = {
         startTime: startDate
@@ -82,6 +83,8 @@ const HealthConnectService = {
           : moment().endOf('day').toISOString()
       }
 
+      console.log('date get steps --->', dates)
+
       const steps = await aggregateRecord({
         recordType: 'Steps',
         timeRangeFilter: {
@@ -90,8 +93,9 @@ const HealthConnectService = {
         },
         dataOriginFilter: ['com.google.android.apps.fitness']
       })
+      //
 
-      return steps
+      return steps?.COUNT_TOTAL
     } catch (error) {
       console.error('getSteps error:', error)
       return []
@@ -101,7 +105,7 @@ const HealthConnectService = {
   // Read Distance dataOriginFilter
   getDistance: async (startDate, endDate, format) => {
     try {
-      await HealthConnectService.requestPermissions()
+      // await HealthConnectService.requestPermissions()
 
       const dates = {
         startTime: startDate
@@ -117,12 +121,9 @@ const HealthConnectService = {
           operator: 'between',
           ...dates
         },
-        dataOriginFilter: [
-          'com.google.android.apps.fitness',
-          'com.fitbit.FitbitMobile'
-        ]
+        dataOriginFilter: ['com.google.android.apps.fitness']
       })
-      return distance
+      return distance.DISTANCE.inMeters
     } catch (error) {
       console.error('getDistance error:', error)
       return []
@@ -132,7 +133,7 @@ const HealthConnectService = {
   // Read Active Calories dataOriginFilter
   getCaloriesBurned: async (startDate, endDate, format) => {
     try {
-      await HealthConnectService.requestPermissions()
+      // await HealthConnectService.requestPermissions()
 
       const dates = {
         startTime: startDate
@@ -149,13 +150,10 @@ const HealthConnectService = {
           operator: 'between',
           ...dates
         },
-        dataOriginFilter: [
-          'com.google.android.apps.fitness',
-          'com.fitbit.FitbitMobile'
-        ]
+        dataOriginFilter: ['com.google.android.apps.fitness']
       })
 
-      return calories
+      return calories.ENERGY_TOTAL.inKilocalories
     } catch (error) {
       console.error('getCaloriesBurned error:', error)
       return []

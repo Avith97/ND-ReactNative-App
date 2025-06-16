@@ -1,9 +1,12 @@
+import moment from 'moment'
+import AsyncStore from '../../data/async/AsyncStore'
 import { store } from '../../redux/store'
 import { services } from '../../services/axios/services'
 import Strings from '../../utils/constants/Strings'
 import { URL } from '../../utils/constants/Urls'
 import { waitUntilNavigationReady, waitUntilNotSyncing } from './check_queue'
 import { healthService } from './healthfunctions/HealthService'
+import { initialize } from 'react-native-health-connect'
 
 export const BackSync = {
   // Function to sync data with the backend
@@ -14,6 +17,8 @@ export const BackSync = {
       if (params?.data?.action === 'trigger') {
         if (params.data?.action_type === 'POST_HEALTH_DATA') {
           console.log('Syncing data with backend:', params.data)
+          const result = await initialize() // or HealthConnectService.init()
+          console.log('✅ Init result:', result)
           await BackSync.health_data_sync()
           console.log('Synced with backend:')
         }
@@ -27,18 +32,29 @@ export const BackSync = {
 
   health_data_sync: async params => {
     try {
-      if (store.getState().settings.isLoading) {
-        await waitUntilNotSyncing()
-      }
+      // if (store.getState().settings.isLoading) {
+      //   await waitUntilNotSyncing()
+      // }
       //make your changes here for health_data_sync
-      let resp = await services._post(URL.otp, {
-        userName: 'vinit@anssoft.in',
-        byEmail: true,
-        byMobile: false
-      })
+      // let resp = await services._post(URL.otp, {
+      //   userName: 'vinit@anssoft.in',
+      //   byEmail: true,
+      //   byMobile: false
+      // })
       let healthData = await healthService.getData()
-      console.log('resp in background--->', resp)
       console.log('healthData in background--->', healthData)
+      if (healthData) {
+        let data = await AsyncStore.getData(Strings.ASYNC_KEY.offline)
+        let resp = await services._post(URL.save_health_data, {
+          runnerId: data?.user?.runnerId,
+          distance: healthData.distance,
+          steps: healthData?.steps,
+          calories: healthData?.toCalories,
+          startDate: moment().format('YYYY-MM-DD'),
+          activityUrl: 'www.googlefit.com'
+        })
+        console.log('resp in background--->', resp)
+      }
     } catch (error) {
       console.error('Failed to sync health data:===>', error)
     }

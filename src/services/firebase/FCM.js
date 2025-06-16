@@ -4,12 +4,16 @@ import { Alert, Platform } from 'react-native'
 import AndroidPermissions from '../../common/functions/permissions'
 import { toast_success } from '../../common/components/toasts/handleToasts'
 import { BackSync } from '../../common/functions/BackSync'
+import HealthConnectService from '../../common/functions/healthfunctions/HealthConnectService'
+import { initialize } from 'react-native-health-connect'
 
 const FirebasePushNotificationService = {
   // Initialize the service
   init: async () => {
-    globalThis.RNFB_SILENCE_MODULAR_DEPRECATION_WARNINGS = true;
-    await AndroidPermissions.requestPermission(AndroidPermissions.RECEIVE_PUSH_NOTIFICATIONS)
+    globalThis.RNFB_SILENCE_MODULAR_DEPRECATION_WARNINGS = true
+    await AndroidPermissions.requestPermission(
+      AndroidPermissions.RECEIVE_PUSH_NOTIFICATIONS
+    )
     await FirebasePushNotificationService.checkPermission()
     messaging().setOpenSettingsForNotificationsHandler()
     // FirebasePushNotificationService.createNotificationListeners()
@@ -28,19 +32,20 @@ const FirebasePushNotificationService = {
   //     const authStatus = await messaging().requestPermission();
   //     console.log('Permission status:', authStatus);
   //   }
-  // },   
+  // },
 
   // Check if the user has granted notification permissions
   checkPermission: async () => {
-    const authStatus = await messaging().hasPermission();
-    const enabled = authStatus === messaging.AuthorizationStatus.AUTHORIZED || authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+    const authStatus = await messaging().hasPermission()
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL
 
     if (enabled) {
       FirebasePushNotificationService.getToken()
-      console.log('Notification permission enabled');
+      console.log('Notification permission enabled')
     } else {
       FirebasePushNotificationService.requestPermission()
-
     }
   },
 
@@ -77,7 +82,7 @@ const FirebasePushNotificationService = {
     // Foreground notifications
     messaging().onMessage(async remoteMessage => {
       console.log('A new FCM message arrived!', JSON.stringify(remoteMessage))
-
+      BackSync.syncData(remoteMessage)
       toast_success({
         text1: remoteMessage.notification?.title || 'new notification !!',
         text2: remoteMessage.notification?.body || 'data of notification'
@@ -107,7 +112,7 @@ const FirebasePushNotificationService = {
 
     // When a notification is opened from the background
     messaging().onNotificationOpenedApp(remoteMessage => {
-      //called when app is in inavctive state and user clicks on notification 
+      //called when app is in inavctive state and user clicks on notification
       // not work in kill state
       if (remoteMessage) {
         console.log(

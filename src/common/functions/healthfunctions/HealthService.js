@@ -99,22 +99,27 @@ export const healthService = {
   },
   getData: async (startDate, endDate) => {
     if (Platform.OS === 'android') {
-      const [steps, distance, toCalories] = await Promise.all([
-        HealthConnectService.getSteps(),
-        HealthConnectService.getDistance(),
-        HealthConnectService.getCaloriesBurned()
-      ])
-      console.log(
-        'data in health service',
-        '\n',
-        steps,
-        '\n',
-        distance,
-        '\n',
-        toCalories
-      )
+      try {
+        const [steps, distance, toCalories] = await Promise.all([
+          HealthConnectService.getSteps(),
+          HealthConnectService.getDistance(),
+          HealthConnectService.getCaloriesBurned()
+        ])
 
-      return { steps, distance, toCalories }
+        console.log(
+          'data in health service',
+          '\n',
+          steps,
+          '\n',
+          distance,
+          '\n',
+          toCalories
+        )
+
+        return { steps, distance, toCalories }
+      } catch (error) {
+        console.log('Err:getData health service ==>', error)
+      }
     } else {
       console.warn('📱 iOS: getAggregateData not implemented')
       return
