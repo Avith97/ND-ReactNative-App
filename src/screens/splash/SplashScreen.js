@@ -33,6 +33,7 @@ const SplashScreen = props => {
     if (isLoggedIn) {
       props.navigation.navigate(Strings.NAVIGATION.app)
     } else {
+      props.navigation.navigate(Strings.NAVIGATION.auth)
     }
   }, [isLoggedIn])
 
