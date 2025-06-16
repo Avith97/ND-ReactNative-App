@@ -18,6 +18,7 @@ export default function GeneralSettingScreenUI(props) {
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
+        disabled={item?.disable}
         style={styles.renderItem}
         onPress={() => props.handleChange(item.id)}>
         <Text style={styles.title}>{item.name}</Text>

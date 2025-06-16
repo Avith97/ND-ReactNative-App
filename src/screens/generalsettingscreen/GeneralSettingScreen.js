@@ -12,13 +12,21 @@ export default function GeneralSettingScreen(props) {
         id: '1',
         name: 'Units Of Measure',
         value: 'Metric System',
-        options: ['cm', 'ft']
+        options: ['cm', 'ft'],
+        disable: true
       },
-      { id: '2', name: 'Language', value: 'English', options: ['kg', 'lbs'] },
+      {
+        id: '2',
+        name: 'Language',
+        value: 'English',
+        options: ['kg', 'lbs'],
+        disable: true
+      },
       {
         id: '3',
         name: 'Delete Account',
-        value: 'Permanently delete your account and all personal data.'
+        value: 'Permanently delete your account and all personal data.',
+        disable: false
       }
     ]
   })
