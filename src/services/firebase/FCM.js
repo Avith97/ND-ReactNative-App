@@ -1,11 +1,14 @@
 // FirebasePushNotificationService.ts
-import messaging, { requestPermission } from '@react-native-firebase/messaging'
-import { Alert, Platform } from 'react-native'
+import messaging from '@react-native-firebase/messaging'
 import AndroidPermissions from '../../common/functions/permissions'
 import { toast_success } from '../../common/components/toasts/handleToasts'
 import { BackSync } from '../../common/functions/BackSync'
-import HealthConnectService from '../../common/functions/healthfunctions/HealthConnectService'
-import { initialize } from 'react-native-health-connect'
+import moment from 'moment'
+// import notifee, {
+//   TimestampTrigger,
+//   TriggerType,
+//   RepeatFrequency,
+// } from '@notifee/react-native';
 
 const FirebasePushNotificationService = {
   // Initialize the service
@@ -131,6 +134,49 @@ const FirebasePushNotificationService = {
       }
     })
 
+    // async function scheduleDaily5PMNotification() {
+    //   // Request permission
+    //   await notifee.requestPermission();
+
+    //   // Create channel for Android
+    //   const channelId = await notifee.createChannel({
+    //     id: 'daily-reminder',
+    //     name: 'Daily Reminder Channel',
+    //   });
+
+    //   // Get now and trigger time
+    //   const now = moment();
+    //   let triggerMoment = moment().hour(17).minute(0).second(0); // 5:00 PM today
+
+    //   if (now.isAfter(triggerMoment)) {
+    //     triggerMoment = triggerMoment.add(1, 'day'); // Schedule for tomorrow
+    //   }
+
+    //   const trigger = {
+    //     type: TriggerType.TIMESTAMP,
+    //     timestamp: triggerMoment.valueOf(), // milliseconds
+    //     repeatFrequency: RepeatFrequency.DAILY,
+    //     alarmManager: true, // Android only, ensures it fires even in Doze mode
+    //   };
+
+    //   // Schedule notification
+    //   await notifee.createTriggerNotification(
+    //     {
+    //       title: '⏰ Daily Reminder',
+    //       body: 'This is your 5 PM daily notification!',
+    //       android: {
+    //         channelId,
+    //         pressAction: {
+    //           id: 'default',
+    //         },
+    //       },
+    //     },
+    //     trigger
+    //   );
+
+    //   console.log('Notification scheduled for:', triggerMoment.format('YYYY-MM-DD HH:mm:ss'));
+    // }
+
     // await notifee.createChannel({
     //   id: 'your-channel-id',
     //   name: 'Default Channel'
@@ -139,3 +185,49 @@ const FirebasePushNotificationService = {
 }
 
 export default FirebasePushNotificationService
+
+export async function scheduleDaily5PMNotification() {
+  // Request permission
+  await notifee.requestPermission()
+
+  // Create channel for Android
+  const channelId = await notifee.createChannel({
+    id: 'daily-reminder',
+    name: 'Daily Reminder Channel'
+  })
+
+  // Get now and trigger time
+  const now = moment()
+  let triggerMoment = moment().hour(17).minute(0).second(0) // 5:00 PM today
+
+  if (now.isAfter(triggerMoment)) {
+    triggerMoment = triggerMoment.add(1, 'day') // Schedule for tomorrow
+  }
+
+  const trigger = {
+    type: TriggerType.TIMESTAMP,
+    timestamp: triggerMoment.valueOf(), // milliseconds
+    repeatFrequency: RepeatFrequency.DAILY,
+    alarmManager: true // Android only, ensures it fires even in Doze mode
+  }
+
+  // Schedule notification
+  await notifee.createTriggerNotification(
+    {
+      title: '⏰ Daily Reminder',
+      body: 'This is your 5 PM daily notification!',
+      android: {
+        channelId,
+        pressAction: {
+          id: 'default'
+        }
+      }
+    },
+    trigger
+  )
+
+  console.log(
+    'Notification scheduled for:',
+    triggerMoment.format('YYYY-MM-DD HH:mm:ss')
+  )
+}
