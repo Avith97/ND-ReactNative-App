@@ -33,9 +33,33 @@ const OtpUI = props => {
         />
       </View>
       <View style={{ marginVertical: hp(2) }}>
-        {/* <Text style={{fontWeight: 'bold', textAlign: 'center'}}>
-          {LABELS.resendOtp}
-        </Text> */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%'
+          }}>
+          <Text
+            onPress={props.canResend ? props.handleResendOtp : null}
+            style={{
+              fontWeight: 'bold',
+              textAlign: 'left',
+              color: props.canResend ? Colors.otp_resent : Colors.gray_06,
+              opacity: props.canResend ? 1 : 0.6
+            }}>
+            {LABELS.resendOtp}
+          </Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              textAlign: 'right',
+              color: props.canResend ? Colors.gray_06 : Colors.otp_resent
+            }}>
+            {String(Math.floor(props.timer / 60)).padStart(2, '0')}:
+            {String(props.timer % 60).padStart(2, '0')}
+          </Text>
+        </View>
         <CustomButton
           title={LABELS.submit}
           name={'submit'}
