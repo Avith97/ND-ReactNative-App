@@ -6,11 +6,13 @@ import Strings from '../../../utils/constants/Strings'
 import { services } from '../../../services/axios/services'
 import { store } from '../../../redux/store'
 import { Text } from 'react-native'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function HomeScreen(props) {
   const { isLoggedIn } = props.route.params
 
   const [loading, setLoading] = useState(false)
+  let isFocused = useIsFocused()
   // Custom hook to fetch health connect data
   // const {healthConnectData, fetchAllData} = useHealthConnectData();
 
@@ -24,7 +26,7 @@ export default function HomeScreen(props) {
   useEffect(() => {
     initiateScreen()
     // requestHealthPermissions();
-  }, [])
+  }, [isFocused])
 
   async function initiateScreen() {
     let data = await getDetails()
