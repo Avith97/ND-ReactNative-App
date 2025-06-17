@@ -157,6 +157,7 @@ const AppStack = props => {
       <Stack.Screen
         name={Strings.NAVIGATION.onboard}
         component={OnBoardScreen}
+        options={{ headerShown: false }} // Hide Header
       />
 
       <Stack.Screen

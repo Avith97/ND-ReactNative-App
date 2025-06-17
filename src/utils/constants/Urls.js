@@ -15,6 +15,9 @@ export const URL = {
   otp_verify: 'login/verify/otp',
   create_profile: 'signup',
 
+  //home
+  home_summary: 'health/summary/user_id',
+
   //delete user
   delete_user: 'delete/user',
 
@@ -53,5 +56,7 @@ export const URL = {
   runner_group: 'public/runner/groupDetails/leaderboard/event_id',
   get_runner_group: 'public/groupRunner/leaderboard/event_id',
 
-  user_profile_pic_upload: '/user/profilePicture/upload/user_id'
+  user_profile_pic_upload: '/user/profilePicture/upload/user_id',
+
+  isUserOnBoardURL: '/check/user/onboard/event_id/user_id'
 }
