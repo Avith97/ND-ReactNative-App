@@ -12,6 +12,7 @@ import { store } from '../../redux/store'
 import { set_user_details } from '../../redux/actions/login_action'
 import { show_web_view_toast } from '../../common/components/toasts/handleToasts'
 import { FilePicker } from '../../common/functions/FilePicker'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function ProfileScreen(props) {
   const [state, setState] = React.useState({
@@ -22,11 +23,13 @@ export default function ProfileScreen(props) {
 
   const { auth } = useSelector(store => store)
 
+  let isFocused = useIsFocused()
+
   useEffect(() => {
     // Fetch user details or any initial data here
     // Example: setState({ userDetails: fetchedData });
     initiateScreen()
-  }, [])
+  }, [isFocused])
 
   async function initiateScreen() {
     // Fetch user details or any initial data here
@@ -50,7 +53,7 @@ export default function ProfileScreen(props) {
       let resp = await services?._get(url)
 
       if (resp?.api_response?.data) {
-        store.dispatch(set_user_details(resp?.data))
+        store.dispatch(set_user_details(resp?.data?.user))
         return resp?.data
       } else {
         throw new Error('Failed to fetch user details')
@@ -73,37 +76,32 @@ export default function ProfileScreen(props) {
     }
   }
 
-  async function base64ToBlob(base64, contentType = 'image/jpeg') {
-    const byteCharacters = atob(base64.split(',')[1]) // remove base64 header
-
+  async function base64ToBlob(base64, mime = 'image/jpeg') {
+    const byteChars = atob(base64)
     const byteArrays = []
 
-    for (let i = 0; i < byteCharacters.length; i += 512) {
-      const slice = byteCharacters.slice(i, i + 512)
+    for (let offset = 0; offset < byteChars.length; offset += 512) {
+      const slice = byteChars.slice(offset, offset + 512)
       const byteNumbers = new Array(slice.length)
-      for (let j = 0; j < slice.length; j++) {
-        byteNumbers[j] = slice.charCodeAt(j)
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i)
       }
       const byteArray = new Uint8Array(byteNumbers)
       byteArrays.push(byteArray)
     }
-
-    console.log()
-
-    return new Blob(byteArrays, { type: contentType })
+    return new Blob(byteArrays, { type: mime })
   }
 
   async function handleUploadImage() {
     let resp = await FilePicker.openPicker()
 
-    const file = new File(
-      [`data:image/jpeg;base64,${resp?.data}`],
-      'profile.jpg',
-      {
-        type: 'image/jpeg'
-      }
-    )
+    const blob = base64ToBlob(resp.data, resp.mime)
 
+    const file = new File([blob], resultFromPicker.filename, {
+      type: resultFromPicker.mime
+    })
+
+    return
     setState({ ...state, AvatarURl: `data:image/jpeg;base64,${resp?.data}` })
 
     let requestParams = { file: file }

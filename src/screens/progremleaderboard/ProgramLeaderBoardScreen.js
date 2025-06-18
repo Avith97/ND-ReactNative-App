@@ -15,11 +15,14 @@ import { services } from '../../services/axios/services'
 import { useSelector } from 'react-redux'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import Loader from '../../common/components/loader/Loader'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function ProgramLeaderBoardScreen(props) {
   let { eventID } = props?.route?.params
 
   const { auth } = useSelector(store => store)
+
+  let isFocused = useIsFocused()
 
   const [state, setState] = useState({
     selectedTab: 'Male',
@@ -34,8 +37,10 @@ export default function ProgramLeaderBoardScreen(props) {
       label: 'Individual'
     },
     selectedWeekRange: {
-      label: 'overAll',
-      value: 'overAll'
+      label: 'OverAll',
+      value: 'OverAll',
+      toDate: null,
+      fromDate: null
     },
     selectedLimit: { label: '5', value: '5' },
     showModal: false,
@@ -61,8 +66,10 @@ export default function ProgramLeaderBoardScreen(props) {
   })
 
   useEffect(() => {
-    InitiateScreen()
-  }, [])
+    if (isFocused) {
+      InitiateScreen()
+    }
+  }, [isFocused])
 
   //  participated labels like , individual , team , age group
   async function getParticipatedOptions(event) {
@@ -121,7 +128,9 @@ export default function ProgramLeaderBoardScreen(props) {
     const dropdownDates = [
       {
         label: 'OverAll',
-        value: ''
+        value: 'OverAll',
+        toDate: null,
+        fromDate: null
       }
     ]
 

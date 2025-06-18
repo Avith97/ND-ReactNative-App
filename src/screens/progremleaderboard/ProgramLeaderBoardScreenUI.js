@@ -1,17 +1,9 @@
 // react native imports
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
 // common components
-import TabSelector from '../../common/components/tabselector/TabSelector'
 import UserLeaderBoardCard from '../../common/components/userleaderboardcard/UserLeaderBoardCard'
-import CustomTextInput from '../../common/components/textInput/CustomTextInput'
 import CustomDropdown from '../../common/components/dropdown/CustomDropdown'
 import DialogBox from '../../common/components/Modal/DialogBox'
 import CustomButton from '../../common/components/buttons/CustomButton'
@@ -21,7 +13,6 @@ import { Image } from 'react-native'
 import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import { hp, wp } from '../../common/functions/dimensions'
 import Icons, { iconType } from '../../assets/icons/Icons'
-import { open_logout_bottom_sheet } from '../../common/components/toasts/handleToasts'
 import IndividualLeaderBoard from './IndividualTab/IndividualLeaderBoard'
 import TeamTab from './teamtab/TeamTab'
 import AgeGroupTab from './agegrouptab/AgeGroupTab'
@@ -218,19 +209,22 @@ export default function ProgramLeaderBoardScreenUI({
                 alignContent: 'center'
               }}>
               <Text>Week Filter</Text>
+
               <View style={styles.dropdownStyle}>
                 <CustomDropdown
                   name="selectedWeekRange"
                   label="Select Week"
                   data={
-                    props.weekDropdowns || [
+                    props?.weekDropdowns || [
                       {
-                        label: 'Overall',
-                        value: ''
+                        label: 'OverAll',
+                        value: 'OverAll',
+                        toDate: null,
+                        fromDate: null
                       }
                     ]
                   }
-                  value={props.selectedWeekRange}
+                  value={props?.selectedWeekRange}
                   onChangeText={(name, value, data) => {
                     props.handleChange(name, value)
                   }}

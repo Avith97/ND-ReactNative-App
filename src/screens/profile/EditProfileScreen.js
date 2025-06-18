@@ -8,6 +8,8 @@ import { services } from '../../services/axios/services'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import moment from 'moment'
 import { store } from '../../redux/store'
+import { useIsFocused } from '@react-navigation/native'
+import Strings from '../../utils/constants/Strings'
 
 export default function EditProfileScreen(props) {
   const [err, seterr] = useState(null)
@@ -26,52 +28,34 @@ export default function EditProfileScreen(props) {
   })
 
   // user detail
-  const auth = useSelector(store => store?.auth)
+  const user = useSelector(store => store?.user)
+
+  let isFocused = useIsFocused()
 
   useEffect(() => {
-    if (auth) {
+    if (user || isFocused) {
       const countryObj = {
-        label: auth.country,
-        value: ` ${auth.countryCode}`,
-        code: auth.country?.slice(0, 2).toUpperCase() || ''
+        label: user.country,
+        value: ` ${user.countryCode}`,
+        code: user.country?.slice(0, 2).toUpperCase() || ''
       }
-
-      console.log('date of birth', auth)
 
       setFormState({
-        firstName: auth.firstName || '',
-        lastName: auth.lastName || '',
-        dob: auth?.dateOfBirth
-          ? moment(auth?.dateOfBirth, 'YYYY-MM-DD').toDate()
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        dob: user?.dateOfBirth
+          ? moment(user?.dateOfBirth, 'YYYY-MM-DD').toDate()
           : null,
         country: countryObj || '',
-        age: auth.age?.toString() || '',
-        weight: auth.weight?.toString() || '',
-        gender: { label: auth.gender, value: auth.gender } || '',
-        height: auth.height?.toString() || '',
-        email: auth?.email || '',
-        contactNumber: auth.contactNumber || ''
+        age: user.age?.toString() || '',
+        weight: user.weight?.toString() || '',
+        gender: { label: user.gender, value: user.gender } || '',
+        height: user.height?.toString() || '',
+        email: user?.email || '',
+        contactNumber: user.contactNumber || ''
       })
     }
-  }, [])
-
-  async function getDetails() {
-    // Simulate an API call to fetch user details
-    try {
-      let url = TemplateService?._userId(URL?.get_profile, auth?.id)
-      let resp = await services?._get(url)
-
-      if (resp?.api_response?.data) {
-        store.dispatch(set_user_details(resp?.data))
-        return resp?.data
-      } else {
-        throw new Error('Failed to fetch user details')
-      }
-    } catch (error) {
-      console.error('Error fetching user details:', error)
-      return null
-    }
-  }
+  }, [isFocused])
 
   function handleChange(params, val) {
     console.log('params', params)
@@ -131,7 +115,7 @@ export default function EditProfileScreen(props) {
     if (!isValid) return
 
     try {
-      let url = TemplateService._userId(URL.update_profile, auth?.id)
+      let url = TemplateService._userId(URL.update_profile, user?.id)
 
       let resp = await services._put(url, {
         ...formState,
@@ -141,23 +125,11 @@ export default function EditProfileScreen(props) {
         dob: moment(formState.dob).format('DD-MM-yyyy')
       })
 
-      console.log(formState?.dob, 'datr')
-
-      console.log('payload', {
-        ...formState,
-        country: formState?.country?.label,
-        countryCode: formState?.country?.value,
-        gender: formState?.gender?.value,
-        dob: formState?.dob
-      })
-
-      console.log(resp)
-
-      if (resp?.status === 'success') {
+      if (resp?.type === 'success') {
         appsnackbar.showSuccessMsg('Profile Updated successfully')
-        await getDetails()
+        props.navigation.goBack()
       } else {
-        await getDetails()
+        props.navigation.goBack()
         appsnackbar.showSuccessMsg(
           resp?.data?.success?.verbose || 'User updated successfully.'
         )
@@ -170,7 +142,7 @@ export default function EditProfileScreen(props) {
   return (
     <View style={{ flex: 1, padding: 20, backgroundColor: '#fff' }}>
       <EditProfileScreenUI
-        userDetail={auth}
+        userDetail={user}
         handleChange={handleChange}
         formState={formState}
         handleSubmit={handleSubmit}
