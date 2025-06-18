@@ -16,7 +16,8 @@ import { set_user_details } from '../../redux/actions/login_action'
 
 const OtpScreen = props => {
   const route = useRoute()
-
+  const [timer, setTimer] = useState(60)
+  const [canResend, setCanResend] = useState(false)
   const [state, setstate] = useState({
     otp: '',
     userId: ''
@@ -31,6 +32,19 @@ const OtpScreen = props => {
     let userId = route.params.userId
     appsnackbar.showSuccessMsg(msg)
   }, [])
+
+  useEffect(() => {
+    let interval = null
+    if (timer > 0) {
+      setCanResend(false)
+      interval = setInterval(() => {
+        setTimer(prev => prev - 1)
+      }, 1000)
+    } else {
+      setCanResend(true)
+    }
+    return () => clearInterval(interval)
+  }, [timer])
 
   function handleChange(params, value) {
     setstate({
@@ -57,6 +71,33 @@ const OtpScreen = props => {
     // }, 2000);
 
     return valid
+  }
+
+  const handleResendOtp = async () => {
+    if (!canResend) return
+
+    try {
+      let resendObj = {
+        userName: route?.params?.userName || '',
+        byEmail: route?.params?.byEmail || false,
+        byMobile: route?.params?.byMobile || false
+      }
+
+      let resp = await services._post(URL.otp, resendObj) // send otp request
+      console.log('sent otp request response -->', resp)
+
+      if (resp.type !== 'success') return
+      if (resp.data.success.code === '200') {
+        setTimer(60) // restart timer
+        props.navigation.navigate(Strings.NAVIGATION.otp, {
+          ...resendObj,
+          message: resp?.data?.success?.verbose
+        })
+      }
+    } catch (error) {
+      console.log('sent otp request error -->', error)
+      appsnackbar.showErrMsg('Something went wrong, please try again later.')
+    }
   }
 
   async function handleSubmit(params, val) {
@@ -108,6 +149,9 @@ const OtpScreen = props => {
         {...err}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        timer={timer}
+        canResend={canResend}
+        handleResendOtp={handleResendOtp}
       />
     </View>
   )

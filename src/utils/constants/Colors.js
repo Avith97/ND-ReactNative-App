@@ -61,6 +61,9 @@ export default {
   dashIcon: '#e1f4e2',
   background_transperant_dark: 'rgba(0,0,0,0.5)',
 
+  //otp resent
+  otp_resent: '#0095FF',
+
   // colors
   appbtn: '#BCD64e',
   app_primary: '#BCD64E',
