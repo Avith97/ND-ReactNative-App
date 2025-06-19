@@ -4,8 +4,6 @@ import TabSelector from '../../../common/components/tabselector/TabSelector'
 import { StyleSheet } from 'react-native'
 import { hp, wp } from '../../../common/functions/dimensions'
 import Fonts, { fontSize } from '../../../utils/constants/Fonts'
-import { ScrollView } from 'react-native'
-import { Dimensions } from 'react-native'
 import Colors from '../../../utils/constants/Colors'
 
 function IndividualLeaderBoardUI({ ...props }) {
@@ -38,7 +36,8 @@ function IndividualLeaderBoardUI({ ...props }) {
           <FlatList
             data={props?.data || []}
             renderItem={renderItem}
-            keyExtractor={item => item.id?.toString()}
+            // keyExtractor={item => item.id?.toString()}  //  Using index as key because some items have duplicate IDs, which causes key warning.
+            keyExtractor={(item, index) => index.toString()}
             showsVerticalScrollIndicator={false}
           />
         </View>
