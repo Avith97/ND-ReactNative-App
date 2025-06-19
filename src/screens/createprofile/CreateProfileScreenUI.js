@@ -14,6 +14,7 @@ import { en as LABELS } from '../../utils/labels/en'
 import { Countries } from '../../data/static_data/countries'
 import { useSelector } from 'react-redux'
 import { CheckBox } from 'react-native-elements'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default function CreateProfileScreenUI(props) {
   const isLoading = useSelector(state => state.settings.isLoading)
@@ -21,81 +22,125 @@ export default function CreateProfileScreenUI(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{LABELS.createProfile}</Text>
-      <View>
-        <View style={{ marginVertical: hp(1) }}>
-          <CustomTextInput
-            name={'firstName'}
-            label={LABELS.firstName}
-            inputStyle={{ ...styles.textInputStyle }}
-            onChangeText={props?.handleChange}
-            inputProps={{
-              value: props.firstName,
-              placeholder: LABELS.firstNamePlaceholder
-            }}
-          />
-        </View>
-        <View style={{ marginVertical: hp(1) }}>
-          <CustomTextInput
-            name={'lastName'}
-            label={LABELS.lastName}
-            inputStyle={{ ...styles.textInputStyle }}
-            onChangeText={props?.handleChange}
-            inputProps={{
-              value: props.lastName,
-              placeholder: LABELS.lastNamePlaceholder
-            }}
-          />
-        </View>
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: hp(5) }}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}>
+        <View>
+          <View style={{ marginVertical: hp(1) }}>
+            <CustomTextInput
+              name={'firstName'}
+              label={LABELS.firstName}
+              inputStyle={{ ...styles.textInputStyle }}
+              onChangeText={props?.handleChange}
+              inputProps={{
+                value: props.firstName,
+                placeholder: LABELS.firstNamePlaceholder
+              }}
+            />
+          </View>
+          <View style={{ marginVertical: hp(1) }}>
+            <CustomTextInput
+              name={'lastName'}
+              label={LABELS.lastName}
+              inputStyle={{ ...styles.textInputStyle }}
+              onChangeText={props?.handleChange}
+              inputProps={{
+                value: props.lastName,
+                placeholder: LABELS.lastNamePlaceholder
+              }}
+            />
+          </View>
+          <View style={{ marginVertical: hp(1.5) }}>
+            <CustomDateTimePicker
+              label={LABELS.dob}
+              name="DOB"
+              mandatory={true}
+              value={props.DOB}
+              onChangeText={(name, value) => props.handleChange(name, value)}
+            />
+          </View>
+          <View style={{ marginVertical: hp(1) }}>
+            <CustomTextInput
+              name={'email'}
+              label={LABELS.email}
+              inputStyle={{ ...styles.textInputStyle }}
+              onChangeText={props?.handleChange}
+              inputProps={{
+                value: props.email,
+                placeholder: LABELS.emailPlaceholder
+              }}
+            />
+          </View>
 
-        <View style={{ marginVertical: hp(1) }}>
-          <CustomTextInput
-            name={'email'}
-            label={LABELS.email}
-            inputStyle={{ ...styles.textInputStyle }}
-            onChangeText={props?.handleChange}
-            inputProps={{
-              value: props.email,
-              placeholder: LABELS.emailPlaceholder
-            }}
-          />
+          <View style={{ marginVertical: hp(1.5) }}>
+            <CustomTextInput
+              name={'contactNumber'}
+              label={LABELS.mobileNumber}
+              mandatory
+              inputStyle={{ ...styles.textInputStyle }}
+              onChangeText={props?.handleChange}
+              inputProps={{
+                value: props.contactNumber,
+                placeholder: LABELS.mobilePlaceholder,
+                keyboardType: 'numeric'
+              }}
+            />
+          </View>
+          <View style={{ marginVertical: hp(1) }}>
+            <CustomDropdown
+              name="country"
+              title={LABELS.country}
+              label={LABELS.select}
+              mandatory
+              data={Countries}
+              onChangeText={props.handleChange}
+              valueExtractor={item => item}
+              labelExtractor={item => item.label}
+            />
+          </View>
+          <View style={{ marginVertical: hp(1) }}>
+            <CustomDropdown
+              name="gender"
+              title={LABELS.gender}
+              label={LABELS.select}
+              mandatory
+              data={props.genderOptions}
+              onChangeText={props.handleChange}
+              valueExtractor={item => item.value}
+              labelExtractor={item => item.label}
+            />
+          </View>
+          <View style={{ marginVertical: hp(1) }}>
+            <CustomTextInput
+              name={'height'}
+              label={LABELS.height}
+              mandatory
+              inputStyle={{ ...styles.textInputStyle }}
+              onChangeText={props?.handleChange}
+              inputProps={{
+                value: props.height,
+                placeholder: LABELS.heightPlaceholder,
+                keyboardType: 'numeric'
+              }}
+            />
+          </View>
+          <View style={{ marginVertical: hp(1) }}>
+            <CustomTextInput
+              name={'weight'}
+              label={LABELS.weight}
+              mandatory
+              inputStyle={{ ...styles.textInputStyle }}
+              onChangeText={props?.handleChange}
+              inputProps={{
+                value: props.weight,
+                placeholder: LABELS.weightPlaceholder,
+                keyboardType: 'numeric'
+              }}
+            />
+          </View>
         </View>
-
-        <View style={{ marginVertical: hp(1) }}>
-          <CustomDropdown
-            name="country"
-            title={LABELS.country}
-            label={LABELS.select}
-            mandatory
-            data={Countries}
-            onChangeText={props.handleChange}
-            valueExtractor={item => item}
-            labelExtractor={item => item.label}
-          />
-        </View>
-
-        <View style={{ marginVertical: hp(1.5) }}>
-          <CustomTextInput
-            name={'contactNumber'}
-            label={LABELS.mobileNumber}
-            inputStyle={{ ...styles.textInputStyle }}
-            onChangeText={props?.handleChange}
-            inputProps={{
-              value: props.contactNumber,
-              placeholder: LABELS.mobilePlaceholder
-            }}
-          />
-        </View>
-        <View style={{ marginVertical: hp(1.5) }}>
-          <CustomDateTimePicker
-            label={LABELS.dob}
-            name="DOB"
-            mandatory={true}
-            value={props.DOB}
-            onChangeText={(name, value) => props.handleChange(name, value)}
-          />
-        </View>
-      </View>
-
+      </ScrollView>
       <View
         style={{
           flexDirection: 'row',

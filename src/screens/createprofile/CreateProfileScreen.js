@@ -20,7 +20,10 @@ export default function CreateProfileScreen(props) {
     countryCode: null,
     DOB: null,
     isDatePickerVisible: false,
-    emailUpdateCheck: false
+    emailUpdateCheck: false,
+    height: null,
+    weight: null,
+    gender: null
   })
 
   const handleConfirm = date => {
@@ -36,6 +39,11 @@ export default function CreateProfileScreen(props) {
         country: 'India',
         code: '+91'
       }
+    ],
+    genderOptions: [
+      { label: 'Male', value: 'MALE' },
+      { label: 'Female', value: 'FEMALE' },
+      { label: 'Other', value: 'OTHER' }
     ]
   })
 
@@ -88,6 +96,18 @@ export default function CreateProfileScreen(props) {
       isValid = false
       err = { dobErr: true }
       appsnackbar.showErrMsg('Please select date of birth')
+    } else if (!state.gender) {
+      isValid = false
+      err = { genderErr: true }
+      appsnackbar.showErrMsg('Please select gender')
+    } else if (!state.height || isNaN(state.height) || state.height <= 0) {
+      isValid = false
+      err = { heightErr: true }
+      appsnackbar.showErrMsg('Please enter valid height')
+    } else if (!state.weight || isNaN(state.weight) || state.weight <= 0) {
+      isValid = false
+      err = { weightErr: true }
+      appsnackbar.showErrMsg('Please enter valid weight')
     }
 
     seterr(err)
@@ -116,7 +136,10 @@ export default function CreateProfileScreen(props) {
           email: state.email,
           contactNumber: state.contactNumber,
           countryCode: state.countryCode,
-          timezone: 'Asia/Calcutta'
+          timezone: 'Asia/Calcutta',
+          height: parseFloat(state.height).toFixed(1),
+          weight: parseFloat(state.weight).toFixed(1),
+          gender: state.gender
         },
         profilePicture: null // or a File object
       }
@@ -128,8 +151,10 @@ export default function CreateProfileScreen(props) {
       if (userObject.profilePicture) {
         syncObj.append('profilePicture', userObject.profilePicture)
       }
+      console.log(syncObj, 'syncObj')
 
       let resp = await services._postFormData(URL.create_profile, syncObj)
+      console.log(resp, 'resp')
 
       if (resp?.type !== 'success') {
         appsnackbar.showErrMsg(resp?.error_data || resp?.verbose)
