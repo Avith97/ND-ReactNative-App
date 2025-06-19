@@ -54,17 +54,36 @@ const EventCard = ({ title, ...props }) => {
         <View style={styles.middleSection}>
           <View style={styles.dashedLine} />
           <View style={styles.row}>
-            <FootPrintItem steps={1677} label={'Yesterday’s Steps '} />
-            <FootPrintItem steps={2677} label={'Weekly Steps'} />
+            {props?.yesterdaysTotalStep && (
+              <FootPrintItem
+                steps={props?.yesterdaysTotalStep}
+                label={'Yesterday’s Steps '}
+              />
+            )}
+            {props?.weeklyTotalSteps && (
+              <FootPrintItem
+                steps={props?.weeklyTotalSteps}
+                label={'Weekly Steps'}
+              />
+            )}
           </View>
         </View>
       </View>
 
       {/* Description Metrics */}
       <View style={styles.detailSection}>
-        <DescriptionDetailItem value={80} unit="Kcal" />
-        <DescriptionDetailItem value={0.8} unit="KM" />
-        <DescriptionDetailItem value={20} unit="Duration" />
+        {props?.totalCalories >= 0 && (
+          <DescriptionDetailItem value={props?.totalCalories} unit="Kcal" />
+        )}
+        {props?.totalDistance >= 0 && (
+          <DescriptionDetailItem value={props?.totalDistance} unit="KM" />
+        )}
+        {props?.totalCompletionTime >= 0 && (
+          <DescriptionDetailItem
+            value={props?.totalCompletionTime}
+            unit="Duration"
+          />
+        )}
       </View>
     </View>
   )

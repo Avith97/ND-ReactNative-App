@@ -34,6 +34,8 @@ export default function ActivitySyncScreenUI() {
       {/* Disconnect Button */}
       <CustomButton
         title={'Disconnect'}
+        name="disconnect"
+        onPress={() => console.log('disconnect')}
         btnStyles={{
           ...styles.btnStyles
         }}

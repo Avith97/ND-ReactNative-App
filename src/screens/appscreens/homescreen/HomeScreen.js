@@ -5,12 +5,18 @@ import { hp } from '../../../common/functions/dimensions'
 import Strings from '../../../utils/constants/Strings'
 import { services } from '../../../services/axios/services'
 import { store } from '../../../redux/store'
-import { Text } from 'react-native'
+import { useIsFocused } from '@react-navigation/native'
+import { TemplateService } from '../../../services/templates/TemplateService'
+import { useSelector } from 'react-redux'
+import { URL } from '../../../utils/constants/Urls'
 
 export default function HomeScreen(props) {
   const { isLoggedIn } = props.route.params
 
   const [loading, setLoading] = useState(false)
+  let isFocused = useIsFocused()
+
+  let user = useSelector(state => state?.user)
   // Custom hook to fetch health connect data
   // const {healthConnectData, fetchAllData} = useHealthConnectData();
 
@@ -24,7 +30,7 @@ export default function HomeScreen(props) {
   useEffect(() => {
     initiateScreen()
     // requestHealthPermissions();
-  }, [])
+  }, [isFocused])
 
   async function initiateScreen() {
     let data = await getDetails()
@@ -40,15 +46,12 @@ export default function HomeScreen(props) {
   async function getDetails() {
     try {
       // Simulate an API call or any async operation
-      let resp = await services._get(
-        `/health/summary/${store.getState().auth?.runnerId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${store.getState().auth.token}`
-          }
-        }
+      let HomeSummaryURL = TemplateService._userId(
+        URL?.home_summary,
+        user?.runnerId
       )
-      console.log('Response:', resp.data)
+      let resp = await services._get(HomeSummaryURL)
+      // console.log('Response:', resp)
       // You can update the state with the response data if needed
       // setState({...state, data: response.data});
 
@@ -105,6 +108,7 @@ export default function HomeScreen(props) {
       showsVerticalScrollIndicator={false}>
       <HomeScreenUI
         {...state}
+        progressEvent={state?.HomeScreenData?.events?.[0]}
         isLoggedIn={isLoggedIn}
         handleNavigate={handleNavigate}
       />

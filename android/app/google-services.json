@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "752736423968",
+    "project_id": "necessary-devil-events",
+    "storage_bucket": "necessary-devil-events.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752736423968:android:c48045d930753625c2ac45",
+        "android_client_info": {
+          "package_name": "com.events.necessarydevilapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuqzixpLEtLIgN-8brKGBuJLfJemOyGvg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,13 @@
 // react native components
 import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Clipboard
+} from 'react-native'
 
 // common components
 import CustomButton from '../../common/components/buttons/CustomButton'
@@ -15,6 +22,10 @@ import { Images } from '../../utils/constants/Images'
 // Labels object for all static text
 import { en as labels } from '../../utils/labels/en'
 import { show_web_view_toast } from '../../common/components/toasts/handleToasts'
+import { appsnackbar } from '../../common/functions/snackbar_actions'
+import { healthService } from '../../common/functions/healthfunctions/HealthService'
+import AsyncStore from '../../data/async/AsyncStore'
+import Strings from '../../utils/constants/Strings'
 
 const LoginUI = props => {
   function seeFaq() {
@@ -46,7 +57,7 @@ const LoginUI = props => {
         <CustomButton
           title={labels?.signUpWithGoogle}
           name={'sign_in_google'}
-          // onPress={props?.handleSubmit}
+          onPress={props?.signUpWithGoogle}
           // isLoading={store.getState().settings.isLoading}
           btnStyles={{
             ...styles.btnStyles,
@@ -75,6 +86,30 @@ const LoginUI = props => {
           title={labels?.signUpWithEmail}
           name={'signup'}
           onPress={() => props?.handleNavigate('signup')}
+          // isLoading={store.getState().settings.isLoading}
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 1,
+            backgroundColor: Colors.white,
+            borderWidth: 1,
+            borderColor: `#1D1D1DB2`,
+            borderRadius: 8
+          }}
+          btnTitleStyles={{
+            ...styles.textStyle,
+            marginLeft: wp(5)
+          }}
+        />
+        <CustomButton
+          title={'Copy FCM Token'}
+          name={'signup'}
+          onPress={async () => {
+            Clipboard.setString(global.fcm_token)
+            appsnackbar.showSuccessMsg('FCM Token copied to clipboard')
+            let x = await healthService.getData()
+            console.log('final health data --->>', x)
+            // AsyncStore.clearData(Strings.ASYNC_KEY.offline, { username: "vinit@anssoft.in" })
+          }}
           // isLoading={store.getState().settings.isLoading}
           btnStyles={{
             ...styles.btnStyles,

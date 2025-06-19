@@ -15,8 +15,15 @@ export default function UserLeaderBoardCard(props) {
         }}
         avatarStyle={styles.avatarImage}></Avatar>
       <View>
-        {props?.runnerActivityDetail?.firstName && <Text style={styles.nameTitle}>{props?.runnerActivityDetail?.firstName} {props?.runnerActivityDetail?.lastName}</Text>}
-       {props?.runnerActivityDetail?.bibNumber  && <Text>BIB no: {props?.runnerActivityDetail?.bibNumber}</Text>}
+        {props?.runnerActivityDetail?.firstName && (
+          <Text style={styles.nameTitle}>
+            {props?.runnerActivityDetail?.firstName}{' '}
+            {props?.runnerActivityDetail?.lastName}
+          </Text>
+        )}
+        {props?.runnerActivityDetail?.bibNumber && (
+          <Text>BIB no: {props?.runnerActivityDetail?.bibNumber}</Text>
+        )}
       </View>
     </View>
   )

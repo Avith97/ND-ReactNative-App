@@ -1,6 +1,6 @@
 //React Native Imports
-import React, { useState } from 'react'
-import { View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Alert, View } from 'react-native'
 
 //  common functions
 import { appsnackbar } from '../../common/functions/snackbar_actions'
@@ -10,6 +10,7 @@ import Strings from '../../utils/constants/Strings'
 
 // UI Components
 import LoginUI from './LoginUI'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
 const LoginScreen = props => {
   const [state, setstate] = useState({
@@ -17,6 +18,14 @@ const LoginScreen = props => {
   })
 
   const [err, seterr] = useState(null)
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '308570200209-egcv1h57uud5vk5fp6inan6js3gtjoo0.apps.googleusercontent.com', // required for web & Android
+      offlineAccess: true // if you need to get refreshToken
+    })
+  }, [])
 
   async function handleChange(params, val) {
     setstate({
@@ -65,6 +74,18 @@ const LoginScreen = props => {
     // console.log(state)
   }
 
+  async function signUpWithGoogle() {
+    try {
+      await GoogleSignin.hasPlayServices()
+      const userInfo = await GoogleSignin.signIn()
+      console.log('User Info:', userInfo)
+      // You can now send userInfo.idToken or userInfo.user to your backend
+    } catch (error) {
+      console.error('Google Sign-in error', error)
+      Alert.alert('Login failed', error.message)
+    }
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <LoginUI
@@ -73,6 +94,7 @@ const LoginScreen = props => {
         handleChange={handleChange}
         handleNavigate={handleNavigate}
         handleSubmit={handleSubmit}
+        signUpWithGoogle={signUpWithGoogle}
       />
     </View>
   )

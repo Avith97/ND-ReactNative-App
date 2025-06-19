@@ -67,7 +67,9 @@ const CustomDateTimePicker = props => {
         isVisible={isDatePickerVisible}
         mode="date"
         maximumDate={props?.maxDate || new Date()}
-        date={props?.value || new Date()}
+        date={
+          props?.value ? moment(props.value, 'YYYY-MM-DD').toDate() : new Date()
+        }
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />

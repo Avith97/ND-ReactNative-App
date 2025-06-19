@@ -6,11 +6,13 @@ import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import Colors from '../../../utils/constants/Colors'
 import EventCard from '../../../common/components/eventcard/EventCard'
 import NotRespondingCard from '../../../common/components/notrespondingcard/NotRespondingCard'
+import moment from 'moment'
 
 export default function HomeScreenUI(props) {
   let { isLoggedIn } = props
 
   const [loading, setloading] = useState(false)
+
   return (
     <ScrollView
       style={styles.container}
@@ -30,10 +32,17 @@ export default function HomeScreenUI(props) {
           {/* progress card */}
           <View style={styles.progress_card_wrapper}>
             <View>
+              <Text style={{ color: 'white', paddingBottom: hp(2) }}>
+                {moment().format('DD MMM YYYY')}
+              </Text>
               <Text style={{ ...styles.title, color: Colors.smoky_white }}>
                 Your daily progress
               </Text>
-              <Text style={styles.subTitle}>Wellness Program</Text>
+              <Text style={styles.subTitle}>
+                {props?.progressEvent
+                  ? props?.progressEvent?.eventName
+                  : 'Wellness Program'}
+              </Text>
               <Text
                 style={{
                   ...styles.subTitle,
@@ -42,8 +51,16 @@ export default function HomeScreenUI(props) {
                 }}>
                 Accumulating daily report
               </Text>
-              <Text style={styles.rangetitle}>From - 01/04/2025</Text>
-              <Text style={styles.rangetitle}>To - 21/04/2025</Text>
+              {props?.progressEvent?.eventStartDate && (
+                <Text style={styles.rangetitle}>
+                  From - {props?.progressEvent?.eventStartDate}
+                </Text>
+              )}
+              {props?.progressEvent?.eventEndDate && (
+                <Text style={styles.rangetitle}>
+                  TO - {props?.progressEvent?.eventEndDate}
+                </Text>
+              )}
             </View>
             <View>
               <PieProgressBar percentage={props?.HomeScreenData?.progressBar} />

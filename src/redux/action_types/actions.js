@@ -1,5 +1,6 @@
 export default {
   HANDLE_SYNC: 'HANDLE_SYNC',
+  HANDLE_INIT: 'HANDLE_INIT',
   LOG_IN: 'LOG_IN',
   LOG_OUT: 'LOG_OUT',
   ADD_TASK: 'ADD_TASK',

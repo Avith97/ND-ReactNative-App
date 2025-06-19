@@ -6,6 +6,7 @@ import { TemplateService } from '../../../services/templates/TemplateService'
 import { URL } from '../../../utils/constants/Urls'
 import { services } from '../../../services/axios/services'
 import { useSelector } from 'react-redux'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function IndividualLeaderBoard(props) {
   let { eventData } = useSelector(store => store)
@@ -15,6 +16,8 @@ export default function IndividualLeaderBoard(props) {
     MaleParticipant: null,
     FemaleParticipant: null
   })
+
+  let isFocused = useIsFocused()
 
   const [options] = useState({
     tabs: [
@@ -26,11 +29,13 @@ export default function IndividualLeaderBoard(props) {
   useEffect(() => {
     InitiateScreen()
   }, [
+    isFocused,
     props?.filters?.selectedWeek?.toDate,
     props?.filters?.selectedWeek?.fromDate,
     props?.filters?.selectLimit?.value,
     props?.filters?.activity,
-    props?.filters?.category
+    props?.filters?.category,
+    props?.selectedCategory?.id
   ])
 
   async function formatData(data = []) {

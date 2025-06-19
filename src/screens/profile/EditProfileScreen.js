@@ -7,6 +7,9 @@ import { URL } from '../../utils/constants/Urls'
 import { services } from '../../services/axios/services'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import moment from 'moment'
+import { store } from '../../redux/store'
+import { useIsFocused } from '@react-navigation/native'
+import Strings from '../../utils/constants/Strings'
 
 export default function EditProfileScreen(props) {
   const [err, seterr] = useState(null)
@@ -14,7 +17,7 @@ export default function EditProfileScreen(props) {
   const [formState, setFormState] = useState({
     firstName: '',
     lastName: '',
-    dob: '',
+    dob: null,
     country: '',
     age: '',
     weight: '',
@@ -25,25 +28,34 @@ export default function EditProfileScreen(props) {
   })
 
   // user detail
-  const auth = useSelector(store => store?.auth)
+  const user = useSelector(store => store?.user)
+
+  let isFocused = useIsFocused()
 
   useEffect(() => {
-    if (auth) {
+    if (user || isFocused) {
+      const countryObj = {
+        label: user.country,
+        value: ` ${user.countryCode}`,
+        code: user.country?.slice(0, 2).toUpperCase() || ''
+      }
+
       setFormState({
-        firstName: auth.firstName || '',
-        lastName: auth.lastName || '',
-        dob: moment(auth.dateOfBirth).format('DD-MM-YYYY') || '',
-        country: auth.country || '',
-        age: auth.age?.toString() || '',
-        weight: auth.weight?.toString() || '',
-        gender: auth.gender || '',
-        height: auth.height?.toString() || '',
-        email: auth?.email || '',
-        contactNumber: auth.contactNumber || '',
-        countryCode: '91'
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        dob: user?.dateOfBirth
+          ? moment(user?.dateOfBirth, 'YYYY-MM-DD').toDate()
+          : null,
+        country: countryObj || '',
+        age: user.age?.toString() || '',
+        weight: user.weight?.toString() || '',
+        gender: { label: user.gender, value: user.gender } || '',
+        height: user.height?.toString() || '',
+        email: user?.email || '',
+        contactNumber: user.contactNumber || ''
       })
     }
-  }, [])
+  }, [isFocused])
 
   function handleChange(params, val) {
     console.log('params', params)
@@ -77,7 +89,11 @@ export default function EditProfileScreen(props) {
       isValid = false
       err = { emailErr: true }
       appsnackbar.showErrMsg('Please enter valid email')
-    } else if (!formState.country?.trim()?.length) {
+    } else if (!formState.country?.label?.trim()?.length) {
+      isValid = false
+      err = { countryErr: true }
+      appsnackbar.showErrMsg('Please select country')
+    } else if (!formState.gender?.label?.trim()?.length) {
       isValid = false
       err = { countryErr: true }
       appsnackbar.showErrMsg('Please select country')
@@ -99,12 +115,21 @@ export default function EditProfileScreen(props) {
     if (!isValid) return
 
     try {
-      let url = TemplateService._userId(URL.update_profile, auth?.id)
-      let resp = await services._put(url, formState)
+      let url = TemplateService._userId(URL.update_profile, user?.id)
 
-      if (resp?.status === 'success') {
+      let resp = await services._put(url, {
+        ...formState,
+        country: formState?.country?.label,
+        countryCode: formState?.country?.value,
+        gender: formState?.gender?.value,
+        dob: moment(formState.dob).format('DD-MM-yyyy')
+      })
+
+      if (resp?.type === 'success') {
         appsnackbar.showSuccessMsg('Profile Updated successfully')
+        props.navigation.goBack()
       } else {
+        props.navigation.goBack()
         appsnackbar.showSuccessMsg(
           resp?.data?.success?.verbose || 'User updated successfully.'
         )
@@ -117,7 +142,7 @@ export default function EditProfileScreen(props) {
   return (
     <View style={{ flex: 1, padding: 20, backgroundColor: '#fff' }}>
       <EditProfileScreenUI
-        userDetail={auth}
+        userDetail={user}
         handleChange={handleChange}
         formState={formState}
         handleSubmit={handleSubmit}

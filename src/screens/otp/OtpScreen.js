@@ -12,7 +12,11 @@ import { services } from '../../services/axios/services'
 import { URL } from '../../utils/constants/Urls'
 import Strings from '../../utils/constants/Strings'
 import { store } from '../../redux/store'
-import { set_user_details } from '../../redux/actions/login_action'
+import {
+  login_action,
+  set_user_details
+} from '../../redux/actions/login_action'
+import { perform_login } from '../../common/functions/login'
 
 const OtpScreen = props => {
   const route = useRoute()
@@ -102,7 +106,7 @@ const OtpScreen = props => {
 
   async function handleSubmit(params, val) {
     let isValid = validate(params, val)
-    // if (!isValid) return
+    if (!isValid) return
     try {
       let syncObj = {
         otp: state.otp,
@@ -123,15 +127,16 @@ const OtpScreen = props => {
         }, 3000)
       } else if (resp?.api_response?.status === 200) {
         // If new user, navigate to create profile screen (newUser === true)
-        store.dispatch(set_user_details(resp?.api_response?.data))
+        // store.dispatch(set_user_details(resp?.api_response?.data))
 
         console.log('token refreshed', resp?.api_response?.data)
-
+        await set_data_storage(resp?.api_response?.data)
         services?.refreshInstance(resp?.api_response?.data?.token)
+        // return
         if (resp?.api_response?.data?.newUser) {
-          props.navigation.navigate(Strings.NAVIGATION.create_profile)
+          props.navigation.replace(Strings.NAVIGATION.create_profile)
         } else {
-          props.navigation.navigate(Strings.NAVIGATION.app, {
+          props.navigation.replace(Strings.NAVIGATION.app, {
             isLoggedIn: true
           })
         }
@@ -139,6 +144,25 @@ const OtpScreen = props => {
     } catch (error) {
       appsnackbar.showErrMsg('Something went wrong')
     }
+  }
+
+  async function data_separation(data) {
+    let auth = {
+      token: data?.token,
+      isLoggedIn: true,
+      contactNumber: data?.contactNumber,
+      email: data?.email,
+      user_id: data?.id,
+      runnerId: data?.runnerId,
+      isAuthorized: data?.isAuthorized
+    }
+    return auth
+  }
+
+  async function set_data_storage(data) {
+    // use to set data in storage
+    const auth = await data_separation(data)
+    await perform_login(auth, (user = { ...data }))
   }
 
   return (
