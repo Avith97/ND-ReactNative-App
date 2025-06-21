@@ -10,21 +10,21 @@ const SplashScreen = props => {
     isLoggedIn: false
   })
 
-  useEffect(() => {
-    checkAppLaunch()
-    setTimeout(() => {
-      if (!state.isLoggedIn) {
-        // props.navigation.replace(Strings.NAVIGATION.app, {
-        //   isLoggedIn:false,
-        // });
-      }
-      // props.navigation.replace(Strings.NAVIGATION.auth)
-    }, 5000)
-    return () => {
-      console.log('first unmount')
-      Linking.removeAllListeners('url')
-    }
-  }, [])
+  // useEffect(() => {
+  //   checkAppLaunch()
+  //   setTimeout(() => {
+  //     if (!state.isLoggedIn) {
+  //       // props.navigation.replace(Strings.NAVIGATION.app, {
+  //       //   isLoggedIn:false,
+  //       // });
+  //     }
+  //     // props.navigation.replace(Strings.NAVIGATION.auth)
+  //   }, 5000)
+  //   return () => {
+  //     console.log('first unmount')
+  //     Linking.removeAllListeners('url')
+  //   }
+  // }, [])
 
   const isInitiating = useSelector(state => state.settings.isInitiating)
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
@@ -32,35 +32,77 @@ const SplashScreen = props => {
   useEffect(() => {
     console.log('user login status ---->', isLoggedIn)
     if (!isInitiating) {
-      if (isLoggedIn) {
-        props.navigation.replace(Strings.NAVIGATION.app)
-      } else {
-        props.navigation.replace(Strings.NAVIGATION.auth)
-      }
+      handleDeepLink()
     }
   }, [isInitiating])
 
-  async function checkAppLaunch(params) {
-    try {
-      // getdevice()
-      let x = await Linking.getInitialURL()
-      if (x) {
-        console.log('<==== new console ====>', x)
-        appsnackbar.showSuccessMsg(`${x}\nApp open from link`)
-      }
+  // useEffect(() => {
+  //   console.log('user login status ---->', isLoggedIn)
+  //   if (!isInitiating) {
+  //     if (isLoggedIn) {
+  //       props.navigation.replace(Strings.NAVIGATION.app)
+  //     } else {
+  //       props.navigation.replace(Strings.NAVIGATION.auth)
+  //     }
+  //   }
+  // }, [isInitiating])
 
-      Linking.addEventListener('url', e => {
-        console.log('token from appA -->', e)
-        // setTimeout(() => {
-        appsnackbar.showSuccessMsg(`${e.url}\nApp open from link`)
-        // }, 6000);
-        //   Linking.openURL(`dummyApp://token${`newtoken123`}`)
-        // Linking.openURL(`dummyApp://token${`newtoken123`}`)
-      })
-    } catch (e) {
-      console.log('error --->', e)
+  // useEffect(() => {
+  //   const linkListener = Linking.addEventListener('url', handleDeepLink);
+
+  //   return () => {
+  //     linkListener.remove();
+  //   };
+  // }, []);
+
+  async function handleDeepLink() {
+    let url = await Linking.getInitialURL()
+    console.log('deeplink', url)
+
+    if (url) {
+      try {
+        const match = url.match(/distKey=([^&]+)/)
+        const distKey = match && decodeURIComponent(match[1])
+        console.log('executed distKey ------>', distKey)
+        appsnackbar.showSuccessMsg(`${url}\nApp open from link`)
+        handleNavigate()
+      } catch (error) {
+        console.log('deeplink error --->', error)
+      }
+    } else {
+      handleNavigate()
     }
   }
+
+  function handleNavigate(params) {
+    if (isLoggedIn) {
+      props.navigation.replace(Strings.NAVIGATION.app, params)
+    } else {
+      props.navigation.replace(Strings.NAVIGATION.auth)
+    }
+  }
+
+  // async function checkAppLaunch(params) {
+  //   try {
+  //     // getdevice()
+  // let x = await Linking.getInitialURL()
+  // if (x) {
+  //   console.log('<==== new console ====>', x)
+  //   appsnackbar.showSuccessMsg(`${x}\nApp open from link`)
+  // }
+
+  //     Linking.addEventListener('url', e => {
+  //       console.log('token from appA -->', e)
+  //       // setTimeout(() => {
+  //       appsnackbar.showSuccessMsg(`${e.url}\nApp open from link`)
+  //       // }, 6000);
+  //       //   Linking.openURL(`dummyApp://token${`newtoken123`}`)
+  //       // Linking.openURL(`dummyApp://token${`newtoken123`}`)
+  //     })
+  //   } catch (e) {
+  //     console.log('error --->', e)
+  //   }
+  // }
 
   return (
     <View style={{ flex: 1 }}>

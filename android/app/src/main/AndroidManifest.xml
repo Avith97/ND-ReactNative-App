@@ -75,23 +75,35 @@
             <intent-filter>
                 <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
             </intent-filter>
+
              <!-- deep linking  -->
-
-             <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- <data android:scheme="https" android:host="api.whatsapp.com" android:pathPrefix="/send" /> -->
-                <data android:scheme="https" android:host="events.necessarydevil.com" android:pathPrefix="/event=" />
-            </intent-filter>
-
             <intent-filter android:label="necessarydevil">
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="events.necessarydevil" />
             </intent-filter>
-            
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="necessarydevil.com"
+                    android:pathPrefix="/"
+                />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="events.necessarydevil.com"
+                    android:pathPrefix="/"
+                />
+            </intent-filter>
+            <!-- deep linking  -->
         </activity>
 
         <!-- Activity to Show Permissions Rationale -->
