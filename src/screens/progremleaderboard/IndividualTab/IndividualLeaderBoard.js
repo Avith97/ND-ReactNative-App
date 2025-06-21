@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import IndividualLeaderBoardUI from './IndividualLeaderBoardUI'
-import axios from 'axios'
 import { TemplateService } from '../../../services/templates/TemplateService'
 import { URL } from '../../../utils/constants/Urls'
 import { services } from '../../../services/axios/services'

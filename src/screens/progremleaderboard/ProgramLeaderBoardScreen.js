@@ -1,5 +1,5 @@
 // react native imports
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 // constants utils & assets
@@ -7,14 +7,12 @@ import Colors from '../../utils/constants/Colors'
 
 // UI component
 import moment from 'moment'
-import axios from 'axios'
 import ProgramLeaderBoardScreenUI from './ProgramLeaderBoardScreenUI'
 import { URL } from '../../utils/constants/Urls'
 import { TemplateService } from '../../services/templates/TemplateService'
 import { services } from '../../services/axios/services'
 import { useSelector } from 'react-redux'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
-import Loader from '../../common/components/loader/Loader'
 import { useIsFocused } from '@react-navigation/native'
 
 export default function ProgramLeaderBoardScreen(props) {
@@ -135,13 +133,15 @@ export default function ProgramLeaderBoardScreen(props) {
     ]
 
     const now = moment()
-    const todayFormatted = now.format(DATE_FORMAT)
+    // const todayFormatted = now.format(DATE_FORMAT).
+    const todayFormatted = now.startOf('day').format(DATE_FORMAT)
+    const todayEndFormatted = now.endOf('day').format(DATE_FORMAT)
 
     const todaysDateOption = {
       label: "Today's Leaderboard",
-      value: `${todayFormatted} ${todayFormatted}`,
+      value: `${todayFormatted} ${todayEndFormatted}`,
       fromDate: todayFormatted,
-      toDate: todayFormatted
+      toDate: todayEndFormatted
     }
 
     const parseDate = (dateStr, format = 'YYYY-MM-DD') =>
@@ -177,11 +177,11 @@ export default function ProgramLeaderBoardScreen(props) {
           last.label = `${moment(last.fromDate, DATE_FORMAT).format(
             'Do MMM'
           )} - ${end.format('Do MMM')}`
-          last.toDate = end.format(DATE_FORMAT)
+          last.toDate = end.endOf('day').format(DATE_FORMAT)
           last.value = `${last.fromDate} ${last.toDate}`
         } else {
-          const fromDateStr = start.format(DATE_FORMAT)
-          const toDateStr = end.format(DATE_FORMAT)
+          const fromDateStr = start.startOf('day').format(DATE_FORMAT)
+          const toDateStr = end.endOf('day').format(DATE_FORMAT)
 
           const weekOption = {
             label: `${start.format('Do MMM')} - ${end.format('Do MMM')}`,
@@ -190,7 +190,10 @@ export default function ProgramLeaderBoardScreen(props) {
             toDate: toDateStr
           }
 
-          if (isCurrentWeek) break
+          if (isCurrentWeek) {
+            formattedWeeks.push(weekOption)
+            break
+          }
           formattedWeeks.push(weekOption)
         }
 
