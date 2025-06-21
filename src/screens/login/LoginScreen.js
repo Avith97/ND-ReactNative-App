@@ -22,7 +22,8 @@ const LoginScreen = props => {
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
-        '308570200209-egcv1h57uud5vk5fp6inan6js3gtjoo0.apps.googleusercontent.com', // required for web & Android
+        '752736423968-qp92tlhrt89ukonb3o6chfvkrbvnjt46.apps.googleusercontent.com',
+      // webClientId: '308570200209-egcv1h57uud5vk5fp6inan6js3gtjoo0.apps.googleusercontent.com', // required for web & Android
       offlineAccess: true // if you need to get refreshToken
     })
   }, [])
