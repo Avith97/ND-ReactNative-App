@@ -11,6 +11,7 @@ import Strings from '../../utils/constants/Strings'
 // UI Components
 import LoginUI from './LoginUI'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
+import { services } from '../../services/axios/services'
 
 const LoginScreen = props => {
   const [state, setstate] = useState({
@@ -80,11 +81,37 @@ const LoginScreen = props => {
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn()
       console.log('User Info:', userInfo)
+      if (userInfo?.type === 'success') {
+        await performLogin(userInfo?.data)
+      } else {
+        appsnackbar.showErrMsg('Something went wrong !!!')
+      }
+
       // You can now send userInfo.idToken or userInfo.user to your backend
     } catch (error) {
       console.error('Google Sign-in error', error)
       Alert.alert('Login failed', error.message)
     }
+  }
+
+  async function performLogin(params) {
+    let syncObj = {
+      firstName: params.user.givenName,
+      lastName: params.user.familyName,
+      email: params.user.email,
+      sourceUniqueId: params.user.id, //check
+      signinSource: 'GOOGLE',
+      signinToken: params.idToken,
+      profilePicLink: params.user.photo
+    }
+
+    // Create FormData
+    const formData = new FormData()
+    formData.append('userRequest', JSON.stringify(syncObj))
+    formData.append('profilePicture', syncObj.profilePicLink)
+
+    let resp = await services._postFormData('signup', formData)
+    console.log('google login --->', resp)
   }
 
   return (
