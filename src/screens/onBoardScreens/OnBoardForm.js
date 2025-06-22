@@ -9,9 +9,10 @@ import ImagesSlideTab from './imagesslidetab/ImagesSlideTab'
 
 const OnBoardForm = props => {
   const { data } = props
-  useEffect(() => {
-    // console.log('OnBoardForm data:', data?.questionType);
-  }, [])
+
+  // useEffect(() => {
+  //   // console.log('OnBoardForm data:', data?.questionType);
+  // }, [])
 
   return (
     <View>

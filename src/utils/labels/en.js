@@ -88,5 +88,7 @@ export const en = {
   final_get_started: 'Get Started',
   final_title: 'Find Your Work',
   final_description:
-    'Discover and access a wide variety of workout routines, filter and sort them based on criteria like type, duration, and intensity, and often receive personalized recommendations to meet your fitness goals and preferences.'
+    'Discover and access a wide variety of workout routines, filter and sort them based on criteria like type, duration, and intensity, and often receive personalized recommendations to meet your fitness goals and preferences.',
+
+  some_thing_went_wrong: 'Something went wrong. Please try again.'
 }

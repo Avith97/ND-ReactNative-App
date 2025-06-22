@@ -17,6 +17,7 @@ export const URL = {
 
   //home
   home_summary: 'health/summary/user_id',
+  onboard_url: '/onboarding/questions/event_id',
 
   //delete user
   delete_user: 'delete/user',
@@ -58,5 +59,7 @@ export const URL = {
 
   user_profile_pic_upload: '/user/profilePicture/upload/user_id',
 
-  isUserOnBoardURL: '/check/user/onboard/event_id/user_id'
+  isUserOnBoardURL: '/check/user/onboard/event_id/user_id',
+
+  submit_onboard: 'onboarding/question/response'
 }

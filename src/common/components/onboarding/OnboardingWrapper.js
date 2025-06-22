@@ -89,6 +89,19 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish, ...props }) => {
     }
   }
 
+  const handleSkipped = () => {
+    console.log('handle next pressed')
+    const nextIndex = Math.round(x.value / width) + 1
+    if (nextIndex < totalSteps) {
+      flatListRef.current?.scrollToOffset({
+        offset: nextIndex * width,
+        animated: true
+      })
+    } else {
+      onFinish && onFinish()
+    }
+  }
+
   const handleBack = () => {
     const prevIndex = Math.round(x.value / width) - 1
     if (prevIndex >= 0) {
@@ -129,6 +142,14 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish, ...props }) => {
       props.onNext(handleNext)
     } else {
       handleNext()
+    }
+  }
+
+  function onSkip() {
+    if (props.onNext) {
+      props.onNext(handleSkipped)
+    } else {
+      handleSkipped()
     }
   }
 

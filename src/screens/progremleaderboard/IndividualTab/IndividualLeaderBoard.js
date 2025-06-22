@@ -26,7 +26,9 @@ export default function IndividualLeaderBoard(props) {
   })
 
   useEffect(() => {
-    InitiateScreen()
+    if (isFocused) {
+      InitiateScreen()
+    }
   }, [
     isFocused,
     props?.filters?.selectedWeek?.toDate,

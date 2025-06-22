@@ -11,23 +11,27 @@ import { useSelector } from 'react-redux'
 export default function ListSlideTabUI(props) {
   const onboard = useSelector(state => state.onboard)
 
+  const [selectedListAnswer, setSelectedListAnswer] = useState(null)
   function onClick(option) {
-    console.log('global --->', global.OnboardingData)
-
     // setkey(nkey)
-    props.handleChange?.('list', {
+    props.handleChange?.(`list`, {
       option_id: option.id,
-      runnerId: 3675,
-      // "runnerId": props.runnerId,
-      eventId: props.eventId,
-      onboardingQuestionId: props.id,
-      response: option?.text
+      onboardingQuestionId: props.id
+      // response: option?.text
     })
   }
 
+  // useEffect(() => {
+  //   console.log('list update --->', props.list)
+  // }, [props.list])
+
   useEffect(() => {
-    console.log('list update --->', props.list)
-  }, [props.list])
+    if (onboard.hasOwnProperty('list')) {
+      let x = onboard['list']
+      x = x.find(item => item.onboardingQuestionId === props?.id)
+      setSelectedListAnswer(x)
+    }
+  }, [onboard])
 
   return (
     <View style={props.childContainerStyle}>
@@ -48,7 +52,9 @@ export default function ListSlideTabUI(props) {
               style={[
                 styles.activityBox,
                 // props?.list?.option_id === option.id && styles.activitySelected,
-                onboard?.list?.option_id === option.id &&
+                // onboard?.list?.option_id === option.id &&
+                //   styles.activitySelected
+                selectedListAnswer?.option_id === option.id &&
                   styles.activitySelected
                 // props.selectedActivity?.title === option.title &&
                 //   styles.activitySelected,

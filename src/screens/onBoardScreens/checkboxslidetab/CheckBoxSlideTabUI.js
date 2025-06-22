@@ -1,15 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { CheckBox } from 'react-native-elements'
 import Colors from '../../../utils/constants/Colors'
 import { useSelector } from 'react-redux'
 
 export default function CheckBoxSlideTabUI(props) {
+  // state and redux state
   const onboard = useSelector(state => state.onboard)
+  const [selectedCheckBoxAnswer, setSelectedCheckBoxAnswer] = useState()
+  const [render, setIsRender] = useState(false)
 
+  // set option to question
   function onClick(item) {
-    props.handleChange('check-box', item)
+    props.handleChange('check-box', {
+      option_id: item.id,
+      onboardingQuestionId: props.id
+      // response: item?.text
+    })
+    setIsRender(true)
   }
+
+  // getting exact question to show reflect option clicked
+  useEffect(() => {
+    if (onboard.hasOwnProperty('check-box')) {
+      let questionResponse = onboard['check-box']
+      questionResponse = questionResponse?.find(
+        item => item.onboardingQuestionId === props?.id
+      )
+      setSelectedCheckBoxAnswer(questionResponse)
+      setIsRender(false)
+    }
+  }, [onboard, render])
 
   return (
     <View style={props.childContainerStyle}>
@@ -29,7 +50,14 @@ export default function CheckBoxSlideTabUI(props) {
             <CheckBox
               checkedColor={Colors.primary}
               uncheckedColor={Colors.primary}
-              checked={onboard?.['check-box']?.id === item.id}
+              // checked={onboard?.['check-box']?.id === item.id}
+              // checked={onboard?.['check-box']?.data?.some(
+              //   opt => opt.id === item.id
+              // )}
+
+              checked={selectedCheckBoxAnswer?.selectedOptions?.some(
+                opt => opt.option_id === item.id
+              )}
               // checked={props?.selectedMotivation.includes(item)}
               onPress={() => onClick(item)}
             />

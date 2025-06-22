@@ -5,15 +5,38 @@ import { wp } from '../../../common/functions/dimensions'
 import Icons from '../../../assets/icons/Icons'
 
 // labels for the screen
-import { en as labels } from '../../../utils/labels/en'
 import { useSelector } from 'react-redux'
 
 export default function ListMultiSelectScreenTabUI(props) {
+  // states and redux data
   const onboard = useSelector(state => state.onboard)
+  const [selectedMultiListAnswer, setSelectedMultiListAnswer] = useState()
+  const [render, setIsRender] = useState(false)
 
+  // onclick option to question
   function onClick(item) {
-    props.handleChange('list-multiselect', item)
+    props.handleChange('list-multiselect', {
+      option_id: item.id,
+      onboardingQuestionId: props?.id
+      // response: item?.text
+    })
+    setIsRender(true)
   }
+
+  // finding exact question response to show selected option
+  useEffect(() => {
+    if (onboard.hasOwnProperty('list-multiselect')) {
+      let questionResponse = onboard['list-multiselect']
+      questionResponse = questionResponse?.find(
+        item => item.onboardingQuestionId === props?.id
+      )
+
+      console.log(questionResponse, 'hek')
+
+      setSelectedMultiListAnswer(questionResponse)
+      setIsRender(false)
+    }
+  }, [onboard, render])
 
   return (
     <View style={props.childContainerStyle}>
@@ -32,8 +55,12 @@ export default function ListMultiSelectScreenTabUI(props) {
               style={[
                 styles.optionBox,
                 // props.selectedExercises.includes(item) && styles.optionSelected,
-                onboard?.['list-multiselect']?.id === option.id &&
-                  styles.optionSelected
+                // onboard?.['list-multiselect']?.data?.some(opt => opt.id === option.id) &&
+                //   styles.optionSelected
+
+                selectedMultiListAnswer?.selectedOptions?.some(
+                  opt => opt.option_id === option.id
+                ) && styles.optionSelected
               ]}
               onPress={() => onClick(option)}>
               {/* left icon */}

@@ -5,10 +5,20 @@ import OnBoardingScreenUI from './OnBoardingScreenUI'
 import { services } from '../../services/axios/services'
 import { onBoardingScreenData } from '../../data/static_data/temp'
 import OnBoardForm from './OnBoardForm'
+import { TemplateService } from '../../services/templates/TemplateService'
+import { useSelector } from 'react-redux'
+import { useIsFocused } from '@react-navigation/native'
+import { URL } from '../../utils/constants/Urls'
+import { appsnackbar } from '../../common/functions/snackbar_actions'
+import { en as labels } from '../../utils/labels/en'
 
 export default function OnBoardScreen(props) {
   global.OnboardingData = null
   global.CurentOnboardingScreen = 'more_about'
+
+  let eventData = useSelector(state => state?.eventData)
+  let user = useSelector(state => state?.user)
+  let isFocused = useIsFocused()
   let key = 0
   const [state, setState] = useState({
     onBoardQuestions: null,
@@ -16,17 +26,20 @@ export default function OnBoardScreen(props) {
   })
 
   useEffect(() => {
-    initiateScreen()
-  }, [])
+    if (isFocused) {
+      initiateScreen()
+    }
+  }, [isFocused])
 
   async function initiateScreen() {
     let data = await getDetails()
+
     if (!data) {
-      console.log('No data received for onboarding screen')
+      appsnackbar.showErrMsg('No data received for onboarding screen')
       return
     }
 
-    let Slides = data?.onBoardQuestions?.map((item, index) => {
+    let Slides = data?.map((item, index) => {
       return () => <OnBoardForm key={index} data={item} {...props} {...state} />
     })
     setState({ ...state, onBoardQuestions: data, slides: Slides })
@@ -35,14 +48,20 @@ export default function OnBoardScreen(props) {
   async function getDetails() {
     try {
       // Simulate an API call or any async operation
-      let resp = await services._get(
-        'https://jsonplaceholder.typicode.com/posts/1'
+      let url = TemplateService._eventID(
+        URL.onboard_url,
+        eventData?.program?.id
       )
-      console.log('Response:', resp)
-      // You can update the state with the response data if needed
-      // setState({...state, data: response.data});
 
-      return onBoardingScreenData
+      let resp = await services._get(url)
+      // console.log('Response:', resp)
+
+      if (resp?.type === 'success') {
+        return resp?.data || []
+        console.log('fetching the onboard data')
+      }
+
+      return []
     } catch (error) {
       console.log('Error onboard screen get details', error)
     }
@@ -55,13 +74,43 @@ export default function OnBoardScreen(props) {
     })
   }
 
-  const handleSubmit = () => {
-    console.log('Form submitted with state:', global.OnboardingData)
+  async function handleSubmit() {
+    console.log('Form submitted with state:', global.OnboardingData, user)
     // You can navigate to the next screen or perform any action here
     // return;
-    props.navigation.navigate(Strings.NAVIGATION.app, {
-      isLoggedIn: true
+
+    const result = []
+    // formatted data as per API request
+    Object.values(global.OnboardingData).forEach(entries => {
+      entries.forEach(entry => {
+        if (entry.selectedOptions) {
+          const optionIds = entry.selectedOptions.map(opt => opt.option_id)
+          const { selectedOptions, ...rest } = entry
+          result.push({
+            ...rest,
+            onboardingOptionIds: optionIds,
+            runnerId: user?.runnerId,
+            eventId: eventData?.program?.id
+          })
+        } else {
+          const { option_id, ...rest } = entry
+          result.push({
+            ...rest,
+            onboardingOptionIds: option_id !== undefined ? [option_id] : [],
+            runnerId: user?.runnerId,
+            eventId: eventData?.program?.id
+          })
+        }
+      })
     })
+
+    let resp = await services?._post(URL?.submit_onboard, result) // Submit onboard API request
+
+    if (resp?.type === 'success') {
+      props.navigation.navigate(Strings.NAVIGATION.eventregister)
+    } else {
+      appsnackbar.showErrMsg(labels.some_thing_went_wrong)
+    }
   }
 
   function onNext(e) {

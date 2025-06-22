@@ -12,9 +12,30 @@ import { store } from '../../../redux/store'
 export default function ListSlideTab(props) {
   global.CurentOnboardingScreen = 'list'
   async function handleChange(params, val) {
+    // This commented because we might get duplicate type of question
+    // global.OnboardingData = {
+    //   ...global.OnboardingData,
+    //   [params]: val
+    // }
+
+    let arrayListAnswers = []
+
+    // checking params present in object or not
+    if (global.OnboardingData?.hasOwnProperty(params)) {
+      let existingArr = global.OnboardingData[params]
+      let uniqueQuestionOption = existingArr?.filter(
+        item => item?.onboardingQuestionId !== val?.onboardingQuestionId
+      )
+
+      arrayListAnswers = [...uniqueQuestionOption, val]
+    } else {
+      arrayListAnswers = [val]
+    }
+
+    // params = []
     global.OnboardingData = {
       ...global.OnboardingData,
-      [params]: val
+      [params]: arrayListAnswers
     }
 
     store.dispatch({
@@ -24,18 +45,19 @@ export default function ListSlideTab(props) {
 
     return
   }
-  const handleSubmit = () => {
-    //not used
-    console.log('Selected Activity:', state)
-    props.navigation.navigate(Strings.NAVIGATION.imagesSlideTab)
-  }
+
+  // const handleSubmit = () => {
+  //   //not used
+  //   console.log('Selected Activity:', state)
+  //   props.navigation.navigate(Strings.NAVIGATION.imagesSlideTab)
+  // }
 
   return (
     <View style={styles.container}>
       <ListSlideTabUI
         {...props}
         handleChange={handleChange}
-        handleSubmit={handleSubmit}
+        // handleSubmit={handleSubmit}
       />
     </View>
   )
