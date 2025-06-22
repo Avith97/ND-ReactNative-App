@@ -4,6 +4,10 @@ import SplashUI from './SplashUI'
 import Strings from '../../utils/constants/Strings'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import { useSelector } from 'react-redux'
+import { services } from '../../services/axios/services'
+import { URL } from '../../utils/constants/Urls'
+import { store } from '../../redux/store'
+import actions from '../../redux/action_types/actions'
 
 const SplashScreen = props => {
   const [state, setState] = useState({
@@ -55,6 +59,25 @@ const SplashScreen = props => {
   //   };
   // }, []);
 
+  async function fetchEventDetails(distKey) {
+    let resp = await services._get('event', {
+      headers: {
+        distKey: encodeURIComponent(distKey),
+        timezone: 'Asia/Calcutta'
+      }
+    })
+
+    if (resp.type !== 'success') {
+      appsnackbar.showErrMsg('Something went wrong!Please try again')
+      return
+    }
+    store.dispatch({
+      type: actions.SET_EVENT_DETAILS,
+      payload: resp?.data
+    })
+    return resp?.data
+  }
+
   async function handleDeepLink() {
     let url = await Linking.getInitialURL()
     console.log('deeplink', url)
@@ -64,8 +87,14 @@ const SplashScreen = props => {
         const match = url.match(/distKey=([^&]+)/)
         const distKey = match && decodeURIComponent(match[1])
         console.log('executed distKey ------>', distKey)
-        appsnackbar.showSuccessMsg(`${url}\nApp open from link`)
-        handleNavigate()
+        // appsnackbar.showSuccessMsg(`${url}\nApp open from link`)
+        let event_details = await fetchEventDetails(distKey)
+        if (event_details) {
+          //check for registered /unregistered user
+          handleNavigate({
+            screen: Strings.NAVIGATION.eventstarted
+          })
+        }
       } catch (error) {
         console.log('deeplink error --->', error)
       }

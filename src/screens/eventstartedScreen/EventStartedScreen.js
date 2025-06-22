@@ -1,13 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import EventStartedScreenUI from './EventStartedScreenUI'
 import Strings from '../../utils/constants/Strings'
 import { useSelector } from 'react-redux'
 
 export default function EventStartedScreen(props) {
-  let { IsRegistered } = props.route.params
+  let IsRegistered = props.route.params?.IsRegistered
 
-  const { eventData } = useSelector(store => store)
+  const eventData = useSelector(store => store.eventData)
+
+  useEffect(() => {
+    console.log('event detail -->', eventData)
+  }, [eventData])
 
   const handleNavigate = () => {
     if (IsRegistered) {
