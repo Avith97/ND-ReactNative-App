@@ -8,9 +8,12 @@ import { URL } from '../../utils/constants/Urls'
 import { services } from '../../services/axios/services'
 
 export default function EventStartedScreen(props) {
-  let { IsRegistered } = props.route.params
+  const user = useSelector(store => store.user)
+  const eventData = useSelector(store => store.eventData)
 
-  const { eventData, user } = useSelector(store => store)
+  useEffect(() => {
+    console.log('event detail -->', eventData)
+  }, [eventData])
 
   // checking is onboard or not
   async function isCheckOnBoard() {
