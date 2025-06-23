@@ -19,7 +19,7 @@ export const BackSync = {
           console.log('Syncing data with backend:', params.data)
           const result = await initialize() // or HealthConnectService.init()
           console.log('✅ Init result:', result)
-          await BackSync.health_data_sync()
+          await BackSync.health_data_sync(params?.data)
           console.log('Synced with backend:')
         }
       } else if (params?.data?.action === 'navigate') {
@@ -41,7 +41,10 @@ export const BackSync = {
       //   byEmail: true,
       //   byMobile: false
       // })
-      let healthData = await healthService.getData()
+      let healthData = await healthService.getData(
+        params?.startDate,
+        params?.endDate
+      )
       console.log('healthData in background--->', healthData)
       if (healthData) {
         let data = await AsyncStore.getData(Strings.ASYNC_KEY.offline)
@@ -50,7 +53,7 @@ export const BackSync = {
           distance: healthData.distance,
           steps: healthData?.steps,
           calories: healthData?.toCalories,
-          startDate: moment().format('YYYY-MM-DD'),
+          startDate: params?.startDate || moment().format('YYYY-MM-DD'),
           activityUrl: 'www.googlefit.com'
         })
         console.log('resp in background--->', resp)
