@@ -83,19 +83,26 @@ const HealthConnectService = {
           : moment().endOf('day').toISOString()
       }
 
-      console.log('date get steps --->', dates)
-
-      const steps = await aggregateRecord({
-        recordType: 'Steps',
+      const steps = await readRecords('Steps', {
         timeRangeFilter: {
           operator: 'between',
           ...dates
         },
         dataOriginFilter: ['com.google.android.apps.fitness']
       })
-      //
 
-      return steps?.COUNT_TOTAL
+      return steps.records
+
+      // const steps = await aggregateRecord({
+      //   recordType: 'Steps',
+      //   timeRangeFilter: {
+      //     operator: 'between',
+      //     ...dates
+      //   },
+      //   dataOriginFilter: ['com.google.android.apps.fitness']
+      // })
+      //
+      // return steps?.COUNT_TOTAL
     } catch (error) {
       console.error('getSteps error:', error)
       return []
@@ -115,15 +122,23 @@ const HealthConnectService = {
           ? moment(endDate, format).endOf('day').toISOString()
           : moment().endOf('day').toISOString()
       }
-      const distance = await aggregateRecord({
-        recordType: 'Distance',
+      const distance = await readRecords('Distance', {
         timeRangeFilter: {
           operator: 'between',
           ...dates
         },
         dataOriginFilter: ['com.google.android.apps.fitness']
       })
-      return distance.DISTANCE.inMeters
+      return distance?.records
+      // const distance = await aggregateRecord({
+      //   recordType: 'Distance',
+      //   timeRangeFilter: {
+      //     operator: 'between',
+      //     ...dates
+      //   },
+      //   dataOriginFilter: ['com.google.android.apps.fitness']
+      // })
+      // return distance.DISTANCE.inMeters
     } catch (error) {
       console.error('getDistance error:', error)
       return []
@@ -144,16 +159,24 @@ const HealthConnectService = {
           : moment().endOf('day').toISOString()
       }
 
-      const calories = await aggregateRecord({
-        recordType: 'TotalCaloriesBurned',
+      const Calories = await readRecords('TotalCaloriesBurned', {
         timeRangeFilter: {
           operator: 'between',
           ...dates
         },
         dataOriginFilter: ['com.google.android.apps.fitness']
       })
+      return Calories?.records
+      // const calories = await aggregateRecord({
+      //   recordType: 'TotalCaloriesBurned',
+      //   timeRangeFilter: {
+      //     operator: 'between',
+      //     ...dates
+      //   },
+      //   dataOriginFilter: ['com.google.android.apps.fitness']
+      // })
 
-      return calories.ENERGY_TOTAL.inKilocalories
+      // return calories.ENERGY_TOTAL.inKilocalories
     } catch (error) {
       console.error('getCaloriesBurned error:', error)
       return []

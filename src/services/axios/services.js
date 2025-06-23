@@ -7,6 +7,7 @@ import { handleSync } from '../../redux/actions/loading'
 import Strings from '../../utils/constants/Strings'
 import { BASE_URL } from '../../utils/constants/Urls'
 import { environment } from '../../../settings'
+import { appsnackbar } from '../../common/functions/snackbar_actions'
 
 const api = {
   //normal request
@@ -150,7 +151,7 @@ const api = {
         error_config: { ...error }
       }
     }
-
+    appsnackbar.showErrMsg('Something went wrong!!!')
     return {
       type: 'error',
       error_data: error?.response?.data,
