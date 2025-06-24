@@ -1,6 +1,6 @@
 // react native components
 import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 // common components
 import PinCodeTextInput from '../../common/components/pincode/PinCodeTextInput'
@@ -18,6 +18,10 @@ import { useSelector } from 'react-redux'
 const OtpUI = props => {
   const isLoading = useSelector(state => state.settings.isLoading)
 
+  // useEffect(() => {
+  // console.log('re-render', props?.timer)
+  // }, [props?.timer])
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{LABELS.enterOtp}</Text>
@@ -33,33 +37,7 @@ const OtpUI = props => {
         />
       </View>
       <View style={{ marginVertical: hp(2) }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%'
-          }}>
-          <Text
-            onPress={props.canResend ? props.handleResendOtp : null}
-            style={{
-              fontWeight: 'bold',
-              textAlign: 'left',
-              color: props.canResend ? Colors.otp_resent : Colors.gray_06,
-              opacity: props.canResend ? 1 : 0.6
-            }}>
-            {LABELS.resendOtp}
-          </Text>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              textAlign: 'right',
-              color: props.canResend ? Colors.gray_06 : Colors.otp_resent
-            }}>
-            {String(Math.floor(props.timer / 60)).padStart(2, '0')}:
-            {String(props.timer % 60).padStart(2, '0')}
-          </Text>
-        </View>
+        <ResendOtp {...props} />
         <CustomButton
           title={LABELS.submit}
           name={'submit'}
@@ -72,6 +50,81 @@ const OtpUI = props => {
           }}
         />
       </View>
+    </View>
+  )
+}
+
+const ResendOtp = props => {
+  const timerValue = 30
+
+  const [timer, setTimer] = useState(timerValue)
+  const [canResend, setCanResend] = useState(false)
+  const timerRef = useRef(null)
+
+  useEffect(() => {
+    startTimer()
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current)
+        timerRef.current = null
+      }
+    }
+  }, [])
+
+  const startTimer = () => {
+    if (timerRef.current) return // prevent multiple intervals
+
+    const duration = timerValue // seconds
+    let timeLeft = duration
+    setTimer(timeLeft)
+    setCanResend(false)
+    timerRef.current = setInterval(() => {
+      timeLeft -= 1
+      setTimer(timeLeft)
+
+      if (timeLeft <= 0) {
+        setCanResend(true)
+        clearInterval(timerRef.current)
+        timerRef.current = null
+      }
+    }, 1000)
+  }
+
+  async function handleResend(params) {
+    if (canResend) {
+      props.handleResendOtp()
+      startTimer()
+    }
+  }
+
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%'
+      }}>
+      <Text
+        onPress={handleResend}
+        style={{
+          fontWeight: 'bold',
+          textAlign: 'left',
+          color: canResend ? Colors.otp_resent : Colors.gray_06,
+          opacity: canResend ? 1 : 0.6
+        }}>
+        {LABELS.resendOtp}
+      </Text>
+      <Text
+        style={{
+          fontWeight: 'bold',
+          textAlign: 'right',
+          color: canResend ? Colors.gray_06 : Colors.otp_resent
+        }}>
+        {String(Math.floor(timer / 60)).padStart(2, '0')}:
+        {String(timer % 60).padStart(2, '0')}
+      </Text>
     </View>
   )
 }

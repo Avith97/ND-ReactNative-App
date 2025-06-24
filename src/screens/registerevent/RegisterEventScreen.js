@@ -43,7 +43,7 @@ export default function RegisterEventScreen(props) {
     try {
       // join like event/2481
 
-      let url = TemplateService?._eventID(URL.get_event, eventData?.program?.id)
+      let url = TemplateService?._eventID(URL.get_event, eventData?.id)
       let resp = await services?._get(url, {
         params: { requestView: 'REGISTER_EVENT' }
       })
@@ -220,7 +220,7 @@ export default function RegisterEventScreen(props) {
 
     let syncObj = {
       userId: auth?.id || null,
-      eventId: eventData?.program?.id || null,
+      eventId: eventData?.id || null,
       ...(state?.eventData?.showCategoryOnRegistration && {
         categoryId: state?.selectedEventCategory?.id || null
       }),
@@ -228,7 +228,7 @@ export default function RegisterEventScreen(props) {
       ...(state?.eventData?.fields?.customFields?.length > 0 && {
         fieldValues: {
           runnerId: auth?.runnerId || null,
-          eventId: eventData?.program?.id || null,
+          eventId: eventData?.id || null,
           fields: transformed || []
         }
       }),

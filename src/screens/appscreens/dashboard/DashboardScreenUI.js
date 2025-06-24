@@ -11,6 +11,7 @@ import CustomWeekAndMonth from '../../../common/components/customweekandmonth/Cu
 import BarChart from '../../../common/components/Charts/BarChart'
 import Colors from '../../../utils/constants/Colors'
 import Fonts, { fontSize } from '../../../utils/constants/Fonts'
+import NoDataFound from '../../../common/components/nodatafound/NoDataFound'
 
 export default function DashboardScreenUI(props) {
   const [weekIndex, setWeekIndex] = useState(0)
@@ -33,96 +34,94 @@ export default function DashboardScreenUI(props) {
 
   return (
     <View>
-      <Text
-        style={{
-          paddingBottom: hp(2),
-          color: Colors?.gray_02,
-          fontFamily: Fonts?.Bold
-        }}>
-        Dashboard
-      </Text>
+      {props?.dashboardData?.graphDTO?.[0]?.runnerActivityDetails?.length ? (
+        <View>
+          {props?.eventGraphData?.progressBar ? (
+            <>
+              <View style={styles.progressContainer}>
+                <Text
+                  style={{
+                    color: Colors.white,
+                    paddingBottom: hp(1),
+                    fontSize: fontSize.m,
+                    fontWeight: 700
+                  }}>
+                  Personal Progress
+                </Text>
 
-      {props?.eventGraphData?.progressBar ? (
-        <>
-          <View style={styles.progressContainer}>
+                <PieProgressBar
+                  program
+                  percentage={props?.eventGraphData?.progressBar}
+                />
+              </View>
+
+              {/* Description Metrics */}
+              <View style={styles.detailSection}>
+                <DescriptionDetailItem value={1088} unit="Kcal" />
+                <DescriptionDetailItem value={12} unit="KM" />
+                <DescriptionDetailItem value={204} unit="Move Min" />
+              </View>
+
+              <View style={styles.buttonContainer}>
+                <CustomButton
+                  title={'Show Leaderboard'}
+                  name={'leaderboard'}
+                  onPress={() =>
+                    props.handleNavigate(
+                      props.eventGraphData?.graphDTO?.[0]?.eventId
+                    )
+                  }
+                  btnStyles={{
+                    ...styles.btnStyles,
+                    elevation: 5
+                  }}
+                  btnTitleStyles={{
+                    ...styles.textStyle
+                  }}
+                />
+              </View>
+            </>
+          ) : (
             <Text
               style={{
-                color: Colors.white,
-                paddingBottom: hp(1),
-                fontSize: fontSize.m,
-                fontWeight: 700
+                textAlign: 'center',
+                paddingVertical: hp(2),
+                color: Colors?.gray_05
               }}>
-              Personal Progress
+              No data found
             </Text>
+          )}
 
-            <PieProgressBar
-              program
-              percentage={props?.eventGraphData?.progressBar}
-            />
-          </View>
+          {/* progress section with bar chart */}
 
-          {/* Description Metrics */}
-          <View style={styles.detailSection}>
-            <DescriptionDetailItem value={1088} unit="Kcal" />
-            <DescriptionDetailItem value={12} unit="KM" />
-            <DescriptionDetailItem value={204} unit="Move Min" />
-          </View>
+          {props?.dashboardData?.graphDTO?.[0]?.runnerActivityDetails
+            ?.length && (
+            <View style={styles.barChartSection}>
+              {/* tabbar */}
 
-          <View style={styles.buttonContainer}>
-            <CustomButton
-              title={'Show Leaderboard'}
-              name={'leaderboard'}
-              onPress={() =>
-                props.handleNavigate(
-                  props.eventGraphData?.graphDTO?.[0]?.eventId
-                )
-              }
-              btnStyles={{
-                ...styles.btnStyles,
-                elevation: 5
-              }}
-              btnTitleStyles={{
-                ...styles.textStyle
-              }}
-            />
-          </View>
-        </>
-      ) : (
-        <Text
-          style={{
-            textAlign: 'center',
-            paddingVertical: hp(2),
-            color: Colors?.gray_05
-          }}>
-          No data found
-        </Text>
-      )}
+              {/* week and month View */}
+              <CustomWeekAndMonth
+                {...props}
+                weekIndex={weekIndex}
+                setWeekIndex={setWeekIndex}
+                currentWeek={props.eventGraphData?.daysData[weekIndex]}
+              />
 
-      {/* progress section with bar chart */}
-
-      {props?.dashboardData?.daysData && (
-        <View style={styles.barChartSection}>
-          {/* tabbar */}
-
-          {/* week and month View */}
-          <CustomWeekAndMonth
-            {...props}
-            weekIndex={weekIndex}
-            setWeekIndex={setWeekIndex}
-            currentWeek={props.eventGraphData?.daysData[weekIndex]}
-          />
-
-          <BarChart
-            data={props.eventGraphData?.daysData[weekIndex]?.days || []}
-            yKeys={['steps']}
-            barWidth={22}
-            chartHeight={250}
-            xKey="day"
-            colorScale={[Colors.primary, Colors.secondary]}
-            // xAxisLabel="Days"
-            // yAxisLabel="Steps"
-          />
+              <BarChart
+                data={props.eventGraphData?.daysData[weekIndex]?.days || []}
+                yKeys={['steps']}
+                barWidth={22}
+                chartHeight={250}
+                xKey="day"
+                colorScale={[Colors.primary, Colors.secondary]}
+                // xAxisLabel="Days"
+                // yAxisLabel="Steps"
+              />
+            </View>
+          )}
         </View>
+      ) : (
+        <NoDataFound />
       )}
     </View>
   )

@@ -12,6 +12,7 @@ import { services } from '../../../services/axios/services'
 import { appsnackbar } from '../../../common/functions/snackbar_actions'
 import moment from 'moment'
 import Loader from '../../../common/components/loader/Loader'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function DashboardScreen() {
   const [state, setState] = useState({
@@ -19,11 +20,14 @@ export default function DashboardScreen() {
     dashboardData: null
   })
 
-  const { auth } = useSelector(store => store)
+  let isFocused = useIsFocused()
+  const auth = useSelector(store => store?.user)
 
   useEffect(() => {
-    initiateScreen()
-  }, [])
+    if (isFocused) {
+      initiateScreen()
+    }
+  }, [isFocused])
 
   async function initiateScreen() {
     let resp = await getDashboardDetail()
@@ -89,9 +93,14 @@ export default function DashboardScreen() {
 
   async function getDashboardDetail(params) {
     try {
-      let url = TemplateService._userId(URL.dashboard_detail, auth?.runner?.id)
+      let url = TemplateService._userId(
+        URL.dashboard_detail,
+        auth?.runner?.id || auth?.runnerId
+      )
 
       let resp = await services._get(url)
+
+      console.log(resp, url)
 
       if (resp?.type === 'success') {
         let data = prepareWeeklySteps(resp.data?.graphDTO?.[0])

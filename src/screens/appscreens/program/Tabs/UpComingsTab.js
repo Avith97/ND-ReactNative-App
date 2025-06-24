@@ -12,6 +12,7 @@ import ProgramCard from '../../../../common/components/programcard/ProgramCard'
 import { hp } from '../../../../common/functions/dimensions'
 import Strings from '../../../../utils/constants/Strings'
 import { Images } from '../../../../utils/constants/Images'
+import NoDataFound from '../../../../common/components/nodatafound/NoDataFound'
 
 export default function UpComingsTab(props) {
   return (
@@ -29,14 +30,7 @@ export default function UpComingsTab(props) {
           </View>
         ))
       ) : (
-        <Text
-          style={{
-            textAlign: 'center',
-            paddingVertical: hp(2),
-            color: Colors?.gray_05
-          }}>
-          No data found
-        </Text>
+        <NoDataFound />
       )}
     </View>
     // <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>

@@ -1,5 +1,6 @@
 import ImagePicker from 'react-native-image-crop-picker'
 import { toast_error } from '../components/toasts/handleToasts'
+import { appsnackbar } from './snackbar_actions'
 
 export const FilePicker = {
   openCamera: async params => {
@@ -8,12 +9,14 @@ export const FilePicker = {
         width: 300,
         height: 400,
         cropping: true,
-        includeBase64: true,
+        includeBase64: false,
         mediaType: 'photo'
       })
       if (['image/jpeg', 'image/png', 'image/jpg'].includes(resp.mime)) {
         // cropImageUpload(image.path, image.data)
         return resp
+      } else {
+        appsnackbar.showErrMsg('File type not supported')
       }
     } catch (error) {
       console.log('Camera cancelled-->', error)
@@ -28,12 +31,14 @@ export const FilePicker = {
         width: 300,
         height: 400,
         cropping: true,
-        includeBase64: true,
+        includeBase64: false,
         mediaType: 'photo'
       })
       if (['image/jpeg', 'image/png', 'image/jpg'].includes(resp.mime)) {
         // cropImageUpload(image.path, image.data)
         return resp
+      } else {
+        appsnackbar.showErrMsg('File type not supported')
       }
     } catch (error) {
       console.log('Picker cancelled-->', error)

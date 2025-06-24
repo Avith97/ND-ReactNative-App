@@ -1,5 +1,5 @@
 //React Native Imports
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Alert, View } from 'react-native'
 
 //  common functions
@@ -13,10 +13,30 @@ import LoginUI from './LoginUI'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { services } from '../../services/axios/services'
 
+import { en as labels } from '../../utils/labels/en'
+import { perform_login } from '../../common/functions/login'
+import ToastModal from '../../common/components/Modal/ToastModal'
+import UpdateForm from './UpdateForm'
+import moment from 'moment'
+import { URL } from '../../utils/constants/Urls'
+import { TemplateService } from '../../services/templates/TemplateService'
+import { store } from '../../redux/store'
+import actions from '../../redux/action_types/actions'
+import { useSelector } from 'react-redux'
+
 const LoginScreen = props => {
-  const [state, setstate] = useState({
-    userId: null
+  const [state, setState] = useState({
+    userId: null,
+    email: null,
+    country: null,
+    dob: null,
+    gender: null
   })
+
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+  const eventData = useSelector(state => state?.eventData)
+
+  const actionRef = useRef(null)
 
   const [err, seterr] = useState(null)
 
@@ -29,8 +49,14 @@ const LoginScreen = props => {
     })
   }, [])
 
+  useEffect(() => {
+    console.log('eventData', eventData)
+  }, [eventData])
+
   async function handleChange(params, val) {
-    setstate({
+    console.log(params, val)
+
+    setState({
       ...state,
       [params]: val
     })
@@ -39,11 +65,18 @@ const LoginScreen = props => {
   function validate(params) {
     let err = {}
     let isValid = true
-    if (!state.userId) {
+    if (!state.country?.label?.trim()?.length) {
       isValid = false
-      err = { userIdErr: true }
-      console.log('invalid')
-      appsnackbar.showErrMsg('Please enter valid email or mobile number')
+      err = { countryErr: true }
+      appsnackbar.showErrMsg('Please select country')
+    } else if (!state.gender?.label?.trim()?.length) {
+      isValid = false
+      err = { countryErr: true }
+      appsnackbar.showErrMsg('Please select country')
+    } else if (!state.dob) {
+      isValid = false
+      err = { dobErr: true }
+      appsnackbar.showErrMsg('Please select date of birth')
     }
 
     seterr(err)
@@ -56,14 +89,52 @@ const LoginScreen = props => {
 
   const handleNavigate = async route => {
     const isSignup = route === 'signup'
+
     if (route === 'signup' || route === 'login') {
       props.navigation.navigate(Strings.NAVIGATION.signup, {
         isSignup: isSignup
       })
+    } else {
+      if (isLoggedIn) {
+        props.navigation.replace(Strings.NAVIGATION.app, route)
+      } else {
+        props.navigation.replace(Strings.NAVIGATION.app, route)
+      }
     }
   }
 
   async function handleSubmit(params) {
+    let syncObj = {
+      firstName: state?.firstName,
+      lastName: state?.lastName,
+      email: state?.email,
+      country: state?.country?.label,
+      countryCode: state?.country?.value,
+      gender: state?.gender?.value,
+      dob: moment(state?.dob).format('DD-MM-yyyy')
+    }
+
+    let url = TemplateService._userId(URL.update_profile, state?.userId)
+
+    let resp = await services._put(url, syncObj)
+
+    console.log(resp)
+
+    if (resp?.type === 'success') {
+      // if event data then goes to start page
+    } else {
+    }
+
+    //  country: formState?.country?.label,
+    //         countryCode: formState?.country?.value,
+    //         gender: formState?.gender?.value,
+    //         dob: moment(formState.dob).format('DD-MM-yyyy')
+
+    // console.log(syncObj)
+
+    console.log(':submitting')
+
+    return
     if (params === 'signup') {
       props.navigation.navigate(Strings.NAVIGATION.signup)
       return
@@ -94,7 +165,30 @@ const LoginScreen = props => {
     }
   }
 
+  async function fetchEventDetails(distKey) {
+    let resp = await services._get('event', {
+      headers: {
+        distKey: encodeURIComponent(distKey),
+        timezone: 'Asia/Calcutta'
+      }
+    })
+
+    if (resp.type !== 'success') {
+      appsnackbar.showErrMsg('Something went wrong!Please try again')
+      handleNavigate()
+      return
+    }
+    store.dispatch({
+      type: actions.SET_EVENT_DETAILS,
+      // payload: resp?.data  // hide it because of data parsing like eventData?.program?.id
+      payload: resp?.data
+    })
+    return resp?.data
+  }
+
   async function performLogin(params) {
+    console.log('checking google data', params)
+
     let syncObj = {
       firstName: params.user.givenName,
       lastName: params.user.familyName,
@@ -109,13 +203,89 @@ const LoginScreen = props => {
     const formData = new FormData()
     formData.append('userRequest', JSON.stringify(syncObj))
     formData.append('profilePicture', syncObj.profilePicLink)
+    console.log(global?.distKey, '')
+
+    let eventData
+    if (global?.distKey) {
+      eventData = await fetchEventDetails(global?.distKey)
+      console.log('eventdata', eventData)
+    }
 
     let resp = await services._postFormData('signup', formData)
-    console.log('google login --->', resp)
+    console.log('google login --->', resp.data)
+
+    if (resp?.type !== 'success') {
+      appsnackbar.showErrMsg(labels.some_thing_went_wrong)
+      return
+    }
+
+    setState({
+      ...state,
+      email: resp.data?.email,
+      userId: resp.data?.runnerId || resp?.data?.id,
+      firstName: resp?.data?.firstName,
+      lastName: resp?.data?.lastName
+    })
+
+    // if (resp?.data?.newUser) {
+    //   showActionItem()
+    // } else {
+    //   // props?.navigation.replace(Strings.NAVIGATION?.app)
+    // }
+    if (resp?.data) {
+      await set_data_storage(resp?.data)
+      if (eventData) {
+        handleNavigate({
+          screen: Strings.NAVIGATION.eventstarted
+        })
+      } else {
+        handleNavigate()
+      }
+    }
+
+    return resp?.data
+
+    //replace
+  }
+
+  async function data_separation(data) {
+    let auth = {
+      token: data?.token,
+      isLoggedIn: true,
+      contactNumber: data?.contactNumber,
+      email: data?.email,
+      user_id: data?.id,
+      runnerId: data?.runnerId,
+      isAuthorized: data?.isAuthorized
+    }
+    return auth
+  }
+
+  async function set_data_storage(data) {
+    // use to set data in storage
+    console.log('testing the offline =====', data)
+
+    services?.refreshInstance(data?.token)
+    const auth = await data_separation(data)
+    await perform_login(auth, (user = { ...data }))
+  }
+
+  const showActionItem = () => {
+    actionRef?.current?.show?.({
+      // data: mockRequests,
+      timeout: 1000 * 100
+    })
   }
 
   return (
     <View style={{ flex: 1 }}>
+      <ToastModal ref={actionRef}>
+        <UpdateForm
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          {...state}
+        />
+      </ToastModal>
       <LoginUI
         {...props}
         {...state}

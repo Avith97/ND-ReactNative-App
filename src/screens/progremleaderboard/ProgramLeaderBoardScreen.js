@@ -275,7 +275,9 @@ export default function ProgramLeaderBoardScreen(props) {
     let runnerData = await getAllRunnerData()
 
     // runner activity detail
-    let runnerActivityDetail = await getRunnerDetail(auth?.runner?.id)
+    let runnerActivityDetail = await getRunnerDetail(
+      auth?.runner?.id || auth?.runnerId
+    )
 
     let formattedParticipatedLabel = await getParticipatedOptions(res)
 

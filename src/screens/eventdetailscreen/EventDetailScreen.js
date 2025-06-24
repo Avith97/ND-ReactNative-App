@@ -4,16 +4,18 @@ import EventDetailScreenUI from './EventDetailScreenUI'
 import Strings from '../../utils/constants/Strings'
 
 export default function EventDetailScreen(props) {
-  let { IsRegistered } = props.route.params
+  let eventData = props?.route?.params?.eventData
 
   const handleNavigate = () => {
-    props.navigation.navigate(Strings.NAVIGATION.eventregister)
+    props.navigation.navigate(Strings.NAVIGATION.programleaderboard, {
+      eventID: eventData.id
+    })
   }
 
   return (
     <View style={{ flex: 1 }}>
       <EventDetailScreenUI
-        IsRegistered={IsRegistered}
+        eventData={eventData}
         handleNavigate={handleNavigate}
       />
     </View>

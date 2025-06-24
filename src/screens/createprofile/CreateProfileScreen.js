@@ -7,9 +7,13 @@ import { services } from '../../services/axios/services'
 import { URL } from '../../utils/constants/Urls'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import { useSelector } from 'react-redux'
+import { perform_login } from '../../common/functions/login'
 
 export default function CreateProfileScreen(props) {
   const { email, contactNumber } = useSelector(state => state.user)
+
+  let eventData = useSelector(store => store.eventData)
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
 
   const [state, setstate] = useState({
     firstName: null,
@@ -139,7 +143,9 @@ export default function CreateProfileScreen(props) {
           timezone: 'Asia/Calcutta',
           height: parseFloat(state.height).toFixed(1),
           weight: parseFloat(state.weight).toFixed(1),
-          gender: state.gender
+          gender: state.gender,
+          fcmToken: global.fcm_token,
+          deviceId: null
         },
         profilePicture: null // or a File object
       }
@@ -167,12 +173,57 @@ export default function CreateProfileScreen(props) {
           appsnackbar.showErrMsg(message || 'Something went wrong')
           return
         }
-        props.navigation.navigate(Strings.NAVIGATION.onboard)
+
+        // checking event data is present or not
+        const isEventPresent = !!eventData?.id
+        console.log(isEventPresent, 'hello')
+
+        if (isEventPresent) {
+          handleNavigate({
+            screen: Strings.NAVIGATION.eventstarted
+          })
+        } else {
+          handleNavigate({
+            screen: Strings.NAVIGATION.home
+          })
+        }
+        await set_data_storage(resp?.data)
       }
     } catch (error) {
       console.log('Error in handleSubmit:', error)
     }
   }
+
+  async function data_separation(data) {
+    let auth = {
+      token: data?.token,
+      isLoggedIn: true,
+      contactNumber: data?.contactNumber,
+      email: data?.email,
+      user_id: data?.id,
+      runnerId: data?.runnerId,
+      isAuthorized: data?.isAuthorized
+    }
+    return auth
+  }
+
+  async function set_data_storage(data) {
+    // use to set data in storage
+    services?.refreshInstance(data?.token)
+    const auth = await data_separation(data)
+    await perform_login(auth, (user = { ...data }))
+  }
+
+  function handleNavigate(params) {
+    if (isLoggedIn) {
+      props.navigation.replace(Strings.NAVIGATION.app, params)
+    } else {
+      props.navigation.replace(Strings.NAVIGATION.app, params)
+    }
+  }
+
+  console.log(eventData, 'event')
+
   return (
     <View style={styles.container}>
       <CreateProfileScreenUI

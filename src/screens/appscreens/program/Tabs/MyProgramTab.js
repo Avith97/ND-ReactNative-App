@@ -9,6 +9,7 @@ import ProgramCard from '../../../../common/components/programcard/ProgramCard'
 import { hp } from '../../../../common/functions/dimensions'
 import Colors from '../../../../utils/constants/Colors'
 import { Images } from '../../../../utils/constants/Images'
+import NoDataFound from '../../../../common/components/nodatafound/NoDataFound'
 
 export default function MyProgramTab(props) {
   return (
@@ -25,14 +26,7 @@ export default function MyProgramTab(props) {
           </View>
         ))
       ) : (
-        <Text
-          style={{
-            textAlign: 'center',
-            paddingVertical: hp(2),
-            color: Colors?.gray_05
-          }}>
-          No data found
-        </Text>
+        <NoDataFound />
       )}
     </View>
   )

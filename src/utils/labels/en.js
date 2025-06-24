@@ -95,5 +95,10 @@ export const en = {
   final_description:
     'Discover and access a wide variety of workout routines, filter and sort them based on criteria like type, duration, and intensity, and often receive personalized recommendations to meet your fitness goals and preferences.',
 
-  some_thing_went_wrong: 'Something went wrong. Please try again.'
+  some_thing_went_wrong: 'Something went wrong. Please try again.',
+
+  // complete profile
+  complete_profile: 'Complete Your Profile',
+  complete_profile_subtext:
+    'Some details are missing from your profile. Please fill in the required information to continue.'
 }

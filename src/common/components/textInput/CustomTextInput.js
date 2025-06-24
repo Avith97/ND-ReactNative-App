@@ -16,6 +16,7 @@ const CustomTextInput = props => {
         </Text>
       )}
       <TextInput
+        editable={props?.inputProps?.editable ?? true}
         onFocus={() => setfocused(true)}
         onBlur={() => setfocused(false)}
         onChangeText={text => props?.onChangeText(props.name, text)}
@@ -26,7 +27,11 @@ const CustomTextInput = props => {
             borderWidth: 2,
             borderColor: Colors.color3
           },
-          { ...props?.inputStyle }
+          { ...props?.inputStyle },
+          {
+            backgroundColor:
+              props?.inputProps?.editable === false ? '#f0f0f0' : 'white'
+          }
         ]}
         {...props?.inputProps}
       />

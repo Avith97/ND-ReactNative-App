@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import BMICardScreenUI from './BMICardScreenUI'
 import { useSelector } from 'react-redux'
 import Loader from '../../common/components/loader/Loader'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function BMICardScreen() {
   const [state, setState] = useState({
@@ -10,11 +11,14 @@ export default function BMICardScreen() {
     loader: false
   })
 
-  let auth = useSelector(store => store?.auth)
+  let auth = useSelector(store => store?.user)
+  let isFocused = useIsFocused()
+
+  console.log(auth, 'ha')
 
   useEffect(() => {
     InitiateScreen()
-  }, [])
+  }, [isFocused])
 
   async function InitiateScreen(params) {
     let { weight, height, bmi, age, gender } = auth

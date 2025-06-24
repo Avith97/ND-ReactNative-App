@@ -12,7 +12,7 @@ export default {
     register: 'register',
     otp: 'otp',
     create_profile: 'createprofile',
-
+    about_us: 'About Us',
     // onboarding screens
     onboard: 'onboard',
     gender: 'gender',

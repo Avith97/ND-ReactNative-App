@@ -8,6 +8,7 @@ import { services } from '../../services/axios/services'
 import { URL } from '../../utils/constants/Urls'
 import { store } from '../../redux/store'
 import actions from '../../redux/action_types/actions'
+import { environment } from '../../../settings'
 
 const SplashScreen = props => {
   const [state, setState] = useState({
@@ -69,13 +70,23 @@ const SplashScreen = props => {
 
     if (resp.type !== 'success') {
       appsnackbar.showErrMsg('Something went wrong!Please try again')
+      handleNavigate()
       return
     }
     store.dispatch({
       type: actions.SET_EVENT_DETAILS,
+      // payload: resp?.data  // hide it because of data parsing like eventData?.program?.id
       payload: resp?.data
     })
     return resp?.data
+  }
+
+  async function getDecodeDistKey(endpoint) {
+    let resp = await services?._get(`redirectedUrl/${endpoint}`)
+
+    console.log(resp, 'resp')
+
+    return '=uyiu32sdfnky3'
   }
 
   async function handleDeepLink() {
@@ -84,9 +95,23 @@ const SplashScreen = props => {
 
     if (url) {
       try {
+        // const match = url.match(/https?:\/\/[^/]+\/([^/?#]+)/)
+        // const distKey = match[1]
+
         const match = url.match(/distKey=([^&]+)/)
-        const distKey = match && decodeURIComponent(match[1])
+        let distKey
+        if (!match) {
+          const match = url.match(/https?:\/\/[^/]+\/([^/?#]+)/)
+          const endpoint = match[1]
+          console.log(endpoint)
+          let distKey = await getDecodeDistKey(endpoint)
+        } else {
+          distKey = match && decodeURIComponent(match[1])
+        }
+
         console.log('executed distKey ------>', distKey)
+
+        global.distKey = distKey
         // appsnackbar.showSuccessMsg(`${url}\nApp open from link`)
         let event_details = await fetchEventDetails(distKey)
         if (event_details) {
@@ -107,7 +132,7 @@ const SplashScreen = props => {
     if (isLoggedIn) {
       props.navigation.replace(Strings.NAVIGATION.app, params)
     } else {
-      props.navigation.replace(Strings.NAVIGATION.auth)
+      props.navigation.replace(Strings.NAVIGATION.auth, params)
     }
   }
 

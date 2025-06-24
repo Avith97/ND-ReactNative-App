@@ -126,7 +126,7 @@ export default function ProgramScreen(props) {
   const handleNavigate = data => {
     store.dispatch({
       type: actions.SET_EVENT_DETAILS,
-      payload: data || {}
+      payload: data?.program || {}
     })
     if (state.selectedTabID === 0) {
       props.navigation.navigate(Strings.NAVIGATION.programleaderboard, {

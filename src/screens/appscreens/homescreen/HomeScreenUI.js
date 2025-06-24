@@ -7,11 +7,14 @@ import Colors from '../../../utils/constants/Colors'
 import EventCard from '../../../common/components/eventcard/EventCard'
 import NotRespondingCard from '../../../common/components/notrespondingcard/NotRespondingCard'
 import moment from 'moment'
+import NoDataFound from '../../../common/components/nodatafound/NoDataFound'
 
 export default function HomeScreenUI(props) {
   let { isLoggedIn } = props
 
   const [loading, setloading] = useState(false)
+
+  console.log(props?.HomeScreenData?.events)
 
   return (
     <ScrollView
@@ -27,7 +30,7 @@ export default function HomeScreenUI(props) {
         </Text>
       </View>
 
-      {props?.HomeScreenData && props?.HomeScreenData?.events ? (
+      {props?.HomeScreenData && props?.HomeScreenData?.events?.length ? (
         <>
           {/* progress card */}
           <View style={styles.progress_card_wrapper}>
@@ -114,7 +117,7 @@ export default function HomeScreenUI(props) {
         </>
       ) : (
         <>
-          <Text style={{ textAlign: 'center' }}>No data found !</Text>
+          <NoDataFound />
         </>
         // <>
         //   {/* ongoing  events  */}

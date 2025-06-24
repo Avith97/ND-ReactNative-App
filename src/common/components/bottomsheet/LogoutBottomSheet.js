@@ -5,6 +5,7 @@ import CustomButton from '../buttons/CustomButton'
 import Icons, { iconType } from '../../../assets/icons/Icons'
 import { open_logout_bottom_sheet } from '../toasts/handleToasts'
 import { hp, wp } from '../../functions/dimensions'
+import { perform_logout } from '../../functions/login'
 
 const LogoutBottomSheet = props => {
   return (
@@ -58,15 +59,18 @@ const LogoutBottomSheet = props => {
           }}>
           <CustomButton
             title={'Yes'}
-            onPress={() => console.log('logged out --->')}
+            onPress={() => {
+              open_logout_bottom_sheet((hide = true))
+              perform_logout()
+            }}
             btnStyles={{
               height: hp(6),
               backgroundColor: '#CF352E',
               elevation: 5
             }}
             btnTitleStyles={{
-              // color: '#CF352E',
-              fontFamily: Fonts.semiBold,
+              color: '#f2f2f2',
+              fontFamily: Fonts.SemiBold,
               fontSize: fontSize.normal
             }}
           />

@@ -5,7 +5,7 @@ import { hp } from '../../../common/functions/dimensions'
 import Strings from '../../../utils/constants/Strings'
 import { services } from '../../../services/axios/services'
 import { store } from '../../../redux/store'
-import { useIsFocused } from '@react-navigation/native'
+import { useFocusEffect, useIsFocused } from '@react-navigation/native'
 import { TemplateService } from '../../../services/templates/TemplateService'
 import { useSelector } from 'react-redux'
 import { URL } from '../../../utils/constants/Urls'
@@ -27,8 +27,15 @@ export default function HomeScreen(props) {
     }
   })
 
+  // react navigation hook for handle lifecycle
+  // useFocusEffect(()=>{
+
+  // },[])
+
   useEffect(() => {
-    initiateScreen()
+    if (isFocused) {
+      initiateScreen()
+    }
     // requestHealthPermissions();
   }, [isFocused])
 

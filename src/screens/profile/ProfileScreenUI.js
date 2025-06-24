@@ -7,6 +7,7 @@ import { FlatList } from 'react-native-gesture-handler'
 import { fontSize } from '../../utils/constants/Fonts'
 import { maskNumber } from '../../common/functions/masknumber'
 import Strings from '../../utils/constants/Strings'
+import { BASE_URL } from '../../utils/constants/Urls'
 
 export default function ProfileScreenUI(props) {
   const settingsData = [
@@ -35,7 +36,8 @@ export default function ProfileScreenUI(props) {
       link: Strings.NAVIGATION.activitysync
     },
     { id: '5', icon: 'file-text', label: 'Terms & Conditions', link: 'ok' },
-    { id: '6', icon: 'help-circle', label: 'Support', link: 'ok' }
+    { id: '6', icon: 'help-circle', label: 'Support', link: 'ok' },
+    { id: '7', icon: 'help-circle', label: 'Logout', link: 'logout' }
   ]
 
   const renderItem = ({ item, index }) => {
@@ -66,10 +68,18 @@ export default function ProfileScreenUI(props) {
         <Avatar
           rounded
           size={'xlarge'}
+          // source={{
+          //   uri: props?.AvatarURl
+          //     ? props?.AvatarURl
+          //     : 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp'
+          // }}
+
           source={{
-            uri: props?.AvatarURl
-              ? props?.AvatarURl
-              : 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp'
+            // uri: "https://192.168.1.49:8443/Profile%20Photos/runner_3675/profilePhoto-20250619_125550-1-.jpeg"
+            // uri:"https://192.168.1.49:8443/Profile%20Photos/runner_3675/profilePhoto-20250620_035514-1-.jpeg"
+            uri:
+              BASE_URL.replace('/api/v1/', '/') +
+              props?.userDetails?.profilePictureLink
           }}
           avatarStyle={styles.avatarImage}
           //   avatarStyle={{shadowOffset: {width: 10, height: 10}}}
@@ -94,7 +104,7 @@ export default function ProfileScreenUI(props) {
               styles.title
             }>{`${props?.userDetails?.user?.firstName} ${props?.userDetails?.user?.lastName}`}</Text>
         )}
-        {props?.userDetails && (
+        {props?.userDetails?.user?.contactNumber && (
           <Text style={styles.numberText}>
             {maskNumber(props?.userDetails?.user?.contactNumber)}
           </Text>

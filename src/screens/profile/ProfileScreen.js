@@ -10,9 +10,14 @@ import { useSelector } from 'react-redux'
 import { URL } from '../../utils/constants/Urls'
 import { store } from '../../redux/store'
 import { set_user_details } from '../../redux/actions/login_action'
-import { show_web_view_toast } from '../../common/components/toasts/handleToasts'
+import {
+  open_logout_bottom_sheet,
+  show_web_view_toast
+} from '../../common/components/toasts/handleToasts'
 import { FilePicker } from '../../common/functions/FilePicker'
 import { useIsFocused } from '@react-navigation/native'
+import { guidGenerator } from '../../common/functions/helper'
+import { perform_login } from '../../common/functions/login'
 
 export default function ProfileScreen(props) {
   const [state, setState] = React.useState({
@@ -28,12 +33,20 @@ export default function ProfileScreen(props) {
   useEffect(() => {
     // Fetch user details or any initial data here
     // Example: setState({ userDetails: fetchedData });
-    initiateScreen()
-  }, [isFocused])
+    if (isFocused) {
+      initiateScreen()
+    }
+  }, [isFocused, state?.userDetails?.profilePictureLink])
 
   async function initiateScreen() {
     // Fetch user details or any initial data here
     let resp = await getDetails() // Replace with your API endpoint
+
+    console.log(
+      'user detail Profile%20Photos/runner_3675/profilePhoto-20250619_122059-1-.jpeg',
+      resp
+    )
+
     // Example: setState({ userDetails: fetchedData });
 
     if (resp) {
@@ -41,6 +54,7 @@ export default function ProfileScreen(props) {
         ...prevState,
         userDetails: resp
       }))
+      // await set_data_storage(resp)
     } else {
       console.error('Failed to fetch user details')
     }
@@ -50,7 +64,9 @@ export default function ProfileScreen(props) {
     // Simulate an API call to fetch user details
     try {
       let url = TemplateService?._userId(URL?.get_profile, auth?.id)
-      let resp = await services?._get(url)
+      let resp = await services._get(url)
+
+      console.log('user profile data', resp)
 
       if (resp?.api_response?.data) {
         store.dispatch(set_user_details(resp?.data?.user))
@@ -65,7 +81,9 @@ export default function ProfileScreen(props) {
   }
 
   const handleNavigate = name => {
-    if (name === 'ok') {
+    if (name === 'logout') {
+      open_logout_bottom_sheet()
+    } else if (name === 'ok') {
       show_web_view_toast(true, { url: 'https://necessarydevil.com/terms' })
     } else if (name) {
       props.navigation.navigate(name, { userDetails: state.userDetails }) // list item navigation
@@ -95,23 +113,50 @@ export default function ProfileScreen(props) {
   async function handleUploadImage() {
     let resp = await FilePicker.openPicker()
 
-    const blob = base64ToBlob(resp.data, resp.mime)
+    // const blob = base64ToBlob(resp.data, resp.mime)
 
-    const file = new File([blob], resultFromPicker.filename, {
-      type: resultFromPicker.mime
-    })
+    const key = 'profileId_' + guidGenerator()
 
-    return
-    setState({ ...state, AvatarURl: `data:image/jpeg;base64,${resp?.data}` })
+    const customParams = {
+      file: {
+        uri: Platform.OS === 'ios' ? resp.sourceURL : resp.path,
+        name: 'profile.jpg', // or resp.filename if available
+        type: resp.mime,
+        key: key,
+        id: key
+      }
+    }
 
-    let requestParams = { file: file }
-    let formData = new FormData()
+    console.log('custom params', customParams)
 
-    formData.append(profilePicture, requestParams.file)
+    const formData = new FormData()
+    formData.append('profilePicture', customParams.file)
 
     let url = TemplateService?._userId(URL?.user_profile_pic_upload, auth?.id)
 
     let res = await services?._postFormData(url, formData)
+
+    console.log('succesfuly updated', res)
+  }
+
+  async function data_separation(data) {
+    let auth = {
+      token: data?.token,
+      isLoggedIn: true,
+      contactNumber: data?.contactNumber,
+      email: data?.email,
+      user_id: data?.id,
+      runnerId: data?.runnerId,
+      isAuthorized: data?.isAuthorized
+    }
+    return auth
+  }
+
+  async function set_data_storage(data) {
+    // use to set data in storage
+    services?.refreshInstance(data?.token)
+    const auth = await data_separation(data)
+    await perform_login(auth, (user = { ...data }))
   }
 
   return (

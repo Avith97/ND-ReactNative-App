@@ -1,6 +1,7 @@
 import AsyncStore from '../../data/async/AsyncStore'
 import {
   login_action,
+  logout_action,
   set_user_details
 } from '../../redux/actions/login_action'
 import { store } from '../../redux/store'
@@ -13,4 +14,9 @@ export const perform_login = async (auth, user, restore_offline) => {
   }
   auth && store.dispatch(login_action(auth))
   user && store.dispatch(set_user_details(user))
+}
+
+export const perform_logout = async (auth, user, restore_offline) => {
+  store.dispatch(logout_action())
+  AsyncStore.clearData(Strings.ASYNC_KEY.offline)
 }

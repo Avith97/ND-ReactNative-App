@@ -19,11 +19,13 @@ export default function AppCustomHeader(props) {
   return (
     <View style={styles.headerContainer}>
       {/* Logo */}
-      <Image
-        source={Images.app_logo}
-        style={styles.logo}
-        resizeMode="contain"
-      />
+      <TouchableOpacity onPress={() => handleNavigate(Strings?.NAVIGATION.app)}>
+        <Image
+          source={Images.app_logo}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
 
       {!isLoggedIn ? (
         <CustomButton

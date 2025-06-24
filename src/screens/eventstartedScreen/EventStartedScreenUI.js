@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import CustomImageBackground from '../../common/components/background/CustomImageBackground'
 import { Images } from '../../utils/constants/Images'
-import Colors from '../../utils/constants/Colors'
 import { hp, wp } from '../../common/functions/dimensions'
 import CustomButton from '../../common/components/buttons/CustomButton'
 
@@ -17,15 +16,22 @@ export default function EventStartedScreenUI(props) {
           <Text style={styles.badgeText}>Not Registered</Text>
         </View>
 
+        {/* Overlay content */}
         <View style={styles.contentContainer}>
-          {/* Overlay content */}
+          {/* name */}
           <View style={styles.overlay}>
             {props?.eventDetail && (
-              <Text style={styles.title}>{props?.eventDetail?.title}</Text>
+              <Text style={styles.title}>
+                {props?.eventDetail?.name || props?.eventDetail?.title}
+              </Text>
             )}
-            {props?.eventDetail?.program && (
+
+            {/* description */}
+            {(props?.eventDetail?.program ||
+              props?.eventDetail?.description) && (
               <Text style={styles.subtitle}>
-                {props?.eventDetail?.program?.description}
+                {props?.eventDetail?.description ||
+                  props?.eventDetail?.description}
               </Text>
             )}
           </View>

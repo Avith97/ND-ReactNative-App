@@ -26,7 +26,7 @@ export const URL = {
   // my_events: "events",
   my_events: 'user_id/events',
   upcoming_events: 'upcomingEvents/user_id',
-  check_user_registered: 'event/registered/${event_id}/${user_id}',
+  check_user_registered: 'event/registered/event_id/user_id',
 
   get_event: 'event/event_id',
   register_event: 'register',
@@ -61,5 +61,7 @@ export const URL = {
 
   isUserOnBoardURL: '/check/user/onboard/event_id/user_id',
 
-  submit_onboard: 'onboarding/question/response'
+  submit_onboard: 'onboarding/question/response',
+  // about us
+  about_us: 'html/template/ABOUT_US'
 }

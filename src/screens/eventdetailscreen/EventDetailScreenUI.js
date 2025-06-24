@@ -9,7 +9,8 @@ import Colors from '../../utils/constants/Colors'
 
 export default function EventDetailScreenUI(props) {
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.white }}>
+    <View
+      style={{ flex: 1, backgroundColor: Colors.white, position: 'relative' }}>
       {/* Image with Badge */}
       <View>
         <Image
@@ -17,22 +18,14 @@ export default function EventDetailScreenUI(props) {
           resizeMode="cover"
           style={styles.bannerImage}
         />
-        {/* status see only registered=true */}
-        {!props.IsRegistered && (
-          <View style={styles.badgeContainer}>
-            <Text style={styles.badgeText}>Not Registered</Text>
-          </View>
-        )}
       </View>
 
       {/* Scrollable Content */}
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.title}>Step Challenge</Text>
-        <Text style={styles.description}>
-          Walking once a day, keeps the doctor away!!. Indeed walking helps you
-          in weight loss, relieving anxiety, fighting diabetes and so many other
-          health-related things. Lets "step with a smile" for next seven days.
+        <Text style={styles.title}>
+          {props?.eventData?.name || props?.eventData?.title}
         </Text>
+        <Text style={styles.description}>{props?.eventData?.description}</Text>
 
         {/* Date Section */}
         <View style={styles.dateRangeContainer}>
@@ -42,36 +35,55 @@ export default function EventDetailScreenUI(props) {
             size={20}
             color="black"
           />
-          <Text style={styles.dateText}> From 26-01-2025 To 30-02-2025</Text>
+          <Text style={styles.dateText}>
+            {' '}
+            {props?.eventData?.eventLocalStartDate} -{' '}
+            {props?.eventData?.eventLocalEndDate}{' '}
+          </Text>
         </View>
 
         {/* Organizer Section */}
-        <Text style={[styles.title, { marginTop: hp(2) }]}>Organized By</Text>
-        <View style={styles.orgContainer}>
-          <Image
-            source={Images.app_logo} // <-- Replace with organizer logo
-            style={styles.orgLogo}
-            resizeMode="contain"
-          />
-          <View style={{ flex: 1, marginLeft: wp(3) }}>
-            <Text style={styles.orgName}>Interface </Text>
-            <Text style={styles.orgSubtitle}>
-              Lorem ipsum dolor sit amet, consectetur
+        {props?.eventData?.organizers?.length && (
+          <View>
+            <Text style={[styles.title, { marginTop: hp(2) }]}>
+              Organized By
             </Text>
+            {props?.eventData?.organizers?.map(organizer => {
+              return (
+                <View style={styles.orgContainer}>
+                  <Image
+                    source={Images.app_logo} // <-- Replace with organizer logo
+                    style={styles.orgLogo}
+                    resizeMode="contain"
+                  />
+                  <View style={{ flex: 1, marginLeft: wp(3) }}>
+                    <Text style={styles.orgName}>{organizer?.name} </Text>
+                    <Text style={styles.orgSubtitle}>
+                      Lorem ipsum dolor sit amet, consectetur
+                    </Text>
+                  </View>
+                </View>
+              )
+            })}
           </View>
-        </View>
+        )}
       </ScrollView>
-
-      {/* Floating Button */}
-      {!props.IsRegistered && (
-        <View style={styles.buttonWrapper}>
-          <CustomButton
-            title={'Register Now'}
-            btnStyles={styles.btnStyle}
-            onPress={props.handleNavigate}
-          />
-        </View>
-      )}
+      <View style={styles?.viewResultBtnContainer}>
+        <CustomButton
+          title={'View Result'}
+          name={'navigate'}
+          onPress={() => props?.handleNavigate()}
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 5,
+            backgroundColor: Colors.primary
+            // width:wp(40)
+          }}
+          btnTitleStyles={{
+            ...styles.textStyle
+          }}
+        />
+      </View>
     </View>
   )
 }
@@ -116,7 +128,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.app_primary,
     padding: hp(1.5),
     borderRadius: 10,
-    width: wp(65)
+    width: wp(60)
   },
   dateText: {
     marginLeft: wp(3),
@@ -144,10 +156,23 @@ const styles = StyleSheet.create({
     bottom: hp(3),
     left: wp(30)
   },
-  btnStyle: {
-    width: wp(40),
-    paddingVertical: hp(1.5),
-    backgroundColor: '#C3E458',
-    borderRadius: 10
+  viewResultBtnContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: wp(20),
+    right: wp(20),
+    padding: 16,
+    // backgroundColor: 'red', // Optional: make background white if button overlaps content
+    // borderTopWidth: 1,
+    borderColor: '#ddd'
+  },
+  btnStyles: {
+    paddingVertical: hp(1),
+    borderRadius: 8
+  },
+  textStyle: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 })
