@@ -1,6 +1,6 @@
 // profile screen =================
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ProfileScreenUI from './ProfileScreenUI'
 import Strings from '../../utils/constants/Strings'
 import { services } from '../../services/axios/services'
@@ -18,6 +18,8 @@ import { FilePicker } from '../../common/functions/FilePicker'
 import { useIsFocused } from '@react-navigation/native'
 import { guidGenerator } from '../../common/functions/helper'
 import { perform_login } from '../../common/functions/login'
+import LogoutBottomSheet from '../../common/components/bottomsheet/LogoutBottomSheet'
+import ToastModal from '../../common/components/Modal/ToastModal'
 
 export default function ProfileScreen(props) {
   const [state, setState] = React.useState({
@@ -26,7 +28,8 @@ export default function ProfileScreen(props) {
     AvatarURl: null
   })
 
-  const { auth } = useSelector(store => store)
+  const auth = useSelector(store => store.auth)
+  const actionRef = useRef(null)
 
   let isFocused = useIsFocused()
 
@@ -82,7 +85,8 @@ export default function ProfileScreen(props) {
 
   const handleNavigate = name => {
     if (name === 'logout') {
-      open_logout_bottom_sheet()
+      showActionItem()
+      // open_logout_bottom_sheet()
     } else if (name === 'ok') {
       show_web_view_toast(true, { url: 'https://necessarydevil.com/terms' })
     } else if (name) {
@@ -159,9 +163,20 @@ export default function ProfileScreen(props) {
     await perform_login(auth, (user = { ...data }))
   }
 
+  const showActionItem = () => {
+    actionRef?.current?.show?.({
+      // data: mockRequests,
+      timeout: 1000 * 10
+    })
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: '#fff', padding: 20 }}>
-      <Loader />
+      {/* <Loader /> */}
+
+      <ToastModal ref={actionRef}>
+        <LogoutBottomSheet />
+      </ToastModal>
       <ProfileScreenUI
         {...state}
         handleNavigate={handleNavigate}

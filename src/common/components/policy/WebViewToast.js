@@ -2,6 +2,7 @@ import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CustomWebView from '../webview/CustomWebView'
 import { hp, wp } from '../../functions/dimensions'
+import { Button } from 'react-native'
 
 // function to access this component
 // show_web_view_toast(true , {url:'https://necessarydevil.com/faq'})  true || false
@@ -18,6 +19,11 @@ const WebViewToast = params => {
   return (
     <View style={{ flex: 1, height: hp(100), width: wp(100) }}>
       <View key={key} style={{ flex: 1 }}>
+        <Button
+          onPress={() => console.log('webwiev  testing')}
+          title="click me">
+          {' '}
+        </Button>
         <CustomWebView URL={params?.props?.url} />
       </View>
     </View>
