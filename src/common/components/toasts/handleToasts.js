@@ -70,7 +70,8 @@ export const open_logout_bottom_sheet = hide => {
   Toast.show({
     type: toast_types.logout_bottomsheet,
     autoHide: true,
-    // position: 'bottom',
+    visibilityTime: 1000 * 10,
+    position: 'bottom',
     bottomOffset: 20,
     topOffset: 0
   })

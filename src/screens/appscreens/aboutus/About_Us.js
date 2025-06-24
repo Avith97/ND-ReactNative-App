@@ -11,10 +11,8 @@ const About_US = () => {
   let isFocused = useIsFocused()
 
   useEffect(() => {
-    if (isFocused) {
-      initiateScreen()
-    }
-  }, [isFocused])
+    initiateScreen()
+  }, [])
 
   async function initiateScreen() {
     let resp = await services._get(URL.about_us)
