@@ -43,6 +43,15 @@ const api = {
       },
       timeout: 10000 // 10 seconds timeout
     })
+    api._axiosFormData = axios.create({
+      baseURL: BASE_URL,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data'
+      },
+      timeout: 10000 // 10 seconds timeout
+    })
   },
 
   _redirectToLogin: _params => {
