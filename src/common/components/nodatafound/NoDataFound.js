@@ -32,12 +32,14 @@ export default function NoDataFound() {
 
 const styles = StyleSheet.create({
   title: {
+    textAlign: 'center',
     fontSize: fontSize.m,
     fontFamily: Fonts.Bold,
     color: colors.grey4,
     padding: hp(0.5)
   },
   subtitle: {
+    textAlign: 'center',
     color: colors.grey4,
     fontSize: fontSize.normal,
     fontFamily: Fonts.Regular

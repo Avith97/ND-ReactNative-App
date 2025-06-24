@@ -33,7 +33,10 @@ export default function DashboardScreenUI(props) {
   )
 
   return (
-    <View>
+    <View
+      style={{
+        padding: wp(5)
+      }}>
       {props?.dashboardData?.graphDTO?.[0]?.runnerActivityDetails?.length ? (
         <View>
           {props?.eventGraphData?.progressBar ? (
