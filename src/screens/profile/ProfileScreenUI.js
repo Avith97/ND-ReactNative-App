@@ -43,11 +43,17 @@ export default function ProfileScreenUI(props) {
     },
     {
       id: '6',
+      icon: 'file-text',
+      label: 'Privacy Policy',
+      link: Strings.NAVIGATION.privacy_policy
+    },
+    {
+      id: '7',
       icon: 'help-circle',
       label: 'Support',
       link: Strings.NAVIGATION.customer_support
     },
-    { id: '7', icon: 'help-circle', label: 'Logout', link: 'logout' }
+    { id: '8', icon: 'help-circle', label: 'Logout', link: 'logout' }
   ]
 
   const renderItem = ({ item, index }) => {

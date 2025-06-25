@@ -18,6 +18,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 
 export default function CreateProfileScreenUI(props) {
   const isLoading = useSelector(state => state.settings.isLoading)
+  console.log(props?.byEmail, props?.byMobile)
 
   return (
     <View style={styles.container}>
@@ -25,12 +26,14 @@ export default function CreateProfileScreenUI(props) {
       <ScrollView
         contentContainerStyle={{ paddingBottom: hp(5) }}
         keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        style={{ paddingHorizontal: hp(0.5) }}>
         <View>
-          <View style={{ marginVertical: hp(1) }}>
+          <View style={{ marginVertical: hp(0.7) }}>
             <CustomTextInput
               name={'firstName'}
               label={LABELS.firstName}
+              mandatory
               inputStyle={{ ...styles.textInputStyle }}
               onChangeText={props?.handleChange}
               inputProps={{
@@ -39,10 +42,11 @@ export default function CreateProfileScreenUI(props) {
               }}
             />
           </View>
-          <View style={{ marginVertical: hp(1) }}>
+          <View style={{ marginVertical: hp(0.7) }}>
             <CustomTextInput
               name={'lastName'}
               label={LABELS.lastName}
+              mandatory
               inputStyle={{ ...styles.textInputStyle }}
               onChangeText={props?.handleChange}
               inputProps={{
@@ -51,7 +55,7 @@ export default function CreateProfileScreenUI(props) {
               }}
             />
           </View>
-          <View style={{ marginVertical: hp(1.5) }}>
+          <View style={{ marginVertical: hp(1) }}>
             <CustomDateTimePicker
               label={LABELS.dob}
               name="DOB"
@@ -60,20 +64,21 @@ export default function CreateProfileScreenUI(props) {
               onChangeText={(name, value) => props.handleChange(name, value)}
             />
           </View>
-          <View style={{ marginVertical: hp(1) }}>
+          <View style={{ marginVertical: hp(0.7) }}>
             <CustomTextInput
               name={'email'}
               label={LABELS.email}
               inputStyle={{ ...styles.textInputStyle }}
               onChangeText={props?.handleChange}
               inputProps={{
+                editable: !props?.byEmail,
                 value: props.email,
                 placeholder: LABELS.emailPlaceholder
               }}
             />
           </View>
 
-          <View style={{ marginVertical: hp(1.5) }}>
+          <View style={{ marginVertical: hp(1) }}>
             <CustomTextInput
               name={'contactNumber'}
               label={LABELS.mobileNumber}
@@ -81,13 +86,14 @@ export default function CreateProfileScreenUI(props) {
               inputStyle={{ ...styles.textInputStyle }}
               onChangeText={props?.handleChange}
               inputProps={{
+                editable: !props?.byMobile,
                 value: props.contactNumber,
                 placeholder: LABELS.mobilePlaceholder,
                 keyboardType: 'numeric'
               }}
             />
           </View>
-          <View style={{ marginVertical: hp(1) }}>
+          <View style={{ marginVertical: hp(0.7) }}>
             <CustomDropdown
               name="country"
               title={LABELS.country}
@@ -99,7 +105,7 @@ export default function CreateProfileScreenUI(props) {
               labelExtractor={item => item.label}
             />
           </View>
-          <View style={{ marginVertical: hp(1) }}>
+          <View style={{ marginVertical: hp(0.7) }}>
             <CustomDropdown
               name="gender"
               title={LABELS.gender}
@@ -111,7 +117,7 @@ export default function CreateProfileScreenUI(props) {
               labelExtractor={item => item.label}
             />
           </View>
-          <View style={{ marginVertical: hp(1) }}>
+          <View style={{ marginVertical: hp(0.7) }}>
             <CustomTextInput
               name={'height'}
               label={LABELS.height}
@@ -125,7 +131,7 @@ export default function CreateProfileScreenUI(props) {
               }}
             />
           </View>
-          <View style={{ marginVertical: hp(1) }}>
+          <View style={{ marginVertical: hp(0.7) }}>
             <CustomTextInput
               name={'weight'}
               label={LABELS.weight}
@@ -195,7 +201,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     paddingVertical: 10,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    width: wp(100)
   },
   title: {
     marginBottom: 10,
@@ -206,7 +213,7 @@ const styles = StyleSheet.create({
     fontSize: fontSize.normal,
     elevation: 5,
     height: hp('5'),
-    width: wp('90'),
+    // width: wp('90'),
     color: Colors.text_black
   }
 })

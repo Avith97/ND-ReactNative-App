@@ -69,14 +69,17 @@ const CircularProgress = ({
         <Text style={[styles.stepsText, { fontSize }]}>
           {currentSteps || `${Math.round(computedPercentage)}%`}
         </Text>
-        {totalSteps && goalSteps >= 0 && (
+        {totalSteps && (
           <View style={{ alignItems: 'center' }}>
             <Text style={styles.subLabel}>
-              Total Steps <Text style={styles.highlight}>{totalSteps}</Text>
+              Total Steps : <Text style={styles.highlight}>{totalSteps}</Text>
             </Text>
-            <Text style={styles.subLabel}>
-              Total Goal <Text style={styles.highlight}>{goalSteps}</Text>
-            </Text>
+
+            {goalSteps && (
+              <Text style={styles.subLabel}>
+                Total Goal <Text style={styles.highlight}>{goalSteps}</Text>
+              </Text>
+            )}
           </View>
         )}
       </View>

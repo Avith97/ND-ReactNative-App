@@ -123,7 +123,11 @@ const OtpScreen = props => {
         // checking event data is present or not
         const isEventPresent = !!eventData?.id
         if (resp?.api_response?.data?.newUser) {
-          props.navigation.replace(Strings.NAVIGATION.create_profile)
+          props.navigation.replace(Strings.NAVIGATION.create_profile, {
+            userName: route?.params?.userName,
+            byEmail: route?.params?.byEmail || false,
+            byMobile: route?.params?.byMobile || false
+          })
         } else {
           if (isEventPresent) {
             handleNavigate({
