@@ -187,8 +187,6 @@ const LoginScreen = props => {
   }
 
   async function performLogin(params) {
-    console.log('checking google data', params)
-
     let syncObj = {
       firstName: params.user.givenName,
       lastName: params.user.familyName,
@@ -196,7 +194,9 @@ const LoginScreen = props => {
       sourceUniqueId: params.user.id, //check
       signinSource: 'GOOGLE',
       signinToken: params.idToken,
-      profilePicLink: params.user.photo
+      profilePicLink: params.user.photo,
+      fcmToken: global.fcm_token,
+      deviceId: null
     }
 
     // Create FormData
@@ -219,22 +219,24 @@ const LoginScreen = props => {
       return
     }
 
-    setState({
-      ...state,
-      email: resp.data?.email,
-      userId: resp.data?.runnerId || resp?.data?.id,
-      firstName: resp?.data?.firstName,
-      lastName: resp?.data?.lastName
-    })
-
-    // if (resp?.data?.newUser) {
-    //   showActionItem()
-    // } else {
-    //   // props?.navigation.replace(Strings.NAVIGATION?.app)
-    // }
-    if (resp?.data) {
-      await set_data_storage(resp?.data)
-      if (eventData) {
+    // setState({
+    //   ...state,
+    //   email: resp.data?.email,
+    //   userId: resp.data?.runnerId || resp?.data?.id,
+    //   firstName: resp?.data?.firstName,
+    //   lastName: resp?.data?.lastName
+    // })
+    await set_data_storage(resp?.data)
+    if (resp?.data?.newUser) {
+      // showActionItem()
+      handleNavigate({
+        screen: Strings.NAVIGATION.complete_profile,
+        params: { InCompleteGoogleResponse: resp.data }
+      })
+    } else {
+      // props?.navigation.replace(Strings.NAVIGATION?.app
+      let isEventPresent = !!eventData?.id
+      if (isEventPresent) {
         handleNavigate({
           screen: Strings.NAVIGATION.eventstarted
         })

@@ -85,8 +85,8 @@ export default function ProfileScreen(props) {
 
   const handleNavigate = name => {
     if (name === 'logout') {
-      showActionItem()
-      // open_logout_bottom_sheet()
+      // showActionItem()
+      open_logout_bottom_sheet()
     } else if (name === 'ok') {
       show_web_view_toast(true, { url: 'https://necessarydevil.com/terms' })
     } else if (name) {
@@ -174,9 +174,9 @@ export default function ProfileScreen(props) {
     <View style={{ flex: 1, backgroundColor: '#fff', padding: 20 }}>
       {/* <Loader /> */}
 
-      <ToastModal ref={actionRef}>
+      {/* <ToastModal ref={actionRef}>
         <LogoutBottomSheet />
-      </ToastModal>
+      </ToastModal> */}
       <ProfileScreenUI
         {...state}
         handleNavigate={handleNavigate}

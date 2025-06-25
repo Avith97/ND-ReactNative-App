@@ -32,6 +32,7 @@ import ProgramLeaderBoardScreen from '../../screens/progremleaderboard/ProgramLe
 import { useSelector } from 'react-redux'
 import OnBoardScreen from '../../screens/onBoardScreens/OnBoardScreen'
 import HomeTabBottomNav from '../tab/HomeTabBottomNav'
+import CompleteProfile from '../../screens/profile/complete/CompleteProfile'
 
 // const TabNavigator = props => {
 //   const Tab = createBottomTabNavigator()
@@ -273,6 +274,12 @@ const AppStack = props => {
         name={Strings.NAVIGATION.notificationlist}
         component={NotificationListScreen}
         options={{ title: 'Notification ' }}
+      />
+
+      <Stack.Screen
+        name={Strings.NAVIGATION.complete_profile}
+        component={CompleteProfile}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
 

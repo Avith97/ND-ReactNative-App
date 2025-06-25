@@ -63,6 +63,7 @@ export default function EditProfileScreenUI(props) {
               name="email"
               disabled
               inputProps={{
+                editable: false,
                 value: props?.formState?.email
               }}
               inputStyle={styles.textInputStyle}

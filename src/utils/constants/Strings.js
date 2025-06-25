@@ -52,6 +52,8 @@ export default {
     notificationlist: 'notificationlist',
     generalsetting: 'generalsetting',
     languagesettings: 'languagesettings',
-    unitsettings: 'unitsettings'
+    unitsettings: 'unitsettings',
+
+    complete_profile: 'Complete Profile'
   }
 }
