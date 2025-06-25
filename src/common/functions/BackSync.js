@@ -43,21 +43,24 @@ export const BackSync = {
       // })
       let healthData = await healthService.getData(
         params?.startDate,
-        params?.endDate
+        params?.endDate,
+        'YYYY-MM-DD HH:mm:ss'
       )
       console.log('healthData in background--->', healthData)
       if (healthData) {
         let data = await AsyncStore.getData(Strings.ASYNC_KEY.offline)
-        services.refreshInstance(data?.auth.token)
-        let resp = await services._post(URL.save_health_data, {
-          runnerId: data?.user?.runnerId,
-          distance: healthData.distance,
-          steps: healthData?.steps,
-          calories: healthData?.toCalories,
-          startDate: params?.startDate || moment().format('YYYY-MM-DD'),
-          activityUrl: 'www.googlefit.com'
-        })
-        console.log('resp in background--->', resp)
+        if (data?.auth?.token) {
+          services.refreshInstance(data?.auth?.token)
+          let resp = await services._post(URL.save_health_data, {
+            runnerId: data?.user?.runnerId,
+            distance: healthData.distance,
+            steps: healthData?.steps,
+            calories: healthData?.toCalories,
+            startDate: params?.startDate || moment().format('YYYY-MM-DD'),
+            activityUrl: 'www.googlefit.com'
+          })
+          console.log('resp in background--->', resp)
+        }
       }
     } catch (error) {
       console.error('Failed to sync health data:===>', error)

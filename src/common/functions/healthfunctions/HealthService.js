@@ -97,13 +97,20 @@ export const healthService = {
       return
     }
   },
-  getData: async (startDate, endDate) => {
+  getData: async (startDate, endDate, format) => {
     if (Platform.OS === 'android') {
       try {
+        // const [steps, distance, toCalories] = await Promise.all([
+        //   HealthConnectService.getSteps(),
+        //   HealthConnectService.getDistance(),
+        //   HealthConnectService.getCaloriesBurned()
+        // ])
+
+        // added start date
         const [steps, distance, toCalories] = await Promise.all([
-          HealthConnectService.getSteps(),
-          HealthConnectService.getDistance(),
-          HealthConnectService.getCaloriesBurned()
+          HealthConnectService.getSteps(startDate, endDate, format),
+          HealthConnectService.getDistance(startDate, endDate, format),
+          HealthConnectService.getCaloriesBurned(startDate, endDate, format)
         ])
 
         console.log(

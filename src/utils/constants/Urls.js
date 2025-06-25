@@ -63,5 +63,7 @@ export const URL = {
 
   submit_onboard: 'onboarding/question/response',
   // about us
-  about_us: 'html/template/ABOUT_US'
+  about_us: 'html/template/ABOUT_US',
+  // helth data
+  save_health_data: 'save/health/connect/user/activity'
 }
