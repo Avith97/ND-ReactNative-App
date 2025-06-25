@@ -48,6 +48,7 @@ export const BackSync = {
       console.log('healthData in background--->', healthData)
       if (healthData) {
         let data = await AsyncStore.getData(Strings.ASYNC_KEY.offline)
+        services.refreshInstance(data?.auth.token)
         let resp = await services._post(URL.save_health_data, {
           runnerId: data?.user?.runnerId,
           distance: healthData.distance,

@@ -137,8 +137,8 @@ const HomeTabBottomNav = props => {
 
             tabBarIcon: ({ color, size }) => (
               <Icons
-                type={iconType.feather}
-                name="calendar"
+                type={iconType.material}
+                name="perm-device-info"
                 color={color}
                 size={20}
               />
