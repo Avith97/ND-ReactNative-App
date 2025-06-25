@@ -54,6 +54,9 @@ export default {
     languagesettings: 'languagesettings',
     unitsettings: 'unitsettings',
 
-    complete_profile: 'Complete Profile'
+    complete_profile: 'Complete Profile',
+    privacy_policy: 'Privacy Policy',
+    customer_support: 'Customer support',
+    terms_condition: 'Terms and Conditions'
   }
 }

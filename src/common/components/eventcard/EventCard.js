@@ -4,6 +4,10 @@ import { fontSize } from '../../../utils/constants/Fonts'
 import { hp } from '../../functions/dimensions'
 import Icons, { iconType } from '../../../assets/icons/Icons'
 import Colors from '../../../utils/constants/Colors'
+import {
+  formatDistanceInKm,
+  formatSecondsWithMoment
+} from '../../functions/helper'
 
 const FootPrintItem = ({
   iconName = 'hiking',
@@ -73,14 +77,20 @@ const EventCard = ({ title, ...props }) => {
       {/* Description Metrics */}
       <View style={styles.detailSection}>
         {props?.totalCalories >= 0 && (
-          <DescriptionDetailItem value={props?.totalCalories} unit="Kcal" />
+          <DescriptionDetailItem
+            value={props?.totalCalories?.toFixed(2)}
+            unit="Kcal"
+          />
         )}
         {props?.totalDistance >= 0 && (
-          <DescriptionDetailItem value={props?.totalDistance} unit="KM" />
+          <DescriptionDetailItem
+            value={formatDistanceInKm(props?.totalDistance)}
+            unit="KM"
+          />
         )}
         {props?.totalCompletionTime >= 0 && (
           <DescriptionDetailItem
-            value={props?.totalCompletionTime}
+            value={formatSecondsWithMoment(props?.totalCompletionTime)}
             unit="Duration"
           />
         )}

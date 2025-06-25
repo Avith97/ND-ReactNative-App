@@ -87,9 +87,11 @@ export default function ProfileScreen(props) {
     if (name === 'logout') {
       // showActionItem()
       open_logout_bottom_sheet()
-    } else if (name === 'ok') {
-      show_web_view_toast(true, { url: 'https://necessarydevil.com/terms' })
-    } else if (name) {
+    }
+    //  else if (name === 'ok') {
+    //   show_web_view_toast(true, { url: 'https://necessarydevil.com/terms' })
+    // }
+    else if (name) {
       props.navigation.navigate(name, { userDetails: state.userDetails }) // list item navigation
     } else {
       props.navigation.navigate(Strings.NAVIGATION.bmi, {

@@ -28,18 +28,18 @@ export default function ActivitySyncScreenUI() {
           size={20}
           color={Colors.appbtn}
         />
-        <Text style={styles.statusText}>Connected</Text>
+        <Text style={styles.statusText}>Connected to healthconnect</Text>
       </View>
 
       {/* Disconnect Button */}
-      <CustomButton
+      {/* <CustomButton
         title={'Disconnect'}
         name="disconnect"
         onPress={() => console.log('disconnect')}
         btnStyles={{
           ...styles.btnStyles
         }}
-      />
+      /> */}
     </View>
   )
 }

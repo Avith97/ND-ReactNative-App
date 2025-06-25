@@ -35,8 +35,18 @@ export default function ProfileScreenUI(props) {
       label: 'Activity Sync',
       link: Strings.NAVIGATION.activitysync
     },
-    { id: '5', icon: 'file-text', label: 'Terms & Conditions', link: 'ok' },
-    { id: '6', icon: 'help-circle', label: 'Support', link: 'ok' },
+    {
+      id: '5',
+      icon: 'file-text',
+      label: 'Terms & Conditions',
+      link: Strings.NAVIGATION.terms_condition
+    },
+    {
+      id: '6',
+      icon: 'help-circle',
+      label: 'Support',
+      link: Strings.NAVIGATION.customer_support
+    },
     { id: '7', icon: 'help-circle', label: 'Logout', link: 'logout' }
   ]
 

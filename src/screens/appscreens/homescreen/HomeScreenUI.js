@@ -8,6 +8,8 @@ import EventCard from '../../../common/components/eventcard/EventCard'
 import NotRespondingCard from '../../../common/components/notrespondingcard/NotRespondingCard'
 import moment from 'moment'
 import NoDataFound from '../../../common/components/nodatafound/NoDataFound'
+import CircularProgress from '../../../common/components/Charts/CircularProgress'
+import { colors } from 'react-native-elements'
 
 export default function HomeScreenUI(props) {
   let { isLoggedIn } = props
@@ -35,38 +37,50 @@ export default function HomeScreenUI(props) {
           {/* progress card */}
           <View style={styles.progress_card_wrapper}>
             <View>
-              <Text style={{ color: 'white', paddingBottom: hp(2) }}>
+              <Text
+                style={{
+                  color: 'white',
+                  paddingBottom: hp(2),
+                  fontSize: fontSize.normal,
+                  fontFamily: Fonts.Thin
+                }}>
                 {moment().format('DD MMM YYYY')}
               </Text>
               <Text style={{ ...styles.title, color: Colors.smoky_white }}>
                 Your daily progress
               </Text>
-              <Text style={styles.subTitle}>
+              <Text style={{ ...styles.subTitle, fontSize: fontSize.m }}>
                 {props?.progressEvent
                   ? props?.progressEvent?.eventName
                   : 'Wellness Program'}
               </Text>
               <Text
                 style={{
-                  ...styles.subTitle,
+                  ...styles.subTitle2,
                   color: Colors.smoky_white,
                   opacity: 0.5
                 }}>
                 Accumulating daily report
               </Text>
-              {props?.progressEvent?.eventStartDate && (
-                <Text style={styles.rangetitle}>
-                  From - {props?.progressEvent?.eventStartDate}
-                </Text>
-              )}
-              {props?.progressEvent?.eventEndDate && (
-                <Text style={styles.rangetitle}>
-                  TO - {props?.progressEvent?.eventEndDate}
-                </Text>
-              )}
+              <View style={{ paddingVertical: hp(1) }}>
+                {props?.progressEvent?.eventStartDate && (
+                  <Text style={styles.rangetitle}>
+                    From - {props?.progressEvent?.eventStartDate}
+                  </Text>
+                )}
+                {props?.progressEvent?.eventEndDate && (
+                  <Text style={styles.rangetitle}>
+                    TO - {props?.progressEvent?.eventEndDate}
+                  </Text>
+                )}
+              </View>
             </View>
             <View>
-              <PieProgressBar percentage={props?.HomeScreenData?.progressBar} />
+              {/* <PieProgressBar percentage={props?.HomeScreenData?.progressBar} /> */}
+              <CircularProgress
+                percentage={props?.HomeScreenData?.progressBar}
+                iconName="leaf"
+              />
             </View>
           </View>
 
@@ -150,14 +164,19 @@ const styles = StyleSheet.create({
     fontSize: fontSize.m,
     // fontFamily: 'Poppins-Black',
     fontFamily: Fonts.Italic,
-    fontWeight: 'bold'
-    // marginBottom: hp(0.5),
+    fontWeight: 'bold',
+    marginBottom: hp(0.5)
   },
   subTitle: {
     fontFamily: Fonts.BoldItalic,
-    fontSize: fontSize.normal,
+    fontSize: fontSize.n,
     color: '#94AE27'
     // marginBottom: hp(1),
+  },
+  subTitle2: {
+    fontFamily: Fonts.Light,
+    fontSize: fontSize.s,
+    color: '#94AE27'
   },
 
   progress_card_wrapper: {
@@ -171,8 +190,9 @@ const styles = StyleSheet.create({
   },
 
   rangetitle: {
-    color: '#ffffff',
-    fontSize: fontSize.s,
+    color: colors.white,
+    fontSize: fontSize.normal,
+    fontFamily: Fonts.LightItalic,
     opacity: 0.8
   }
 })
