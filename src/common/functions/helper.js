@@ -40,9 +40,14 @@ export function formatDistanceInKm(meters, decimals = 2) {
   return km?.toFixed(decimals)
 }
 
-export function formatSecondsWithMoment(seconds) {
-  if (!seconds || isNaN(seconds)) return '00'
-  return moment.utc(seconds * 1000).format('mm')
+// export function formatSecondsWithMoment(seconds) {
+//   if (!seconds || isNaN(seconds)) return '00'
+//   return moment.utc(seconds * 1000).format('mm')
+// }
+
+export function formatToHHMMSS(seconds) {
+  if (!seconds || isNaN(seconds)) return '00:00:00'
+  return moment.utc(seconds * 1000).format('HH:mm:ss')
 }
 
 export function parseHtmlDescription(string) {

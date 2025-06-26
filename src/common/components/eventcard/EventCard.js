@@ -4,10 +4,7 @@ import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import { hp } from '../../functions/dimensions'
 import Icons, { iconType } from '../../../assets/icons/Icons'
 import Colors from '../../../utils/constants/Colors'
-import {
-  formatDistanceInKm,
-  formatSecondsWithMoment
-} from '../../functions/helper'
+import { formatDistanceInKm, formatToHHMMSS } from '../../functions/helper'
 
 const FootPrintItem = ({
   iconName = 'Step',
@@ -90,7 +87,7 @@ const EventCard = ({ title, ...props }) => {
         )}
         {props?.totalCompletionTime >= 0 && (
           <DescriptionDetailItem
-            value={formatSecondsWithMoment(props?.totalCompletionTime)}
+            value={formatToHHMMSS(props?.totalCompletionTime)}
             unit="Duration"
           />
         )}

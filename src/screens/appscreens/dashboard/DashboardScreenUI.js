@@ -15,7 +15,7 @@ import NoDataFound from '../../../common/components/nodatafound/NoDataFound'
 import CircularProgress from '../../../common/components/Charts/CircularProgress'
 import {
   formatDistanceInKm,
-  formatSecondsWithMoment
+  formatToHHMMSS
 } from '../../../common/functions/helper'
 
 export default function DashboardScreenUI(props) {
@@ -71,7 +71,7 @@ export default function DashboardScreenUI(props) {
               unit="Km"
             />
             <DescriptionDetailItem
-              value={formatSecondsWithMoment(props?.dashboardData?.totalTime)}
+              value={formatToHHMMSS(props?.dashboardData?.totalTime)}
               unit="Duration"
             />
           </View>
