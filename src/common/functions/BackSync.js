@@ -17,7 +17,7 @@ export const BackSync = {
       if (params?.data?.action === 'trigger') {
         if (params.data?.action_type === 'POST_HEALTH_DATA') {
           console.log('Syncing data with backend:', params.data)
-          const result = await initialize() // or HealthConnectService.init()
+          // const result = await initialize() // or HealthConnectService.init()
           console.log('✅ Init result:', result)
           await BackSync.health_data_sync(params?.data)
           console.log('Synced with backend:')
@@ -31,6 +31,8 @@ export const BackSync = {
   },
 
   health_data_sync: async params => {
+    console.log(params)
+
     try {
       // if (store.getState().settings.isLoading) {
       //   await waitUntilNotSyncing()
@@ -41,6 +43,7 @@ export const BackSync = {
       //   byEmail: true,
       //   byMobile: false
       // })
+      const result = await initialize()
       let healthData = await healthService.getData(
         params?.startDate,
         params?.endDate,

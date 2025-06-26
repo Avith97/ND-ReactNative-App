@@ -2,7 +2,8 @@ import React from 'react'
 import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import Svg, { Circle } from 'react-native-svg'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import Fonts from '../../../utils/constants/Fonts'
+import Fonts, { fontSize as fs } from '../../../utils/constants/Fonts'
+import Colors from '../../../utils/constants/Colors'
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window')
 
@@ -67,7 +68,12 @@ const CircularProgress = ({
       <View style={[StyleSheet.absoluteFill, styles.center]}>
         <Icon name={iconName} size={iconSize} color={iconColor} />
         <Text style={[styles.stepsText, { fontSize }]}>
-          {currentSteps || `${Math.round(computedPercentage)}%`}
+          {currentSteps || `${Math.round(computedPercentage)}`}{' '}
+          {!currentSteps && (
+            <Text style={{ color: Colors.white, fontSize: fontSize * 0.6 }}>
+              %
+            </Text>
+          )}
         </Text>
         {totalSteps && (
           <View style={{ alignItems: 'center' }}>

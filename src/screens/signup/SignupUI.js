@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: fontSize.normal,
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.Medium,
     color: 'black'
   },
   btnStyles: {

@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import Colors from '../../../utils/constants/Colors'
 import { hp, wp } from '../../functions/dimensions'
-import { fontSize } from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 
 const CustomTextInput = props => {
   const [focused, setfocused] = useState(false)
@@ -44,11 +44,13 @@ export default CustomTextInput
 const style = StyleSheet.create({
   label: {
     fontSize: fontSize.normal,
-    marginBottom: hp(0.5)
+    fontFamily: Fonts.Regular
+    // marginBottom: hp(0.5),
   },
   textInputStyle: {
     paddingVertical: hp(1.3),
     paddingHorizontal: wp(3),
+    fontFamily: Fonts.Regular,
     borderWidth: 0.7,
     // elevation: 9,
     borderColor: 'grey',

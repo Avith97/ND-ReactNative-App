@@ -24,7 +24,7 @@ function IndividualLeaderBoardUI({ ...props }) {
   )
   return (
     <View style={{ flex: 1 }}>
-      <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.Medium }}>
+      <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.SemiBold }}>
         Individual Leaderboard
       </Text>
       <TabSelector tabs={props.tabs} onTabChange={props.onTabChange} />
@@ -46,7 +46,8 @@ function IndividualLeaderBoardUI({ ...props }) {
           style={{
             textAlign: 'center',
             paddingVertical: hp(2),
-            color: Colors?.gray_05
+            color: Colors?.gray_05,
+            fontFamily: Fonts.Regular
           }}>
           No data found
         </Text>
@@ -79,17 +80,19 @@ const styles = StyleSheet.create({
   name: {
     flex: 1,
     fontSize: fontSize.md,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: Fonts.Medium,
     color: '#333'
   },
   score: {
     fontSize: fontSize.md,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: Fonts.SemiBold,
     marginRight: 8,
     color: '#333'
   },
   textStyle: {
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.Medium,
     color: 'black'
   },
   btnStyles: {

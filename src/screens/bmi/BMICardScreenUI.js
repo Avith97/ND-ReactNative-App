@@ -40,13 +40,10 @@ export default function BMICardScreenUI({ BMISummery, ...props }) {
         {/* Normal Weight Range */}
         {BMISummery?.normalWeightRange && (
           <View style={styles.rangeBox}>
-            <Text style={styles.rangeText}>
-              Normal weight for the height:
-              {'\n'}
-              <Text style={styles.rangeHighlight}>
-                {BMISummery?.normalWeightRange?.min} kg –{' '}
-                {BMISummery?.normalWeightRange?.max} kg
-              </Text>
+            <Text style={styles.rangeText}>Normal weight for the height</Text>
+            <Text style={styles.rangeHighlight}>
+              {BMISummery?.normalWeightRange?.min} kg –{' '}
+              {BMISummery?.normalWeightRange?.max} kg
             </Text>
           </View>
         )}
@@ -104,13 +101,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fontSize.l,
     color: '#444',
-    fontFamily: Fonts?.Bold
+    fontFamily: Fonts.Bold
   },
   bmiValue: {
     fontSize: fontSize.xl,
     color: '#91c12f',
     fontWeight: 900,
-    marginVertical: 8
+    marginVertical: 8,
+    fontFamily: Fonts.SemiBold
   },
   progressWrapper: {
     alignItems: 'center',
@@ -151,13 +149,15 @@ const styles = StyleSheet.create({
     marginVertical: 4
   },
   infoValue: {
-    fontSize: fontSize.md,
+    fontSize: fontSize.m,
     fontWeight: '600',
-    color: '#7fbf3f'
+    color: '#7fbf3f',
+    fontFamily: Fonts.normal
   },
   infoLabel: {
     fontSize: fontSize.normal,
-    color: '#AAA'
+    color: '#AAA',
+    fontFamily: Fonts.Regular
   },
   rangeBox: {
     marginTop: 10,
@@ -169,10 +169,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: Fonts?.SemiBold,
     color: '#222',
-    fontSize: fontSize.md
+    fontSize: fontSize.normal
   },
   rangeHighlight: {
     color: '#7fbf3f',
-    fontSize: fontSize.l
+    fontSize: fontSize.m,
+    textAlign: 'center',
+    fontFamily: Fonts.SemiBold
   }
 })

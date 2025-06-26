@@ -9,6 +9,8 @@ import { URL } from '../../utils/constants/Urls'
 import { store } from '../../redux/store'
 import actions from '../../redux/action_types/actions'
 import { environment } from '../../../settings'
+import { en as labels } from '../../utils/labels/en'
+import Toast from 'react-native-toast-message'
 
 const SplashScreen = props => {
   const [state, setState] = useState({
@@ -84,9 +86,18 @@ const SplashScreen = props => {
   async function getDecodeDistKey(endpoint) {
     let resp = await services?._get(`redirectedUrl/${endpoint}`)
 
-    console.log(resp, 'resp')
-
-    return '=uyiu32sdfnky3'
+    if (resp?.type === 'success') {
+      return resp?.data?.idValue?.distKey
+    } else {
+      Toast.show({
+        type: 'error',
+        // autoHide: false,
+        visibilityTime: 2000,
+        position: 'bottom',
+        text1: 'Invalid URL',
+        text2: 'Given URL is invalid, please try again'
+      })
+    }
   }
 
   async function handleDeepLink() {
@@ -101,23 +112,30 @@ const SplashScreen = props => {
         const match = url.match(/distKey=([^&]+)/)
         let distKey
         if (!match) {
-          const match = url.match(/https?:\/\/[^/]+\/([^/?#]+)/)
-          const endpoint = match[1]
-          console.log(endpoint)
-          let distKey = await getDecodeDistKey(endpoint)
+          const nameMatch = url.match(/https?:\/\/[^/]+\/([^/?#]+)/)
+          const endpoint = nameMatch[1]
+
+          distKey = await getDecodeDistKey(endpoint)
         } else {
           distKey = match && decodeURIComponent(match[1])
         }
 
-        console.log('executed distKey ------>', distKey)
-
         global.distKey = distKey
         // appsnackbar.showSuccessMsg(`${url}\nApp open from link`)
-        let event_details = await fetchEventDetails(distKey)
+
+        let event_details = null
+        if (distKey) {
+          event_details = await fetchEventDetails(distKey)
+        }
+
         if (event_details) {
           //check for registered /unregistered user
           handleNavigate({
             screen: Strings.NAVIGATION.eventstarted
+          })
+        } else {
+          handleNavigate({
+            screen: Strings.NAVIGATION.home
           })
         }
       } catch (error) {

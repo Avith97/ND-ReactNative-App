@@ -4,7 +4,7 @@ import { Image } from 'react-native'
 import { Images } from '../../utils/constants/Images'
 import { hp, wp } from '../../common/functions/dimensions'
 import CustomButton from '../../common/components/buttons/CustomButton'
-import { fontSize } from '../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import Icons, { iconType } from '../../assets/icons/Icons'
 import Colors from '../../utils/constants/Colors'
 
@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: fontSize.md,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: Fonts.Regular,
     color: '#444'
   },
   btnStyles: {

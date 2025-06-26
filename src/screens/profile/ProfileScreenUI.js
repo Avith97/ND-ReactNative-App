@@ -1,19 +1,21 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Avatar, Icon } from 'react-native-elements'
-import { hp } from '../../common/functions/dimensions'
+import { hp, wp } from '../../common/functions/dimensions'
 import CustomButton from '../../common/components/buttons/CustomButton'
 import { FlatList } from 'react-native-gesture-handler'
-import { fontSize } from '../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import { maskNumber } from '../../common/functions/masknumber'
 import Strings from '../../utils/constants/Strings'
 import { BASE_URL } from '../../utils/constants/Urls'
+import { iconType } from '../../assets/icons/Icons'
 
 export default function ProfileScreenUI(props) {
   const settingsData = [
     {
       id: '1',
-      icon: 'user',
+      icon: 'user-cog',
+      type: 'fa5',
       label: 'Profile Settings',
       link: Strings.NAVIGATION.editprofile
     },
@@ -25,31 +27,36 @@ export default function ProfileScreenUI(props) {
     // },
     {
       id: '3',
-      icon: 'sliders',
+      icon: 'link',
+      type: 'entypo',
       label: 'General Settings',
       link: Strings.NAVIGATION.generalsetting
     },
     {
       id: '4',
       icon: 'link',
+      type: 'entypo',
       label: 'Activity Sync',
       link: Strings.NAVIGATION.activitysync
     },
     {
       id: '5',
-      icon: 'file-text',
+      icon: 'document-text-sharp',
+      type: 'ionicon',
       label: 'Terms & Conditions',
       link: Strings.NAVIGATION.terms_condition
     },
     {
       id: '6',
-      icon: 'file-text',
+      icon: 'policy',
+      type: 'material',
       label: 'Privacy Policy',
       link: Strings.NAVIGATION.privacy_policy
     },
     {
       id: '7',
-      icon: 'help-circle',
+      icon: 'question-circle',
+      type: 'FAIcon5',
       label: 'Support',
       link: Strings.NAVIGATION.customer_support
     },
@@ -59,6 +66,7 @@ export default function ProfileScreenUI(props) {
   const renderItem = ({ item, index }) => {
     const isFirst = index === 0
     const isLast = index === settingsData.length - 1
+    console.log(iconType[item.type])
 
     return (
       <TouchableOpacity
@@ -70,8 +78,15 @@ export default function ProfileScreenUI(props) {
         ]}
         onPress={() => props.handleNavigate(item.link)}>
         <View style={styles.row}>
-          {/* <Icon name={item.icon} size={20} color="#000" /> */}
-          <Text style={styles.label}>{item.label}</Text>
+          {/* <Icon
+            name={item.icon}
+            type={iconType[item.type]}
+            size={20}
+            color="#000"
+          /> */}
+          <Text style={{ ...styles.label, fontFamily: Fonts.Regular }}>
+            {item.label}
+          </Text>
         </View>
         <Icon name="chevron-right" size={20} color="#000" />
       </TouchableOpacity>
@@ -153,16 +168,18 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSize.md,
-    fontWeight: 600,
-    paddingVertical: 6
+    // fontWeight: 600,
+    paddingVertical: 6,
+    fontFamily: Fonts.Medium
   },
   numberText: {
     fontSize: fontSize.normal,
-    fontWeight: 600
+    fontFamily: Fonts.Regular
   },
   emailText: {
     fontSize: fontSize.normal,
-    paddingVertical: 8
+    paddingVertical: 8,
+    fontFamily: Fonts.Regular
   },
   listContainer: {
     backgroundColor: '#f5f5f5',
@@ -172,7 +189,9 @@ const styles = StyleSheet.create({
   },
   item: {
     backgroundColor: '#79777714',
-    padding: 16,
+    // padding: 16,
+    paddingVertical: hp(1.5),
+    paddingHorizontal: wp(3),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'

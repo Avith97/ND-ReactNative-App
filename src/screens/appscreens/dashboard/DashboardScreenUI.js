@@ -45,8 +45,13 @@ export default function DashboardScreenUI(props) {
             /> */}
 
             <CircularProgress
-              percentage={props?.dashboardData?.progressBar}
-              currentSteps={props?.dashboardData?.todaysStep}
+              // percentage={props?.dashboardData?.progressBar}
+              percentage={
+                props?.dashboardData?.totalTarget === 0
+                  ? 100
+                  : props?.dashboardData?.progressBar
+              }
+              currentSteps={props?.dashboardData?.todaysStep} // 0
               totalSteps={props?.dashboardData?.totalSteps}
               goalSteps={props?.dashboardData?.totalTarget || 0} //
               iconName="run"
@@ -97,7 +102,8 @@ export default function DashboardScreenUI(props) {
           style={{
             textAlign: 'center',
             paddingVertical: hp(2),
-            color: Colors?.gray_05
+            color: Colors?.gray_05,
+            fontFamily: Fonts.Regular
           }}>
           No data found
         </Text>
@@ -192,13 +198,15 @@ const styles = StyleSheet.create({
   },
   metricValue: {
     fontSize: fontSize.m,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: Fonts.Bold,
     color: Colors.white,
     textAlign: 'center'
   },
   unitLabel: {
-    fontSize: fontSize.normal,
+    fontSize: fontSize.s,
     color: Colors.white,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: Fonts.Medium
   }
 })

@@ -44,3 +44,13 @@ export function formatSecondsWithMoment(seconds) {
   if (!seconds || isNaN(seconds)) return '00'
   return moment.utc(seconds * 1000).format('mm')
 }
+
+export function parseHtmlDescription(string) {
+  if (!string) return ''
+  return string
+    .replace(/<br\s*\/?>/gi, '\n') // convert <br> to newline
+    .replace(/<\/?p>/gi, '') // remove <p> tags
+    .replace(/<\/?b>/gi, '**') // optional: bold marker
+    .replace(/<[^>]+>/g, '') // remove other tags
+    .trim()
+}
