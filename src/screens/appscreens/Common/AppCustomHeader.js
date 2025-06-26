@@ -80,9 +80,7 @@ export default function AppCustomHeader(props) {
       for (const event of global.ongoingEvents) {
         try {
           const response = await BackSync.health_data_sync({
-            startDate: moment(event?.eventStartDate, 'YYYY-MM-DD')
-              .startOf('day')
-              .format('YYYY-MM-DD HH:mm:ss'),
+            startDate: moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
             endDate: moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
             format: 'YYYY-MM-DD HH:mm:ss'
             // eventId: event.id // optional: if your API needs event ID

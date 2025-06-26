@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     fontSize: fontSize.normal,
     elevation: 5,
-    height: hp('5'),
+    // height: hp('5'),
     // width: wp('90'),
     color: Colors.text_black
   }

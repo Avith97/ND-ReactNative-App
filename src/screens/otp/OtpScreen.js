@@ -130,15 +130,15 @@ const OtpScreen = props => {
           })
         } else {
           if (isEventPresent) {
+            await set_data_storage(resp?.api_response?.data)
             handleNavigate({
               screen: Strings.NAVIGATION.eventstarted
             })
-            await set_data_storage(resp?.api_response?.data)
           } else {
+            await set_data_storage(resp?.api_response?.data)
             props.navigation.replace(Strings.NAVIGATION.app, {
               isLoggedIn: true
             })
-            await set_data_storage(resp?.api_response?.data)
           }
         }
       }

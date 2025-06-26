@@ -71,9 +71,7 @@ export default function DashboardScreenUI(props) {
               unit="Km"
             />
             <DescriptionDetailItem
-              value={
-                formatSecondsWithMoment(props?.dashboardData?.totalTime) || 0
-              }
+              value={formatSecondsWithMoment(props?.dashboardData?.totalTime)}
               unit="Duration"
             />
           </View>

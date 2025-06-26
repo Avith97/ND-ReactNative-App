@@ -66,7 +66,6 @@ export default function ProfileScreenUI(props) {
   const renderItem = ({ item, index }) => {
     const isFirst = index === 0
     const isLast = index === settingsData.length - 1
-    console.log(iconType[item.type])
 
     return (
       <TouchableOpacity
@@ -128,13 +127,10 @@ export default function ProfileScreenUI(props) {
           />
         </Avatar>
 
-        {(props?.userDetails?.user?.firstName ||
-          props?.userDetails?.user?.lastName) && (
-          <Text
-            style={
-              styles.title
-            }>{`${props?.userDetails?.user?.firstName} ${props?.userDetails?.user?.lastName}`}</Text>
-        )}
+        <Text style={styles.title}>{`${
+          props?.userDetails?.user?.firstName || ''
+        } ${props?.userDetails?.user?.lastName || ''}`}</Text>
+
         {props?.userDetails?.user?.contactNumber && (
           <Text style={styles.numberText}>
             {maskNumber(props?.userDetails?.user?.contactNumber)}
