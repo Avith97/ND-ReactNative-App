@@ -56,6 +56,8 @@ export function parseHtmlDescription(string) {
     .replace(/<br\s*\/?>/gi, '\n') // convert <br> to newline
     .replace(/<\/?p>/gi, '') // remove <p> tags
     .replace(/<\/?b>/gi, '**') // optional: bold marker
-    .replace(/<[^>]+>/g, '') // remove other tags
+    .replace(/<[^>]+>/g, '')
+    .replace(/\n{2,}/g, '\n')
+    .replace(/\n/g, ' ') // remove other tags
     .trim()
 }

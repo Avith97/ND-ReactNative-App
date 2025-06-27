@@ -17,6 +17,7 @@ export default function HomeScreen(props) {
   let isFocused = useIsFocused()
 
   let user = useSelector(state => state?.user)
+  const isSoftSyncing = useSelector(store => store.settings?.isSoftSyncing)
   // Custom hook to fetch health connect data
   // const {healthConnectData, fetchAllData} = useHealthConnectData();
 
@@ -33,14 +34,17 @@ export default function HomeScreen(props) {
   // },[])
 
   useEffect(() => {
-    if (isFocused) {
+    // console.log('global softsyncing', global.isSoftSyncing)
+    if (isFocused && !isSoftSyncing) {
       initiateScreen()
     }
     // requestHealthPermissions();
-  }, [isFocused])
+  }, [isFocused, isSoftSyncing])
 
   async function initiateScreen() {
     let data = await getDetails()
+
+    console.log('data updating')
 
     if (!data) {
       console.log('No data received for onboarding screen')
@@ -60,8 +64,8 @@ export default function HomeScreen(props) {
       let resp = await services._get(HomeSummaryURL)
 
       // setting global events
-      if (resp.data?.events?.length) {
-        global.ongoingEvents = resp.data?.events
+      if (resp.data) {
+        global.ongoingEvents = true
       }
 
       // You can update the state with the response data if needed

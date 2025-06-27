@@ -227,6 +227,8 @@ const App = () => {
     // return () => appStateListener.remove();
   }, []);
 
+  
+
   const initHealthConnect = async () => {
     FirebasePushNotificationService.getToken()
     setloading(true);

@@ -19,6 +19,8 @@ import { toast_success } from '../../../common/components/toasts/handleToasts'
 import Toast from 'react-native-toast-message'
 import moment from 'moment'
 import { BackSync } from '../../../common/functions/BackSync'
+import { store } from '../../../redux/store'
+import { handleSoftSync } from '../../../redux/actions/loading'
 
 export default function AppCustomHeader(props) {
   const navigation = useNavigation() // ✅ Access navigation
@@ -52,7 +54,12 @@ export default function AppCustomHeader(props) {
     return () => {
       if (animation) animation.stop()
     }
-  }, [isLoading, global.ongoingEvents?.length])
+  }, [isLoading, global.ongoingEvents])
+
+  useEffect(() => {
+    store.dispatch(handleSoftSync(isLoading))
+    global.temp = isLoading
+  }, [isLoading])
 
   const rotateInterpolate = rotateAnim.interpolate({
     inputRange: [0, 1],
@@ -76,22 +83,23 @@ export default function AppCustomHeader(props) {
     //     endDate: moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
     //     format: 'YYYY-MM-DD HH:mm:ss'
     //   },"active")
-    if (global.ongoingEvents?.length) {
-      for (const event of global.ongoingEvents) {
-        try {
-          const response = await BackSync.health_data_sync({
-            startDate: moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
-            endDate: moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
-            format: 'YYYY-MM-DD HH:mm:ss'
-            // eventId: event.id // optional: if your API needs event ID
-          })
-          setIsLoading(false)
-          Toast.hide()
-          console.log(`Synced event `, response)
-        } catch (error) {
-          console.error(`Error syncing event ${event.id}:`, error)
-        }
+
+    if (global.ongoingEvents) {
+      // for (const event of global.ongoingEvents) {
+      try {
+        const response = await BackSync.health_data_sync({
+          startDate: moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+          endDate: moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
+          format: 'YYYY-MM-DD HH:mm:ss'
+          // eventId: event.id // optional: if your API needs event ID
+        })
+        setIsLoading(false)
+        Toast.hide()
+        console.log(`Synced event `, response)
+      } catch (error) {
+        console.error(`Error syncing event ${event.id}:`, error)
       }
+      // }
     }
 
     // // call health connect data sync api

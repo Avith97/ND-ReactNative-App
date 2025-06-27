@@ -1,4 +1,5 @@
 import AsyncStore from '../../data/async/AsyncStore'
+import { InitiateAllGlobals } from '../../data/globals/Index'
 import { handleInit } from '../../redux/actions/loading'
 import { store } from '../../redux/store'
 import { initiateFirebaseService } from '../../services/firebase'
@@ -8,6 +9,7 @@ import { perform_login } from './login'
 
 export const initiateApp = async () => {
   store.dispatch(handleInit(true))
+  InitiateAllGlobals()
   await Promise.all([
     initiateFirebaseService(),
     HealthConnectService.init(),
