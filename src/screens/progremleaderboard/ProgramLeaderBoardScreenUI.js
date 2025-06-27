@@ -187,7 +187,7 @@ export default function ProgramLeaderBoardScreenUI({
               justifyContent: 'space-between',
               alignContent: 'center'
             }}>
-            <Text style={styles.filterlable}>Participated</Text>
+            <Text style={styles.filterlable}>{en.label_participant}</Text>
             <View style={styles.dropdownStyle}>
               <CustomDropdown
                 name="selectedParticipated"
@@ -248,7 +248,7 @@ export default function ProgramLeaderBoardScreenUI({
                   justifyContent: 'space-between',
                   alignContent: 'center'
                 }}>
-                <Text style={styles.filterlable}>Activity Types</Text>
+                <Text style={styles.filterlable}>{en.label_activity_type}</Text>
                 <View style={styles.dropdownStyle}>
                   <CustomDropdown
                     name="selectedActivity"
@@ -276,7 +276,9 @@ export default function ProgramLeaderBoardScreenUI({
                   justifyContent: 'space-between',
                   alignContent: 'center'
                 }}>
-                <Text style={styles.filterlable}>Category Types</Text>
+                <Text style={styles.filterlable}>
+                  {en.label_category_types}
+                </Text>
                 <View style={styles.dropdownStyle}>
                   <CustomDropdown
                     name="selectedCategory"
@@ -304,11 +306,11 @@ export default function ProgramLeaderBoardScreenUI({
                 justifyContent: 'space-between'
                 // alignContent: 'center',
               }}>
-              <Text style={styles.filterlable}>Top Participant</Text>
+              <Text style={styles.filterlable}>{en.label_top_participant}</Text>
               <View style={styles.dropdownStyle}>
                 <CustomDropdown
                   name="selectedLimit"
-                  label="Select"
+                  label={en.select}
                   data={props?.limit}
                   value={props?.selectedLimit} // Pre-selected value
                   onChangeText={(name, value) => {
@@ -336,7 +338,7 @@ export default function ProgramLeaderBoardScreenUI({
             paddingBottom: hp(2)
           }}>
           <CustomButton
-            title={'Cancel'}
+            title={en.cancel}
             name={'cancel'}
             onPress={() => props.handleChange('showModal', !props?.showModal)}
             btnStyles={{ backgroundColor: 'transparent', borderWidth: 0.9 }}
@@ -347,7 +349,7 @@ export default function ProgramLeaderBoardScreenUI({
             }}
           />
           <CustomButton
-            title={'Apply'}
+            title={en.apply}
             name={'submit'}
             onPress={props?.handleSubmit}
             minWidth={wp('30')}

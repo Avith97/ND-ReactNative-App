@@ -30,6 +30,7 @@ export const en = {
   resendOtp: 'Resend OTP',
   submit: 'Submit',
   cancel: 'Cancel',
+  apply: 'Apply',
   otpSubTitle: 'Enter OTP for authentication',
 
   // create profile screen
@@ -88,6 +89,8 @@ export const en = {
   register_not_open: 'Registration not open Registration not open yet',
   register_closed: 'Registration Closed',
   register_here: 'Register Here',
+  no_team_data: 'No Teams data found',
+  no_runner_group_data: 'No runner group data found',
 
   //LeaderBoard screen
   label_leaderboard: 'Leaderboard',
@@ -97,6 +100,12 @@ export const en = {
   label_show_leaderboard: 'Show Leaderboard',
   label_individual_leaderboard: 'Individual Leaderboard',
   label_week_filter: 'Week Filter',
+  label_participant: 'Participated',
+  label_category_types: 'Category Types',
+  label_top_participant: 'Top Participant',
+  label_team_leaderboard: 'Teams Leaderboard',
+  label_runner_group_leaderboard: 'Runner Group Leaderboard',
+  label_age_group_leaderboard: 'Age Group Leaderboard',
 
   //activitySync screen
   label_connected: 'Connected',

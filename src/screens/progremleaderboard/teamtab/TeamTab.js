@@ -9,6 +9,7 @@ import { URL } from '../../../utils/constants/Urls'
 import { services } from '../../../services/axios/services'
 import { hp, wp } from '../../../common/functions/dimensions'
 import Colors from '../../../utils/constants/Colors'
+import { en } from '../../../utils/labels/en'
 
 export default function TeamTab({ ...props }) {
   const [state, setState] = useState({
@@ -98,7 +99,7 @@ export default function TeamTab({ ...props }) {
   return (
     <>
       <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.Medium }}>
-        Teams Leaderboard
+        {en.label_team_leaderboard}
       </Text>
       {state?.teamsData?.length ? (
         <FlatList
@@ -116,7 +117,7 @@ export default function TeamTab({ ...props }) {
             color: Colors?.gray_05,
             fontFamily: Fonts.Regular
           }}>
-          No Teams data found
+          {en.no_team_data}
         </Text>
       )}
     </>

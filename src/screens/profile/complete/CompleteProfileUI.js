@@ -53,8 +53,8 @@ export default function CompleteProfileUI(props) {
         <View style={styles.fullWidth}>
           <CustomDropdown
             name="gender"
-            title="Gender"
-            label="Select"
+            title={LABELS.gender}
+            label={LABELS.select}
             mandatory
             value={props?.gender}
             data={[

@@ -9,6 +9,7 @@ import { URL } from '../../../utils/constants/Urls'
 import { services } from '../../../services/axios/services'
 import { hp, wp } from '../../../common/functions/dimensions'
 import Colors from '../../../utils/constants/Colors'
+import { en } from '../../../utils/labels/en'
 
 export default function RunnerGroupTab({ ...props }) {
   const [state, setState] = useState({
@@ -97,7 +98,7 @@ export default function RunnerGroupTab({ ...props }) {
   return (
     <>
       <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.Medium }}>
-        Runner Group Leaderboard
+        {en.label_runner_group_leaderboard}
       </Text>
 
       {state?.groupData?.length ? (
@@ -116,7 +117,7 @@ export default function RunnerGroupTab({ ...props }) {
             color: Colors?.gray_05,
             fontFamily: Fonts.Regular
           }}>
-          No runner group data found
+          {en.no_runner_group_data}
         </Text>
       )}
     </>

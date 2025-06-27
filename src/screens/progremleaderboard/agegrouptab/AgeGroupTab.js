@@ -8,6 +8,7 @@ import { URL } from '../../../utils/constants/Urls'
 import { services } from '../../../services/axios/services'
 import AgeGroupTabUI from './AgeGroupTabUI'
 import { wp } from '../../../common/functions/dimensions'
+import { en } from '../../../utils/labels/en'
 
 export default function AgeGroupTab({ ...props }) {
   const [state, setState] = useState({
@@ -81,7 +82,7 @@ export default function AgeGroupTab({ ...props }) {
   return (
     <>
       <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.Medium }}>
-        Age Group Leaderboard
+        {en.label_age_group_leaderboard}
       </Text>
       <FlatList
         data={state?.ageGroupData?.ageGroupDTOs || []}
