@@ -25,7 +25,9 @@ const OtpUI = props => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{LABELS.enterOtp}</Text>
-      <Text style={{ marginBottom: hp(1) }}>{LABELS.otpSubTitle} </Text>
+      <Text style={{ marginBottom: hp(1), fontFamily: Fonts.Medium }}>
+        {LABELS.otpSubTitle}{' '}
+      </Text>
       <View style={{ alignItems: 'center' }}>
         <PinCodeTextInput
           value={props.pin}
@@ -109,7 +111,7 @@ const ResendOtp = props => {
       <Text
         onPress={handleResend}
         style={{
-          fontWeight: 'bold',
+          fontFamily: Fonts.Medium,
           textAlign: 'left',
           color: canResend ? Colors.otp_resent : Colors.gray_06,
           opacity: canResend ? 1 : 0.6
@@ -118,7 +120,7 @@ const ResendOtp = props => {
       </Text>
       <Text
         style={{
-          fontWeight: 'bold',
+          fontFamily: Fonts.Medium,
           textAlign: 'right',
           color: canResend ? Colors.gray_06 : Colors.otp_resent
         }}>
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: 20,
     fontSize: fontSize.l,
-    fontWeight: 'bold'
+    fontFamily: Fonts.SemiBold
   },
   textInputStyle: {
     fontSize: fontSize.normal,
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: fontSize.normal,
-    fontFamily: Fonts.medium,
+    // fontFamily: Fonts.medium,
     color: 'black'
   },
   btnStyles: {

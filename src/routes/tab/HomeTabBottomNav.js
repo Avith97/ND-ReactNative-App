@@ -52,7 +52,7 @@ const HomeTabBottomNav = props => {
             },
             tabBarIcon: ({ color, size }) => (
               <Icons
-                type={iconType.feather}
+                type={iconType.material}
                 name="home"
                 color={color}
                 size={20}
@@ -94,8 +94,8 @@ const HomeTabBottomNav = props => {
             },
             tabBarIcon: ({ color, size }) => (
               <Icons
-                type={iconType.feather}
-                name="bar-chart-2"
+                type={iconType.material}
+                name="dashboard"
                 color={color}
                 size={20}
               />

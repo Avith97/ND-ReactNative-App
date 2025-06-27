@@ -1,19 +1,20 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { fontSize } from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import { hp } from '../../functions/dimensions'
 import Icons, { iconType } from '../../../assets/icons/Icons'
 import Colors from '../../../utils/constants/Colors'
+import { formatDistanceInKm, formatToHHMMSS } from '../../functions/helper'
 
 const FootPrintItem = ({
-  iconName = 'hiking',
+  iconName = 'Step',
   steps = '1087',
   label = "Today's Steps",
   day = 0
 }) => (
   <View style={styles.centered}>
     <Icons
-      type={iconType.material}
+      // type={iconType.material}
       name={iconName}
       size={20}
       color={Colors.primary}
@@ -73,14 +74,20 @@ const EventCard = ({ title, ...props }) => {
       {/* Description Metrics */}
       <View style={styles.detailSection}>
         {props?.totalCalories >= 0 && (
-          <DescriptionDetailItem value={props?.totalCalories} unit="Kcal" />
+          <DescriptionDetailItem
+            value={props?.totalCalories?.toFixed(2)}
+            unit="Kcal"
+          />
         )}
         {props?.totalDistance >= 0 && (
-          <DescriptionDetailItem value={props?.totalDistance} unit="KM" />
+          <DescriptionDetailItem
+            value={formatDistanceInKm(props?.totalDistance)}
+            unit="KM"
+          />
         )}
         {props?.totalCompletionTime >= 0 && (
           <DescriptionDetailItem
-            value={props?.totalCompletionTime}
+            value={formatToHHMMSS(props?.totalCompletionTime)}
             unit="Duration"
           />
         )}
@@ -94,8 +101,9 @@ const styles = StyleSheet.create({
     marginTop: -hp(1.5)
   },
   title: {
-    fontSize: fontSize.m,
-    fontWeight: 'bold'
+    fontSize: fontSize.normal,
+    // fontWeight: 'bold'
+    fontFamily: Fonts.Medium
     // marginBottom: hp(0.5),
   },
   centered: {
@@ -108,7 +116,7 @@ const styles = StyleSheet.create({
   },
   mainSection: {
     flexDirection: 'row',
-    gap: 20,
+    gap: 10,
     backgroundColor: '#E1FB98',
     borderWidth: 1,
     borderColor: '#B2DB03',
@@ -144,10 +152,12 @@ const styles = StyleSheet.create({
   },
   metricValue: {
     fontSize: fontSize.m,
-    fontWeight: 'bold'
+    // fontWeight: 'bold'
+    fontFamily: Fonts.SemiBold
   },
   unitLabel: {
-    fontSize: fontSize.normal
+    fontSize: fontSize.normal,
+    fontFamily: Fonts.Medium
   }
 })
 

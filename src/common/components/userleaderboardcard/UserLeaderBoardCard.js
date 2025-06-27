@@ -1,17 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { hp, wp } from '../../functions/dimensions'
-import { fontSize } from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import { Avatar } from 'react-native-elements'
+import { BASE_URL } from '../../../utils/constants/Urls'
 
 export default function UserLeaderBoardCard(props) {
+  console.log(props?.runnerActivityDetail)
+
   return (
     <View style={styles.userCard}>
       <Avatar
         rounded
         size={'large'}
         source={{
-          uri: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp'
+          uri:
+            BASE_URL.replace('/api/v1/', '/') +
+            props?.runnerActivityDetail?.profileLink
         }}
         avatarStyle={styles.avatarImage}></Avatar>
       <View>
@@ -22,7 +27,9 @@ export default function UserLeaderBoardCard(props) {
           </Text>
         )}
         {props?.runnerActivityDetail?.bibNumber && (
-          <Text>BIB no: {props?.runnerActivityDetail?.bibNumber}</Text>
+          <Text style={styles.bibTitle}>
+            BIB no: {props?.runnerActivityDetail?.bibNumber}
+          </Text>
         )}
       </View>
     </View>
@@ -41,7 +48,13 @@ const styles = StyleSheet.create({
     marginBottom: hp(2)
   },
   nameTitle: {
-    fontSize: fontSize.md,
-    fontWeight: 800
+    fontSize: fontSize.m,
+    // fontWeight: 800,
+    fontFamily: Fonts.SemiBold
+  },
+  bibTitle: {
+    fontSize: fontSize.normal,
+    // fontWeight: 800,
+    fontFamily: Fonts.Medium
   }
 })

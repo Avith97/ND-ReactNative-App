@@ -1,21 +1,43 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import Svg, { Circle } from 'react-native-svg'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Fonts, { fontSize as fs } from '../../../utils/constants/Fonts'
+import Colors from '../../../utils/constants/Colors'
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window')
 
 const CircularProgress = ({
-  percentage = 0,
-  radius = 50,
-  strokeWidth = 10,
+  percentage,
+  currentSteps,
+  totalSteps,
+  goalSteps,
+  radius = SCREEN_WIDTH * 0.2,
+  strokeWidth,
   progressColor = '#B6FF2D',
   backgroundColor = '#555',
-  iconName = 'leaf',
-  iconSize = 24,
+  iconName = 'run',
   iconColor = '#B6FF2D'
 }) => {
-  const normalizedRadius = radius - strokeWidth / 2
+  const dynamicStrokeWidth = strokeWidth || radius * 0.15
+
+  //size manage
+  const iconSize = radius * 0.4
+  const fontSize = radius * 0.28
+  // const fontSize = radius * 0.35;
+
+  // Calculate percentage from steps if not provided
+  const computedPercentage =
+    percentage != null
+      ? percentage
+      : totalSteps && goalSteps
+      ? (totalSteps / goalSteps) * 100
+      : 0
+
+  const normalizedRadius = radius - dynamicStrokeWidth / 2
   const circumference = 2 * Math.PI * normalizedRadius
-  const strokeDashoffset = circumference - (percentage / 100) * circumference
+  const strokeDashoffset =
+    circumference - (computedPercentage / 100) * circumference
 
   return (
     <View style={{ width: radius * 2, height: radius * 2 }}>
@@ -26,7 +48,7 @@ const CircularProgress = ({
           cx={radius}
           cy={radius}
           r={normalizedRadius}
-          strokeWidth={strokeWidth}
+          strokeWidth={dynamicStrokeWidth}
         />
         <Circle
           stroke={progressColor}
@@ -34,7 +56,7 @@ const CircularProgress = ({
           cx={radius}
           cy={radius}
           r={normalizedRadius}
-          strokeWidth={strokeWidth}
+          strokeWidth={dynamicStrokeWidth}
           strokeDasharray={`${circumference} ${circumference}`}
           strokeDashoffset={strokeDashoffset}
           strokeLinecap="round"
@@ -45,7 +67,27 @@ const CircularProgress = ({
 
       <View style={[StyleSheet.absoluteFill, styles.center]}>
         <Icon name={iconName} size={iconSize} color={iconColor} />
-        <Text style={styles.text}>{`${percentage}%`}</Text>
+        <Text style={[styles.stepsText, { fontSize }]}>
+          {currentSteps || `${Math.round(computedPercentage)}`}{' '}
+          {!currentSteps && (
+            <Text style={{ color: Colors.white, fontSize: fontSize * 0.6 }}>
+              %
+            </Text>
+          )}
+        </Text>
+        {totalSteps && (
+          <View style={{ alignItems: 'center' }}>
+            <Text style={styles.subLabel}>
+              Total Steps : <Text style={styles.highlight}>{totalSteps}</Text>
+            </Text>
+
+            {goalSteps && (
+              <Text style={styles.subLabel}>
+                Total Goal <Text style={styles.highlight}>{goalSteps}</Text>
+              </Text>
+            )}
+          </View>
+        )}
       </View>
     </View>
   )
@@ -56,11 +98,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  text: {
+  stepsText: {
     color: '#FFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginTop: 4
+    fontFamily: Fonts.Medium,
+    marginTop: 6
+  },
+  subLabel: {
+    color: '#FFF',
+    fontSize: 9,
+    fontFamily: Fonts.LightItalic,
+    fontWeight: '500'
+  },
+  highlight: {
+    color: '#B6FF2D',
+    fontFamily: Fonts.Bold
+    // fontWeight: 'bold',
   }
 })
 

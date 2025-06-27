@@ -3,6 +3,7 @@ import {
   openHealthConnectDataManagement,
   openHealthConnectSettings
 } from 'react-native-health-connect'
+import HealthConnectService from './healthfunctions/HealthConnectService'
 
 const AndroidPermissions = {
   requestPermission: async (permission, title) => {
@@ -26,6 +27,8 @@ const AndroidPermissions = {
     }
   },
   requestAgain: async (permission, title) => {
+    console.log('requestagain log', title) // title.toLowerCase()
+
     if (Platform.OS !== 'android') {
       return
     }
@@ -43,6 +46,7 @@ const AndroidPermissions = {
             onPress: async () => {
               if (permission === AndroidPermissions.HEALTH_CONNECT) {
                 openHealthConnectSettings()
+                // HealthConnectService.requestPermissions()
                 // openHealthConnectDataManagement()
               } else {
                 Linking.openSettings()

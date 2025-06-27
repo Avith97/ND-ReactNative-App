@@ -93,7 +93,7 @@ export default function CompleteProfile(props) {
       isValid = false
       err = { dobErr: true }
       appsnackbar.showErrMsg('Please select date of birth')
-    } else if (moment().diff(moment(state.dob), 'years') < 18) {
+    } else if (moment().diff(moment(state.dob), 'years') < 16) {
       isValid = false
       err = { dobErr: true }
       appsnackbar.showErrMsg('You must be at least 18 years old')

@@ -58,7 +58,12 @@ export default function HomeScreen(props) {
         user?.runnerId
       )
       let resp = await services._get(HomeSummaryURL)
-      // console.log('Response:', resp)
+
+      // setting global events
+      if (resp.data?.events?.length) {
+        global.ongoingEvents = resp.data?.events
+      }
+
       // You can update the state with the response data if needed
       // setState({...state, data: response.data});
 

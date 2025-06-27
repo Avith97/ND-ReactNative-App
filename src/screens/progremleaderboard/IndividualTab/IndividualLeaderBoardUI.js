@@ -47,7 +47,8 @@ function IndividualLeaderBoardUI({ ...props }) {
           style={{
             textAlign: 'center',
             paddingVertical: hp(2),
-            color: Colors?.gray_05
+            color: Colors?.gray_05,
+            fontFamily: Fonts.Regular
           }}>
           {en.no_record}
         </Text>
@@ -80,17 +81,19 @@ const styles = StyleSheet.create({
   name: {
     flex: 1,
     fontSize: fontSize.md,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: Fonts.Medium,
     color: '#333'
   },
   score: {
     fontSize: fontSize.md,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: Fonts.SemiBold,
     marginRight: 8,
     color: '#333'
   },
   textStyle: {
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.Medium,
     color: 'black'
   },
   btnStyles: {

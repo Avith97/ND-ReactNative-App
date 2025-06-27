@@ -33,6 +33,9 @@ import { useSelector } from 'react-redux'
 import OnBoardScreen from '../../screens/onBoardScreens/OnBoardScreen'
 import HomeTabBottomNav from '../tab/HomeTabBottomNav'
 import CompleteProfile from '../../screens/profile/complete/CompleteProfile'
+import SupportScreen from '../../screens/support/SupportScreen'
+import TermsAndConditions from '../../screens/termsandconditions/TermsAndConditions'
+import PrivacyPolicy from '../../screens/privacypolicy/PrivacyPolicy'
 
 // const TabNavigator = props => {
 //   const Tab = createBottomTabNavigator()
@@ -279,6 +282,24 @@ const AppStack = props => {
       <Stack.Screen
         name={Strings.NAVIGATION.complete_profile}
         component={CompleteProfile}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={Strings.NAVIGATION.privacy_policy}
+        component={PrivacyPolicy}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={Strings.NAVIGATION.terms_condition}
+        component={TermsAndConditions}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={Strings.NAVIGATION.customer_support}
+        component={SupportScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

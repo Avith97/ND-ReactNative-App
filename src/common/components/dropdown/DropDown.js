@@ -15,6 +15,7 @@ import PropTypes from 'prop-types'
 import ViewPropTypes from 'deprecated-react-native-prop-types'
 import { wp, hp } from '../../functions/dimensions'
 import Colors from '../../../utils/constants/Colors'
+import Fonts from '../../../utils/constants/Fonts'
 
 const Dropdown = props => {
   const {
@@ -244,7 +245,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   textInput: {
-    flex: 1
+    flex: 1,
+    fontFamily: Fonts.Regular
   },
   dropdown: {
     position: 'absolute',

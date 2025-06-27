@@ -7,7 +7,8 @@ import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import { TemplateService } from '../../../services/templates/TemplateService'
 import { URL } from '../../../utils/constants/Urls'
 import { services } from '../../../services/axios/services'
-import { wp } from '../../../common/functions/dimensions'
+import { hp, wp } from '../../../common/functions/dimensions'
+import Colors from '../../../utils/constants/Colors'
 
 export default function TeamTab({ ...props }) {
   const [state, setState] = useState({
@@ -99,13 +100,25 @@ export default function TeamTab({ ...props }) {
       <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.Medium }}>
         Teams Leaderboard
       </Text>
-      <FlatList
-        data={state?.teamsData || []}
-        renderItem={renderTeam}
-        keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: wp(1.5) }}
-      />
+      {state?.teamsData?.length ? (
+        <FlatList
+          data={state?.teamsData || []}
+          renderItem={renderTeam}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: wp(1.5) }}
+        />
+      ) : (
+        <Text
+          style={{
+            textAlign: 'center',
+            paddingVertical: hp(2),
+            color: Colors?.gray_05,
+            fontFamily: Fonts.Regular
+          }}>
+          No Teams data found
+        </Text>
+      )}
     </>
   )
 }

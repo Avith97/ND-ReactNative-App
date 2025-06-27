@@ -57,10 +57,12 @@ export default function ProgramLeaderBoardScreenUI({
 
         {/* Name and Bib */}
         <View style={styles.textContainer}>
-          <Text style={styles.nameText}>
+          <Text style={{ ...styles.nameText, fontFamily: Fonts.SemiBold }}>
             {item.firstName} {item.lastName}
           </Text>
-          <Text style={styles.bibText}>Bib: {item.bibNumber}</Text>
+          <Text style={{ ...styles.bibText, fontFamily: Fonts.SemiBold }}>
+            Bib: {item.bibNumber}
+          </Text>
         </View>
       </TouchableOpacity>
     )
@@ -185,7 +187,7 @@ export default function ProgramLeaderBoardScreenUI({
               justifyContent: 'space-between',
               alignContent: 'center'
             }}>
-            <Text>Participated</Text>
+            <Text style={styles.filterlable}>Participated</Text>
             <View style={styles.dropdownStyle}>
               <CustomDropdown
                 name="selectedParticipated"
@@ -246,7 +248,7 @@ export default function ProgramLeaderBoardScreenUI({
                   justifyContent: 'space-between',
                   alignContent: 'center'
                 }}>
-                <Text>Activity Types</Text>
+                <Text style={styles.filterlable}>Activity Types</Text>
                 <View style={styles.dropdownStyle}>
                   <CustomDropdown
                     name="selectedActivity"
@@ -274,7 +276,7 @@ export default function ProgramLeaderBoardScreenUI({
                   justifyContent: 'space-between',
                   alignContent: 'center'
                 }}>
-                <Text>Category Types</Text>
+                <Text style={styles.filterlable}>Category Types</Text>
                 <View style={styles.dropdownStyle}>
                   <CustomDropdown
                     name="selectedCategory"
@@ -302,7 +304,7 @@ export default function ProgramLeaderBoardScreenUI({
                 justifyContent: 'space-between'
                 // alignContent: 'center',
               }}>
-              <Text>Top Participant</Text>
+              <Text style={styles.filterlable}>Top Participant</Text>
               <View style={styles.dropdownStyle}>
                 <CustomDropdown
                   name="selectedLimit"
@@ -385,7 +387,8 @@ const styles = StyleSheet.create({
   name: {
     flex: 1,
     fontSize: fontSize.md,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: Fonts.SemiBold,
     color: '#333'
   },
   score: {
@@ -395,7 +398,7 @@ const styles = StyleSheet.create({
     color: '#333'
   },
   textStyle: {
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.Medium,
     color: 'black'
   },
   btnStyles: {
@@ -430,5 +433,9 @@ const styles = StyleSheet.create({
     width: '62%',
     right: wp(2)
     // left:
+  },
+  filterlable: {
+    fontSize: fontSize.normal,
+    fontFamily: Fonts.Regular
   }
 })

@@ -4,8 +4,12 @@ import CustomImageBackground from '../../common/components/background/CustomImag
 import { Images } from '../../utils/constants/Images'
 import { hp, wp } from '../../common/functions/dimensions'
 import CustomButton from '../../common/components/buttons/CustomButton'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
+import { parseHtmlDescription } from '../../common/functions/helper'
 
 export default function EventStartedScreenUI(props) {
+  console.log(props)
+
   return (
     <View style={styles.container}>
       <CustomImageBackground
@@ -13,7 +17,7 @@ export default function EventStartedScreenUI(props) {
         style={styles.bgImage}>
         {/* Top Right Badge */}
         <View style={styles.badgeContainer}>
-          <Text style={styles.badgeText}>Not Registered</Text>
+          {/* <Text style={styles.badgeText}>Not Registered</Text> */}
         </View>
 
         {/* Overlay content */}
@@ -30,8 +34,8 @@ export default function EventStartedScreenUI(props) {
             {(props?.eventDetail?.program ||
               props?.eventDetail?.description) && (
               <Text style={styles.subtitle}>
-                {props?.eventDetail?.description ||
-                  props?.eventDetail?.description}
+                {parseHtmlDescription(props?.eventDetail?.description) ||
+                  parseHtmlDescription(props?.eventDetail?.description)}
               </Text>
             )}
           </View>
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
   badgeContainer: {
     alignSelf: 'flex-end',
     margin: wp(4),
-    backgroundColor: 'orange',
+    // backgroundColor: 'orange',
     paddingHorizontal: wp(3),
     paddingVertical: hp(0.5),
     borderRadius: 15
@@ -81,15 +85,17 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: fontSize.m,
+    // fontWeight: 'bold',
+    fontFamily: Fonts.SemiBold,
     textAlign: 'center',
     marginBottom: hp(1)
   },
   subtitle: {
     color: 'white',
-    fontSize: 14,
-    textAlign: 'center'
+    fontSize: fontSize.normal,
+    textAlign: 'center',
+    fontFamily: Fonts.Regular
   },
   btnStyle: {
     width: wp(60)

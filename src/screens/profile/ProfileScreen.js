@@ -1,6 +1,6 @@
 // profile screen =================
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ProfileScreenUI from './ProfileScreenUI'
 import Strings from '../../utils/constants/Strings'
 import { services } from '../../services/axios/services'
@@ -28,6 +28,8 @@ export default function ProfileScreen(props) {
     AvatarURl: null
   })
 
+  const [render, setRender] = useState(false)
+
   const auth = useSelector(store => store.auth)
   const actionRef = useRef(null)
 
@@ -39,7 +41,7 @@ export default function ProfileScreen(props) {
     if (isFocused) {
       initiateScreen()
     }
-  }, [isFocused, state?.userDetails?.profilePictureLink])
+  }, [isFocused, state?.userDetails?.profilePictureLink, render])
 
   async function initiateScreen() {
     // Fetch user details or any initial data here
@@ -73,6 +75,7 @@ export default function ProfileScreen(props) {
 
       if (resp?.api_response?.data) {
         store.dispatch(set_user_details(resp?.data?.user))
+        setRender(false)
         return resp?.data
       } else {
         throw new Error('Failed to fetch user details')
@@ -87,9 +90,11 @@ export default function ProfileScreen(props) {
     if (name === 'logout') {
       // showActionItem()
       open_logout_bottom_sheet()
-    } else if (name === 'ok') {
-      show_web_view_toast(true, { url: 'https://necessarydevil.com/terms' })
-    } else if (name) {
+    }
+    //  else if (name === 'ok') {
+    //   show_web_view_toast(true, { url: 'https://necessarydevil.com/terms' })
+    // }
+    else if (name) {
       props.navigation.navigate(name, { userDetails: state.userDetails }) // list item navigation
     } else {
       props.navigation.navigate(Strings.NAVIGATION.bmi, {
@@ -140,7 +145,11 @@ export default function ProfileScreen(props) {
 
     let res = await services?._postFormData(url, formData)
 
-    console.log('succesfuly updated', res)
+    if (res.type === 'success') {
+      setRender(true)
+    } else {
+      console.log('some thing went wrong profile update')
+    }
   }
 
   async function data_separation(data) {

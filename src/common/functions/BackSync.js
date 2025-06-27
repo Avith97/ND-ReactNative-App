@@ -31,6 +31,8 @@ export const BackSync = {
   },
 
   health_data_sync: async params => {
+    console.log(params)
+
     try {
       // if (store.getState().settings.isLoading) {
       //   await waitUntilNotSyncing()
@@ -41,6 +43,7 @@ export const BackSync = {
       //   byEmail: true,
       //   byMobile: false
       // })
+      const result = await initialize()
       let healthData = await healthService.getData(
         params?.startDate,
         params?.endDate,

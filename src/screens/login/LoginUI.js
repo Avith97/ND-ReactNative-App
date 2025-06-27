@@ -36,15 +36,21 @@ const LoginUI = props => {
       {/* <CustomImageBackground> */}
 
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ top: -hp(4), fontSize: fontSize.l, fontWeight: 600 }}>
+        <Text
+          style={{
+            top: -hp(4),
+            fontSize: fontSize.l,
+            fontWeight: 600,
+            fontFamily: Fonts.Bold
+          }}>
           {labels?.joinCommunity}
         </Text>
         <View
           style={{
-            width: wp(35),
-            height: hp(15),
+            width: wp(30),
+            height: hp(13),
             // backgroundColor: 'pink',
-            marginBottom: hp(2),
+            // marginBottom: hp(2),
             top: -hp(4)
           }}>
           <Image
@@ -100,7 +106,7 @@ const LoginUI = props => {
             marginLeft: wp(5)
           }}
         />
-        <CustomButton
+        {/* <CustomButton
           title={'Copy FCM Token'}
           name={'signup'}
           onPress={async () => {
@@ -123,22 +129,32 @@ const LoginUI = props => {
             ...styles.textStyle,
             marginLeft: wp(5)
           }}
-        />
+        /> */}
 
         <View style={{ flexDirection: 'row' }}>
-          <Text>{labels?.alreadyRegistered}</Text>{' '}
+          <Text style={{ fontFamily: Fonts.medium, fontSize: fontSize.normal }}>
+            {labels?.alreadyRegistered}
+          </Text>{' '}
           <TouchableOpacity onPress={() => props?.handleNavigate('login')}>
-            <Text style={{ color: Colors.targetColor }}> {labels?.login}</Text>
+            <Text
+              style={{
+                color: Colors.targetColor,
+                fontFamily: Fonts.SemiBold,
+                fontSize: fontSize.normal
+              }}>
+              {' '}
+              {labels?.login}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+      {/* <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         <Text>SEE FAQ</Text>{' '}
         <TouchableOpacity onPress={() => seeFaq()}>
           <Text style={{ color: Colors.targetColor }}> Click here</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       {/* </CustomImageBackground> */}
     </View>
   )
@@ -154,7 +170,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: fontSize.normal,
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.Medium,
     color: 'black'
   },
   loginBtn: {

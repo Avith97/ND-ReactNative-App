@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CreateProfileScreenUI from './CreateProfileScreenUI'
 import Strings from '../../utils/constants/Strings'
 import moment from 'moment'
@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { perform_login } from '../../common/functions/login'
 
 export default function CreateProfileScreen(props) {
+  let { userName, byEmail, byMobile } = props?.route?.params
   const { email, contactNumber } = useSelector(state => state.user)
 
   let eventData = useSelector(store => store.eventData)
@@ -52,6 +53,14 @@ export default function CreateProfileScreen(props) {
   })
 
   const [err, seterr] = useState(null)
+
+  useEffect(() => {
+    if (byEmail) {
+      setstate({ ...state, email: userName })
+    } else {
+      setstate({ ...state, contactNumber: userName })
+    }
+  }, [userName])
 
   async function handleChange(params, val) {
     if (params === 'country') {
@@ -100,6 +109,10 @@ export default function CreateProfileScreen(props) {
       isValid = false
       err = { dobErr: true }
       appsnackbar.showErrMsg('Please select date of birth')
+    } else if (moment().diff(moment(state.DOB), 'years') < 16) {
+      isValid = false
+      err = { dobErr: true }
+      appsnackbar.showErrMsg('You must be at least 16 years old')
     } else if (!state.gender) {
       isValid = false
       err = { genderErr: true }
@@ -157,7 +170,6 @@ export default function CreateProfileScreen(props) {
       if (userObject.profilePicture) {
         syncObj.append('profilePicture', userObject.profilePicture)
       }
-      console.log(syncObj, 'syncObj')
 
       let resp = await services._postFormData(URL.create_profile, syncObj)
       console.log(resp, 'resp')
@@ -176,7 +188,6 @@ export default function CreateProfileScreen(props) {
 
         // checking event data is present or not
         const isEventPresent = !!eventData?.id
-        console.log(isEventPresent, 'hello')
 
         if (isEventPresent) {
           handleNavigate({
@@ -184,7 +195,8 @@ export default function CreateProfileScreen(props) {
           })
         } else {
           handleNavigate({
-            screen: Strings.NAVIGATION.home
+            screen: Strings.NAVIGATION.home,
+            params: { isLoggedIn: true }
           })
         }
         await set_data_storage(resp?.data)
@@ -222,7 +234,7 @@ export default function CreateProfileScreen(props) {
     }
   }
 
-  console.log(eventData, 'event')
+  console.log(byMobile, byEmail, 'event')
 
   return (
     <View style={styles.container}>
@@ -230,6 +242,8 @@ export default function CreateProfileScreen(props) {
         {...props}
         {...state}
         {...options}
+        byEmail={byEmail}
+        byMobile={byMobile}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handleConfirm={handleConfirm}

@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import Icons, { iconType } from '../../../assets/icons/Icons'
 import Colors from '../../../utils/constants/Colors'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 
 export default function CustomWeekAndMonth(props) {
   const currentWeek = props.currentWeek
@@ -32,11 +33,11 @@ export default function CustomWeekAndMonth(props) {
         <View style={styles.centerHeader}>
           <Text style={styles.weekRange}>{currentWeek?.weekRange}</Text>
           <View style={styles.stepsRow}>
-            <Icons name="Step" size={20} color={Colors.white} />
+            <Icons name="Step" size={15} color={Colors.white} />
 
             {/* <MaterialIcons name="directions-walk" size={16} color="#fff" /> */}
             <Text style={styles.stepCount}>
-              {currentWeek?.totalSteps || 0} steps
+              {currentWeek?.totalSteps || 0} Steps
             </Text>
           </View>
         </View>
@@ -79,8 +80,9 @@ const styles = StyleSheet.create({
   },
   weekRange: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '600'
+    fontSize: fontSize.normal,
+    // fontWeight: '600'
+    fontFamily: Fonts.Bold
   },
   stepsRow: {
     flexDirection: 'row',
@@ -89,7 +91,8 @@ const styles = StyleSheet.create({
   },
   stepCount: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: fontSize.s,
+    fontFamily: Fonts.Medium,
     marginLeft: 4
   },
   chart: {
