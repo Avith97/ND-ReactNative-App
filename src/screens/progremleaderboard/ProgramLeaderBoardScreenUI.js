@@ -19,6 +19,7 @@ import AgeGroupTab from './agegrouptab/AgeGroupTab'
 import SearchBar from '../../common/components/searchbar/Searchbar'
 import Colors from '../../utils/constants/Colors'
 import RunnerGroupTab from './runnergroup/RunnerGroupTab'
+import { en } from '../../utils/labels/en'
 
 export default function ProgramLeaderBoardScreenUI({
   selectedTab,
@@ -71,7 +72,7 @@ export default function ProgramLeaderBoardScreenUI({
         {/* title and filter icon */}
         <View style={styles.headerIconTitle}>
           <Text style={{ fontSize: fontSize.m, fontWeight: 700 }}>
-            Leaderboard
+            {en.label_leaderboard}
           </Text>
 
           <TouchableOpacity
@@ -208,8 +209,7 @@ export default function ProgramLeaderBoardScreenUI({
                 justifyContent: 'space-between',
                 alignContent: 'center'
               }}>
-              <Text>Week Filter</Text>
-
+              <Text>{en.label_week_filter}</Text>
               <View style={styles.dropdownStyle}>
                 <CustomDropdown
                   name="selectedWeekRange"

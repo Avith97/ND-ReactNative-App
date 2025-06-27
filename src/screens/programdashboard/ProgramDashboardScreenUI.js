@@ -11,6 +11,7 @@ import PieProgressBar from '../../common/components/progressbar/PieProgressBar'
 import CustomButton from '../../common/components/buttons/CustomButton'
 import BarChart from '../../common/components/Charts/BarChart'
 import CustomWeekAndMonth from '../../common/components/customweekandmonth/CustomWeekAndMonth'
+import { en } from '../../utils/labels/en'
 
 export default function ProgramDashboardScreenUI(props) {
   const data = [
@@ -54,7 +55,7 @@ export default function ProgramDashboardScreenUI(props) {
 
       <View style={styles.buttonContainer}>
         <CustomButton
-          title={'Show Leaderboard'}
+          title={en.label_show_leaderboard}
           name={'leaderboard'}
           onPress={props.handleNavigate}
           btnStyles={{

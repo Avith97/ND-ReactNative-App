@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native'
 import { hp, wp } from '../../../common/functions/dimensions'
 import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import Colors from '../../../utils/constants/Colors'
+import { en } from '../../../utils/labels/en'
 
 function IndividualLeaderBoardUI({ ...props }) {
   const renderItem = ({ item }) => (
@@ -25,7 +26,7 @@ function IndividualLeaderBoardUI({ ...props }) {
   return (
     <View style={{ flex: 1 }}>
       <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.Medium }}>
-        Individual Leaderboard
+        {en.label_individual_leaderboard}
       </Text>
       <TabSelector tabs={props.tabs} onTabChange={props.onTabChange} />
 
@@ -48,7 +49,7 @@ function IndividualLeaderBoardUI({ ...props }) {
             paddingVertical: hp(2),
             color: Colors?.gray_05
           }}>
-          No data found
+          {en.no_record}
         </Text>
       )}
     </View>

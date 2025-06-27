@@ -7,6 +7,7 @@ import CustomButton from '../../common/components/buttons/CustomButton'
 import { fontSize } from '../../utils/constants/Fonts'
 import Icons, { iconType } from '../../assets/icons/Icons'
 import Colors from '../../utils/constants/Colors'
+import { en } from '../../utils/labels/en'
 
 export default function ActivitySyncScreenUI() {
   return (
@@ -28,12 +29,12 @@ export default function ActivitySyncScreenUI() {
           size={20}
           color={Colors.appbtn}
         />
-        <Text style={styles.statusText}>Connected</Text>
+        <Text style={styles.statusText}>{en.label_connected}</Text>
       </View>
 
       {/* Disconnect Button */}
       <CustomButton
-        title={'Disconnect'}
+        title={en.label_disconnect}
         name="disconnect"
         onPress={() => console.log('disconnect')}
         btnStyles={{

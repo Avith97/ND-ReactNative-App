@@ -15,16 +15,6 @@ import NoDataFound from '../../../common/components/nodatafound/NoDataFound'
 
 export default function DashboardScreenUI(props) {
   const [weekIndex, setWeekIndex] = useState(0)
-
-  // const data = [
-  //   {day: 'Mon', steps: 4000},
-  //   {day: 'Tue', steps: 7000},
-  //   {day: 'Wen', steps: 5000},
-  //   {day: 'Thu', steps: 10000},
-  //   {day: 'Fri', steps: 5000},
-  //   {day: 'Sat', steps: 7000},
-  //   {day: 'Sun', steps: 7050},
-  // ];
   const DescriptionDetailItem = ({ value, unit }) => (
     <View style={styles.centered}>
       <Text style={styles.metricValue}>{value}</Text>

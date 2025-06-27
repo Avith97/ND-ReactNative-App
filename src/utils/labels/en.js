@@ -29,6 +29,7 @@ export const en = {
   enterOtp: 'Enter OTP',
   resendOtp: 'Resend OTP',
   submit: 'Submit',
+  cancel: 'Cancel',
   otpSubTitle: 'Enter OTP for authentication',
 
   // create profile screen
@@ -37,6 +38,8 @@ export const en = {
   lastName: 'Last Name',
   email: 'Email',
   country: 'Country',
+  contactNo: 'Contact No',
+  postal: 'Postal(Zip/Pincode)',
   select: 'Select',
   height: 'Height',
   weight: 'Weight',
@@ -56,6 +59,14 @@ export const en = {
   and: 'and',
   privacy: ' Privacy Policy',
 
+  //register screen
+  label_terms_to_agree: 'Agree to the all terms & conditions',
+  label_age_group: 'Age Group',
+  label_fitness_group: 'Fitness Group',
+  label_event_category: 'Event Category',
+  label_show_suggestion: 'Show suggestions',
+  label_activity_type: 'Activity Type',
+  label_physical: 'Physical/Virtual',
   // onboard screen
 
   //more about you screen
@@ -73,21 +84,23 @@ export const en = {
   more_about_weightPlaceholder: 'Kg',
   more_about_heightPlaceholder: 'Cm',
 
-  // activity level screen
-  activityLevelHeading: 'What is your activity level?',
-  activityLevelSubText:
-    'This helps us design your workouts to fit your lifestyle',
+  no_record: 'No Record Found',
+  register_not_open: 'Registration not open Registration not open yet',
+  register_closed: 'Registration Closed',
+  register_here: 'Register Here',
 
-  //belly
-  bellyConditionHeading: 'Choose your belly condition',
-  bellyConditionSubText: 'Knowing your goals helps us tailor your experience',
+  //LeaderBoard screen
+  label_leaderboard: 'Leaderboard',
+  label_result: 'Result',
+  label_gender_rank: 'Gender Rank',
+  label_overall_rank: 'Overall Rank',
+  label_show_leaderboard: 'Show Leaderboard',
+  label_individual_leaderboard: 'Individual Leaderboard',
+  label_week_filter: 'Week Filter',
 
-  // exercise type screen
-  exerciseTypeHeading: 'What type of exercises do you enjoy?',
-  exerciseTypeSubText: 'This helps us understand your preferences better.',
-  medicalConditionsHeading:
-    'Do you have any medical conditions or physical limitations that we should be aware of?',
-  workoutEnvironmentHeading: 'What is your preferred workout environment?',
+  //activitySync screen
+  label_connected: 'Connected',
+  label_disconnect: 'Disconnect',
 
   //  final screen
   final_get_started: 'Get Started',
@@ -100,5 +113,7 @@ export const en = {
   // complete profile
   complete_profile: 'Complete Your Profile',
   complete_profile_subtext:
-    'Some details are missing from your profile. Please fill in the required information to continue.'
+    'Some details are missing from your profile. Please fill in the required information to continue.',
+  //Profile screen
+  label_check_bmi_score: 'Check BMI Score'
 }

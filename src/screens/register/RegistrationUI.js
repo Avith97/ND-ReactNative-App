@@ -7,6 +7,7 @@ import { hp, wp } from '../../common/functions/dimensions'
 import CustomDropdown from '../../common/components/dropdown/CustomDropdown'
 import CustomButton from '../../common/components/buttons/CustomButton'
 import CustomDateTimePicker from '../../common/components/datepicker/CustomDateTimePicker'
+import { en } from '../../utils/labels/en'
 
 const RegistrationUI = props => {
   return (
@@ -40,7 +41,7 @@ const RegistrationUI = props => {
           </View>
           <View style={{ marginVertical: hp(1.5) }}>
             <CustomTextInput
-              label="First name"
+              label={en.firstName}
               name={'firstName'}
               mandatory
               onChangeText={props.handleChange}
@@ -48,7 +49,7 @@ const RegistrationUI = props => {
           </View>
           <View style={{ marginVertical: hp(1.5) }}>
             <CustomTextInput
-              label="Last name"
+              label={en.lastName}
               name={'lastName'}
               mandatory
               onChangeText={props.handleChange}
@@ -57,8 +58,8 @@ const RegistrationUI = props => {
           <View style={{ marginVertical: hp(1.5) }}>
             <CustomDropdown
               name={'gender'}
-              title="Gender"
-              label="Select"
+              title={en.gender}
+              label={en.select}
               mandatory
               data={[
                 { gender: 'Male' },
@@ -74,8 +75,8 @@ const RegistrationUI = props => {
             <View style={{ width: wp(25) }}>
               <CustomDropdown
                 name={'c_num'}
-                title="Contact No"
-                label="Select"
+                title={en.contactNo}
+                label={en.select}
                 mandatory
                 data={[
                   { country: 'IND' },
@@ -105,7 +106,7 @@ const RegistrationUI = props => {
           </View>
           <View>
             <CustomTextInput
-              label="Postal(Zip/Pincode)"
+              label={en.postal}
               name={'postal_code'}
               mandatory
               onChangeText={props.handleChange}
@@ -118,12 +119,12 @@ const RegistrationUI = props => {
               marginTop: hp(5)
             }}>
             <CustomButton
-              title={'Submit'}
+              title={en.submit}
               name={'submit'}
               onPress={props.handleSubmit}
             />
             <CustomButton
-              title={'Cancel'}
+              title={en.cancel}
               name={'cancel'}
               onPress={props.handleSubmit}
             />

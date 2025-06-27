@@ -13,6 +13,7 @@ import { hp } from '../../../../common/functions/dimensions'
 import Strings from '../../../../utils/constants/Strings'
 import { Images } from '../../../../utils/constants/Images'
 import NoDataFound from '../../../../common/components/nodatafound/NoDataFound'
+import { en } from '../../../../utils/labels/en'
 
 export default function UpComingsTab(props) {
   return (
@@ -33,9 +34,6 @@ export default function UpComingsTab(props) {
         <NoDataFound />
       )}
     </View>
-    // <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-    //   <Text style={styles.noFoundTitle}>No Record Found</Text>
-    // </View>
   )
 }
 

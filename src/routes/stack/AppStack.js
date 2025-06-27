@@ -282,14 +282,6 @@ const AppStack = props => {
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
-
-    // <Drawer.Navigator initialRouteName={Strings.NAVIGATION.health}>
-    //   <Drawer.Screen
-    //     name={Strings.NAVIGATION.health}
-    //     component={HealthScreen}
-    //   />
-
-    // </Drawer.Navigator>
   )
 }
 

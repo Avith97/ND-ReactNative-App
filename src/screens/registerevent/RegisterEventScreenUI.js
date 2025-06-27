@@ -15,6 +15,7 @@ import { CheckBox, Input } from 'react-native-elements'
 import CustomTextInput from '../../common/components/textInput/CustomTextInput'
 import CustomDropdown from '../../common/components/dropdown/CustomDropdown'
 import MultiSelectDropdown from '../../common/components/dropdown/MultiSelectDropdown'
+import { en } from '../../utils/labels/en'
 
 export default function RegisterEventScreenUI(props) {
   const [agree, setAgree] = useState(false)
@@ -25,18 +26,18 @@ export default function RegisterEventScreenUI(props) {
     <ScrollView contentContainerStyle={styles.container}>
       {/* Link-style heading */}
       <TouchableOpacity>
-        <Text style={styles.registerLink}>Register Here</Text>
+        <Text style={styles.registerLink}>{en.register_here}</Text>
       </TouchableOpacity>
       {/* Registration status */}
       {!props?.eventData?.isRegistrationOpen && (
         <Text style={{ color: 'red', fontSize: fontSize.m }}>
-          Registration Closed
+          {en.register_closed}
         </Text>
       )}
       {/* Event status */}
       {props?.eventData?.eventState === 'DRAFT' && (
         <Text style={{ color: 'orange', fontSize: fontSize.m }}>
-          Registration not open Registration not open yet
+          {en.register_not_open}
         </Text>
       )}
       {props?.eventData?.eventState !== 'DRAFT' &&
@@ -45,7 +46,7 @@ export default function RegisterEventScreenUI(props) {
             {/* participant type  */}
             {props?.eventData?.showParticipationType && (
               <CustomDropdown
-                title={'Physical/Virtual'}
+                title={en.label_physical}
                 name="participantType"
                 label="Select Participation Type"
                 itemData={[
@@ -64,8 +65,8 @@ export default function RegisterEventScreenUI(props) {
             <View style={{ marginVertical: hp(1.5) }}>
               <CustomDropdown
                 name="selectedActivity"
-                title="Activity Type"
-                label="Select"
+                title={en.label_activity_type}
+                label={en.select}
                 mandatory
                 value={props?.selectedActivity?.displayName || ''}
                 data={props?.eventData?.activities || []}
@@ -105,7 +106,7 @@ export default function RegisterEventScreenUI(props) {
       {props?.eventData?.eventData?.showSuggestionOnRegisterEvent &&
         props?.eventData?.suggestedPoints && (
           <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-            <Text>Show suggestions</Text>
+            <Text>{en.label_show_suggestion}</Text>
           </View>
         )}
       {/* show event category */}
@@ -113,8 +114,8 @@ export default function RegisterEventScreenUI(props) {
         <View style={{ marginVertical: hp(1.5) }}>
           <CustomDropdown
             name="selectedEventCategory"
-            title="Event Category"
-            label="Select"
+            title={en.label_event_category}
+            label={en.select}
             mandatory
             data={props?.eventData?.eventRunCategories || []}
             value={props?.selectedEventCategory?.category || ''}
@@ -130,8 +131,8 @@ export default function RegisterEventScreenUI(props) {
         <View style={{ marginVertical: hp(1.5) }}>
           <MultiSelectDropdown
             name="selectedRunnerGroup"
-            title="Fitness Group"
-            label="Select"
+            title={en.label_fitness_group}
+            label={en.select}
             mandatory
             data={[
               { title: '', data: props?.eventData?.runnerGroupListDto?.data }
@@ -152,8 +153,8 @@ export default function RegisterEventScreenUI(props) {
         <View style={{ marginVertical: hp(1.5) }}>
           <CustomDropdown
             name="selectedAgeGroup"
-            title="Age Group"
-            label="Select"
+            title={en.label_age_group}
+            label={en.select}
             mandatory
             data={props?.eventData?.ageGroupDTOList || []}
             value={props?.selectedAgeGroup?.groupName || ''}
@@ -206,7 +207,7 @@ export default function RegisterEventScreenUI(props) {
                         index
                       )
                     }}
-                    label="Select"
+                    label={en.select}
                     mandatory={groupField?.requiredField}
                     data={[{ title: '', data: groupField?.fieldOptions || [] }]}
                     multiSelect={false}
@@ -222,7 +223,7 @@ export default function RegisterEventScreenUI(props) {
                   <MultiSelectDropdown
                     name={fieldKey}
                     title={groupField?.displayName || ''}
-                    label="Select"
+                    label={en.select}
                     onChange={(name, value) =>
                       props.handleChange(
                         name,
@@ -263,9 +264,7 @@ export default function RegisterEventScreenUI(props) {
             )
           }
         />
-        <Text style={styles.termsText}>
-          Agree to the all terms & conditions
-        </Text>
+        <Text style={styles.termsText}>{en.label_terms_to_agree}</Text>
       </View>
       {/* Buttons */}
       <CustomButton
@@ -274,7 +273,7 @@ export default function RegisterEventScreenUI(props) {
         onPress={props.handleSubmit}
       />
       <CustomButton
-        title="Cancel"
+        title={en.cancel}
         name="cancel"
         btnStyles={styles.secondaryBtn}
         onPress={props.handleChange}

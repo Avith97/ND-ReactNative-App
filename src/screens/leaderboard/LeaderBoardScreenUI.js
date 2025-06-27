@@ -11,6 +11,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { Image } from 'react-native'
 import TabSelector from '../../common/components/tabselector/TabSelector'
 import UserLeaderBoardCard from '../../common/components/userleaderboardcard/UserLeaderBoardCard'
+import { en } from '../../utils/labels/en'
 
 export default function LeaderBoardScreenUI(props) {
   const TrophyIcon = () => (
@@ -54,16 +55,16 @@ export default function LeaderBoardScreenUI(props) {
 
       <View style={styles.userRecordSection}>
         <View style={styles.resultContainer}>
-          <Text style={styles.resultTitle}>Result</Text>
+          <Text style={styles.resultTitle}>{en.label_result}</Text>
           <PieProgressBar leaderboard />
         </View>
         <View style={styles.rankContainer}>
           <View style={styles.cardItem}>
-            <Text style={styles.resultTitle}>Gender Rank</Text>
+            <Text style={styles.resultTitle}>{en.label_gender_rank}</Text>
             <Text style={styles.resultSubTitle}>1</Text>
           </View>
           <View style={styles.cardItem}>
-            <Text style={styles.resultTitle}>Overall Rank</Text>
+            <Text style={styles.resultTitle}>{en.label_overall_rank}</Text>
             <Text style={styles.resultSubTitle}>1</Text>
           </View>
         </View>
@@ -88,7 +89,7 @@ export default function LeaderBoardScreenUI(props) {
               color: Colors.gray_06,
               marginVertical: hp(3)
             }}>
-            No Data
+            {en.no_record}
           </Text>
         )}
       </View>

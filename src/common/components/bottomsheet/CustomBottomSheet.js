@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     // textAlign: 'center'
   },
   itemText: {
-    fontFamily: Fonts.black,
+    fontFamily: Fonts.Black,
     fontSize: fontSize.normal,
     color: 'red',
     textAlign: 'center'

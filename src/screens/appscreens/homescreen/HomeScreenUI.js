@@ -8,6 +8,7 @@ import EventCard from '../../../common/components/eventcard/EventCard'
 import NotRespondingCard from '../../../common/components/notrespondingcard/NotRespondingCard'
 import moment from 'moment'
 import NoDataFound from '../../../common/components/nodatafound/NoDataFound'
+import { en } from '../../../utils/labels/en'
 
 export default function HomeScreenUI(props) {
   let { isLoggedIn } = props
@@ -22,7 +23,9 @@ export default function HomeScreenUI(props) {
       contentContainerStyle={{ paddingBottom: hp(5) }}
       showsVerticalScrollIndicator={false}>
       <View style={{ paddingHorizontal: 5, marginBottom: hp(1) }}>
-        <Text style={styles.title}>{isLoggedIn ? 'Welcome' : 'Welcome!'}</Text>
+        <Text style={styles.title}>
+          {isLoggedIn ? `${en.welcome}` : `${en.welcome}!`}
+        </Text>
         <Text style={styles.subTitle}>
           {isLoggedIn
             ? "You're doing good today!"

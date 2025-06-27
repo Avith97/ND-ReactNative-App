@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: hp('1'),
-    // width:wp('70'),
     height: hp('6'),
     borderRadius: 10
   },

@@ -8,6 +8,7 @@ import { fontSize } from '../../utils/constants/Fonts'
 import { maskNumber } from '../../common/functions/masknumber'
 import Strings from '../../utils/constants/Strings'
 import { BASE_URL } from '../../utils/constants/Urls'
+import { en } from '../../utils/labels/en'
 
 export default function ProfileScreenUI(props) {
   const settingsData = [
@@ -114,7 +115,10 @@ export default function ProfileScreenUI(props) {
             {props?.userDetails?.user?.email}
           </Text>
         )}
-        <CustomButton title="Check BMI Score" onPress={props?.handleNavigate} />
+        <CustomButton
+          title={en.label_check_bmi_score}
+          onPress={props?.handleNavigate}
+        />
       </View>
 
       <View style={{ marginTop: hp(2) }}>
