@@ -93,7 +93,6 @@ export default function AppCustomHeader(props) {
         }
       }
     }
-    console.log('syncyn', resp)
 
     // // call health connect data sync api
     // setTimeout(() => {

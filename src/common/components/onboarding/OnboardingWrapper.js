@@ -19,6 +19,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import Icons, { iconType } from '../../../assets/icons/Icons'
 import { hp, wp } from '../../functions/dimensions'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 
 const { width } = Dimensions.get('window')
 
@@ -233,12 +234,15 @@ const styles = StyleSheet.create({
   },
   skipText: {
     color: '#666',
-    fontSize: 16,
-    fontWeight: '500'
+    // fontSize: 16,
+    // fontWeight: '500',
+    fontFamily: Fonts.Regular,
+    fontSize: fontSize.m
   },
   button: {
     backgroundColor: '#A7C43C',
     paddingVertical: hp(1),
+
     borderRadius: 12,
     alignItems: 'center',
     shadowColor: '#000',
@@ -248,8 +252,9 @@ const styles = StyleSheet.create({
     elevation: 8
   },
   buttonText: {
+    fontFamily: Fonts.Regular,
     color: 'white',
-    fontSize: 18
+    fontSize: fontSize.m
   },
   slideContentContainer: {
     flex: 1,

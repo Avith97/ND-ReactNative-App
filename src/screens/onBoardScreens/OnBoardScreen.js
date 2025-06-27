@@ -86,36 +86,41 @@ export default function OnBoardScreen(props) {
     // return;
 
     const result = []
-    // formatted data as per API request
-    Object.values(global.OnboardingData).forEach(entries => {
-      entries.forEach(entry => {
-        if (entry.selectedOptions) {
-          const optionIds = entry.selectedOptions.map(opt => opt.option_id)
-          const { selectedOptions, ...rest } = entry
-          result.push({
-            ...rest,
-            onboardingOptionIds: optionIds,
-            runnerId: user?.runnerId,
-            eventId: eventData?.id
-          })
-        } else {
-          const { option_id, ...rest } = entry
-          result.push({
-            ...rest,
-            onboardingOptionIds: option_id !== undefined ? [option_id] : [],
-            runnerId: user?.runnerId,
-            eventId: eventData?.id
-          })
-        }
+
+    if (global.OnboardingData) {
+      // formatted data as per API request
+      Object.values(global.OnboardingData).forEach(entries => {
+        entries.forEach(entry => {
+          if (entry.selectedOptions) {
+            const optionIds = entry.selectedOptions.map(opt => opt.option_id)
+            const { selectedOptions, ...rest } = entry
+            result.push({
+              ...rest,
+              onboardingOptionIds: optionIds,
+              runnerId: user?.runnerId,
+              eventId: eventData?.id
+            })
+          } else {
+            const { option_id, ...rest } = entry
+            result.push({
+              ...rest,
+              onboardingOptionIds: option_id !== undefined ? [option_id] : [],
+              runnerId: user?.runnerId,
+              eventId: eventData?.id
+            })
+          }
+        })
       })
-    })
 
-    let resp = await services?._post(URL?.submit_onboard, result) // Submit onboard API request
+      let resp = await services?._post(URL?.submit_onboard, result) // Submit onboard API request
 
-    if (resp?.type === 'success') {
-      props.navigation.navigate(Strings.NAVIGATION.eventregister)
+      if (resp?.type === 'success') {
+        props.navigation.replace(Strings.NAVIGATION.eventregister)
+      } else {
+        appsnackbar.showErrMsg('Please fill the question')
+      }
     } else {
-      appsnackbar.showErrMsg(labels.some_thing_went_wrong)
+      props.navigation.replace(Strings.NAVIGATION.eventregister)
     }
   }
 

@@ -9,6 +9,7 @@ import { hp, wp } from '../../../common/functions/dimensions'
 import { en as LABELS } from '../../../utils/labels/en'
 import { useSelector } from 'react-redux'
 import { Images } from '../../../utils/constants/Images'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 
 export default function BellyConditionScreenUI(props) {
   // state and global data
@@ -43,7 +44,7 @@ export default function BellyConditionScreenUI(props) {
       <View style={styles.ContentContainer}>
         {/* === Belly Condition Section === */}
         <Text style={[styles.heading]}>{props?.question}</Text>
-        <Text style={styles.subText}>{props?.sub_text}</Text>
+        <Text style={styles.subText}>{props?.subText}</Text>
 
         <View style={styles.bellyGrid}>
           {props?.options &&
@@ -76,8 +77,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20
   },
-  heading: { fontSize: 20, fontWeight: 'bold', marginTop: 20 },
-  subText: { fontSize: 14, color: '#666', marginBottom: 15 },
+  heading: { fontSize: fontSize.m, fontFamily: Fonts.Bold },
+  subText: { fontSize: fontSize.normal, fontFamily: Fonts.Regular },
   continueBtn: {
     backgroundColor: '#BFFF00',
     paddingVertical: 15,
@@ -90,7 +91,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'flex-center',
     // alignItems:"center",
-    gap: wp(5)
+    gap: wp(5),
+    paddingVertical: hp(2)
   },
   bellyBox: {
     width: wp(24), // each image box is 25% width
