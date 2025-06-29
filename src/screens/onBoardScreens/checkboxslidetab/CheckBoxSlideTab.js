@@ -27,8 +27,6 @@ export default function CheckBoxSlideTab(props) {
       const existingOptions =
         arrayListMultiSelectAnswers[existingIndex].selectedOptions
 
-      console.log(existingOptions)
-
       const alreadyExists = existingOptions.some(
         option => option.option_id === val.option_id
       )

@@ -21,7 +21,6 @@ export function guidGenerator() {
 }
 
 export function eventDataSeparation(data) {
-  console.log(data)
   return data
   //   let event = {
   //       token: data?.token,

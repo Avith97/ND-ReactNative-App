@@ -172,7 +172,6 @@ export default function CreateProfileScreen(props) {
       }
 
       let resp = await services._postFormData(URL.create_profile, syncObj)
-      console.log(resp, 'resp')
 
       if (resp?.type !== 'success') {
         appsnackbar.showErrMsg(resp?.error_data || resp?.verbose)

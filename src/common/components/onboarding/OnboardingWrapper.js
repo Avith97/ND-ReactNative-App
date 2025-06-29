@@ -78,7 +78,6 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish, ...props }) => {
   )
 
   const handleNext = () => {
-    console.log('handle next pressed')
     const nextIndex = Math.round(x.value / width) + 1
     if (nextIndex < totalSteps) {
       flatListRef.current?.scrollToOffset({
@@ -91,7 +90,6 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish, ...props }) => {
   }
 
   const handleSkipped = () => {
-    console.log('handle next pressed')
     const nextIndex = Math.round(x.value / width) + 1
     if (nextIndex < totalSteps) {
       flatListRef.current?.scrollToOffset({

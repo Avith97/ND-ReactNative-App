@@ -14,8 +14,6 @@ export default function BMICardScreen() {
   let auth = useSelector(store => store?.user)
   let isFocused = useIsFocused()
 
-  console.log(auth, 'ha')
-
   useEffect(() => {
     InitiateScreen()
   }, [isFocused])

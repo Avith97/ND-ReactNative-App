@@ -9,8 +9,6 @@ import Colors from '../../utils/constants/Colors'
 import { parseHtmlDescription } from '../../common/functions/helper'
 
 export default function EventDetailScreenUI(props) {
-  console.log(props?.eventData)
-
   return (
     <View
       style={{ flex: 1, backgroundColor: Colors.white, position: 'relative' }}>

@@ -35,7 +35,6 @@ export default function HomeScreen(props) {
   // },[])
 
   useEffect(() => {
-    // console.log('global softsyncing', global.isSoftSyncing)
     if (isFocused && !isSoftSyncing) {
       initiateScreen()
     }
@@ -44,8 +43,6 @@ export default function HomeScreen(props) {
 
   async function initiateScreen() {
     let data = await getDetails()
-
-    console.log('data updating')
 
     if (!data) {
       console.log('No data received for onboarding screen')

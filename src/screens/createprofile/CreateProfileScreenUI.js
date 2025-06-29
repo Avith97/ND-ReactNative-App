@@ -19,7 +19,6 @@ import Strings from '../../utils/constants/Strings'
 
 export default function CreateProfileScreenUI(props) {
   const isLoading = useSelector(state => state.settings.isLoading)
-  console.log(props?.byEmail, props?.byMobile)
   const handleNavigate = params => {
     props.navigation.navigate(Strings.NAVIGATION.app, params)
   }

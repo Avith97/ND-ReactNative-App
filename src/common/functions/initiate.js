@@ -20,7 +20,7 @@ export const initiateApp = async () => {
 
 export const retrieve_offline_data = async () => {
   const data = await AsyncStore.getData(Strings.ASYNC_KEY.offline)
-  console.log('offline data --->', data)
+  // console.log('offline data --->', data)
   if (data) {
     await perform_login(data?.auth, data?.user, (restore_offline = true))
   }

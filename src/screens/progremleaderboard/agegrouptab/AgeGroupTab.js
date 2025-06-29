@@ -21,7 +21,7 @@ export default function AgeGroupTab({ ...props }) {
 
   async function InitiateScreen() {
     let resp = await getAgeWiseData()
-    console.log(resp, 'getting me dta')
+    // console.log(resp, 'getting me dta')
 
     if (resp) {
       setState({ ...state, ageGroupData: resp })

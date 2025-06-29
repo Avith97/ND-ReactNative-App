@@ -6,8 +6,6 @@ import { Avatar } from 'react-native-elements'
 import { BASE_URL } from '../../../utils/constants/Urls'
 
 export default function UserLeaderBoardCard(props) {
-  console.log(props?.runnerActivityDetail)
-
   return (
     <View style={styles.userCard}>
       <Avatar

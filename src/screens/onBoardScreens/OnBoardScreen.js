@@ -81,7 +81,7 @@ export default function OnBoardScreen(props) {
   }
 
   async function handleSubmit() {
-    console.log('Form submitted with state:', global.OnboardingData, user)
+    // console.log('Form submitted with state:', global.OnboardingData, user)
     // You can navigate to the next screen or perform any action here
     // return;
 
@@ -125,7 +125,6 @@ export default function OnBoardScreen(props) {
   }
 
   function onNext(e) {
-    console.log('onnext called')
     global.CurentOnboardingScreen = 'more_about'
     e?.()
   }

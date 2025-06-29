@@ -33,7 +33,7 @@ const api = {
   }),
 
   refreshInstance: token => {
-    console.log('access token --->', store.getState().auth.token)
+    // console.log('access token --->', store.getState().auth.token)
     api._axios = axios.create({
       baseURL: BASE_URL,
       headers: {
@@ -98,7 +98,7 @@ const api = {
           })
           // console.log('new token from refreshed --->',refreshToken)
           const { accessToken } = refreshToken?.data || refreshToken
-          console.log('new token from refreshed --->', accessToken)
+          // console.log('new token from refreshed --->', accessToken)
 
           // await update_token(accessToken) //update token at redux &asyncstore
           if (__DEV__) {

@@ -8,8 +8,6 @@ import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import { parseHtmlDescription } from '../../common/functions/helper'
 
 export default function EventStartedScreenUI(props) {
-  console.log(props)
-
   return (
     <View style={styles.container}>
       <CustomImageBackground

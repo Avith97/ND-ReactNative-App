@@ -180,7 +180,6 @@ export default function CompleteProfile(props) {
 
   async function set_data_storage(data) {
     // use to set data in storage
-    console.log('testing the offline in complete profile screen =====', data)
 
     services?.refreshInstance(data?.token)
     const auth = await data_separation(data)
