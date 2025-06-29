@@ -21,11 +21,14 @@ import moment from 'moment'
 import { BackSync } from '../../../common/functions/BackSync'
 import { store } from '../../../redux/store'
 import { handleSoftSync } from '../../../redux/actions/loading'
+import { useSelector } from 'react-redux'
 
 export default function AppCustomHeader(props) {
   const navigation = useNavigation() // ✅ Access navigation
 
   const [isLoading, setIsLoading] = useState(false)
+
+  const onGoingEvents = useSelector(store => store.onGoingEvents?.onGoingEvents)
 
   // let isLoading = true
 
@@ -54,7 +57,7 @@ export default function AppCustomHeader(props) {
     return () => {
       if (animation) animation.stop()
     }
-  }, [isLoading, global.ongoingEvents])
+  }, [isLoading, onGoingEvents?.length])
 
   useEffect(() => {
     store.dispatch(handleSoftSync(isLoading))
@@ -84,7 +87,7 @@ export default function AppCustomHeader(props) {
     //     format: 'YYYY-MM-DD HH:mm:ss'
     //   },"active")
 
-    if (global.ongoingEvents) {
+    if (onGoingEvents?.length) {
       // for (const event of global.ongoingEvents) {
       try {
         const response = await BackSync.health_data_sync({
@@ -144,7 +147,7 @@ export default function AppCustomHeader(props) {
             <Icons name="bell" type={iconType.feather} size={20} />
             <Text>Sync Data</Text>
           </TouchableOpacity> */}
-          {global.ongoingEvents?.length && (
+          {onGoingEvents?.length && (
             <TouchableOpacity
               onPress={() => handleSyncData()}
               disabled={isLoading}
