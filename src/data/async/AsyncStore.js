@@ -42,7 +42,7 @@ const AsyncStore = {
 
   clearData: async key => {
     await AsyncStorage.removeItem(key)
-    console.log(`Item with key ${key} removed`)
+    // console.log(`Item with key ${key} removed`)
     return
   }
 }

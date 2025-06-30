@@ -1,19 +1,20 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { fontSize } from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import { hp } from '../../functions/dimensions'
 import Icons, { iconType } from '../../../assets/icons/Icons'
 import Colors from '../../../utils/constants/Colors'
+import { formatDistanceInKm, formatToHHMMSS } from '../../functions/helper'
 
 const FootPrintItem = ({
-  iconName = 'hiking',
+  iconName = 'Step',
   steps = '1087',
   label = "Today's Steps",
   day = 0
 }) => (
   <View style={styles.centered}>
     <Icons
-      type={iconType.material}
+      // type={iconType.material}
       name={iconName}
       size={20}
       color={Colors.primary}
@@ -54,17 +55,42 @@ const EventCard = ({ title, ...props }) => {
         <View style={styles.middleSection}>
           <View style={styles.dashedLine} />
           <View style={styles.row}>
-            <FootPrintItem steps={1677} label={'Yesterday’s Steps '} />
-            <FootPrintItem steps={2677} label={'Weekly Steps'} />
+            {props?.yesterdaysTotalStep && (
+              <FootPrintItem
+                steps={props?.yesterdaysTotalStep}
+                label={'Yesterday’s Steps '}
+              />
+            )}
+            {props?.weeklyTotalSteps && (
+              <FootPrintItem
+                steps={props?.weeklyTotalSteps}
+                label={'Weekly Steps'}
+              />
+            )}
           </View>
         </View>
       </View>
 
       {/* Description Metrics */}
       <View style={styles.detailSection}>
-        <DescriptionDetailItem value={80} unit="Kcal" />
-        <DescriptionDetailItem value={0.8} unit="KM" />
-        <DescriptionDetailItem value={20} unit="Duration" />
+        {props?.totalCalories >= 0 && (
+          <DescriptionDetailItem
+            value={props?.totalCalories?.toFixed(2)}
+            unit="Kcal"
+          />
+        )}
+        {props?.totalDistance >= 0 && (
+          <DescriptionDetailItem
+            value={formatDistanceInKm(props?.totalDistance)}
+            unit="KM"
+          />
+        )}
+        {props?.totalCompletionTime >= 0 && (
+          <DescriptionDetailItem
+            value={formatToHHMMSS(props?.totalCompletionTime)}
+            unit="Duration"
+          />
+        )}
       </View>
     </View>
   )
@@ -75,8 +101,9 @@ const styles = StyleSheet.create({
     marginTop: -hp(1.5)
   },
   title: {
-    fontSize: fontSize.m,
-    fontWeight: 'bold'
+    fontSize: fontSize.normal,
+    // fontWeight: 'bold'
+    fontFamily: Fonts.Medium
     // marginBottom: hp(0.5),
   },
   centered: {
@@ -89,7 +116,7 @@ const styles = StyleSheet.create({
   },
   mainSection: {
     flexDirection: 'row',
-    gap: 20,
+    gap: 10,
     backgroundColor: '#E1FB98',
     borderWidth: 1,
     borderColor: '#B2DB03',
@@ -125,10 +152,12 @@ const styles = StyleSheet.create({
   },
   metricValue: {
     fontSize: fontSize.m,
-    fontWeight: 'bold'
+    // fontWeight: 'bold'
+    fontFamily: Fonts.SemiBold
   },
   unitLabel: {
-    fontSize: fontSize.normal
+    fontSize: fontSize.normal,
+    fontFamily: Fonts.Medium
   }
 })
 

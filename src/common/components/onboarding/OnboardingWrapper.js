@@ -19,6 +19,7 @@ import Animated, {
 } from 'react-native-reanimated'
 import Icons, { iconType } from '../../../assets/icons/Icons'
 import { hp, wp } from '../../functions/dimensions'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 
 const { width } = Dimensions.get('window')
 
@@ -77,7 +78,18 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish, ...props }) => {
   )
 
   const handleNext = () => {
-    console.log('handle next pressed')
+    const nextIndex = Math.round(x.value / width) + 1
+    if (nextIndex < totalSteps) {
+      flatListRef.current?.scrollToOffset({
+        offset: nextIndex * width,
+        animated: true
+      })
+    } else {
+      onFinish && onFinish()
+    }
+  }
+
+  const handleSkipped = () => {
     const nextIndex = Math.round(x.value / width) + 1
     if (nextIndex < totalSteps) {
       flatListRef.current?.scrollToOffset({
@@ -129,6 +141,14 @@ const OnboardingWrapper = ({ slides, onSkip, onFinish, ...props }) => {
       props.onNext(handleNext)
     } else {
       handleNext()
+    }
+  }
+
+  function onSkip() {
+    if (props.onNext) {
+      props.onNext(handleSkipped)
+    } else {
+      handleSkipped()
     }
   }
 
@@ -212,12 +232,15 @@ const styles = StyleSheet.create({
   },
   skipText: {
     color: '#666',
-    fontSize: 16,
-    fontWeight: '500'
+    // fontSize: 16,
+    // fontWeight: '500',
+    fontFamily: Fonts.Regular,
+    fontSize: fontSize.m
   },
   button: {
     backgroundColor: '#A7C43C',
     paddingVertical: hp(1),
+
     borderRadius: 12,
     alignItems: 'center',
     shadowColor: '#000',
@@ -227,8 +250,9 @@ const styles = StyleSheet.create({
     elevation: 8
   },
   buttonText: {
+    fontFamily: Fonts.Regular,
     color: 'white',
-    fontSize: 18
+    fontSize: fontSize.m
   },
   slideContentContainer: {
     flex: 1,

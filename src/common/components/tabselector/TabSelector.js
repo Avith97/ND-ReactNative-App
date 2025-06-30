@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import { fontSize } from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import { hp } from '../../functions/dimensions'
 
 const TabSelector = ({
@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
   },
   tabText: {
     color: 'black',
-    fontSize: fontSize.md
+    fontSize: fontSize.md,
+    fontFamily: Fonts.Medium
   },
   activeTabText: {
     fontWeight: 'bold'

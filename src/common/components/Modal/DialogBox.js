@@ -1,6 +1,7 @@
 import React from 'react'
 import { Modal, View, StyleSheet, Text } from 'react-native'
-import { wp } from '../../functions/dimensions'
+import { hp, wp } from '../../functions/dimensions'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 
 const DialogBox = ({ visible, onClose, children, title }) => {
   if (!visible) return null
@@ -23,8 +24,9 @@ const DialogBox = ({ visible, onClose, children, title }) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: fontSize.m,
+    fontFamily: Fonts.SemiBold,
+    // fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center'
   },
@@ -37,7 +39,8 @@ const styles = StyleSheet.create({
   dialog: {
     width: wp(90),
     // padding: 10,
-    paddingHorizontal:wp(10),
+    paddingHorizontal: wp(10),
+    paddingVertical: hp(2),
     backgroundColor: '#f3f3f3',
     borderRadius: 10,
     alignItems: 'center'

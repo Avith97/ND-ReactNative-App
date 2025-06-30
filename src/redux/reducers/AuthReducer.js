@@ -4,12 +4,11 @@ const initialState = {
   token: null,
   refresh_token: null,
   isLoggedIn: false,
-  riskProfileCompleted: null,
-  tokenType: null,
-  userId: null,
-  clientId: null,
-  roles: null,
-  isFamily: 'N'
+  contactNumber: null,
+  email: null,
+  user_id: null,
+  runnerId: null,
+  isAuthorized: false
 }
 
 export default AuthReducer = (state = initialState, action) => {
@@ -28,11 +27,11 @@ export default AuthReducer = (state = initialState, action) => {
         token: null,
         refresh_token: null,
         isLoggedIn: false,
-        riskProfileCompleted: null,
-        tokenType: null,
-        userId: null,
-        clientId: null,
-        roles: null
+        contactNumber: null,
+        email: null,
+        user_id: null,
+        runnerId: null,
+        isAuthorized: false
       }
 
     default:

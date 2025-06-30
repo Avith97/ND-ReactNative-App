@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Icons from '../../../assets/icons/Icons'
 import { hp, wp } from '../../../common/functions/dimensions'
-import Fonts from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 
 if (Platform.OS === 'android') {
   UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -98,18 +98,19 @@ const styles = StyleSheet.create({
     gap: 8
   },
   rank: {
-    fontSize: 18,
+    fontSize: fontSize.m,
     // fontWeight: 'bold',
     fontFamily: Fonts.SemiBold,
     marginRight: 6
   },
   title: {
-    fontSize: 16,
-    fontWeight: '600'
+    fontSize: fontSize.m,
+    fontFamily: Fonts.Medium
   },
   score: {
-    fontSize: 16,
-    fontWeight: '600'
+    fontSize: fontSize.normal,
+    // fontWeight: '600'
+    fontFamily: Fonts.SemiBold
   },
   memberRow: {
     flexDirection: 'row',
@@ -117,10 +118,12 @@ const styles = StyleSheet.create({
     marginTop: 8
   },
   memberName: {
-    fontSize: 14
+    fontSize: fontSize.normal,
+    fontFamily: Fonts.Regular
   },
   memberScore: {
-    fontSize: 14
+    fontSize: fontSize.s,
+    fontFamily: Fonts.SemiBold
   }
 })
 

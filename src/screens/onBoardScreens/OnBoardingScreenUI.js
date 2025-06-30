@@ -8,19 +8,21 @@ import Loader from '../../common/components/loader/Loader'
 const OnBoardingScreenUI = props => {
   const [key, setkey] = useState(0)
   const [slides, setslides] = useState([
-    () => (
-      <MoreAboutScreen
-        {...props}
-        handleChange={props.handleChange}
-        {...styles}
-      />
-    )
+    // () => (
+    //   <MoreAboutScreen
+    //     {...props}
+    //     handleChange={props.handleChange}
+    //     {...styles}
+    //   />
+    // )
   ])
 
   useEffect(() => {
     setkey(key + 1)
     setslides([...slides, ...props?.slides])
   }, [props?.slides])
+
+  const handleSkipped = () => {}
 
   return (
     <View key={key} style={{ flex: 1 }}>
@@ -29,7 +31,7 @@ const OnBoardingScreenUI = props => {
       <OnboardingWrapper
         slides={[...slides]}
         onNext={props.onNext}
-        onSkip={() => console.log('Skipped')}
+        onSkip={() => handleSkipped}
         onFinish={props.handleSubmit}
       />
       {/* } */}

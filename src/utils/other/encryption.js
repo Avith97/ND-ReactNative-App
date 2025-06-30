@@ -41,5 +41,5 @@ export const EncryptionService = {
     padding: CryptoJS.pad.Pkcs7,
     iv: CryptoJS.enc.Utf8.parse('nda_@3%%^!!@2025')
   },
-  e_k: CryptoJS.enc.Utf8.parse('_@3%health^!@2025')
+  e_k: CryptoJS.enc.Utf8.parse('_@3ndevil^!@2025')
 }

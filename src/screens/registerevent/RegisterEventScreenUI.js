@@ -8,10 +8,10 @@ import {
 } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { hp, wp } from '../../common/functions/dimensions'
-import { fontSize } from '../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import Colors from '../../utils/constants/Colors'
 import CustomButton from '../../common/components/buttons/CustomButton'
-import { CheckBox, Input } from 'react-native-elements'
+import { CheckBox, colors, Input } from 'react-native-elements'
 import CustomTextInput from '../../common/components/textInput/CustomTextInput'
 import CustomDropdown from '../../common/components/dropdown/CustomDropdown'
 import MultiSelectDropdown from '../../common/components/dropdown/MultiSelectDropdown'
@@ -292,14 +292,16 @@ const styles = StyleSheet.create({
   registerLink: {
     //   color: 'blue',
     //   textDecorationLine: 'underline',
-    marginBottom: hp(1),
-    fontSize: fontSize.l
+    // marginBottom: hp(1),
+    fontSize: fontSize.m,
+    fontFamily: Fonts.SemiBold
   },
   inputGroup: {
     marginBottom: hp(2)
   },
   label: {
     fontSize: fontSize.s,
+    fontFamily: Fonts.Medium,
     marginBottom: hp(0.5),
     color: '#555'
   },
@@ -319,7 +321,11 @@ const styles = StyleSheet.create({
   termsText: {
     marginLeft: wp(0),
     fontSize: fontSize.normal,
-    color: '#333'
+    color: '#333',
+    fontFamily: Fonts.Medium
+  },
+  textInputStyle: {
+    color: colors.grey0
   },
   primaryBtn: {
     backgroundColor: '#C3E458',

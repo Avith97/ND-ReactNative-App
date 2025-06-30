@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Image, DevSettings } from 'react-native'
 import { Images } from '../../../utils/constants/Images'
 import CustomButton from '../buttons/CustomButton'
-import { hp } from '../../functions/dimensions'
+import { hp, wp } from '../../functions/dimensions'
 import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 
 class ErrorBoundary extends Component {
@@ -28,11 +28,11 @@ class ErrorBoundary extends Component {
         <View style={styles.container}>
           <Image
             source={Images.err_boundary}
-            resizeMode="contain"
+            resizeMode="cover"
             style={{
               flex: 1,
               // height: '',
-              width: '100%'
+              width: wp(100)
             }}
           />
           <CustomButton

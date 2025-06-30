@@ -7,34 +7,12 @@ import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import { TemplateService } from '../../../services/templates/TemplateService'
 import { URL } from '../../../utils/constants/Urls'
 import { services } from '../../../services/axios/services'
-import { wp } from '../../../common/functions/dimensions'
+import { hp, wp } from '../../../common/functions/dimensions'
+import Colors from '../../../utils/constants/Colors'
 
 export default function RunnerGroupTab({ ...props }) {
   const [state, setState] = useState({
-    groupData: [
-      {
-        runnerGroupId: 3,
-        runnerGroupName: 'Runner Group 3',
-        teamOrGroup: 0,
-        runnerGroupDistance: 970395.8999999996,
-        runnerGroupRank: 1,
-        runnerGroupTotalSteps: 1898447,
-        runnerGroupTotalCompletionTime: 1556678,
-        runnerGroupTotalCalories: 0,
-        runnerGroupTotalWellnessPoint: 0
-      },
-      {
-        runnerGroupId: 1,
-        runnerGroupName: 'Runner Group 1',
-        teamOrGroup: 0,
-        runnerGroupDistance: 27266.8,
-        runnerGroupRank: 2,
-        runnerGroupTotalSteps: 37940,
-        runnerGroupTotalCompletionTime: 6206,
-        runnerGroupTotalCalories: 0,
-        runnerGroupTotalWellnessPoint: 0
-      }
-    ]
+    groupData: []
   })
   const [expandedTeamId, setExpandedTeamId] = useState(null)
 
@@ -119,15 +97,28 @@ export default function RunnerGroupTab({ ...props }) {
   return (
     <>
       <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.Medium }}>
-        Teams Leaderboard
+        Runner Group Leaderboard
       </Text>
-      <FlatList
-        data={state?.groupData || []}
-        renderItem={renderTeam}
-        keyExtractor={item => item.runnerGroupId}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: wp(1.5) }}
-      />
+
+      {state?.groupData?.length ? (
+        <FlatList
+          data={state?.groupData || []}
+          renderItem={renderTeam}
+          keyExtractor={item => item.runnerGroupId}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: wp(1.5) }}
+        />
+      ) : (
+        <Text
+          style={{
+            textAlign: 'center',
+            paddingVertical: hp(2),
+            color: Colors?.gray_05,
+            fontFamily: Fonts.Regular
+          }}>
+          No runner group data found
+        </Text>
+      )}
     </>
   )
 }

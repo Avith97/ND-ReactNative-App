@@ -1,5 +1,5 @@
 // react native imports
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 // constants utils & assets
@@ -7,19 +7,20 @@ import Colors from '../../utils/constants/Colors'
 
 // UI component
 import moment from 'moment'
-import axios from 'axios'
 import ProgramLeaderBoardScreenUI from './ProgramLeaderBoardScreenUI'
 import { URL } from '../../utils/constants/Urls'
 import { TemplateService } from '../../services/templates/TemplateService'
 import { services } from '../../services/axios/services'
 import { useSelector } from 'react-redux'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
-import Loader from '../../common/components/loader/Loader'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function ProgramLeaderBoardScreen(props) {
   let { eventID } = props?.route?.params
 
   const { auth } = useSelector(store => store)
+
+  let isFocused = useIsFocused()
 
   const [state, setState] = useState({
     selectedTab: 'Male',
@@ -34,8 +35,10 @@ export default function ProgramLeaderBoardScreen(props) {
       label: 'Individual'
     },
     selectedWeekRange: {
-      label: 'overAll',
-      value: 'overAll'
+      label: 'OverAll',
+      value: 'OverAll',
+      toDate: null,
+      fromDate: null
     },
     selectedLimit: { label: '5', value: '5' },
     showModal: false,
@@ -61,8 +64,10 @@ export default function ProgramLeaderBoardScreen(props) {
   })
 
   useEffect(() => {
-    InitiateScreen()
-  }, [])
+    if (isFocused) {
+      InitiateScreen()
+    }
+  }, [isFocused])
 
   //  participated labels like , individual , team , age group
   async function getParticipatedOptions(event) {
@@ -121,18 +126,22 @@ export default function ProgramLeaderBoardScreen(props) {
     const dropdownDates = [
       {
         label: 'OverAll',
-        value: ''
+        value: 'OverAll',
+        toDate: null,
+        fromDate: null
       }
     ]
 
     const now = moment()
-    const todayFormatted = now.format(DATE_FORMAT)
+    // const todayFormatted = now.format(DATE_FORMAT).
+    const todayFormatted = now.startOf('day').format(DATE_FORMAT)
+    const todayEndFormatted = now.endOf('day').format(DATE_FORMAT)
 
     const todaysDateOption = {
       label: "Today's Leaderboard",
-      value: `${todayFormatted} ${todayFormatted}`,
+      value: `${todayFormatted} ${todayEndFormatted}`,
       fromDate: todayFormatted,
-      toDate: todayFormatted
+      toDate: todayEndFormatted
     }
 
     const parseDate = (dateStr, format = 'YYYY-MM-DD') =>
@@ -168,11 +177,11 @@ export default function ProgramLeaderBoardScreen(props) {
           last.label = `${moment(last.fromDate, DATE_FORMAT).format(
             'Do MMM'
           )} - ${end.format('Do MMM')}`
-          last.toDate = end.format(DATE_FORMAT)
+          last.toDate = end.endOf('day').format(DATE_FORMAT)
           last.value = `${last.fromDate} ${last.toDate}`
         } else {
-          const fromDateStr = start.format(DATE_FORMAT)
-          const toDateStr = end.format(DATE_FORMAT)
+          const fromDateStr = start.startOf('day').format(DATE_FORMAT)
+          const toDateStr = end.endOf('day').format(DATE_FORMAT)
 
           const weekOption = {
             label: `${start.format('Do MMM')} - ${end.format('Do MMM')}`,
@@ -181,7 +190,10 @@ export default function ProgramLeaderBoardScreen(props) {
             toDate: toDateStr
           }
 
-          if (isCurrentWeek) break
+          if (isCurrentWeek) {
+            formattedWeeks.push(weekOption)
+            break
+          }
           formattedWeeks.push(weekOption)
         }
 
@@ -263,7 +275,9 @@ export default function ProgramLeaderBoardScreen(props) {
     let runnerData = await getAllRunnerData()
 
     // runner activity detail
-    let runnerActivityDetail = await getRunnerDetail(auth?.runner?.id)
+    let runnerActivityDetail = await getRunnerDetail(
+      auth?.runner?.id || auth?.runnerId
+    )
 
     let formattedParticipatedLabel = await getParticipatedOptions(res)
 

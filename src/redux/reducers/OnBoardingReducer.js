@@ -12,6 +12,14 @@ export default (state = initialState, { type, payload }) => {
     case actions.SET_ONBOARDING_DATA:
       return { ...state, ...payload }
 
+    case actions.LOG_OUT:
+      return {
+        list: [],
+        image: [],
+        'list-multiselect': [],
+        'check-box': []
+      }
+
     default:
       return state
   }

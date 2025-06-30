@@ -1,58 +1,62 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { View, Animated, StyleSheet } from 'react-native'
 import { hp, wp } from '../../functions/dimensions'
 import Colors from '../../../utils/constants/Colors'
 
 const MovingObject = props => {
-  const [height, setheight] = useState(props.height || hp(0.7))
-  const [width, sewidth] = useState(props.width || wp(70))
-  const translateX = new Animated.Value(-(width + 20)) // Start position just before A (negative offset)
+  const [height, setHeight] = useState(props.height || hp(0.7))
+  const [width, setWidth] = useState(props.width || wp(70))
+
+  const translateX = useRef(new Animated.Value(-(width + 20))).current
+
   useEffect(() => {
-    Animated.loop(
+    const animation = Animated.loop(
       Animated.sequence([
-        // Move from A (0) to B (300)
         Animated.timing(translateX, {
-          toValue: width + 20, // Move to position B (300)
-          // toValue: 500, // Move to position B (300)
-          duration: 1500, // Duration to reach B
+          toValue: width + 20,
+          duration: 1500,
           useNativeDriver: true
         }),
-        // Reset position back to A
         Animated.timing(translateX, {
-          toValue: -120, // Move back to position A (slightly before A)
-          duration: 0, // Instant reset to start position
+          toValue: -(width + 20),
+          duration: 0,
           useNativeDriver: true
         })
       ])
-    ).start()
-  }, [])
+    )
+
+    animation.start()
+
+    return () => animation.stop()
+  }, [translateX, width])
 
   return (
-    // <View style={styles.container}>
-    <View style={{ ...styles.line, height: height, width: width }}>
+    <View style={[styles.line, { height, width }]}>
       <Animated.View
-        style={[styles.box, { transform: [{ translateX }], height: height }]}
+        style={[
+          styles.box,
+          {
+            transform: [{ translateX }],
+            height
+          }
+        ]}
       />
     </View>
-    // </View>
   )
 }
 
 const styles = StyleSheet.create({
   line: {
     overflow: 'hidden',
-    width: 500, // The length of the line from A to B
     height: 2,
-    backgroundColor: '#f3f3f3', // The line from A to B
+    backgroundColor: 'lightgray',
     justifyContent: 'center',
     borderRadius: 12
   },
   box: {
     width: wp(30),
-    height: 30,
     borderRadius: 12,
-    backgroundColor: Colors.color3,
-    // backgroundColor: '#4caf50',
+    backgroundColor: Colors.primary,
     position: 'absolute'
   }
 })

@@ -1,17 +1,9 @@
 // react native imports
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
 // common components
-import TabSelector from '../../common/components/tabselector/TabSelector'
 import UserLeaderBoardCard from '../../common/components/userleaderboardcard/UserLeaderBoardCard'
-import CustomTextInput from '../../common/components/textInput/CustomTextInput'
 import CustomDropdown from '../../common/components/dropdown/CustomDropdown'
 import DialogBox from '../../common/components/Modal/DialogBox'
 import CustomButton from '../../common/components/buttons/CustomButton'
@@ -21,7 +13,6 @@ import { Image } from 'react-native'
 import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import { hp, wp } from '../../common/functions/dimensions'
 import Icons, { iconType } from '../../assets/icons/Icons'
-import { open_logout_bottom_sheet } from '../../common/components/toasts/handleToasts'
 import IndividualLeaderBoard from './IndividualTab/IndividualLeaderBoard'
 import TeamTab from './teamtab/TeamTab'
 import AgeGroupTab from './agegrouptab/AgeGroupTab'
@@ -65,10 +56,12 @@ export default function ProgramLeaderBoardScreenUI({
 
         {/* Name and Bib */}
         <View style={styles.textContainer}>
-          <Text style={styles.nameText}>
+          <Text style={{ ...styles.nameText, fontFamily: Fonts.SemiBold }}>
             {item.firstName} {item.lastName}
           </Text>
-          <Text style={styles.bibText}>Bib: {item.bibNumber}</Text>
+          <Text style={{ ...styles.bibText, fontFamily: Fonts.SemiBold }}>
+            Bib: {item.bibNumber}
+          </Text>
         </View>
       </TouchableOpacity>
     )
@@ -193,7 +186,7 @@ export default function ProgramLeaderBoardScreenUI({
               justifyContent: 'space-between',
               alignContent: 'center'
             }}>
-            <Text>Participated</Text>
+            <Text style={styles.filterlable}>Participated</Text>
             <View style={styles.dropdownStyle}>
               <CustomDropdown
                 name="selectedParticipated"
@@ -217,20 +210,23 @@ export default function ProgramLeaderBoardScreenUI({
                 justifyContent: 'space-between',
                 alignContent: 'center'
               }}>
-              <Text>Week Filter</Text>
+              <Text style={styles.filterlable}>Week Filter</Text>
+
               <View style={styles.dropdownStyle}>
                 <CustomDropdown
                   name="selectedWeekRange"
                   label="Select Week"
                   data={
-                    props.weekDropdowns || [
+                    props?.weekDropdowns || [
                       {
-                        label: 'Overall',
-                        value: ''
+                        label: 'OverAll',
+                        value: 'OverAll',
+                        toDate: null,
+                        fromDate: null
                       }
                     ]
                   }
-                  value={props.selectedWeekRange}
+                  value={props?.selectedWeekRange}
                   onChangeText={(name, value, data) => {
                     props.handleChange(name, value)
                   }}
@@ -252,7 +248,7 @@ export default function ProgramLeaderBoardScreenUI({
                   justifyContent: 'space-between',
                   alignContent: 'center'
                 }}>
-                <Text>Activity Types</Text>
+                <Text style={styles.filterlable}>Activity Types</Text>
                 <View style={styles.dropdownStyle}>
                   <CustomDropdown
                     name="selectedActivity"
@@ -280,7 +276,7 @@ export default function ProgramLeaderBoardScreenUI({
                   justifyContent: 'space-between',
                   alignContent: 'center'
                 }}>
-                <Text>Category Types</Text>
+                <Text style={styles.filterlable}>Category Types</Text>
                 <View style={styles.dropdownStyle}>
                   <CustomDropdown
                     name="selectedCategory"
@@ -308,7 +304,7 @@ export default function ProgramLeaderBoardScreenUI({
                 justifyContent: 'space-between'
                 // alignContent: 'center',
               }}>
-              <Text>Top Participant</Text>
+              <Text style={styles.filterlable}>Top Participant</Text>
               <View style={styles.dropdownStyle}>
                 <CustomDropdown
                   name="selectedLimit"
@@ -391,7 +387,8 @@ const styles = StyleSheet.create({
   name: {
     flex: 1,
     fontSize: fontSize.md,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: Fonts.SemiBold,
     color: '#333'
   },
   score: {
@@ -401,7 +398,7 @@ const styles = StyleSheet.create({
     color: '#333'
   },
   textStyle: {
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.Medium,
     color: 'black'
   },
   btnStyles: {
@@ -436,5 +433,9 @@ const styles = StyleSheet.create({
     width: '62%',
     right: wp(2)
     // left:
+  },
+  filterlable: {
+    fontSize: fontSize.normal,
+    fontFamily: Fonts.Regular
   }
 })

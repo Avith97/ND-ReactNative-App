@@ -9,7 +9,8 @@ import Icons, { iconType } from '../../../assets/icons/Icons'
 const PieProgressBar = ({
   percentage = 80,
   leaderboard = false,
-  program = false
+  program = false,
+  ...props
 }) => {
   const completed = percentage
   const remaining = 100 - percentage
@@ -62,6 +63,7 @@ const PieProgressBar = ({
               color={Colors.primary}
             />
             <Text style={styles.percentageText}>{`${completed}%`}</Text>
+            <Text style={{ color: Colors.primary }}>Progress</Text>
             <Text style={{ color: Colors.primary }}>Progress</Text>
           </View>
         ) : (

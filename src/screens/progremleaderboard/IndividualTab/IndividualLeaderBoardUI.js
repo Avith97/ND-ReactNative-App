@@ -4,8 +4,6 @@ import TabSelector from '../../../common/components/tabselector/TabSelector'
 import { StyleSheet } from 'react-native'
 import { hp, wp } from '../../../common/functions/dimensions'
 import Fonts, { fontSize } from '../../../utils/constants/Fonts'
-import { ScrollView } from 'react-native'
-import { Dimensions } from 'react-native'
 import Colors from '../../../utils/constants/Colors'
 
 function IndividualLeaderBoardUI({ ...props }) {
@@ -26,7 +24,7 @@ function IndividualLeaderBoardUI({ ...props }) {
   )
   return (
     <View style={{ flex: 1 }}>
-      <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.Medium }}>
+      <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.SemiBold }}>
         Individual Leaderboard
       </Text>
       <TabSelector tabs={props.tabs} onTabChange={props.onTabChange} />
@@ -38,12 +36,21 @@ function IndividualLeaderBoardUI({ ...props }) {
           <FlatList
             data={props?.data || []}
             renderItem={renderItem}
-            keyExtractor={item => item.id?.toString()}
+            // keyExtractor={item => item.id?.toString()}  //  Using index as key because some items have duplicate IDs, which causes key warning.
+            keyExtractor={(item, index) => index.toString()}
             showsVerticalScrollIndicator={false}
           />
         </View>
       ) : (
-        <Text style={{textAlign:"center" , paddingVertical:hp(2), color:Colors?.gray_05}}>No data found</Text>
+        <Text
+          style={{
+            textAlign: 'center',
+            paddingVertical: hp(2),
+            color: Colors?.gray_05,
+            fontFamily: Fonts.Regular
+          }}>
+          No data found
+        </Text>
       )}
     </View>
   )
@@ -73,17 +80,19 @@ const styles = StyleSheet.create({
   name: {
     flex: 1,
     fontSize: fontSize.md,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: Fonts.Medium,
     color: '#333'
   },
   score: {
     fontSize: fontSize.md,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: Fonts.SemiBold,
     marginRight: 8,
     color: '#333'
   },
   textStyle: {
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.Medium,
     color: 'black'
   },
   btnStyles: {

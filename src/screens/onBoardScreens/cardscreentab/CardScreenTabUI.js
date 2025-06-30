@@ -7,6 +7,7 @@ import { hp, wp } from '../../../common/functions/dimensions'
 import { Images } from '../../../utils/constants/Images'
 
 import { en as labels } from '../../../utils/labels/en'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 export default function CardScreenTabUI(props) {
   return (
     <View style={styles.container}>
@@ -69,13 +70,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
   },
   title: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: fontSize.m,
+    fontFamily: Fonts.Bold,
     marginBottom: 10,
     textAlign: 'center'
   },
   description: {
-    fontSize: 14,
+    fontSize: fontSize.normal,
+    fontFamily: Fonts.Regular,
     textAlign: 'center',
     color: '#444'
   },

@@ -52,6 +52,8 @@ import ErrorBoundary from './src/common/components/errorboundary/ErrorBoundary';
 import Navigator from './src/routes';
 import { store } from './src/redux/store';
 import { Provider } from 'react-redux'
+import { initiateApp } from './src/common/functions/initiate';
+import FirebasePushNotificationService from './src/services/firebase/FCM';
 
 
 import Toast from 'react-native-toast-message'
@@ -206,6 +208,7 @@ const vibrate = async () => {
 const App = () => {
   const [loading, setloading] = useState(false);
   useEffect(() => {
+    initiateApp()
     initHealthConnect();
     // setupBackgroundFetch(); // Initialize background fetch when the app loads
 
@@ -224,7 +227,10 @@ const App = () => {
     // return () => appStateListener.remove();
   }, []);
 
-  const initHealthConnect = () => {
+  
+
+  const initHealthConnect = async () => {
+    FirebasePushNotificationService.getToken()
     setloading(true);
     // initialize()
     setTimeout(() => {
