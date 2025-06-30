@@ -416,6 +416,21 @@ export default function ProgramLeaderBoardScreen(props) {
 
   async function handleChange(params, val) {
     if (params === 'search') {
+      // When search box is cleared
+      if (!val?.trim()) {
+        const runnerActivityDetail = await getRunnerDetail(
+          auth?.runner?.id || auth?.runnerId
+        )
+
+        setState({
+          ...state,
+          searchResultData: [],
+          runnerActivityDetail: runnerActivityDetail
+        })
+
+        return
+      }
+
       let searchResultData = await searchResult(val)
 
       // if (searchResultData?.length > 0) {
