@@ -19,7 +19,7 @@ export const FilePicker = {
         appsnackbar.showErrMsg('File type not supported')
       }
     } catch (error) {
-      console.log('Camera cancelled-->', error)
+      // console.log('Camera cancelled-->', error)
       toast_error('Camera Closed')
     }
 
@@ -41,7 +41,7 @@ export const FilePicker = {
         appsnackbar.showErrMsg('File type not supported')
       }
     } catch (error) {
-      console.log('Picker cancelled-->', error)
+      // console.log('Picker cancelled-->', error)
       toast_error('Image picker cancelled')
     }
 
@@ -58,7 +58,7 @@ export const FilePicker = {
         return resp
       }
     } catch (error) {
-      console.log('Picker Video cancelled-->', error)
+      // console.log('Picker Video cancelled-->', error)
       toast_error('Video picker cancelled')
     }
   },
@@ -73,7 +73,7 @@ export const FilePicker = {
         return resp
       }
     } catch (error) {
-      console.log('Camera Video cancelled-->', error)
+      // console.log('Camera Video cancelled-->', error)
       toast_error('Camera Video Closed')
     }
   }

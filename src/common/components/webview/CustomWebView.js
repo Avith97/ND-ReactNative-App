@@ -22,7 +22,6 @@ const CustomWebView = props => {
   }, [])
 
   function renderError(e) {
-    console.log('error new ===>', e)
     return (
       <View style={{ flex: 1, ...StyleSheet.absoluteFillObject }}>
         <Image
@@ -66,7 +65,6 @@ const CustomWebView = props => {
 
   function handleWebViewNavigationStateChange(params) {
     const { url } = params
-    console.log('web params -->', params)
   }
 
   return (

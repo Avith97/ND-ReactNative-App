@@ -15,8 +15,6 @@ const CustomDateTimePicker = (props = defaultProps) => {
   const [show, setshow] = useState(false)
 
   function handleConfirm(params) {
-    console.log('date', params)
-
     setselectedDate(params)
     // props.handleConfirm(params)
     setshow(false)

@@ -50,7 +50,6 @@ const OtpScreen = props => {
   function validate(params, val) {
     let valid = true
     let err = {}
-    // console.log('validate params', params, state.otp)
 
     // if (params === 'otp' && val?.length < 6) {
     if (state.otp?.length < 6) {
@@ -58,7 +57,6 @@ const OtpScreen = props => {
       valid = false
       appsnackbar.showErrMsg(err.otpErr)
     }
-    console.log('validate params', params, err)
     // seterr(err);
     // setTimeout(() => {
     //   seterr({});
@@ -76,7 +74,6 @@ const OtpScreen = props => {
       }
 
       let resp = await services._post(URL.otp, resendObj) // send otp request
-      console.log('sent otp request response -->', resp)
 
       if (resp.type !== 'success') return
       if (resp.data.success.code === '200') {

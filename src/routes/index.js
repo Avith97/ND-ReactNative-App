@@ -18,7 +18,6 @@ const Navigator = props => {
       linking={[]}
       // fallback={<Loader isLoading={true} />}
       onReady={() => {
-        console.log('nav container ready')
         global.navready = true
       }}>
       <Stack.Navigator

@@ -58,8 +58,6 @@ export default function EditProfileScreen(props) {
   }, [isFocused])
 
   function handleChange(params, val) {
-    console.log('params', params)
-
     setFormState({
       ...formState,
       [params]: val
@@ -76,7 +74,6 @@ export default function EditProfileScreen(props) {
     if (!formState.firstName?.length || !nameRegex.test(formState.firstName)) {
       isValid = false
       err = { firstNameErr: true }
-      console.log('invalid')
       appsnackbar.showErrMsg('Please enter valid first name')
     } else if (
       !formState.lastName?.length ||

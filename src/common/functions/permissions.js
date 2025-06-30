@@ -12,14 +12,14 @@ const AndroidPermissions = {
     }
     try {
       const granted = await PermissionsAndroid.request(permission)
-      console.log('permission result ===>', granted)
+      // console.log('permission result ===>', granted)
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         console.log(`${permission} permission granted`)
         return true
       } else if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
         await AndroidPermissions.requestAgain(permission, title)
       } else {
-        console.log(`${permission} permission denied`)
+        // console.log(`${permission} permission denied`)
         return false
       }
     } catch (err) {

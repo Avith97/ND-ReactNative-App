@@ -37,7 +37,6 @@ const SplashScreen = props => {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
 
   useEffect(() => {
-    console.log('user login status ---->', isLoggedIn)
     if (!isInitiating) {
       handleDeepLink()
     }
@@ -102,7 +101,7 @@ const SplashScreen = props => {
 
   async function handleDeepLink() {
     let url = await Linking.getInitialURL()
-    console.log('deeplink', url)
+    // console.log('deeplink', url)
 
     if (url) {
       try {

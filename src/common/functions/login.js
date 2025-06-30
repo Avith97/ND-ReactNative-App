@@ -9,7 +9,6 @@ import { services } from '../../services/axios/services'
 import Strings from '../../utils/constants/Strings'
 
 export const perform_login = async (auth, user, restore_offline) => {
-  console.log('before write --->', auth, '\n', user)
   services.refreshInstance(auth.token)
   if (!restore_offline) {
     AsyncStore.setData(Strings.ASYNC_KEY.offline, { auth: auth, user: user })
@@ -19,7 +18,7 @@ export const perform_login = async (auth, user, restore_offline) => {
 }
 
 export const perform_logout = async (auth, user, restore_offline) => {
-  console.log('perform logout')
+  // console.log('perform logout')
   try {
     store.dispatch(logout_action())
     AsyncStore.clearData(Strings.ASYNC_KEY.offline)

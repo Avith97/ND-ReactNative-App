@@ -51,7 +51,7 @@ export default function GeneralSettingScreenUI(props) {
 
       if (resp?.type === 'success') {
         const message = resp?.data?.success?.verbose
-        console.log('User deleted successfully:', message)
+        // console.log('User deleted successfully:', message)
 
         // ✅ Navigate to login screen
         handleNavigate()
@@ -59,7 +59,7 @@ export default function GeneralSettingScreenUI(props) {
         appsnackbar.showErrMsg('Something went wrong!')
       }
     } catch (error) {
-      console.log('Error delete screen get details', error)
+      // console.log('Error delete screen get details', error)
       appsnackbar.showErrMsg('Something went wrong!')
     } finally {
       props.setModalVisible(false)

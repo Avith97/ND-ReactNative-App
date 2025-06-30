@@ -49,12 +49,12 @@ const LoginScreen = props => {
     })
   }, [])
 
-  useEffect(() => {
-    console.log('eventData', eventData)
-  }, [eventData])
+  // useEffect(() => {
+  //   console.log('eventData', eventData)
+  // }, [eventData])
 
   async function handleChange(params, val) {
-    console.log(params, val)
+    // console.log(params, val)
 
     setState({
       ...state,
@@ -118,8 +118,6 @@ const LoginScreen = props => {
 
     let resp = await services._put(url, syncObj)
 
-    console.log(resp)
-
     if (resp?.type === 'success') {
       // if event data then goes to start page
     } else {
@@ -132,7 +130,7 @@ const LoginScreen = props => {
 
     // console.log(syncObj)
 
-    console.log(':submitting')
+    // console.log(':submitting')
 
     return
     if (params === 'signup') {
@@ -151,7 +149,7 @@ const LoginScreen = props => {
     try {
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn()
-      console.log('User Info:', userInfo)
+      // console.log('User Info:', userInfo)
       if (userInfo?.type === 'success') {
         await performLogin(userInfo?.data)
       } else {
@@ -203,16 +201,16 @@ const LoginScreen = props => {
     const formData = new FormData()
     formData.append('userRequest', JSON.stringify(syncObj))
     formData.append('profilePicture', syncObj.profilePicLink)
-    console.log(global?.distKey, '')
+    // console.log(global?.distKey, '')
 
     let eventData
     if (global?.distKey) {
       eventData = await fetchEventDetails(global?.distKey)
-      console.log('eventdata', eventData)
+      // console.log('eventdata', eventData)
     }
 
     let resp = await services._postFormData('signup', formData)
-    console.log('google login --->', resp.data)
+    // console.log('google login --->', resp.data)
 
     if (resp?.type !== 'success') {
       appsnackbar.showErrMsg(labels.some_thing_went_wrong)
@@ -265,7 +263,7 @@ const LoginScreen = props => {
 
   async function set_data_storage(data) {
     // use to set data in storage
-    console.log('testing the offline =====', data)
+    // console.log('testing the offline =====', data)
 
     services?.refreshInstance(data?.token)
     const auth = await data_separation(data)

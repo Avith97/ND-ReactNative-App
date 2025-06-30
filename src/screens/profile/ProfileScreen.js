@@ -47,11 +47,6 @@ export default function ProfileScreen(props) {
     // Fetch user details or any initial data here
     let resp = await getDetails() // Replace with your API endpoint
 
-    console.log(
-      'user detail Profile%20Photos/runner_3675/profilePhoto-20250619_122059-1-.jpeg',
-      resp
-    )
-
     // Example: setState({ userDetails: fetchedData });
 
     if (resp) {
@@ -70,8 +65,6 @@ export default function ProfileScreen(props) {
     try {
       let url = TemplateService?._userId(URL?.get_profile, auth?.id)
       let resp = await services._get(url)
-
-      console.log('user profile data', resp)
 
       if (resp?.api_response?.data) {
         store.dispatch(set_user_details(resp?.data?.user))
@@ -135,8 +128,6 @@ export default function ProfileScreen(props) {
         id: key
       }
     }
-
-    console.log('custom params', customParams)
 
     const formData = new FormData()
     formData.append('profilePicture', customParams.file)

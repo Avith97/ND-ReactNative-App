@@ -13,9 +13,9 @@ const WebViewToast = params => {
     setKey(key + 1)
   }, [params?.props?.url])
 
-  useEffect(() => {
-    console.log('props policy detail ===?', params?.props)
-  }, [params])
+  // useEffect(() => {
+  //   console.log('props policy detail ===?', params?.props)
+  // }, [params])
   return (
     <View style={{ flex: 1, height: hp(100), width: wp(100) }}>
       <View key={key} style={{ flex: 1 }}>

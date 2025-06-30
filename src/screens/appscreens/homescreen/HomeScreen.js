@@ -9,6 +9,7 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native'
 import { TemplateService } from '../../../services/templates/TemplateService'
 import { useSelector } from 'react-redux'
 import { URL } from '../../../utils/constants/Urls'
+import { handleSetOngoingEvents } from '../../../redux/actions/event_actions'
 
 export default function HomeScreen(props) {
   const { isLoggedIn } = props.route.params
@@ -17,6 +18,7 @@ export default function HomeScreen(props) {
   let isFocused = useIsFocused()
 
   let user = useSelector(state => state?.user)
+  const isSoftSyncing = useSelector(store => store.settings?.isSoftSyncing)
   // Custom hook to fetch health connect data
   // const {healthConnectData, fetchAllData} = useHealthConnectData();
 
@@ -33,11 +35,11 @@ export default function HomeScreen(props) {
   // },[])
 
   useEffect(() => {
-    if (isFocused) {
+    if (isFocused && !isSoftSyncing) {
       initiateScreen()
     }
     // requestHealthPermissions();
-  }, [isFocused])
+  }, [isFocused, isSoftSyncing])
 
   async function initiateScreen() {
     let data = await getDetails()
@@ -60,8 +62,9 @@ export default function HomeScreen(props) {
       let resp = await services._get(HomeSummaryURL)
 
       // setting global events
-      if (resp.data?.events?.length) {
-        global.ongoingEvents = resp.data?.events
+      if (resp.data?.events) {
+        store.dispatch(handleSetOngoingEvents(resp.data?.events))
+        // global.ongoingEvents = resp.data?.events
       }
 
       // You can update the state with the response data if needed

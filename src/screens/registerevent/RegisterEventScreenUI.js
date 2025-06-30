@@ -11,7 +11,7 @@ import { hp, wp } from '../../common/functions/dimensions'
 import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import Colors from '../../utils/constants/Colors'
 import CustomButton from '../../common/components/buttons/CustomButton'
-import { CheckBox, Input } from 'react-native-elements'
+import { CheckBox, colors, Input } from 'react-native-elements'
 import CustomTextInput from '../../common/components/textInput/CustomTextInput'
 import CustomDropdown from '../../common/components/dropdown/CustomDropdown'
 import MultiSelectDropdown from '../../common/components/dropdown/MultiSelectDropdown'
@@ -322,6 +322,9 @@ const styles = StyleSheet.create({
     fontSize: fontSize.normal,
     color: '#333',
     fontFamily: Fonts.Medium
+  },
+  textInputStyle: {
+    color: colors.grey0
   },
   primaryBtn: {
     backgroundColor: '#C3E458',

@@ -1,4 +1,5 @@
 import AsyncStore from '../../data/async/AsyncStore'
+import { InitiateAllGlobals } from '../../data/globals/Index'
 import { handleInit } from '../../redux/actions/loading'
 import { store } from '../../redux/store'
 import { initiateFirebaseService } from '../../services/firebase'
@@ -8,6 +9,7 @@ import { perform_login } from './login'
 
 export const initiateApp = async () => {
   store.dispatch(handleInit(true))
+  InitiateAllGlobals()
   await Promise.all([
     initiateFirebaseService(),
     HealthConnectService.init(),
@@ -18,7 +20,7 @@ export const initiateApp = async () => {
 
 export const retrieve_offline_data = async () => {
   const data = await AsyncStore.getData(Strings.ASYNC_KEY.offline)
-  console.log('offline data --->', data)
+  // console.log('offline data --->', data)
   if (data) {
     await perform_login(data?.auth, data?.user, (restore_offline = true))
   }

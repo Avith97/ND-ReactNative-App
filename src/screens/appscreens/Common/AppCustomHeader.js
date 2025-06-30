@@ -19,11 +19,16 @@ import { toast_success } from '../../../common/components/toasts/handleToasts'
 import Toast from 'react-native-toast-message'
 import moment from 'moment'
 import { BackSync } from '../../../common/functions/BackSync'
+import { store } from '../../../redux/store'
+import { handleSoftSync } from '../../../redux/actions/loading'
+import { useSelector } from 'react-redux'
 
 export default function AppCustomHeader(props) {
   const navigation = useNavigation() // ✅ Access navigation
 
   const [isLoading, setIsLoading] = useState(false)
+
+  const onGoingEvents = useSelector(store => store.onGoingEvents?.onGoingEvents)
 
   // let isLoading = true
 
@@ -52,7 +57,12 @@ export default function AppCustomHeader(props) {
     return () => {
       if (animation) animation.stop()
     }
-  }, [isLoading, global.ongoingEvents?.length])
+  }, [isLoading, onGoingEvents?.length])
+
+  useEffect(() => {
+    store.dispatch(handleSoftSync(isLoading))
+    global.temp = isLoading
+  }, [isLoading])
 
   const rotateInterpolate = rotateAnim.interpolate({
     inputRange: [0, 1],
@@ -76,24 +86,24 @@ export default function AppCustomHeader(props) {
     //     endDate: moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
     //     format: 'YYYY-MM-DD HH:mm:ss'
     //   },"active")
-    if (global.ongoingEvents?.length) {
-      for (const event of global.ongoingEvents) {
-        try {
-          const response = await BackSync.health_data_sync({
-            startDate: moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
-            endDate: moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
-            format: 'YYYY-MM-DD HH:mm:ss'
-            // eventId: event.id // optional: if your API needs event ID
-          })
-          setIsLoading(false)
-          Toast.hide()
-          console.log(`Synced event `, response)
-        } catch (error) {
-          console.error(`Error syncing event ${event.id}:`, error)
-        }
+
+    if (onGoingEvents?.length) {
+      // for (const event of global.ongoingEvents) {
+      try {
+        const response = await BackSync.health_data_sync({
+          startDate: moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+          endDate: moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
+          format: 'YYYY-MM-DD HH:mm:ss'
+          // eventId: event.id // optional: if your API needs event ID
+        })
+        setIsLoading(false)
+        Toast.hide()
+        console.log(`Synced event `, response)
+      } catch (error) {
+        console.error(`Error syncing event ${event.id}:`, error)
       }
+      // }
     }
-    console.log('syncyn', resp)
 
     // // call health connect data sync api
     // setTimeout(() => {
@@ -137,7 +147,7 @@ export default function AppCustomHeader(props) {
             <Icons name="bell" type={iconType.feather} size={20} />
             <Text>Sync Data</Text>
           </TouchableOpacity> */}
-          {global.ongoingEvents?.length && (
+          {onGoingEvents?.length && (
             <TouchableOpacity
               onPress={() => handleSyncData()}
               disabled={isLoading}

@@ -4,8 +4,9 @@ import { Images } from '../../utils/constants/Images'
 import Icons, { iconType } from '../../assets/icons/Icons'
 import CustomButton from '../../common/components/buttons/CustomButton'
 import { hp, wp } from '../../common/functions/dimensions'
-import { fontSize } from '../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import Colors from '../../utils/constants/Colors'
+import { parseHtmlDescription } from '../../common/functions/helper'
 
 export default function EventDetailScreenUI(props) {
   return (
@@ -25,25 +26,28 @@ export default function EventDetailScreenUI(props) {
         <Text style={styles.title}>
           {props?.eventData?.name || props?.eventData?.title}
         </Text>
-        <Text style={styles.description}>{props?.eventData?.description}</Text>
+        <Text style={styles.description}>
+          {props?.eventData?.description &&
+            parseHtmlDescription(props?.eventData?.description)}
+        </Text>
 
         {/* Date Section */}
         <View style={styles.dateRangeContainer}>
           <Icons
             name="calendar"
             type={iconType.feather}
-            size={20}
+            size={15}
             color="black"
           />
           <Text style={styles.dateText}>
             {' '}
-            {props?.eventData?.eventLocalStartDate} -{' '}
-            {props?.eventData?.eventLocalEndDate}{' '}
+            {props?.eventData?.localStartDate} -{' '}
+            {props?.eventData?.localEndDate}{' '}
           </Text>
         </View>
 
         {/* Organizer Section */}
-        {props?.eventData?.organizers?.length && (
+        {/* {props?.eventData?.organizers?.length && (
           <View>
             <Text style={[styles.title, { marginTop: hp(2) }]}>
               Organized By
@@ -58,15 +62,13 @@ export default function EventDetailScreenUI(props) {
                   />
                   <View style={{ flex: 1, marginLeft: wp(3) }}>
                     <Text style={styles.orgName}>{organizer?.name} </Text>
-                    <Text style={styles.orgSubtitle}>
-                      Lorem ipsum dolor sit amet, consectetur
-                    </Text>
+                   
                   </View>
                 </View>
               )
             })}
           </View>
-        )}
+        )} */}
       </ScrollView>
       <View style={styles?.viewResultBtnContainer}>
         <CustomButton
@@ -80,7 +82,8 @@ export default function EventDetailScreenUI(props) {
             // width:wp(40)
           }}
           btnTitleStyles={{
-            ...styles.textStyle
+            ...styles.textStyle,
+            color: Colors.gray_01
           }}
         />
       </View>
@@ -113,26 +116,29 @@ const styles = StyleSheet.create({
     paddingBottom: hp(12) // space for floating button
   },
   title: {
-    fontSize: fontSize.l,
-    fontWeight: '600',
+    fontSize: fontSize.m,
+    fontFamily: Fonts.SemiBold,
     marginBottom: hp(1)
   },
   description: {
     fontSize: fontSize.normal,
+    fontFamily: Fonts.Regular,
     color: '#444',
     marginBottom: hp(2)
   },
   dateRangeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.app_primary,
     padding: hp(1.5),
     borderRadius: 10,
-    width: wp(60)
+    width: wp(55)
   },
   dateText: {
     marginLeft: wp(3),
-    fontSize: fontSize.normal
+    fontSize: fontSize.s,
+    fontFamily: Fonts.Medium
   },
   orgContainer: {
     flexDirection: 'row',
@@ -145,10 +151,12 @@ const styles = StyleSheet.create({
   },
   orgName: {
     fontSize: fontSize.m,
+    fontFamily: Fonts.Medium,
     fontWeight: '600'
   },
   orgSubtitle: {
     fontSize: fontSize.s,
+    fontFamily: Fonts.Regular,
     color: '#666'
   },
   buttonWrapper: {
@@ -168,7 +176,7 @@ const styles = StyleSheet.create({
   },
   btnStyles: {
     paddingVertical: hp(1),
-    borderRadius: 8
+    borderRadius: 15
   },
   textStyle: {
     color: '#fff',

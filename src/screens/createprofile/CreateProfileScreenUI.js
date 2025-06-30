@@ -15,10 +15,13 @@ import { Countries } from '../../data/static_data/countries'
 import { useSelector } from 'react-redux'
 import { CheckBox } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
+import Strings from '../../utils/constants/Strings'
 
 export default function CreateProfileScreenUI(props) {
   const isLoading = useSelector(state => state.settings.isLoading)
-  console.log(props?.byEmail, props?.byMobile)
+  const handleNavigate = params => {
+    props.navigation.navigate(Strings.NAVIGATION.app, params)
+  }
 
   return (
     <View style={styles.container}>
@@ -188,9 +191,33 @@ export default function CreateProfileScreenUI(props) {
           justifyContent: 'center'
         }}>
         <Text>{LABELS.termsPrefix}</Text>
-        <Text style={{ color: Colors.targetColor }}>{LABELS.terms}</Text>
+        <Text
+          onPress={() =>
+            handleNavigate(
+              {
+                screen: Strings.NAVIGATION.terms_condition,
+                params: { isLoggedIn: true }
+              },
+              true
+            )
+          }
+          style={{ color: Colors.targetColor }}>
+          {LABELS.terms}
+        </Text>
         <Text>{LABELS.and}</Text>
-        <Text style={{ color: Colors.targetColor }}>{LABELS.privacy}</Text>
+        <Text
+          onPress={() =>
+            handleNavigate(
+              {
+                screen: Strings.NAVIGATION.privacy_policy,
+                params: { isLoggedIn: true }
+              },
+              true
+            )
+          }
+          style={{ color: Colors.targetColor }}>
+          {LABELS.privacy}
+        </Text>
       </View>
     </View>
   )
