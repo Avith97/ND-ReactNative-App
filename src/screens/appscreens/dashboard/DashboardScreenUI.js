@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StepsGraph from '../../../common/components/Charts/StepsGraph'
 import CustomButton from '../../../common/components/buttons/CustomButton'
 import { hp, wp } from '../../../common/functions/dimensions'
@@ -17,9 +17,26 @@ import {
   formatDistanceInKm,
   formatToHHMMSS
 } from '../../../common/functions/helper'
+import moment from 'moment'
 
 export default function DashboardScreenUI(props) {
   const [weekIndex, setWeekIndex] = useState(0)
+
+  useEffect(() => {
+    const today = moment()
+    const daysData = props?.eventGraphData?.daysData || []
+
+    const foundIndex = daysData?.findIndex(week => {
+      return week.days.some(day => moment(day.date).isSame(today, 'day'))
+    })
+
+    if (foundIndex !== -1) {
+      setWeekIndex(foundIndex)
+    } else {
+      setWeekIndex(0)
+    }
+  }, [props?.eventGraphData])
+
   const DescriptionDetailItem = ({ value, unit }) => (
     <View style={styles.centered}>
       <Text style={styles.metricValue}>{value}</Text>
