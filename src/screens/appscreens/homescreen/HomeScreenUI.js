@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import PieProgressBar from '../../../common/components/progressbar/PieProgressBar'
-import { hp } from '../../../common/functions/dimensions'
+import { hp, wp } from '../../../common/functions/dimensions'
 import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import Colors from '../../../utils/constants/Colors'
 import EventCard from '../../../common/components/eventcard/EventCard'
@@ -38,11 +38,11 @@ export default function HomeScreenUI(props) {
           <>
             {/* progress card */}
             <View style={styles.progress_card_wrapper}>
-              <View>
+              <View style={{ flex: 1.2 }}>
                 <Text
                   style={{
                     color: 'white',
-                    paddingBottom: hp(2),
+                    paddingVertical: hp(1),
                     fontSize: fontSize.normal,
                     fontFamily: Fonts.Thin
                   }}>
@@ -51,11 +51,12 @@ export default function HomeScreenUI(props) {
                 <Text style={{ ...styles.title, color: Colors.smoky_white }}>
                   Your daily progress
                 </Text>
-                <Text style={{ ...styles.subTitle, fontSize: fontSize.m }}>
-                  {props?.progressEvent
-                    ? props?.progressEvent?.eventName
-                    : 'Wellness Program'}
-                </Text>
+                {props?.progressEvent?.eventName && (
+                  <Text style={{ ...styles.subTitle, fontSize: fontSize.m }}>
+                    {props?.progressEvent?.eventName}
+                  </Text>
+                )}
+
                 <Text
                   style={{
                     ...styles.subTitle2,
@@ -77,11 +78,17 @@ export default function HomeScreenUI(props) {
                   )}
                 </View>
               </View>
-              <View>
+              <View
+                style={{
+                  flex: 0.8,
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}>
                 {/* <PieProgressBar percentage={props?.HomeScreenData?.progressBar} /> */}
                 <CircularProgress
                   percentage={props?.HomeScreenData?.progressBar}
                   iconName="leaf"
+                  radius={wp(17)}
                 />
               </View>
             </View>
@@ -186,7 +193,7 @@ const styles = StyleSheet.create({
   progress_card_wrapper: {
     backgroundColor: '#26281C',
     paddingHorizontal: hp(2),
-    paddingVertical: hp(1.5),
+    // paddingVertical: hp(1),
     borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',

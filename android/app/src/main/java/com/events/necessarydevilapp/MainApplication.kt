@@ -40,9 +40,9 @@ class MainApplication : Application(), ReactApplication {
     SoLoader.init(this, OpenSourceMergedSoMapping)
 
     // Register your custom SSL pinning factory here
-    // OkHttpClientProvider.setOkHttpClientFactory(PinningSSLFactory())//<---uncomment on production
+     OkHttpClientProvider.setOkHttpClientFactory(PinningSSLFactory())//<---uncomment on production
     
-    OkHttpClientProvider.setOkHttpClientFactory(IgnoreSSLFactory())  // qa purpose(testing)comment on production
+    // OkHttpClientProvider.setOkHttpClientFactory(IgnoreSSLFactory())  // qa purpose(testing)comment on production
     // if (BuildConfig.DEBUG) {
     //   OkHttpClientProvider.setOkHttpClientFactory(IgnoreSSLFactory()) 
     // }
