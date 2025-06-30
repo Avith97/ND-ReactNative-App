@@ -59,6 +59,7 @@ export default function HomeScreen(props) {
         URL?.home_summary,
         user?.runnerId
       )
+
       let resp = await services._get(HomeSummaryURL)
 
       // setting global events
@@ -134,7 +135,6 @@ export default function HomeScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 12,
     backgroundColor: '#fff',
     paddingBottom: hp(10)
   }

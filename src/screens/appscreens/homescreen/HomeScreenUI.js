@@ -10,104 +10,106 @@ import moment from 'moment'
 import NoDataFound from '../../../common/components/nodatafound/NoDataFound'
 import CircularProgress from '../../../common/components/Charts/CircularProgress'
 import { colors } from 'react-native-elements'
+import CustomImageBackground from '../../../common/components/background/CustomImageBackground'
 
 export default function HomeScreenUI(props) {
   let { isLoggedIn } = props
 
   const [loading, setloading] = useState(false)
 
-  console.log(props?.HomeScreenData?.events)
-
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={{ paddingBottom: hp(5) }}
-      showsVerticalScrollIndicator={false}>
-      <View style={{ paddingHorizontal: 5, marginBottom: hp(1) }}>
-        <Text style={styles.title}>{isLoggedIn ? 'Welcome' : 'Welcome!'}</Text>
-        <Text style={styles.subTitle}>
-          {isLoggedIn
-            ? "You're doing good today!"
-            : 'A step Towards Healthy Life !'}
-        </Text>
-      </View>
+    <CustomImageBackground opacity={1} style={{ flex: 1 }}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={{ paddingBottom: hp(5) }}
+        showsVerticalScrollIndicator={false}>
+        <View style={{ paddingHorizontal: 5, marginBottom: hp(1) }}>
+          <Text style={styles.title}>
+            {isLoggedIn ? 'Welcome' : 'Welcome!'}
+          </Text>
+          <Text style={styles.subTitle}>
+            {isLoggedIn
+              ? "You're doing good today!"
+              : 'A step Towards Healthy Life !'}
+          </Text>
+        </View>
 
-      {props?.HomeScreenData && props?.HomeScreenData?.events?.length ? (
-        <>
-          {/* progress card */}
-          <View style={styles.progress_card_wrapper}>
-            <View>
-              <Text
-                style={{
-                  color: 'white',
-                  paddingBottom: hp(2),
-                  fontSize: fontSize.normal,
-                  fontFamily: Fonts.Thin
-                }}>
-                {moment().format('DD MMM YYYY')}
-              </Text>
-              <Text style={{ ...styles.title, color: Colors.smoky_white }}>
-                Your daily progress
-              </Text>
-              <Text style={{ ...styles.subTitle, fontSize: fontSize.m }}>
-                {props?.progressEvent
-                  ? props?.progressEvent?.eventName
-                  : 'Wellness Program'}
-              </Text>
-              <Text
-                style={{
-                  ...styles.subTitle2,
-                  color: Colors.smoky_white,
-                  opacity: 0.5
-                }}>
-                Accumulating daily report
-              </Text>
-              <View style={{ paddingVertical: hp(1) }}>
-                {props?.progressEvent?.eventStartDate && (
-                  <Text style={styles.rangetitle}>
-                    From - {props?.progressEvent?.eventStartDate}
-                  </Text>
-                )}
-                {props?.progressEvent?.eventEndDate && (
-                  <Text style={styles.rangetitle}>
-                    TO - {props?.progressEvent?.eventEndDate}
-                  </Text>
-                )}
+        {props?.HomeScreenData && props?.HomeScreenData?.events?.length ? (
+          <>
+            {/* progress card */}
+            <View style={styles.progress_card_wrapper}>
+              <View>
+                <Text
+                  style={{
+                    color: 'white',
+                    paddingBottom: hp(2),
+                    fontSize: fontSize.normal,
+                    fontFamily: Fonts.Thin
+                  }}>
+                  {moment().format('DD MMM YYYY')}
+                </Text>
+                <Text style={{ ...styles.title, color: Colors.smoky_white }}>
+                  Your daily progress
+                </Text>
+                <Text style={{ ...styles.subTitle, fontSize: fontSize.m }}>
+                  {props?.progressEvent
+                    ? props?.progressEvent?.eventName
+                    : 'Wellness Program'}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.subTitle2,
+                    color: Colors.smoky_white,
+                    opacity: 0.5
+                  }}>
+                  Accumulating daily report
+                </Text>
+                <View style={{ paddingVertical: hp(1) }}>
+                  {props?.progressEvent?.eventStartDate && (
+                    <Text style={styles.rangetitle}>
+                      From - {props?.progressEvent?.eventStartDate}
+                    </Text>
+                  )}
+                  {props?.progressEvent?.eventEndDate && (
+                    <Text style={styles.rangetitle}>
+                      TO - {props?.progressEvent?.eventEndDate}
+                    </Text>
+                  )}
+                </View>
+              </View>
+              <View>
+                {/* <PieProgressBar percentage={props?.HomeScreenData?.progressBar} /> */}
+                <CircularProgress
+                  percentage={props?.HomeScreenData?.progressBar}
+                  iconName="leaf"
+                />
               </View>
             </View>
-            <View>
-              {/* <PieProgressBar percentage={props?.HomeScreenData?.progressBar} /> */}
-              <CircularProgress
-                percentage={props?.HomeScreenData?.progressBar}
-                iconName="leaf"
-              />
-            </View>
-          </View>
 
-          {/* not responding challenge */}
+            {/* not responding challenge */}
 
-          {/* {props?.notResponding && props?.notResponding && (
+            {/* {props?.notResponding && props?.notResponding && (
             <NotRespondingCard handleNavigate={props.handleNavigate} />
           )} */}
 
-          {/* ongoing  events  */}
-          <View style={{ marginVertical: hp(1) }}>
-            {props?.HomeScreenData?.events?.map((item, index) => {
-              return (
-                <View key={index}>
-                  <Text style={styles?.title}>{item?.eventName}</Text>
-                  <EventCard
-                    key={index}
-                    {...item}
-                    handleNavigate={props.handleNavigate}
-                  />
-                </View>
-              )
-            })}
-          </View>
+            {/* ongoing  events  */}
+            <View style={{ marginVertical: hp(1) }}>
+              {props?.HomeScreenData?.events?.map((item, index) => {
+                return (
+                  <View key={index}>
+                    <Text style={styles?.title}>{item?.eventName}</Text>
+                    <EventCard
+                      key={index}
+                      {...item}
+                      handleNavigate={props.handleNavigate}
+                    />
+                  </View>
+                )
+              })}
+            </View>
 
-          {/* ongoing challenges */}
-          {/* <View style={{marginVertical: hp(2)}}>
+            {/* ongoing challenges */}
+            {/* <View style={{marginVertical: hp(2)}}>
             {props.Challenges?.map((item, index) => (
               <ChallengeCard
                 key={index}
@@ -117,8 +119,8 @@ export default function HomeScreenUI(props) {
             ))}
           </View> */}
 
-          {/* session */}
-          {/* <View style={{marginVertical: hp(1)}}>
+            {/* session */}
+            {/* <View style={{marginVertical: hp(1)}}>
             <Text style={{...styles.title, fontFamily: Fonts.BoldItalic}}>
               Planning Diet for Weight Management
             </Text>
@@ -128,37 +130,39 @@ export default function HomeScreenUI(props) {
               </View>
             ))}
           </View> */}
-        </>
-      ) : (
-        <>
-          <NoDataFound />
-        </>
-        // <>
-        //   {/* ongoing  events  */}
-        //   <View style={{marginVertical: hp(1)}}>
-        //     {props?.events ||
-        //       [].map((item, index) => {
-        //         return (
-        //           <>
-        //             <ProgramCard
-        //               key={index}
-        //               {...item}
-        //               handleNavigate={props.handleNavigate}
-        //             />
-        //             {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
-        //           </>
-        //         );
-        //       })}
-        //   </View>
-        // </>
-      )}
-    </ScrollView>
+          </>
+        ) : (
+          <>
+            <NoDataFound />
+          </>
+          // <>
+          //   {/* ongoing  events  */}
+          //   <View style={{marginVertical: hp(1)}}>
+          //     {props?.events ||
+          //       [].map((item, index) => {
+          //         return (
+          //           <>
+          //             <ProgramCard
+          //               key={index}
+          //               {...item}
+          //               handleNavigate={props.handleNavigate}
+          //             />
+          //             {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
+          //           </>
+          //         );
+          //       })}
+          //   </View>
+          // </>
+        )}
+      </ScrollView>
+    </CustomImageBackground>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    padding: 12
   },
   title: {
     fontSize: fontSize.m,

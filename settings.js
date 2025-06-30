@@ -7,4 +7,4 @@ let Types = {
 
 
 // environment
-export const environment = Types.DEV
+export const environment = Types.LIVE
