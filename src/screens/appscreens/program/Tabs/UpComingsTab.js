@@ -22,7 +22,7 @@ export default function UpComingsTab(props) {
           <View key={index} style={styles.cardSpacing}>
             <ProgramCard
               {...item}
-              image={Images?.program_card_bg_image}
+              // image={Images?.program_card_bg_image}
               buttonName="Register"
               minWidth={'100%'}
               handleNavigate={() => props?.handleNavigate(item)}

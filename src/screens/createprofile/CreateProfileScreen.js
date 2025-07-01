@@ -213,7 +213,8 @@ export default function CreateProfileScreen(props) {
       email: data?.email,
       user_id: data?.id,
       runnerId: data?.runnerId,
-      isAuthorized: data?.isAuthorized
+      isAuthorized: data?.isAuthorized,
+      googleSource: false
     }
     return auth
   }

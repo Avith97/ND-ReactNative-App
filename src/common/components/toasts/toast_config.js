@@ -6,6 +6,7 @@ import LogoutBottomSheet from '../bottomsheet/LogoutBottomSheet'
 import WebViewToast from '../policy/WebViewToast'
 import { hp, wp } from '../../functions/dimensions'
 import { ToastComponent } from './ToastComponent'
+import ExitAppBottomSheet from '../bottomsheet/ExitAppBottomSheet'
 
 export const toast_config = {
   success: props => <ToastComponent type={'success'} {...props} />,
@@ -35,5 +36,7 @@ export const toast_config = {
         backgroundColor: 'rgba(0,0,0,0.01)'
       }}
     />
-  )
+  ),
+
+  exit_bottom_sheet: props => <ExitAppBottomSheet {...props} />
 }

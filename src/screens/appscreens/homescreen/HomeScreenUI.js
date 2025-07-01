@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native'
 import PieProgressBar from '../../../common/components/progressbar/PieProgressBar'
 import { hp, wp } from '../../../common/functions/dimensions'
 import Fonts, { fontSize } from '../../../utils/constants/Fonts'
@@ -23,8 +23,12 @@ export default function HomeScreenUI(props) {
         style={styles.container}
         contentContainerStyle={{ paddingBottom: hp(5) }}
         showsVerticalScrollIndicator={false}>
-        <View style={{ paddingHorizontal: 5, marginBottom: hp(1) }}>
-          <Text style={styles.title}>
+        <View style={{ paddingHorizontal: 5, marginBottom: hp(1.5) }}>
+          <Text
+            style={{
+              fontSize: fontSize.m,
+              fontFamily: Fonts.SemiBold
+            }}>
             {isLoggedIn ? 'Welcome' : 'Welcome!'}
           </Text>
           <Text style={styles.subTitle}>
@@ -73,7 +77,7 @@ export default function HomeScreenUI(props) {
                   )}
                   {props?.progressEvent?.eventEndDate && (
                     <Text style={styles.rangetitle}>
-                      TO - {props?.progressEvent?.eventEndDate}
+                      To - {props?.progressEvent?.eventEndDate}
                     </Text>
                   )}
                 </View>
@@ -100,7 +104,7 @@ export default function HomeScreenUI(props) {
           )} */}
 
             {/* ongoing  events  */}
-            <View style={{ marginVertical: hp(1) }}>
+            {/* <View style={{ marginVertical: hp(1) }}>
               {props?.HomeScreenData?.events?.map((item, index) => {
                 return (
                   <View key={index}>
@@ -113,7 +117,22 @@ export default function HomeScreenUI(props) {
                   </View>
                 )
               })}
-            </View>
+            </View> */}
+
+            <FlatList
+              data={props?.HomeScreenData?.events || []}
+              keyExtractor={(item, index) => index.toString()}
+              contentContainerStyle={{ marginVertical: hp(1) }}
+              renderItem={({ item }) => (
+                <View style={{ flex: 1, gap: hp(1) }}>
+                  <EventCard
+                    title={item?.eventName}
+                    {...item}
+                    handleNavigate={props.handleNavigate}
+                  />
+                </View>
+              )}
+            />
 
             {/* ongoing challenges */}
             {/* <View style={{marginVertical: hp(2)}}>
@@ -193,7 +212,7 @@ const styles = StyleSheet.create({
   progress_card_wrapper: {
     backgroundColor: '#26281C',
     paddingHorizontal: hp(2),
-    // paddingVertical: hp(1),
+    paddingVertical: hp(0.5),
     borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',

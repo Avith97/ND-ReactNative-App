@@ -256,7 +256,8 @@ const LoginScreen = props => {
       email: data?.email,
       user_id: data?.id,
       runnerId: data?.runnerId,
-      isAuthorized: data?.isAuthorized
+      isAuthorized: data?.isAuthorized,
+      googleSource: true
     }
     return auth
   }

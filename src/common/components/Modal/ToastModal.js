@@ -102,11 +102,12 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: '#fff',
     // backgroundColor: 'red',
-    padding: 16,
+    padding: 5,
     borderRadius: 10,
-    width: '90%',
-    maxHeight: '80%',
-    minHeight: hp(43)
+    // width: '90%',
+    // maxHeight: '80%',
+    height: hp(20),
+    minHeight: hp(42)
   },
   header: {
     fontSize: 18,

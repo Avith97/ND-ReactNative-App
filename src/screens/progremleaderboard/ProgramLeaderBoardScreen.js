@@ -14,6 +14,7 @@ import { services } from '../../services/axios/services'
 import { useSelector } from 'react-redux'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import { useIsFocused } from '@react-navigation/native'
+import Loader from '../../common/components/loader/Loader'
 
 export default function ProgramLeaderBoardScreen(props) {
   let { eventID } = props?.route?.params
@@ -73,13 +74,16 @@ export default function ProgramLeaderBoardScreen(props) {
   async function getParticipatedOptions(event) {
     const participated = []
 
-    const type = event.challengeType
+    console.log(type)
+
+    const type = event?.challengeType
     // const id = event.id
-    const showRunnerGroupGraph = event.showRunnerGroupGraph
-    const showAgeGroup = event.showAgeGroup
+    const showRunnerGroupGraph = event?.showRunnerGroupGraph
+    const showAgeGroup = event?.showAgeGroup
 
     // ✅ Individual condition
     if (
+      !type ||
       type === 'BOTH' ||
       type === 'TEAM_RELAY' ||
       ['INDIVIDUAL', 'RELAY'].includes(type)
@@ -267,42 +271,89 @@ export default function ProgramLeaderBoardScreen(props) {
     }
   }
 
+  // async function InitiateScreen() {
+  //   // getting Event Detail
+  //   let res = await getEventDetail()
+
+  //   // getting all Runners data, it will work like suggestion list
+  //   let runnerData = await getAllRunnerData()
+
+  //   // runner activity detail
+  //   let runnerActivityDetail = await getRunnerDetail(
+  //     auth?.runner?.id || auth?.runnerId
+  //   )
+
+  //   let formattedParticipatedLabel = await getParticipatedOptions(res)
+
+  //   // formatted week data
+  //   let weeksData = await generateWeekFilterOptions(res, eventID)
+
+  //   // get activity option
+  //   let getActivities = await getActivityOptions(res) // activites not set how can I set
+
+  //   let activityPriority = res?.activities?.[0]?.activityPriority || 'PRIMARY'
+  //   let eventCategoryId = res?.eventRunCategories?.[0]?.id || null
+
+  //   setState({
+  //     ...state,
+  //     eventData: res,
+  //     weekDropdowns: weeksData,
+  //     formattedParticipatedLabel: formattedParticipatedLabel,
+  //     activityPriority: activityPriority,
+  //     eventCategoryId: eventCategoryId,
+  //     runnerData: runnerData,
+  //     runnerActivityDetail: runnerActivityDetail,
+  //     eventActivities: getActivities,
+  //     selectedActivity: getActivities?.activity?.[0],
+  //     selectedCategory: getActivities?.category?.[0]
+  //   })
+  // }
+
   async function InitiateScreen() {
-    // getting Event Detail
-    let res = await getEventDetail()
+    try {
+      const runnerId = auth?.runner?.id || auth?.runnerId
 
-    // getting all Runners data, it will work like suggestion list
-    let runnerData = await getAllRunnerData()
+      // Fetch core data in parallel
+      const [eventData, runnerData, runnerActivityDetail] = await Promise.all([
+        getEventDetail(),
+        getAllRunnerData(),
+        getRunnerDetail(runnerId)
+      ])
 
-    // runner activity detail
-    let runnerActivityDetail = await getRunnerDetail(
-      auth?.runner?.id || auth?.runnerId
-    )
+      // Extract fallback-safe values
+      const activityPriority =
+        eventData?.activities?.[0]?.activityPriority || 'PRIMARY'
+      const eventCategoryId = eventData?.eventRunCategories?.[0]?.id || null
 
-    let formattedParticipatedLabel = await getParticipatedOptions(res)
+      // These depend on eventData, so run after it's fetched
+      const [formattedParticipatedLabel, weekDropdowns, eventActivities] =
+        await Promise.all([
+          getParticipatedOptions(eventData),
+          generateWeekFilterOptions(eventData, eventID),
+          getActivityOptions(eventData)
+        ])
 
-    // formatted week data
-    let weeksData = await generateWeekFilterOptions(res, eventID)
+      // Destructure activity and category safely
+      const selectedActivity = eventActivities?.activity?.[0] || null
+      const selectedCategory = eventActivities?.category?.[0] || null
 
-    // get activity option
-    let getActivities = await getActivityOptions(res) // activites not set how can I set
-
-    let activityPriority = res?.activities?.[0]?.activityPriority || 'PRIMARY'
-    let eventCategoryId = res?.eventRunCategories?.[0]?.id || null
-
-    setState({
-      ...state,
-      eventData: res,
-      weekDropdowns: weeksData,
-      formattedParticipatedLabel: formattedParticipatedLabel,
-      activityPriority: activityPriority,
-      eventCategoryId: eventCategoryId,
-      runnerData: runnerData,
-      runnerActivityDetail: runnerActivityDetail,
-      eventActivities: getActivities,
-      selectedActivity: getActivities?.activity?.[0],
-      selectedCategory: getActivities?.category?.[0]
-    })
+      setState(prev => ({
+        ...prev,
+        eventData,
+        runnerData,
+        runnerActivityDetail,
+        activityPriority,
+        eventCategoryId,
+        weekDropdowns,
+        formattedParticipatedLabel,
+        eventActivities,
+        selectedActivity,
+        selectedCategory
+      }))
+    } catch (error) {
+      console.error('Error during screen initialization:', error)
+      // Optionally handle error in state
+    }
   }
 
   async function getEventDetail() {
@@ -462,7 +513,7 @@ export default function ProgramLeaderBoardScreen(props) {
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white, padding: 20 }}>
       {/* <Prg {...state}  /> */}
-      {/* <Loader /> */}
+      <Loader />
 
       <ProgramLeaderBoardScreenUI
         {...state}

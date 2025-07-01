@@ -16,6 +16,8 @@ import { store } from '../../../redux/store'
 import Loader from '../../../common/components/loader/Loader'
 import actions from '../../../redux/action_types/actions'
 import { TemplateService } from '../../../services/templates/TemplateService'
+import { useIsFocused } from '@react-navigation/native'
+import { interPolate } from '../../../services/interpolate/interpolate'
 
 export default function ProgramScreen(props) {
   const [state, setState] = useState({
@@ -23,6 +25,8 @@ export default function ProgramScreen(props) {
   })
 
   const userData = useSelector(state => state.auth)
+
+  let focused = useIsFocused()
 
   const [options, setOptions] = useState({
     programs: [],
@@ -48,15 +52,25 @@ export default function ProgramScreen(props) {
           const start = moment(event?.localStartDate)
           const end = moment(event?.localEndDate)
 
+          let eventStatus = 'Completed'
+          if (now.isBefore(start)) {
+            eventStatus = 'Not Started Yet'
+          } else if (now.isBetween(start, end, undefined, '[]')) {
+            eventStatus = 'Ongoing'
+          }
+
           return {
             title: event?.name,
             localStartDate: event?.localStartDate,
             localEndDate: event?.localEndDate,
-            buttonName: 'View Result',
-            image: { uri: `${BASE_URL.DEV}${event.image?.url}` },
-            eventStatus: now.isBetween(start, end, undefined, '[]')
-              ? 'ongoing'
-              : 'completed',
+            buttonName:
+              eventStatus === 'Not Started Yet'
+                ? 'View Details'
+                : 'View Result',
+            image: event?.image?.url
+              ? { uri: interPolate.base_url(event?.image?.url) }
+              : null,
+            eventStatus: eventStatus,
             program: event
           }
         })
@@ -92,7 +106,9 @@ export default function ProgramScreen(props) {
             title: event?.name,
             localStartDate: event?.localStartDate,
             localEndDate: event?.localEndDate,
-            image: { uri: `${BASE_URL.DEV}${event.image?.url}` },
+            image: event?.image?.url
+              ? { uri: interPolate.base_url(event?.image?.url) }
+              : null,
             eventStatus: now.isBetween(start, end, undefined, '[]')
               ? 'ongoing'
               : 'upcoming',
@@ -112,12 +128,14 @@ export default function ProgramScreen(props) {
 
   // Fetch data when selectedTabID changes
   useEffect(() => {
-    if (state.selectedTabID === 0) {
-      fetchPrograms()
-    } else {
-      fetchUpcomingPrograms()
+    if (focused) {
+      if (state.selectedTabID === 0) {
+        fetchPrograms()
+      } else {
+        fetchUpcomingPrograms()
+      }
     }
-  }, [state.selectedTabID])
+  }, [state.selectedTabID, focused])
 
   const handleChange = tab => {
     setState(prev => ({ ...prev, selectedTabID: tab?.id }))
@@ -129,9 +147,20 @@ export default function ProgramScreen(props) {
       payload: data?.program || {}
     })
     if (state.selectedTabID === 0) {
-      props.navigation.navigate(Strings.NAVIGATION.programleaderboard, {
-        eventID: data?.program.id
-      })
+      if (data?.eventStatus === 'Not Started Yet') {
+        // Handle not yet started event
+        props.navigation.navigate(Strings.NAVIGATION.eventdetail, {
+          eventDistKey: data?.program?.distKey
+        })
+      } else {
+        // Handle ongoing or completed event
+        props.navigation.navigate(Strings.NAVIGATION.programleaderboard, {
+          eventID: data?.program?.id
+        })
+      }
+      // props.navigation.navigate(Strings.NAVIGATION.programleaderboard, {
+      //   eventID: data?.program.id
+      // })
     } else {
       props.navigation.navigate(Strings.NAVIGATION.eventstarted, {
         isRegistered: false

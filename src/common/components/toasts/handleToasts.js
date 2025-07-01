@@ -93,3 +93,21 @@ export const show_web_view_toast = (show, params = {}) => {
     topOffset: 0
   })
 }
+
+export const show_exit_bottom_sheet = hide => {
+  console.log('exit_bottom_sheet called', hide)
+
+  if (hide) {
+    Toast.hide()
+    return
+  }
+  Toast.show({
+    type: toast_types.exit_bottom_sheet,
+    // type: 'success',
+    autoHide: true,
+    visibilityTime: 1000 * 10,
+    position: 'bottom',
+    bottomOffset: 20,
+    topOffset: 0
+  })
+}

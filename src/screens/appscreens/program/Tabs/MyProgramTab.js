@@ -19,7 +19,6 @@ export default function MyProgramTab(props) {
           <View key={index} style={styles.cardSpacing}>
             <ProgramCard
               {...item}
-              image={Images?.program_card_bg_image}
               minWidth={'100%'}
               handleNavigate={() => props.handleNavigate(item)}
             />

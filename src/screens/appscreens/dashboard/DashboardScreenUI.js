@@ -33,7 +33,7 @@ export default function DashboardScreenUI(props) {
       style={{
         padding: wp(5)
       }}>
-      {props?.dashboardData?.progressBar >= 0 ? (
+      {props?.dashboardData?.graphDTO?.[0] ? (
         <>
           <View style={styles.progressContainer}>
             <Text style={styles.title}>Personal Progress</Text>

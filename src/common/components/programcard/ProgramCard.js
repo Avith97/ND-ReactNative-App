@@ -11,6 +11,7 @@ import CustomButton from '../buttons/CustomButton'
 import { hp, wp } from '../../functions/dimensions'
 import Colors from '../../../utils/constants/Colors'
 import Icons, { iconType } from '../../../assets/icons/Icons'
+import { Images } from '../../../utils/constants/Images'
 
 const ProgramCard = ({
   title,
@@ -29,16 +30,19 @@ const ProgramCard = ({
       activeOpacity={0.8}
       style={{ ...styles.card, width: minWidth }}>
       <ImageBackground
-        source={image}
+        source={image || Images.program_card_bg_image}
         style={styles.image}
-        imageStyle={styles.imageStyle}>
+        imageStyle={styles.imageStyle}
+        resizeMode="cover">
         <View style={styles.gradientOverlay} />
         <View
           style={{
             ...styles.statusTag,
             backgroundColor:
-              props.eventStatus == 'completed' || buttonName === 'Register'
+              props.eventStatus == 'Completed' || buttonName === 'Register'
                 ? '#EC6B47AB'
+                : props.eventStatus == 'Not Started Yet'
+                ? ' #AFEA0DB2'
                 : Colors.primary
           }}>
           <Text style={styles.statusText}>
@@ -100,7 +104,7 @@ const styles = StyleSheet.create({
     height: hp(20),
     padding: 10,
     justifyContent: 'space-between',
-    resizeMode: 'contain'
+    resizeMode: 'cover'
   },
   gradientOverlay: {
     ...StyleSheet.absoluteFillObject,

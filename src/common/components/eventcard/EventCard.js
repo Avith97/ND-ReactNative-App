@@ -22,15 +22,16 @@ const FootPrintItem = ({
     <Text
       style={{
         ...styles.stepValue,
-        fontSize: day === 1 ? fontSize.l : fontSize.md
+        fontSize: day === 1 ? fontSize.l : fontSize.md,
+        fontFamily: day === 1 ? Fonts.SemiBold : Fonts.Medium
       }}>
       {steps}
     </Text>
     <Text
       style={{
         ...styles.title,
-        fontSize: day === 1 ? fontSize.m : fontSize.normal,
-        fontWeight: day === 1 ? '700' : '400'
+        fontSize: day === 1 ? fontSize.normal : fontSize.s,
+        fontFamily: day === 1 ? Fonts.SemiBold : Fonts.Medium
       }}>
       {label}
     </Text>
@@ -98,21 +99,21 @@ const EventCard = ({ title, ...props }) => {
 
 const styles = StyleSheet.create({
   card: {
-    marginTop: -hp(1.5)
+    marginBottom: hp(1.8)
   },
   title: {
-    fontSize: fontSize.normal,
+    fontSize: fontSize.m,
     // fontWeight: 'bold'
-    fontFamily: Fonts.Medium
+    fontFamily: Fonts.SemiBold
     // marginBottom: hp(0.5),
   },
   centered: {
     alignItems: 'center'
   },
   stepValue: {
-    fontSize: fontSize.m,
-    fontWeight: 'bold',
-    marginVertical: 4
+    fontSize: fontSize.m
+    // fontWeight: 'bold',
+    // marginVertical: 4
   },
   mainSection: {
     flexDirection: 'row',
@@ -126,6 +127,7 @@ const styles = StyleSheet.create({
   },
   middleSection: {
     flex: 1,
+    paddingVertical: hp(0.6),
     paddingHorizontal: 10
   },
   dashedLine: {

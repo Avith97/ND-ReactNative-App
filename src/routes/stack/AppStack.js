@@ -1,5 +1,5 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, BackHandler, Alert } from 'react-native'
+import React, { useEffect, useRef } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Strings from '../../utils/constants/Strings'
@@ -36,6 +36,14 @@ import CompleteProfile from '../../screens/profile/complete/CompleteProfile'
 import SupportScreen from '../../screens/support/SupportScreen'
 import TermsAndConditions from '../../screens/termsandconditions/TermsAndConditions'
 import PrivacyPolicy from '../../screens/privacypolicy/PrivacyPolicy'
+import { useNavigation } from '@react-navigation/native'
+import ExitAppBottomSheet from '../../common/components/bottomsheet/ExitAppBottomSheet'
+import ToastModal from '../../common/components/Modal/ToastModal'
+import { hp } from '../../common/functions/dimensions'
+import {
+  exit_bottom_sheet,
+  show_exit_bottom_sheet
+} from '../../common/components/toasts/handleToasts'
 
 // const TabNavigator = props => {
 //   const Tab = createBottomTabNavigator()
@@ -140,169 +148,204 @@ import PrivacyPolicy from '../../screens/privacypolicy/PrivacyPolicy'
 const AppStack = props => {
   // const Drawer = createDrawerNavigator();
 
+  let actionRef = useRef(null)
+
+  const navigation = global.navigation || useNavigation()
+
   const Stack = createStackNavigator()
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
 
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    )
+
+    return () => backHandler.remove()
+  }, [navigation])
+
+  const backAction = () => {
+    const currentRoute = navigation.getCurrentRoute?.()?.name
+
+    if (currentRoute === Strings.NAVIGATION.home) {
+      // On Home screen: do nothing or disable back
+      return true // do nothing (prevent exit modal)
+    }
+
+    if (navigation.canGoBack()) {
+      navigation.goBack()
+    } else {
+      show_exit_bottom_sheet(false)
+    }
+    return true
+  }
+
   return (
-    <Stack.Navigator
-      initialRouteName={Strings.NAVIGATION.home}
-      screenOptions={{
-        headerShown: true,
-        header: props => (
-          <AppCustomHeader
-            {...props}
-            isLoggedIn={{
-              // isLoggedIn: props.route.params.isLoggedIn
-              isLoggedIn: isLoggedIn
-            }}
-          />
-        )
-      }}>
-      <Stack.Screen
-        name={Strings.NAVIGATION.onboard}
-        component={OnBoardScreen}
-        options={{ headerShown: false }} // Hide Header
-      />
+    <>
+      {/* <ToastModal  ref={actionRef}>
+        <ExitAppBottomSheet  />
+      </ToastModal> */}
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.home}
-        component={HomeTabBottomNav}
-        initialParams={{
-          // isLoggedIn: props.route.params.isLoggedIn
-          isLoggedIn: isLoggedIn
-        }}
-      />
-      <Stack.Screen
-        name={Strings.NAVIGATION.profile}
-        component={ProfileScreen}
-        options={{ title: 'Profile' }}
-      />
+      <Stack.Navigator
+        initialRouteName={Strings.NAVIGATION.home}
+        screenOptions={{
+          headerShown: true,
+          header: props => (
+            <AppCustomHeader
+              {...props}
+              isLoggedIn={{
+                // isLoggedIn: props.route.params.isLoggedIn
+                isLoggedIn: isLoggedIn
+              }}
+            />
+          )
+        }}>
+        <Stack.Screen
+          name={Strings.NAVIGATION.onboard}
+          component={OnBoardScreen}
+          options={{ headerShown: false }} // Hide Header
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.bmi}
-        component={BMICardScreen}
-        options={{ title: 'BMI' }}
-      />
-      <Stack.Screen
-        name={Strings.NAVIGATION.notificationsetting}
-        component={NotificationSettingScreen}
-        options={{ title: 'Notification Settings' }}
-      />
-      <Stack.Screen
-        name={Strings.NAVIGATION.editprofile}
-        component={EditProfileScreen}
-        options={{ title: 'Edit Profile' }}
-      />
-      <Stack.Screen
-        name={Strings.NAVIGATION.generalsetting}
-        component={GeneralSettingScreen}
-        options={{ title: 'General Settings' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.home}
+          component={HomeTabBottomNav}
+          initialParams={{
+            // isLoggedIn: props.route.params.isLoggedIn
+            isLoggedIn: isLoggedIn
+          }}
+        />
+        <Stack.Screen
+          name={Strings.NAVIGATION.profile}
+          component={ProfileScreen}
+          options={{ title: 'Profile' }}
+        />
 
-      {/* language setting */}
+        <Stack.Screen
+          name={Strings.NAVIGATION.bmi}
+          component={BMICardScreen}
+          options={{ title: 'BMI' }}
+        />
+        <Stack.Screen
+          name={Strings.NAVIGATION.notificationsetting}
+          component={NotificationSettingScreen}
+          options={{ title: 'Notification Settings' }}
+        />
+        <Stack.Screen
+          name={Strings.NAVIGATION.editprofile}
+          component={EditProfileScreen}
+          options={{ title: 'Edit Profile' }}
+        />
+        <Stack.Screen
+          name={Strings.NAVIGATION.generalsetting}
+          component={GeneralSettingScreen}
+          options={{ title: 'General Settings' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.languagesettings}
-        component={LanguageSettingScreen}
-        options={{ title: 'Select Language' }}
-      />
-      {/* unitsetting */}
+        {/* language setting */}
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.unitsettings}
-        component={UnitSettingsScreen}
-        options={{ title: 'Select Unit' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.languagesettings}
+          component={LanguageSettingScreen}
+          options={{ title: 'Select Language' }}
+        />
+        {/* unitsetting */}
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.activitysync}
-        component={ActivitySyncScreen}
-        options={{ title: 'Activity Sync' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.unitsettings}
+          component={UnitSettingsScreen}
+          options={{ title: 'Select Unit' }}
+        />
 
-      {/* Event specific screen */}
+        <Stack.Screen
+          name={Strings.NAVIGATION.activitysync}
+          component={ActivitySyncScreen}
+          options={{ title: 'Activity Sync' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.eventstarted}
-        component={EventStartedScreen}
-        options={{ title: 'Get started' }}
-      />
+        {/* Event specific screen */}
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.eventdetail}
-        component={EventDetailScreen}
-        options={{ title: 'Event Detail' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.eventstarted}
+          component={EventStartedScreen}
+          options={{ title: 'Get started' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.eventregister}
-        component={RegisterEventScreen}
-        options={{ title: 'Register Event' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.eventdetail}
+          component={EventDetailScreen}
+          options={{ title: 'Event Detail' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.consent}
-        component={ConsentScreen}
-        options={{ title: 'Consent' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.eventregister}
+          component={RegisterEventScreen}
+          options={{ title: 'Register Event' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.leaderboard}
-        component={LeaderBoardScreen}
-        options={{ title: 'Leaderboard' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.consent}
+          component={ConsentScreen}
+          options={{ title: 'Consent' }}
+        />
 
-      {/* program */}
-      <Stack.Screen
-        name={Strings.NAVIGATION.programdetail}
-        component={ProgramDetailScreen}
-        options={{ title: 'Program Detail' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.leaderboard}
+          component={LeaderBoardScreen}
+          options={{ title: 'Leaderboard' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.programleaderboard}
-        component={ProgramLeaderBoardScreen}
-        options={{ title: 'Program Leaderboard ' }}
-      />
+        {/* program */}
+        <Stack.Screen
+          name={Strings.NAVIGATION.programdetail}
+          component={ProgramDetailScreen}
+          options={{ title: 'Program Detail' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.submitresponse}
-        component={SubmitResponseScreen}
-        options={{ title: 'Response ' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.programleaderboard}
+          component={ProgramLeaderBoardScreen}
+          options={{ title: 'Program Leaderboard ' }}
+        />
 
-      {/* notification list screen */}
+        <Stack.Screen
+          name={Strings.NAVIGATION.submitresponse}
+          component={SubmitResponseScreen}
+          options={{ title: 'Response ' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.notificationlist}
-        component={NotificationListScreen}
-        options={{ title: 'Notification ' }}
-      />
+        {/* notification list screen */}
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.complete_profile}
-        component={CompleteProfile}
-        options={{ headerShown: false }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.notificationlist}
+          component={NotificationListScreen}
+          options={{ title: 'Notification ' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.privacy_policy}
-        component={PrivacyPolicy}
-        options={{ headerShown: false }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.complete_profile}
+          component={CompleteProfile}
+          options={{ headerShown: false }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.terms_condition}
-        component={TermsAndConditions}
-        options={{ headerShown: false }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.privacy_policy}
+          component={PrivacyPolicy}
+          options={{ headerShown: false }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.customer_support}
-        component={SupportScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+        <Stack.Screen
+          name={Strings.NAVIGATION.terms_condition}
+          component={TermsAndConditions}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={Strings.NAVIGATION.customer_support}
+          component={SupportScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </>
 
     // <Drawer.Navigator initialRouteName={Strings.NAVIGATION.health}>
     //   <Drawer.Screen

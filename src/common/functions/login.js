@@ -9,6 +9,14 @@ import { store } from '../../redux/store'
 import { services } from '../../services/axios/services'
 import Strings from '../../utils/constants/Strings'
 
+// GoogleSignin.configure({
+//   webClientId:
+//     '752736423968-qp92tlhrt89ukonb3o6chfvkrbvnjt46.apps.googleusercontent.com',
+//   // webClientId: '308570200209-egcv1h57uud5vk5fp6inan6js3gtjoo0.apps.googleusercontent.com', // required for web & Android
+//   offlineAccess: true, // if you need to get refreshToken
+//   forceCodeForRefreshToken: true // Optional, depending on your use case
+// })
+
 export const perform_login = async (auth, user, restore_offline) => {
   services.refreshInstance(auth.token)
   if (!restore_offline) {
@@ -19,19 +27,17 @@ export const perform_login = async (auth, user, restore_offline) => {
 }
 
 export const perform_logout = async () => {
+  let auth = store.getState().auth
+
   try {
-    GoogleSignin.configure({
-      webClientId:
-        '752736423968-qp92tlhrt89ukonb3o6chfvkrbvnjt46.apps.googleusercontent.com',
-      // webClientId: '308570200209-egcv1h57uud5vk5fp6inan6js3gtjoo0.apps.googleusercontent.com', // required for web & Android
-      offlineAccess: true // if you need to get refreshToken
-    })
+    if (auth?.googleSource) {
+      const isSignedIn = await GoogleSignin.signIn()
+      if (isSignedIn) {
+        await GoogleSignin.revokeAccess()
+        await GoogleSignin.signOut()
+      } // Ignore if not signed in
+    }
     // removed google session
-    const isSignedIn = await GoogleSignin.signIn()
-    if (isSignedIn) {
-      await GoogleSignin.revokeAccess()
-      await GoogleSignin.signOut()
-    } // Ignore if not signed in
     await AsyncStore.clearData(Strings.ASYNC_KEY.offline)
 
     store.dispatch(logout_action())
