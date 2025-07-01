@@ -7,9 +7,13 @@ import { URL } from '../../utils/constants/Urls'
 import { services } from '../../services/axios/services'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import Loader from '../../common/components/loader/Loader'
+import { store } from '../../redux/store'
+import actions from '../../redux/action_types/actions'
 
 export default function EventDetailScreen(props) {
-  let eventID = props?.route?.params?.eventID
+  let eventDistKey = props?.route?.params?.eventDistKey
+
+  console.log(eventDistKey)
 
   const [eventData, setEventData] = useState(null)
 
@@ -18,28 +22,47 @@ export default function EventDetailScreen(props) {
   }, [])
 
   async function initiateScreen() {
-    let resp = await getEventDetail()
+    let resp = await fetchEventDetails(eventDistKey)
 
     if (resp) {
       setEventData(resp)
     }
   }
 
-  async function getEventDetail() {
-    try {
-      let url = TemplateService?._eventID(URL.get_event, eventID)
+  // async function getEventDetail() {
+  //   try {
+  //     let url = TemplateService?._eventID(URL.get_event, eventID)
 
-      let resp = await services?._get(url)
+  //     let resp = await services?._get(url)
 
-      if (resp?.type === 'success') {
-        return resp?.data
-      } else {
-        appsnackbar.showErrMsg('Something went wrong')
+  //     if (resp?.type === 'success') {
+  //       return resp?.data
+  //     } else {
+  //       appsnackbar.showErrMsg('Something went wrong')
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error)
+  //     return null
+  //   }
+  // }
+
+  async function fetchEventDetails(eventDistKey) {
+    let resp = await services._get('event', {
+      headers: {
+        distKey: encodeURIComponent(eventDistKey),
+        timezone: 'Asia/Calcutta'
       }
-    } catch (error) {
-      console.error('Error fetching data:', error)
-      return null
+    })
+
+    console.log(resp)
+
+    if (resp.type !== 'success') {
+      appsnackbar.showErrMsg('Something went wrong!Please try again')
+      handleNavigate()
+      return
     }
+
+    return resp?.data
   }
 
   const handleNavigate = () => {

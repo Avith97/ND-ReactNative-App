@@ -41,8 +41,8 @@ export const FilePicker = {
         appsnackbar.showErrMsg('File type not supported')
       }
     } catch (error) {
-      // console.log('Picker cancelled-->', error)
-      toast_error('Image picker cancelled')
+      console.log('Picker cancelled-->', error)
+      // toast_error('Image picker cancelled')
     }
 
     // return resp;

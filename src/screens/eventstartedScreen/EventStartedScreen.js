@@ -85,7 +85,7 @@ export default function EventStartedScreen(props) {
     let onboardQuestions = await getOnBoard()
     if (isUserRegistered) {
       props.navigation.navigate(Strings.NAVIGATION.eventdetail, {
-        eventData: eventData
+        eventDistKey: eventData?.distKey
       })
     } else {
       if (isOnBoard || onboardQuestions?.length === 0) {

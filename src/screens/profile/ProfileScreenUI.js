@@ -98,7 +98,7 @@ export default function ProfileScreenUI(props) {
       <View style={{ alignItems: 'center' }}>
         <Avatar
           rounded
-          size={'xlarge'}
+          size={120}
           source={{
             // uri: "https://192.168.1.49:8443/Profile%20Photos/runner_3675/profilePhoto-20250619_125550-1-.jpeg"
             // uri:"https://192.168.1.49:8443/Profile%20Photos/runner_3675/profilePhoto-20250620_035514-1-.jpeg"

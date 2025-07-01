@@ -1,3 +1,4 @@
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import AsyncStore from '../../data/async/AsyncStore'
 import {
   login_action,
@@ -17,20 +18,29 @@ export const perform_login = async (auth, user, restore_offline) => {
   user && store.dispatch(set_user_details(user))
 }
 
-export const perform_logout = async (auth, user, restore_offline) => {
-  // console.log('perform logout')
+export const perform_logout = async () => {
   try {
+    GoogleSignin.configure({
+      webClientId:
+        '752736423968-qp92tlhrt89ukonb3o6chfvkrbvnjt46.apps.googleusercontent.com',
+      // webClientId: '308570200209-egcv1h57uud5vk5fp6inan6js3gtjoo0.apps.googleusercontent.com', // required for web & Android
+      offlineAccess: true // if you need to get refreshToken
+    })
+    // removed google session
+    const isSignedIn = await GoogleSignin.signIn()
+    if (isSignedIn) {
+      await GoogleSignin.revokeAccess()
+      await GoogleSignin.signOut()
+    } // Ignore if not signed in
+    await AsyncStore.clearData(Strings.ASYNC_KEY.offline)
+
     store.dispatch(logout_action())
-    AsyncStore.clearData(Strings.ASYNC_KEY.offline)
+
     global.navigation.reset({
       index: 0,
-      routes: [
-        {
-          name: Strings.NAVIGATION.auth
-        }
-      ]
+      routes: [{ name: Strings.NAVIGATION.auth }]
     })
   } catch (error) {
-    console.log('perform logout', error)
+    console.log('perform_logout error:', error)
   }
 }
