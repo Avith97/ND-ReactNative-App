@@ -4,6 +4,7 @@ import { hp, wp } from '../../functions/dimensions'
 import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import { Avatar } from 'react-native-elements'
 import { BASE_URL } from '../../../utils/constants/Urls'
+import { getFullImageUrl } from '../../functions/helper'
 
 export default function UserLeaderBoardCard(props) {
   return (
@@ -12,9 +13,7 @@ export default function UserLeaderBoardCard(props) {
         rounded
         size={'large'}
         source={{
-          uri:
-            BASE_URL.replace('/api/v1/', '/') +
-            props?.runnerActivityDetail?.profileLink
+          uri: getFullImageUrl(props?.runnerActivityDetail?.profileLink)
         }}
         avatarStyle={styles.avatarImage}></Avatar>
       <View>

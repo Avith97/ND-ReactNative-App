@@ -9,7 +9,7 @@ import {
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import Colors from '../../../utils/constants/Colors'
 import { hp, wp } from '../../functions/dimensions'
-import { fontSize } from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import Icons, { iconType } from '../../../assets/icons/Icons'
 
 const SearchBar = props => {
@@ -181,12 +181,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   nameText: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: fontSize.normal,
+    // fontWeight: '600',
+    fontFamily: Fonts.Regular,
     color: '#333'
   },
   bibText: {
-    fontSize: 14,
+    fontSize: fontSize.s,
+    // fontWeight: '600',
+    fontFamily: Fonts.Regular,
     color: '#666'
   }
 })

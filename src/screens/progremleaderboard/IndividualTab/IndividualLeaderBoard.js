@@ -6,6 +6,8 @@ import { URL } from '../../../utils/constants/Urls'
 import { services } from '../../../services/axios/services'
 import { useSelector } from 'react-redux'
 import { useIsFocused } from '@react-navigation/native'
+import { interPolate } from '../../../services/interpolate/interpolate'
+import { getFullImageUrl } from '../../../common/functions/helper'
 
 export default function IndividualLeaderBoard(props) {
   let { eventData } = useSelector(store => store)
@@ -46,9 +48,12 @@ export default function IndividualLeaderBoard(props) {
       score: item.totalSteps || 0,
       backgroundColor:
         index % 3 === 0 ? '#E6F7FF' : index % 3 === 1 ? '#FFECE6' : '#FFF7E6',
-      avatar: item.profileLink
-        ? `https://192.168.1.49:8443/${item.profileLink}`
-        : 'https://img.icons8.com/3d-fluency/94/user-male-circle.png'
+      // avatar: item?.profileLink?.startsWith('http')
+      //   ? item?.profileLink
+      //   : item.profileLink
+      //   ? interPolate.base_url(item.profileLink)
+      //   : 'https://img.icons8.com/3d-fluency/94/user-male-circle.png'
+      avatar: getFullImageUrl(item?.profileLink)
     }))
   }
 

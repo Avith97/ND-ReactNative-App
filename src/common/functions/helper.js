@@ -1,4 +1,6 @@
 import moment from 'moment'
+import { interPolate } from '../../services/interpolate/interpolate'
+import { Images } from '../../utils/constants/Images'
 
 export function guidGenerator() {
   var S4 = function () {
@@ -59,4 +61,31 @@ export function parseHtmlDescription(string) {
     .replace(/\n{2,}/g, '\n')
     .replace(/\n/g, ' ') // remove other tags
     .trim()
+}
+
+export function getFullImageUrl(imagePath) {
+  if (!imagePath) {
+    // No image path provided
+    return 'https://img.icons8.com/3d-fluency/94/user-male-circle.png'
+  }
+
+  const isFullUrl = imagePath?.startsWith('http')
+
+  if (isFullUrl) {
+    return imagePath.trim() // Return the URL as is
+  } else {
+    // If it's a relative path, use your base URL interpolation function
+    return interPolate.base_url(decodeURIComponent(imagePath))
+  }
+}
+
+export function getFullEventBgImageUrl(imagePath) {
+  const isFullUrl = imagePath?.startsWith('http')
+
+  if (isFullUrl) {
+    return imagePath.trim() // Return the URL as is
+  } else {
+    // If it's a relative path, use your base URL interpolation function
+    return interPolate.base_url(decodeURIComponent(imagePath))
+  }
 }

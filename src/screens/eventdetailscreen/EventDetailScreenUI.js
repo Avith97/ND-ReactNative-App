@@ -6,7 +6,11 @@ import CustomButton from '../../common/components/buttons/CustomButton'
 import { hp, wp } from '../../common/functions/dimensions'
 import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import Colors from '../../utils/constants/Colors'
-import { parseHtmlDescription } from '../../common/functions/helper'
+import {
+  getFullEventBgImageUrl,
+  getFullImageUrl,
+  parseHtmlDescription
+} from '../../common/functions/helper'
 
 export default function EventDetailScreenUI(props) {
   return (
@@ -15,7 +19,11 @@ export default function EventDetailScreenUI(props) {
       {/* Image with Badge */}
       <View>
         <Image
-          source={Images.runner_bg_image}
+          source={
+            props?.eventData?.image?.url
+              ? { uri: getFullEventBgImageUrl(props?.eventData?.image?.url) }
+              : Images.program_card_bg_image
+          }
           resizeMode="cover"
           style={styles.bannerImage}
         />
@@ -41,34 +49,42 @@ export default function EventDetailScreenUI(props) {
           />
           <Text style={styles.dateText}>
             {' '}
-            {props?.eventData?.localStartDate} -{' '}
-            {props?.eventData?.localEndDate}{' '}
+            {props?.eventData?.eventLocalStartDate} -{' '}
+            {props?.eventData?.eventLocalEndDate}{' '}
           </Text>
         </View>
 
+        {console.log(props?.eventData?.organizers)}
+
         {/* Organizer Section */}
-        {/* {props?.eventData?.organizers?.length && (
+        {props?.eventData?.organizers?.length && (
           <View>
             <Text style={[styles.title, { marginTop: hp(2) }]}>
               Organized By
             </Text>
             {props?.eventData?.organizers?.map(organizer => {
+              // removed first slash
+              let organizerURL =
+                organizer?.organizerLogo &&
+                organizer?.organizerLogo?.startsWith('/')
+                  ? organizer?.organizerLogo?.slice(1)
+                  : organizer?.organizerLogo
+
               return (
                 <View style={styles.orgContainer}>
                   <Image
-                    source={Images.app_logo} // <-- Replace with organizer logo
+                    source={{ uri: getFullImageUrl(organizerURL) }} // <-- Replace with organizer logo
                     style={styles.orgLogo}
                     resizeMode="contain"
                   />
                   <View style={{ flex: 1, marginLeft: wp(3) }}>
                     <Text style={styles.orgName}>{organizer?.name} </Text>
-                   
                   </View>
                 </View>
               )
             })}
           </View>
-        )} */}
+        )}
       </ScrollView>
       <View style={styles?.viewResultBtnContainer}>
         <CustomButton
@@ -147,7 +163,9 @@ const styles = StyleSheet.create({
   },
   orgLogo: {
     width: wp(15),
-    height: hp(6)
+    height: hp(6),
+    backgroundColor: '#f2f2f2',
+    borderRadius: 6
   },
   orgName: {
     fontSize: fontSize.m,

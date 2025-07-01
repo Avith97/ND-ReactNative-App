@@ -260,7 +260,9 @@ export default function RegisterEventScreen(props) {
         appsnackbar.showSuccessMsg(
           resp?.data?.success?.verbose || 'Thank you for registering.'
         )
-        props.navigation.replace(Strings.NAVIGATION.home)
+        props.navigation.replace(Strings.NAVIGATION.eventdetail, {
+          eventDistKey: eventData?.distKey
+        })
 
         return resp.data
       } else {

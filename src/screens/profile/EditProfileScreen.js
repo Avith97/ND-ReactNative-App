@@ -36,7 +36,7 @@ export default function EditProfileScreen(props) {
     if (user || isFocused) {
       const countryObj = {
         label: user.country,
-        value: ` ${user.countryCode}`,
+        value: ` ${user.countryCode?.trim()}`,
         code: user.country?.slice(0, 2).toUpperCase() || ''
       }
 

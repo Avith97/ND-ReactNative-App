@@ -10,6 +10,7 @@ import Strings from '../../utils/constants/Strings'
 import { BASE_URL } from '../../utils/constants/Urls'
 import { en } from '../../utils/labels/en'
 import { iconType } from '../../assets/icons/Icons'
+import { getFullImageUrl } from '../../common/functions/helper'
 
 export default function ProfileScreenUI(props) {
   const settingsData = [
@@ -98,19 +99,11 @@ export default function ProfileScreenUI(props) {
       <View style={{ alignItems: 'center' }}>
         <Avatar
           rounded
-          size={'xlarge'}
-          // source={{
-          //   uri: props?.AvatarURl
-          //     ? props?.AvatarURl
-          //     : 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp'
-          // }}
-
+          size={120}
           source={{
             // uri: "https://192.168.1.49:8443/Profile%20Photos/runner_3675/profilePhoto-20250619_125550-1-.jpeg"
             // uri:"https://192.168.1.49:8443/Profile%20Photos/runner_3675/profilePhoto-20250620_035514-1-.jpeg"
-            uri:
-              BASE_URL.replace('/api/v1/', '/') +
-              props?.userDetails?.profilePictureLink
+            uri: getFullImageUrl(props?.userDetails?.profilePictureLink)
           }}
           avatarStyle={styles.avatarImage}
           //   avatarStyle={{shadowOffset: {width: 10, height: 10}}}

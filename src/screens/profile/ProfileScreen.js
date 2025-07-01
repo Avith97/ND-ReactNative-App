@@ -133,13 +133,14 @@ export default function ProfileScreen(props) {
     formData.append('profilePicture', customParams.file)
 
     let url = TemplateService?._userId(URL?.user_profile_pic_upload, auth?.id)
+    if (resp) {
+      let res = await services?._postFormData(url, formData)
 
-    let res = await services?._postFormData(url, formData)
-
-    if (res.type === 'success') {
-      setRender(true)
-    } else {
-      console.log('some thing went wrong profile update')
+      if (res.type === 'success') {
+        setRender(true)
+      } else {
+        console.log('some thing went wrong profile update')
+      }
     }
   }
 
