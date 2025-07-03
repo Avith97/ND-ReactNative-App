@@ -8,6 +8,7 @@ import { services } from '../../services/axios/services'
 import Loader from '../../common/components/loader/Loader'
 import { useSelector } from 'react-redux'
 import { TemplateService } from '../../services/templates/TemplateService'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function RegisterEventScreen(props) {
   const [state, setState] = useState({
@@ -26,9 +27,13 @@ export default function RegisterEventScreen(props) {
 
   const { eventData, auth } = useSelector(store => store)
 
+  const isFocused = useIsFocused()
+
   useEffect(() => {
-    initiateScreen()
-  }, [])
+    if (isFocused) {
+      initiateScreen()
+    }
+  }, [isFocused])
 
   async function initiateScreen() {
     let resp = await getDetails()
@@ -260,9 +265,14 @@ export default function RegisterEventScreen(props) {
         appsnackbar.showSuccessMsg(
           resp?.data?.success?.verbose || 'Thank you for registering.'
         )
-        props.navigation.replace(Strings.NAVIGATION.eventdetail, {
-          eventDistKey: eventData?.distKey
+
+        props.navigation.replace(Strings.NAVIGATION.home_tab_bottom_nav, {
+          screen: Strings.NAVIGATION.eventdetail,
+          params: { eventDistKey: eventData?.distKey }
         })
+        // props.navigation.replace(Strings.NAVIGATION.eventdetail, {
+        //   eventDistKey: eventData?.distKey
+        // })
 
         return resp.data
       } else {

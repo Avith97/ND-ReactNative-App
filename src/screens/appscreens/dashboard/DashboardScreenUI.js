@@ -15,7 +15,8 @@ import NoDataFound from '../../../common/components/nodatafound/NoDataFound'
 import CircularProgress from '../../../common/components/Charts/CircularProgress'
 import {
   formatDistanceInKm,
-  formatToHHMMSS
+  formatToHHMMSS,
+  isEventStarted
 } from '../../../common/functions/helper'
 
 export default function DashboardScreenUI(props) {
@@ -33,8 +34,8 @@ export default function DashboardScreenUI(props) {
       style={{
         padding: wp(5)
       }}>
-      {props?.dashboardData?.graphDTO?.[0] ? (
-        <>
+      {props?.dashboardData?.graphDTO?.[0] && (
+        <View style={{ marginBottom: hp(1) }}>
           <View style={styles.progressContainer}>
             <Text style={styles.title}>Personal Progress</Text>
 
@@ -55,7 +56,7 @@ export default function DashboardScreenUI(props) {
               totalSteps={props?.dashboardData?.totalSteps}
               goalSteps={props?.dashboardData?.totalTarget || 0} //
               iconName="run"
-              radius={wp(27)}
+              radius={wp(25)}
               // strokeWidth={10}
             />
           </View>
@@ -63,7 +64,7 @@ export default function DashboardScreenUI(props) {
           {/* Description Metrics */}
           <View style={styles.detailSection}>
             <DescriptionDetailItem
-              value={props?.dashboardData?.totalCalorie}
+              value={props?.dashboardData?.totalCalorie || 0}
               unit="Kcal"
             />
             <DescriptionDetailItem
@@ -76,35 +77,30 @@ export default function DashboardScreenUI(props) {
             />
           </View>
 
-          <View style={styles.buttonContainer}>
-            <CustomButton
-              title={'Show Leaderboard'}
-              name={'leaderboard'}
-              onPress={() =>
-                props.handleNavigate(
-                  props.eventGraphData?.graphDTO?.[0]?.eventId
-                )
-              }
-              btnStyles={{
-                ...styles.btnStyles,
-                elevation: 5
-              }}
-              btnTitleStyles={{
-                ...styles.textStyle
-              }}
-            />
-          </View>
-        </>
-      ) : (
-        <Text
-          style={{
-            textAlign: 'center',
-            paddingVertical: hp(2),
-            color: Colors?.gray_05,
-            fontFamily: Fonts.Regular
-          }}>
-          No data found
-        </Text>
+          {/* if event data ongoing then it will work  */}
+          {isEventStarted(
+            props.eventGraphData?.graphDTO?.[0].eventStartDate
+          ) && (
+            <View style={styles.buttonContainer}>
+              <CustomButton
+                title={'Show Leaderboard'}
+                name={'leaderboard'}
+                onPress={() =>
+                  props.handleNavigate(
+                    props.eventGraphData?.graphDTO?.[0]?.eventId
+                  )
+                }
+                btnStyles={{
+                  ...styles.btnStyles,
+                  elevation: 5
+                }}
+                btnTitleStyles={{
+                  ...styles.textStyle
+                }}
+              />
+            </View>
+          )}
+        </View>
       )}
       {props?.dashboardData?.graphDTO?.[0]?.runnerActivityDetails?.length ? (
         <View>
@@ -137,7 +133,7 @@ export default function DashboardScreenUI(props) {
           )}
         </View>
       ) : (
-        <NoDataFound />
+        <NoDataFound subTitle=" event is not started yet " />
       )}
     </View>
   )
@@ -178,8 +174,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   btnStyles: {
-    width: wp(90),
-    marginVertical: hp(1)
+    width: wp(90)
+    // marginVertical: hp(1)
   },
   plusbtnStyle: {
     width: wp(10)

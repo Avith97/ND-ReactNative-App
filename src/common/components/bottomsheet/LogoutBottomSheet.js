@@ -29,7 +29,7 @@ const LogoutBottomSheet = props => {
           <Text
             style={{
               textAlign: 'center',
-              fontFamily: Fonts.semiBold,
+              fontFamily: Fonts.Medium,
               color: '#535353',
               fontSize: fontSize.m
             }}>
@@ -40,7 +40,7 @@ const LogoutBottomSheet = props => {
           <Text
             style={{
               textAlign: 'center',
-              fontFamily: Fonts.semiBold,
+              fontFamily: Fonts.Regular,
               color: '#535353',
               fontSize: fontSize.normal,
               marginTop: hp(5)
@@ -86,7 +86,7 @@ const LogoutBottomSheet = props => {
             }}
             btnTitleStyles={{
               color: Colors.primary,
-              fontFamily: Fonts.semiBold,
+              fontFamily: Fonts.Medium,
               fontSize: fontSize.normal
             }}
           />

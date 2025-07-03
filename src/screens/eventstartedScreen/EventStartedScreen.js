@@ -79,14 +79,20 @@ export default function EventStartedScreen(props) {
   async function handleNavigate() {
     // checking user register or not
     let isUserRegistered = await checkUserRegisteredOrNot()
+
     //checking user onboard or not
     let isOnBoard = await isCheckOnBoard()
     // checking onboard question present or not
     let onboardQuestions = await getOnBoard()
+
     if (isUserRegistered) {
-      props.navigation.navigate(Strings.NAVIGATION.eventdetail, {
-        eventDistKey: eventData?.distKey
+      props.navigation.navigate(Strings.NAVIGATION.home_tab_bottom_nav, {
+        screen: Strings.NAVIGATION.eventdetail,
+        params: { eventDistKey: eventData?.distKey }
       })
+      // props.navigation.navigate(Strings.NAVIGATION.eventdetail, {
+      //   eventDistKey: eventData?.distKey
+      // })
     } else {
       if (isOnBoard || onboardQuestions?.length === 0) {
         props.navigation.navigate(Strings.NAVIGATION.eventregister) // isOnBoard === true then continue(user already onboarded)

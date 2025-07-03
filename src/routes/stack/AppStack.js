@@ -167,7 +167,7 @@ const AppStack = props => {
   const backAction = () => {
     const currentRoute = navigation.getCurrentRoute?.()?.name
 
-    if (currentRoute === Strings.NAVIGATION.home) {
+    if (currentRoute === Strings.NAVIGATION.home_tab_bottom_nav) {
       // On Home screen: do nothing or disable back
       return true // do nothing (prevent exit modal)
     }
@@ -187,7 +187,7 @@ const AppStack = props => {
       </ToastModal> */}
 
       <Stack.Navigator
-        initialRouteName={Strings.NAVIGATION.home}
+        initialRouteName={Strings.NAVIGATION.home_tab_bottom_nav}
         screenOptions={{
           headerShown: true,
           header: props => (
@@ -207,7 +207,8 @@ const AppStack = props => {
         />
 
         <Stack.Screen
-          name={Strings.NAVIGATION.home}
+          // name={Strings.NAVIGATION.home}
+          name={Strings.NAVIGATION.home_tab_bottom_nav}
           component={HomeTabBottomNav}
           initialParams={{
             // isLoggedIn: props.route.params.isLoggedIn
@@ -270,11 +271,11 @@ const AppStack = props => {
           options={{ title: 'Get started' }}
         />
 
-        <Stack.Screen
+        {/* <Stack.Screen
           name={Strings.NAVIGATION.eventdetail}
           component={EventDetailScreen}
           options={{ title: 'Event Detail' }}
-        />
+        /> */}
 
         <Stack.Screen
           name={Strings.NAVIGATION.eventregister}

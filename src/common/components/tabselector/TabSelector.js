@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.Medium
   },
   activeTabText: {
-    fontWeight: 'bold'
+    fontSize: fontSize.md,
+    fontFamily: Fonts.Medium
   },
   activeBackground: color => ({
     backgroundColor: color,

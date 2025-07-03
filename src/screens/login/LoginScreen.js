@@ -153,7 +153,7 @@ const LoginScreen = props => {
       if (userInfo?.type === 'success') {
         await performLogin(userInfo?.data)
       } else {
-        appsnackbar.showErrMsg('Something went wrong !!!')
+        // appsnackbar.showErrMsg('Something went wrong !!!')
       }
 
       // You can now send userInfo.idToken or userInfo.user to your backend
@@ -185,6 +185,8 @@ const LoginScreen = props => {
   }
 
   async function performLogin(params) {
+    console.log(global.fcm_token, 'fcm token in login screen')
+
     let syncObj = {
       firstName: params.user.givenName,
       lastName: params.user.familyName,

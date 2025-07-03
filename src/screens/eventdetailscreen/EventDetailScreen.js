@@ -9,23 +9,29 @@ import { appsnackbar } from '../../common/functions/snackbar_actions'
 import Loader from '../../common/components/loader/Loader'
 import { store } from '../../redux/store'
 import actions from '../../redux/action_types/actions'
+import { useIsFocused } from '@react-navigation/native'
+import moment from 'moment'
 
 export default function EventDetailScreen(props) {
   let eventDistKey = props?.route?.params?.eventDistKey
 
-  console.log(eventDistKey)
-
   const [eventData, setEventData] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  let isFocused = useIsFocused()
 
   useEffect(() => {
-    initiateScreen()
-  }, [])
+    if (isFocused) {
+      initiateScreen()
+    }
+  }, [isFocused])
 
   async function initiateScreen() {
+    setLoading(true)
     let resp = await fetchEventDetails(eventDistKey)
-
     if (resp) {
       setEventData(resp)
+      setLoading(false)
     }
   }
 
@@ -47,6 +53,8 @@ export default function EventDetailScreen(props) {
   // }
 
   async function fetchEventDetails(eventDistKey) {
+    console.log(moment().format('hh:mm:ss'))
+
     let resp = await services._get('event', {
       headers: {
         distKey: encodeURIComponent(eventDistKey),
@@ -54,13 +62,13 @@ export default function EventDetailScreen(props) {
       }
     })
 
-    console.log(resp)
-
     if (resp.type !== 'success') {
       appsnackbar.showErrMsg('Something went wrong!Please try again')
       handleNavigate()
       return
     }
+
+    console.log(moment().format('hh:mm:ss'))
 
     return resp?.data
   }
@@ -73,7 +81,7 @@ export default function EventDetailScreen(props) {
 
   return (
     <View style={{ flex: 1 }}>
-      <Loader />
+      <Loader isLoading={loading} />
       <EventDetailScreenUI
         eventData={eventData}
         handleNavigate={handleNavigate}

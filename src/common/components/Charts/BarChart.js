@@ -7,9 +7,11 @@ import {
   VictoryAxis,
   VictoryGroup,
   VictoryLegend,
-  VictoryTooltip
+  VictoryTooltip,
+  VictoryLabel
 } from 'victory-native'
 import Colors from '../../../utils/constants/Colors'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 
 const BarChart = ({
   data,
@@ -74,17 +76,41 @@ const BarChart = ({
           style={{
             axis: { stroke: 'transparent' },
             grid: { stroke: 'transparent' },
-            axisLabel: { padding: 30 }
+            axisLabel: {
+              padding: 30,
+              fontSize: fontSize.medium, // customize as per your setup
+              fontFamily: Fonts.SemiBold,
+              fill: '#333'
+            },
+            tickLabels: {
+              fontSize: fontSize.small,
+              fontFamily: Fonts.Regular,
+              fill: '#555'
+            }
           }}
         />
         <VictoryAxis
           dependentAxis
           label={yAxisLabel}
+          tickFormat={tick =>
+            typeof tick === 'number' ? tick.toFixed(0) : tick
+          }
           style={{
             axis: { stroke: 'transparent' },
-            axisLabel: { padding: 40 }
+            axisLabel: {
+              padding: 40,
+              fontSize: fontSize.s, // customize as per your setup
+              fontFamily: Fonts.Medium,
+              fill: '#333'
+            },
+            tickLabels: {
+              fontSize: fontSize.s,
+              fontFamily: Fonts.Regular,
+              fill: '#555'
+            }
           }}
         />
+        {/* Render bars based on whether it's multiple series or single series */}
 
         {isMultiple ? (
           <VictoryGroup
@@ -98,20 +124,42 @@ const BarChart = ({
                 y={key}
                 barWidth={calculatedBarWidth}
                 labels={({ datum }) => (showDataLabels ? datum[key] : '')}
-                labelComponent={<VictoryTooltip />}
+                labelComponent={
+                  <VictoryLabel
+                    dy={-5}
+                    style={{
+                      fontSize: fontSize.small,
+                      fontFamily: Fonts.Regular,
+                      fill: '#000'
+                    }}
+                  />
+                }
               />
             ))}
           </VictoryGroup>
         ) : (
           <VictoryBar
             colorScale={colorScale}
-            style={{ data: { fill: Colors.primary } }}
+            style={{
+              data: { fill: Colors.primary, fontFamily: Fonts.Regular }
+            }}
             data={parsedData}
             x={xKey}
             y={yKeys[0]}
             barWidth={calculatedBarWidth}
-            labels={({ datum }) => (showDataLabels ? datum[yKeys[0]] : '')}
-            labelComponent={<VictoryTooltip />}
+            labels={({ datum }) =>
+              datum[yKeys[0]] === 0 ? '' : showDataLabels ? datum[yKeys[0]] : ''
+            }
+            labelComponent={
+              <VictoryLabel
+                dy={-5}
+                style={{
+                  fontSize: fontSize.small,
+                  fontFamily: Fonts.Regular,
+                  fill: '#000'
+                }}
+              />
+            }
           />
         )}
       </VictoryChart>

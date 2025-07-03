@@ -28,7 +28,7 @@ export default function RegisterEventScreenUI(props) {
         <Text style={styles.registerLink}>Register Here</Text>
       </TouchableOpacity>
       {/* Registration status */}
-      {!props?.eventData?.isRegistrationOpen && (
+      {props?.eventData?.isRegistrationOpen === false && (
         <Text style={{ color: 'red', fontSize: fontSize.m }}>
           Registration Closed
         </Text>
@@ -61,7 +61,7 @@ export default function RegisterEventScreenUI(props) {
             )}
 
             {/* Activity Type */}
-            <View style={{ marginVertical: hp(1.5) }}>
+            <View style={{ marginVertical: hp(1) }}>
               <CustomDropdown
                 name="selectedActivity"
                 title="Activity Type"
@@ -102,15 +102,16 @@ export default function RegisterEventScreenUI(props) {
               )}
           </>
         )}
-      {props?.eventData?.eventData?.showSuggestionOnRegisterEvent &&
+      {/* {props?.eventData?.eventData?.showSuggestionOnRegisterEvent &&
         props?.eventData?.suggestedPoints && (
           <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
             <Text>Show suggestions</Text>
           </View>
-        )}
+        )} */}
+
       {/* show event category */}
       {props?.eventData?.showCategoryOnRegistration && (
-        <View style={{ marginVertical: hp(1.5) }}>
+        <View style={{ marginVertical: hp(1) }}>
           <CustomDropdown
             name="selectedEventCategory"
             title="Event Category"
@@ -127,7 +128,7 @@ export default function RegisterEventScreenUI(props) {
 
       {/* show runner group */}
       {props?.eventData?.showRunnerGroup && (
-        <View style={{ marginVertical: hp(1.5) }}>
+        <View style={{ marginVertical: hp(1) }}>
           <MultiSelectDropdown
             name="selectedRunnerGroup"
             title="Fitness Group"
@@ -149,7 +150,7 @@ export default function RegisterEventScreenUI(props) {
 
       {/* age group */}
       {props?.eventData?.showAgeGroup && (
-        <View style={{ marginVertical: hp(1.5) }}>
+        <View style={{ marginVertical: hp(1) }}>
           <CustomDropdown
             name="selectedAgeGroup"
             title="Age Group"
@@ -175,7 +176,7 @@ export default function RegisterEventScreenUI(props) {
             <View>
               {groupField?.fieldType?.name === 'TEXT' ||
               groupField?.fieldType?.name === 'NUMBER' ? (
-                <View style={{ marginVertical: hp(1.5) }}>
+                <View style={{ marginVertical: hp(1) }}>
                   <CustomTextInput
                     label={groupField?.displayName}
                     name={fieldKey}
@@ -195,7 +196,7 @@ export default function RegisterEventScreenUI(props) {
                   />
                 </View>
               ) : groupField?.fieldType?.name === 'SINGLE_SELECT' ? (
-                <View style={{ marginVertical: hp(1.5) }}>
+                <View style={{ marginVertical: hp(1) }}>
                   <MultiSelectDropdown
                     name={fieldKey}
                     title={groupField?.displayName || ''}
@@ -218,7 +219,7 @@ export default function RegisterEventScreenUI(props) {
                   />
                 </View>
               ) : (
-                <View style={{ marginVertical: hp(1.5) }}>
+                <View style={{ marginVertical: hp(1) }}>
                   <MultiSelectDropdown
                     name={fieldKey}
                     title={groupField?.displayName || ''}

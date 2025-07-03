@@ -16,7 +16,7 @@ const ExitAppBottomSheet = props => {
       // Navigate to Home Page
       global.navigation.reset({
         index: 0,
-        routes: [{ name: Strings.NAVIGATION.home }]
+        routes: [{ name: Strings.NAVIGATION.home_tab_bottom_nav }]
       })
     }
     show_exit_bottom_sheet(true)
@@ -41,7 +41,7 @@ const ExitAppBottomSheet = props => {
           <Text
             style={{
               textAlign: 'center',
-              fontFamily: Fonts.semiBold,
+              fontFamily: Fonts.Medium,
               color: '#535353',
               fontSize: fontSize.m
             }}>
@@ -52,7 +52,7 @@ const ExitAppBottomSheet = props => {
           <Text
             style={{
               textAlign: 'center',
-              fontFamily: Fonts.semiBold,
+              fontFamily: Fonts.Regular,
               color: '#535353',
               fontSize: fontSize.normal,
               marginTop: hp(5)
@@ -70,6 +70,7 @@ const ExitAppBottomSheet = props => {
             // alignItems: 'center',
             gap: hp(1),
             paddingVertical: hp(1),
+            paddingHorizontal: hp(3),
             justifyContent: 'space-around'
           }}>
           <CustomButton
@@ -97,7 +98,7 @@ const ExitAppBottomSheet = props => {
             }}
             btnTitleStyles={{
               color: Colors.primary,
-              fontFamily: Fonts.semiBold,
+              fontFamily: Fonts.Medium,
               fontSize: fontSize.normal
             }}
           />
@@ -112,7 +113,7 @@ const ExitAppBottomSheet = props => {
             }}
             btnTitleStyles={{
               color: Colors.primary,
-              fontFamily: Fonts.semiBold,
+              fontFamily: Fonts.Medium,
               fontSize: fontSize.normal
             }}
           />

@@ -21,7 +21,8 @@ import { interPolate } from '../../../services/interpolate/interpolate'
 
 export default function ProgramScreen(props) {
   const [state, setState] = useState({
-    selectedTabID: 0
+    selectedTabID: 0,
+    loader: false
   })
 
   const userData = useSelector(state => state.auth)
@@ -41,6 +42,7 @@ export default function ProgramScreen(props) {
     let url = TemplateService._userId(URL.my_events, userData?.runnerId)
     try {
       // api request
+      setState(prev => ({ ...prev, loader: true }))
       const resp = await services._get(url)
 
       // response handle
@@ -79,6 +81,7 @@ export default function ProgramScreen(props) {
           ...prev,
           programs: formattedPrograms
         }))
+        setState(prev => ({ ...prev, loader: false }))
       }
     } catch (error) {
       console.log('Error fetching all programs:', error)
@@ -91,6 +94,7 @@ export default function ProgramScreen(props) {
     let url = TemplateService._userId(URL.upcoming_events, userData?.runnerId)
     try {
       // API request
+      setState(prev => ({ ...prev, loader: true }))
       const resp = await services._get(url)
 
       // response handle
@@ -120,6 +124,7 @@ export default function ProgramScreen(props) {
           ...prev,
           programs: formattedPrograms
         }))
+        setState(prev => ({ ...prev, loader: false }))
       }
     } catch (error) {
       console.log('Error fetching upcoming programs:', error)
@@ -149,9 +154,13 @@ export default function ProgramScreen(props) {
     if (state.selectedTabID === 0) {
       if (data?.eventStatus === 'Not Started Yet') {
         // Handle not yet started event
-        props.navigation.navigate(Strings.NAVIGATION.eventdetail, {
-          eventDistKey: data?.program?.distKey
+        props.navigation.navigate(Strings.NAVIGATION.home_tab_bottom_nav, {
+          screen: Strings.NAVIGATION.eventdetail,
+          params: { eventDistKey: data?.program?.distKey }
         })
+        // props.navigation.navigate(Strings.NAVIGATION.eventdetail, {
+        //   eventDistKey: data?.program?.distKey
+        // })
       } else {
         // Handle ongoing or completed event
         props.navigation.navigate(Strings.NAVIGATION.programleaderboard, {
@@ -170,7 +179,7 @@ export default function ProgramScreen(props) {
 
   return (
     <View style={styles.container}>
-      <Loader />
+      <Loader isLoading={state?.loader} />
       <ProgramScreenUI
         {...state}
         {...options}

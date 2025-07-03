@@ -21,6 +21,7 @@ export default function DashboardScreen() {
   })
 
   let isFocused = useIsFocused()
+  const [loading, setLoading] = useState(false)
   const auth = useSelector(store => store?.user)
 
   useEffect(() => {
@@ -30,10 +31,12 @@ export default function DashboardScreen() {
   }, [isFocused])
 
   async function initiateScreen() {
+    setLoading(true)
     let resp = await getDashboardDetail()
 
     if (resp) {
       setState(prev => ({ ...prev, dashboardData: resp || null }))
+      setLoading(false)
     }
   }
 
@@ -145,7 +148,7 @@ export default function DashboardScreen() {
       style={styles.container}
       contentContainerStyle={{ paddingBottom: hp(5) }}
       showsVerticalScrollIndicator={false}>
-      <Loader />
+      <Loader isLoading={loading} />
 
       <DashboardScreenUI
         {...state}

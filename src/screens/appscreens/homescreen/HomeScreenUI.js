@@ -11,6 +11,8 @@ import NoDataFound from '../../../common/components/nodatafound/NoDataFound'
 import CircularProgress from '../../../common/components/Charts/CircularProgress'
 import { colors } from 'react-native-elements'
 import CustomImageBackground from '../../../common/components/background/CustomImageBackground'
+import ProgramCard from '../../../common/components/programcard/ProgramCard'
+import { programCardFormattedData } from '../../../common/functions/helper'
 
 export default function HomeScreenUI(props) {
   let { isLoggedIn } = props
@@ -41,125 +43,108 @@ export default function HomeScreenUI(props) {
         {props?.HomeScreenData && props?.HomeScreenData?.events?.length ? (
           <>
             {/* progress card */}
-            <View style={styles.progress_card_wrapper}>
-              <View style={{ flex: 1.2 }}>
-                <Text
-                  style={{
-                    color: 'white',
-                    paddingVertical: hp(1),
-                    fontSize: fontSize.normal,
-                    fontFamily: Fonts.Thin
-                  }}>
-                  {moment().format('DD MMM YYYY')}
-                </Text>
-                <Text style={{ ...styles.title, color: Colors.smoky_white }}>
-                  Your daily progress
-                </Text>
-                {props?.progressEvent?.eventName && (
-                  <Text style={{ ...styles.subTitle, fontSize: fontSize.m }}>
-                    {props?.progressEvent?.eventName}
+            {props?.HomeScreenData?.events?.length && (
+              <View style={styles.progress_card_wrapper}>
+                <View style={{ flex: 1.2 }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      paddingVertical: hp(1),
+                      fontSize: fontSize.normal,
+                      fontFamily: Fonts.Thin
+                    }}>
+                    {moment().format('DD MMM YYYY')}
                   </Text>
-                )}
+                  <Text style={{ ...styles.title, color: Colors.smoky_white }}>
+                    Your daily progress
+                  </Text>
+                  {props?.progressEvent?.eventName && (
+                    <Text style={{ ...styles.subTitle, fontSize: fontSize.m }}>
+                      {props?.progressEvent?.eventName}
+                    </Text>
+                  )}
 
-                <Text
+                  <Text
+                    style={{
+                      ...styles.subTitle2,
+                      color: Colors.smoky_white,
+                      opacity: 0.5
+                    }}>
+                    Accumulating daily report
+                  </Text>
+                  <View style={{ paddingVertical: hp(1) }}>
+                    {props?.progressEvent?.eventStartDate && (
+                      <Text style={styles.rangetitle}>
+                        From - {props?.progressEvent?.eventStartDate}
+                      </Text>
+                    )}
+                    {props?.progressEvent?.eventEndDate && (
+                      <Text style={styles.rangetitle}>
+                        To - {props?.progressEvent?.eventEndDate}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+                <View
                   style={{
-                    ...styles.subTitle2,
-                    color: Colors.smoky_white,
-                    opacity: 0.5
+                    flex: 0.8,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                    // backgroundColor:"red",
+                    // padding:hp(1)
                   }}>
-                  Accumulating daily report
-                </Text>
-                <View style={{ paddingVertical: hp(1) }}>
-                  {props?.progressEvent?.eventStartDate && (
-                    <Text style={styles.rangetitle}>
-                      From - {props?.progressEvent?.eventStartDate}
-                    </Text>
-                  )}
-                  {props?.progressEvent?.eventEndDate && (
-                    <Text style={styles.rangetitle}>
-                      To - {props?.progressEvent?.eventEndDate}
-                    </Text>
-                  )}
+                  {/* <PieProgressBar percentage={props?.HomeScreenData?.progressBar} /> */}
+                  <CircularProgress
+                    percentage={props?.HomeScreenData?.progressBar}
+                    iconName="leaf"
+                    radius={wp(16)}
+                  />
                 </View>
               </View>
-              <View
-                style={{
-                  flex: 0.8,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}>
-                {/* <PieProgressBar percentage={props?.HomeScreenData?.progressBar} /> */}
-                <CircularProgress
-                  percentage={props?.HomeScreenData?.progressBar}
-                  iconName="leaf"
-                  radius={wp(17)}
-                />
-              </View>
-            </View>
+            )}
 
-            {/* not responding challenge */}
-
-            {/* {props?.notResponding && props?.notResponding && (
-            <NotRespondingCard handleNavigate={props.handleNavigate} />
-          )} */}
-
-            {/* ongoing  events  */}
-            {/* <View style={{ marginVertical: hp(1) }}>
-              {props?.HomeScreenData?.events?.map((item, index) => {
-                return (
-                  <View key={index}>
-                    <Text style={styles?.title}>{item?.eventName}</Text>
+            {/* ongoing events */}
+            {props?.HomeScreenData?.events?.length && (
+              <FlatList
+                data={props?.HomeScreenData?.events || []}
+                keyExtractor={(item, index) => index.toString()}
+                contentContainerStyle={{ marginVertical: hp(1) }}
+                renderItem={({ item }) => (
+                  <View style={{ flex: 1, gap: hp(1) }}>
                     <EventCard
-                      key={index}
+                      title={item?.eventName}
                       {...item}
                       handleNavigate={props.handleNavigate}
                     />
                   </View>
-                )
-              })}
-            </View> */}
-
-            <FlatList
-              data={props?.HomeScreenData?.events || []}
-              keyExtractor={(item, index) => index.toString()}
-              contentContainerStyle={{ marginVertical: hp(1) }}
-              renderItem={({ item }) => (
-                <View style={{ flex: 1, gap: hp(1) }}>
-                  <EventCard
-                    title={item?.eventName}
-                    {...item}
-                    handleNavigate={props.handleNavigate}
-                  />
-                </View>
-              )}
-            />
-
-            {/* ongoing challenges */}
-            {/* <View style={{marginVertical: hp(2)}}>
-            {props.Challenges?.map((item, index) => (
-              <ChallengeCard
-                key={index}
-                {...item}
-                handleNavigate={props.handleNavigate}
+                )}
               />
-            ))}
-          </View> */}
+            )}
 
-            {/* session */}
-            {/* <View style={{marginVertical: hp(1)}}>
-            <Text style={{...styles.title, fontFamily: Fonts.BoldItalic}}>
-              Planning Diet for Weight Management
-            </Text>
-            {props.sessions.map((item, index) => (
-              <View key={index}>
-                <SessionCard key={index} {...item} />
-              </View>
-            ))}
-          </View> */}
+            {/* registered events but upcoming */}
+            <View style={{ marginVertical: hp(0) }}>
+              {!props?.HomeScreenData?.events?.length &&
+                props?.HomeScreenData?.registeredEvents?.map((item, index) => {
+                  let event = programCardFormattedData(item)
+
+                  return (
+                    <ProgramCard
+                      key={index}
+                      {...event}
+                      program={event?.program || event}
+                      handleNavigate={props.handleNavigateDetail}
+                    />
+                  )
+                })}
+            </View>
           </>
         ) : (
           <>
-            <NoDataFound />
+            <NoDataFound
+              subTitle={
+                "It seems like you haven't tracked any activities yet. Please visit program section for registration."
+              }
+            />
           </>
           // <>
           //   {/* ongoing  events  */}

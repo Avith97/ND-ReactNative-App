@@ -56,13 +56,13 @@ const EventCard = ({ title, ...props }) => {
         <View style={styles.middleSection}>
           <View style={styles.dashedLine} />
           <View style={styles.row}>
-            {props?.yesterdaysTotalStep && (
+            {props?.yesterdaysTotalStep >= 0 && (
               <FootPrintItem
                 steps={props?.yesterdaysTotalStep}
                 label={'Yesterday’s Steps '}
               />
             )}
-            {props?.weeklyTotalSteps && (
+            {props?.weeklyTotalSteps >= 0 && (
               <FootPrintItem
                 steps={props?.weeklyTotalSteps}
                 label={'Weekly Steps'}

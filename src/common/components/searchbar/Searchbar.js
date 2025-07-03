@@ -91,7 +91,7 @@ const SearchBar = props => {
         <Icons
           name="search"
           type={iconType?.material}
-          size={20}
+          size={23}
           color={Colors.gray}
           style={styles.searchIcon}
         />
@@ -159,11 +159,12 @@ const styles = StyleSheet.create({
     paddingVertical: hp(1.3),
     paddingHorizontal: wp(3),
     fontSize: fontSize.normal,
+    fontFamily: Fonts.Regular,
     color: '#000'
   },
   searchIcon: {
     position: 'absolute',
-    top: '35%',
+    top: '28%',
     left: wp(3),
     zIndex: 1
   },

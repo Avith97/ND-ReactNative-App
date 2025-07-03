@@ -54,8 +54,6 @@ export default function EventDetailScreenUI(props) {
           </Text>
         </View>
 
-        {console.log(props?.eventData?.organizers)}
-
         {/* Organizer Section */}
         {props?.eventData?.organizers?.length && (
           <View>
@@ -78,7 +76,9 @@ export default function EventDetailScreenUI(props) {
                     resizeMode="contain"
                   />
                   <View style={{ flex: 1, marginLeft: wp(3) }}>
-                    <Text style={styles.orgName}>{organizer?.name} </Text>
+                    <Text style={styles.orgName}>
+                      {parseHtmlDescription(organizer?.name)}
+                    </Text>
                   </View>
                 </View>
               )
@@ -86,7 +86,7 @@ export default function EventDetailScreenUI(props) {
           </View>
         )}
       </ScrollView>
-      <View style={styles?.viewResultBtnContainer}>
+      {/* <View style={styles?.viewResultBtnContainer}>
         <CustomButton
           title={'View Result'}
           name={'navigate'}
@@ -102,15 +102,15 @@ export default function EventDetailScreenUI(props) {
             color: Colors.gray_01
           }}
         />
-      </View>
+      </View> */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   bannerImage: {
-    width: '100%',
-    height: hp(35),
+    width: wp(100),
+    height: hp(30),
     opacity: 0.6
   },
   badgeContainer: {
@@ -159,17 +159,18 @@ const styles = StyleSheet.create({
   orgContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: hp(1.5)
+    // marginTop: hp(0.2),
+    elevation: 2
   },
   orgLogo: {
-    width: wp(15),
-    height: hp(6),
+    width: wp(19),
+    height: hp(7),
     backgroundColor: '#f2f2f2',
-    borderRadius: 6
+    borderRadius: 2
   },
   orgName: {
     fontSize: fontSize.m,
-    fontFamily: Fonts.Medium,
+    fontFamily: Fonts.Regular,
     fontWeight: '600'
   },
   orgSubtitle: {

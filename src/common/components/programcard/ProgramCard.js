@@ -39,10 +39,11 @@ const ProgramCard = ({
           style={{
             ...styles.statusTag,
             backgroundColor:
-              props.eventStatus == 'Completed' || buttonName === 'Register'
+              // props.eventStatus === 'Not Started Yet'
+              //   ? '#AFEA0DB2'
+              // :
+              props.eventStatus === 'Completed' || buttonName === 'Register'
                 ? '#EC6B47AB'
-                : props.eventStatus == 'Not Started Yet'
-                ? ' #AFEA0DB2'
                 : Colors.primary
           }}>
           <Text style={styles.statusText}>

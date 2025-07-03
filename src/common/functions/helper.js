@@ -89,3 +89,37 @@ export function getFullEventBgImageUrl(imagePath) {
     return interPolate.base_url(decodeURIComponent(imagePath))
   }
 }
+
+export const isEventStarted = startDate => {
+  if (!startDate) return false
+
+  return moment().isSameOrAfter(startDate, 'day')
+}
+
+export const programCardFormattedData = data => {
+  if (!data) return null
+
+  const now = moment()
+  const start = moment(data?.localStartDate)
+  const end = moment(data?.localEndDate)
+
+  let eventStatus = 'Completed'
+  if (now.isBefore(start)) {
+    eventStatus = 'Not Started Yet'
+  } else if (now.isBetween(start, end, undefined, '[]')) {
+    eventStatus = 'Ongoing'
+  }
+
+  return {
+    title: data?.name,
+    localStartDate: data?.localStartDate,
+    localEndDate: data?.localEndDate,
+    buttonName:
+      eventStatus === 'Not Started Yet' ? 'View Details' : 'View Result',
+    image: data?.image?.url
+      ? { uri: interPolate.base_url(data?.image?.url) }
+      : null,
+    eventStatus: eventStatus,
+    program: data
+  }
+}

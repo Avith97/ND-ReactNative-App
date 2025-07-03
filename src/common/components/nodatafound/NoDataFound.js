@@ -6,7 +6,7 @@ import { Images } from '../../../utils/constants/Images'
 import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import { colors } from 'react-native-elements'
 
-export default function NoDataFound() {
+export default function NoDataFound(props) {
   return (
     <View
       style={{
@@ -23,8 +23,9 @@ export default function NoDataFound() {
       />
       <Text style={styles.title}>No Data Found</Text>
       <Text style={{ ...styles.subtitle }}>
-        It seems like you haven't tracked any activities yet. Start your fitness
-        journey by recording your Active.
+        {props?.subTitle
+          ? props?.subTitle
+          : "It seems like you haven't tracked any activities yet. Start your fitness journey by recording your activities."}
       </Text>
     </View>
   )
@@ -33,19 +34,19 @@ export default function NoDataFound() {
 const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
-    fontSize: fontSize.m,
-    fontFamily: Fonts.Bold,
+    fontSize: fontSize.normal,
+    fontFamily: Fonts.Medium,
     color: colors.grey4,
-    padding: hp(0.5)
+    paddingTop: hp(0.8)
   },
   subtitle: {
     textAlign: 'center',
     color: colors.grey4,
-    fontSize: fontSize.normal,
+    fontSize: fontSize.s,
     fontFamily: Fonts.Regular
   },
   nodataImage: {
-    width: wp(90),
-    height: hp(25)
+    width: wp(45),
+    height: hp(15)
   }
 })

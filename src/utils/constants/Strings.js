@@ -3,6 +3,7 @@ export default {
     offline: 'offline'
   },
   NAVIGATION: {
+    home_tab_bottom_nav: 'home_tab_bottom_nav',
     auth: 'auth',
     app: 'app',
     health: 'sample',

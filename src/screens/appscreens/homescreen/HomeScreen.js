@@ -61,6 +61,7 @@ export default function HomeScreen(props) {
       )
 
       let resp = await services._get(HomeSummaryURL)
+      console.log(resp)
 
       // setting global events
       if (resp.data?.events) {
@@ -117,6 +118,19 @@ export default function HomeScreen(props) {
   //   setLoading(params);
   // }
 
+  const handleNavigateDetail = data => {
+    if (data) {
+      store.dispatch({
+        type: 'SET_EVENT_DETAILS',
+        payload: data || {}
+      })
+      props.navigation.navigate(Strings.NAVIGATION.home_tab_bottom_nav, {
+        screen: Strings.NAVIGATION.eventdetail,
+        params: { eventDistKey: data?.distKey }
+      })
+    }
+  }
+
   return (
     <ScrollView
       style={styles.container}
@@ -127,6 +141,7 @@ export default function HomeScreen(props) {
         progressEvent={state?.HomeScreenData?.events?.[0]}
         isLoggedIn={isLoggedIn}
         handleNavigate={handleNavigate}
+        handleNavigateDetail={handleNavigateDetail}
       />
     </ScrollView>
   )

@@ -70,6 +70,9 @@ export default function AppCustomHeader(props) {
   })
 
   const handleNavigate = name => {
+    // navigation.navigate(Strings.NAVIGATION.home_tab_bottom_nav, {
+    //   screen: name
+    // })
     navigation.navigate(name)
   }
 
