@@ -35,7 +35,7 @@ export default function ProgramDashboardScreen(props) {
   }
 
   const handleChange = tab => {
-    console.log(tab)
+    // console.log(tab)
 
     setState(prev => ({ ...prev, selectedTab: tab }))
   }

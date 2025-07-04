@@ -9,6 +9,11 @@ export default EventReducer = (state = initialState, action) => {
     case actions.SET_EVENT_DETAILS:
       return { ...state, ...action.payload }
 
+    case actions.LOG_OUT:
+      return {
+        eventData: null
+      }
+
     default:
       return state
   }

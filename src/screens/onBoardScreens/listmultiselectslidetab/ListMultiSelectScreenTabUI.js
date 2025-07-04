@@ -1,19 +1,43 @@
 // react core components + React Native components
 import React, { useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import { wp } from '../../../common/functions/dimensions'
+import { hp, wp } from '../../../common/functions/dimensions'
 import Icons from '../../../assets/icons/Icons'
 
 // labels for the screen
-import { en as labels } from '../../../utils/labels/en'
 import { useSelector } from 'react-redux'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 
 export default function ListMultiSelectScreenTabUI(props) {
+  // states and redux data
   const onboard = useSelector(state => state.onboard)
+  const [selectedMultiListAnswer, setSelectedMultiListAnswer] = useState()
+  const [render, setIsRender] = useState(false)
 
+  // onclick option to question
   function onClick(item) {
-    props.handleChange('list-multiselect', item)
+    props.handleChange('list-multiselect', {
+      option_id: item.id,
+      onboardingQuestionId: props?.id
+      // response: item?.text
+    })
+    setIsRender(true)
   }
+
+  // finding exact question response to show selected option
+  useEffect(() => {
+    if (onboard.hasOwnProperty('list-multiselect')) {
+      let questionResponse = onboard['list-multiselect']
+      questionResponse = questionResponse?.find(
+        item => item.onboardingQuestionId === props?.id
+      )
+
+      console.log(questionResponse, 'hek')
+
+      setSelectedMultiListAnswer(questionResponse)
+      setIsRender(false)
+    }
+  }, [onboard, render])
 
   return (
     <View style={props.childContainerStyle}>
@@ -22,49 +46,54 @@ export default function ListMultiSelectScreenTabUI(props) {
         {props?.question && (
           <Text style={styles.heading}>{props?.question}</Text>
         )}
-        {props?.sub_text && (
-          <Text style={styles.subText}>{props?.sub_text}</Text>
-        )}
-        {props?.options &&
-          props?.options?.map((option, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.optionBox,
-                // props.selectedExercises.includes(item) && styles.optionSelected,
-                onboard?.['list-multiselect']?.id === option.id &&
-                  styles.optionSelected
-              ]}
-              onPress={() => onClick(option)}>
-              {/* left icon */}
-              {option?.icon && option?.iconPosition === 'left' && (
-                <View style={{ width: wp(10) }}>
-                  <Icons name={option.icon} size={30} color="#000" />
-                </View>
-              )}
+        {props?.subText && <Text style={styles.subText}>{props?.subText}</Text>}
 
-              {/* content */}
-              <View style={{ width: wp(55) }}>
-                {option?.text && (
-                  <Text numberOfLines={2} style={styles.activityTitle}>
-                    {option?.text}
-                  </Text>
-                )}
-                {option?.subText && (
-                  <Text numberOfLines={2} style={styles.activityDesc}>
-                    {option?.subText}
-                  </Text>
-                )}
-              </View>
+        <View style={{ paddingTop: hp(1) }}>
+          {props?.options &&
+            props?.options?.map((option, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.optionBox,
+                  // props.selectedExercises.includes(item) && styles.optionSelected,
+                  // onboard?.['list-multiselect']?.data?.some(opt => opt.id === option.id) &&
+                  //   styles.optionSelected
 
-              {/* right icon */}
-              {option?.icon && option?.iconPosition === 'right' && (
-                <View style={{ width: wp(10), marginLeft: wp(10) }}>
-                  <Icons name={option.icon} size={30} color="#000" />
+                  selectedMultiListAnswer?.selectedOptions?.some(
+                    opt => opt.option_id === option.id
+                  ) && styles.optionSelected
+                ]}
+                onPress={() => onClick(option)}>
+                {/* left icon */}
+                {option?.icon && option?.iconPosition === 'left' && (
+                  <View style={{ width: wp(10) }}>
+                    <Icons name={option.icon} size={30} color="#000" />
+                  </View>
+                )}
+
+                {/* content */}
+                <View style={{ width: wp(55) }}>
+                  {option?.text && (
+                    <Text numberOfLines={2} style={styles.activityTitle}>
+                      {option?.text}
+                    </Text>
+                  )}
+                  {option?.subText && (
+                    <Text numberOfLines={2} style={styles.activityDesc}>
+                      {option?.subText}
+                    </Text>
+                  )}
                 </View>
-              )}
-            </TouchableOpacity>
-          ))}
+
+                {/* right icon */}
+                {option?.icon && option?.iconPosition === 'right' && (
+                  <View style={{ width: wp(10), marginLeft: wp(10) }}>
+                    <Icons name={option.icon} size={30} color="#000" />
+                  </View>
+                )}
+              </TouchableOpacity>
+            ))}
+        </View>
       </View>
     </View>
   )
@@ -77,7 +106,8 @@ const styles = StyleSheet.create({
     // width: wp(100),
     // flexWrap: 'wrap',
   },
-  heading: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
+  heading: { fontSize: fontSize.m, fontFamily: Fonts.Bold },
+  subText: { fontSize: fontSize.n, fontFamily: Fonts.Regular },
   optionBox: {
     flexDirection: 'row',
     // width: wp(80),
@@ -101,5 +131,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginTop: 10
-  }
+  },
+  activityTitle: {
+    fontSize: fontSize.normal,
+    fontFamily: Fonts.SemiBold
+  },
+  activityDesc: { fontSize: fontSize.s, fontFamily: Fonts.Regular }
 })

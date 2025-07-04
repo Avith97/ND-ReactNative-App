@@ -12,8 +12,6 @@ import Toast from 'react-native-toast-message'
 import { hp, wp } from '../../functions/dimensions'
 
 const CustomBottomSheet = ({ props, ...params }) => {
-  console.log('bottomsheet props ---> ', params)
-
   const handleChange = params => {
     props.onSelect && props.onSelect(params)
     Toast.hide()

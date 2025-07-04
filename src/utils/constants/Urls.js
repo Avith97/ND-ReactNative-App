@@ -15,6 +15,10 @@ export const URL = {
   otp_verify: 'login/verify/otp',
   create_profile: 'signup',
 
+  //home
+  home_summary: 'health/summary/user_id',
+  onboard_url: '/onboarding/questions/event_id',
+
   //delete user
   delete_user: 'delete/user',
 
@@ -22,7 +26,7 @@ export const URL = {
   // my_events: "events",
   my_events: 'user_id/events',
   upcoming_events: 'upcomingEvents/user_id',
-  check_user_registered: 'event/registered/${event_id}/${user_id}',
+  check_user_registered: 'event/registered/event_id/user_id',
 
   get_event: 'event/event_id',
   register_event: 'register',
@@ -51,5 +55,15 @@ export const URL = {
   get_event: 'event/event_id',
 
   runner_group: 'public/runner/groupDetails/leaderboard/event_id',
-  get_runner_group: 'public/groupRunner/leaderboard/event_id'
+  get_runner_group: 'public/groupRunner/leaderboard/event_id',
+
+  user_profile_pic_upload: '/user/profilePicture/upload/user_id',
+
+  isUserOnBoardURL: '/check/user/onboard/event_id/user_id',
+
+  submit_onboard: 'onboarding/question/response',
+  // about us
+  about_us: 'html/template/ABOUT_US',
+  // helth data
+  save_health_data: 'save/health/connect/user/activity'
 }

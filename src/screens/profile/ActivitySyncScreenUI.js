@@ -4,7 +4,7 @@ import { Image } from 'react-native'
 import { Images } from '../../utils/constants/Images'
 import { hp, wp } from '../../common/functions/dimensions'
 import CustomButton from '../../common/components/buttons/CustomButton'
-import { fontSize } from '../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import Icons, { iconType } from '../../assets/icons/Icons'
 import Colors from '../../utils/constants/Colors'
 
@@ -28,16 +28,18 @@ export default function ActivitySyncScreenUI() {
           size={20}
           color={Colors.appbtn}
         />
-        <Text style={styles.statusText}>Connected</Text>
+        <Text style={styles.statusText}>Connected to healthconnect</Text>
       </View>
 
       {/* Disconnect Button */}
-      <CustomButton
+      {/* <CustomButton
         title={'Disconnect'}
+        name="disconnect"
+        onPress={() => console.log('disconnect')}
         btnStyles={{
           ...styles.btnStyles
         }}
-      />
+      /> */}
     </View>
   )
 }
@@ -68,7 +70,8 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontSize: fontSize.md,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: Fonts.Regular,
     color: '#444'
   },
   btnStyles: {

@@ -1,29 +1,130 @@
-import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native'
-import React from 'react'
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Animated,
+  Easing
+} from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigation } from '@react-navigation/native' // ✅ Add this
 import { Images } from '../../../utils/constants/Images'
 import { hp, wp } from '../../../common/functions/dimensions'
 import Icons, { iconType } from '../../../assets/icons/Icons'
 import Strings from '../../../utils/constants/Strings'
 import CustomButton from '../../../common/components/buttons/CustomButton'
+import Colors from '../../../utils/constants/Colors'
+import { toast_success } from '../../../common/components/toasts/handleToasts'
+import Toast from 'react-native-toast-message'
+import moment from 'moment'
+import { BackSync } from '../../../common/functions/BackSync'
+import { store } from '../../../redux/store'
+import { handleSoftSync } from '../../../redux/actions/loading'
+import { useSelector } from 'react-redux'
 
 export default function AppCustomHeader(props) {
   const navigation = useNavigation() // ✅ Access navigation
 
+  const [isLoading, setIsLoading] = useState(false)
+
+  const onGoingEvents = useSelector(store => store.onGoingEvents?.onGoingEvents)
+
+  // let isLoading = true
+
   const { isLoggedIn } = props.isLoggedIn
 
+  const rotateAnim = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    let animation
+
+    if (isLoading) {
+      animation = Animated.loop(
+        Animated.timing(rotateAnim, {
+          toValue: 1,
+          duration: 1000, // 1 rotation per second
+          easing: Easing.linear,
+          useNativeDriver: true
+        })
+      )
+      animation.start()
+    } else {
+      rotateAnim.stopAnimation()
+      rotateAnim.setValue(0)
+    }
+
+    return () => {
+      if (animation) animation.stop()
+    }
+  }, [isLoading, onGoingEvents?.length])
+
+  useEffect(() => {
+    store.dispatch(handleSoftSync(isLoading))
+    global.temp = isLoading
+  }, [isLoading])
+
+  const rotateInterpolate = rotateAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg']
+  })
+
   const handleNavigate = name => {
+    // navigation.navigate(Strings.NAVIGATION.home_tab_bottom_nav, {
+    //   screen: name
+    // })
     navigation.navigate(name)
+  }
+
+  async function handleSyncData() {
+    setIsLoading(true)
+    Toast.show({
+      type: 'transparent_layer',
+      autoHide: false,
+      topOffset: 0
+    })
+    //  console.log(global.ongoingEvents);
+    //   let resp = await BackSync.health_data_sync({
+    //     startDate: moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    //     endDate: moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    //     format: 'YYYY-MM-DD HH:mm:ss'
+    //   },"active")
+
+    if (onGoingEvents?.length) {
+      // for (const event of global.ongoingEvents) {
+      try {
+        const response = await BackSync.health_data_sync({
+          startDate: moment().startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+          endDate: moment().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
+          format: 'YYYY-MM-DD HH:mm:ss'
+          // eventId: event.id // optional: if your API needs event ID
+        })
+        setIsLoading(false)
+        Toast.hide()
+        console.log(`Synced event `, response)
+      } catch (error) {
+        console.error(`Error syncing event ${event.id}:`, error)
+      }
+      // }
+    }
+
+    // // call health connect data sync api
+    // setTimeout(() => {
+    //   setIsLoading(false)
+    //   Toast.hide()
+    // }, 3000)
   }
 
   return (
     <View style={styles.headerContainer}>
       {/* Logo */}
-      <Image
-        source={Images.app_logo}
-        style={styles.logo}
-        resizeMode="contain"
-      />
+      <TouchableOpacity onPress={() => handleNavigate(Strings?.NAVIGATION.app)}>
+        <Image
+          source={Images.app_logo}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      </TouchableOpacity>
 
       {!isLoggedIn ? (
         <CustomButton
@@ -40,10 +141,39 @@ export default function AppCustomHeader(props) {
         />
       ) : (
         <View style={styles.rightIcons}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => handleNavigate(Strings.NAVIGATION.notificationlist)}>
             <Icons name="bell" type={iconType.feather} size={20} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          {/* <TouchableOpacity
+            onPress={() => handleSyncData()}>
+            <Icons name="bell" type={iconType.feather} size={20} />
+            <Text>Sync Data</Text>
+          </TouchableOpacity> */}
+          {onGoingEvents?.length && (
+            <TouchableOpacity
+              onPress={() => handleSyncData()}
+              disabled={isLoading}
+              activeOpacity={0.6}
+              style={{
+                height: 40,
+                width: 40,
+                borderRadius: 100,
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <Animated.View
+                style={{ transform: [{ rotate: rotateInterpolate }] }}>
+                <Icons
+                  name="sync"
+                  type={iconType.ant}
+                  size={isLoading ? 24 : 20}
+                  color={isLoading ? Colors.primary : Colors.gray_04}
+                />
+              </Animated.View>
+            </TouchableOpacity>
+          )}
+
           <TouchableOpacity
             onPress={() => handleNavigate(Strings.NAVIGATION.profile)}>
             <Icons name="user" type={iconType.feather} size={20} />

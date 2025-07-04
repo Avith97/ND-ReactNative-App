@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DateTimePicker, {
   CancelButton,
   ConfirmButton
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     padding: wp(1.8),
     borderWidth: 0.7,
     // elevation: 9,
-    borderColor: Colors.red,
+    // borderColor: Colors.red,
     borderRadius: 6,
     backgroundColor: 'white'
   },

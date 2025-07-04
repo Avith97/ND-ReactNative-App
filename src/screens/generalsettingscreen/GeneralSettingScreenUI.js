@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import CustomModal from '../../common/components/Modal/CustomModal'
 import { FlatList } from 'react-native'
-import { fontSize } from '../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import Colors from '../../utils/constants/Colors'
 import { hp, wp } from '../../common/functions/dimensions'
 import DialogBox from '../../common/components/Modal/DialogBox'
@@ -18,6 +18,7 @@ export default function GeneralSettingScreenUI(props) {
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
+        disabled={item?.disable}
         style={styles.renderItem}
         onPress={() => props.handleChange(item.id)}>
         <Text style={styles.title}>{item.name}</Text>
@@ -50,7 +51,7 @@ export default function GeneralSettingScreenUI(props) {
 
       if (resp?.type === 'success') {
         const message = resp?.data?.success?.verbose
-        console.log('User deleted successfully:', message)
+        // console.log('User deleted successfully:', message)
 
         // ✅ Navigate to login screen
         handleNavigate()
@@ -58,7 +59,7 @@ export default function GeneralSettingScreenUI(props) {
         appsnackbar.showErrMsg('Something went wrong!')
       }
     } catch (error) {
-      console.log('Error delete screen get details', error)
+      // console.log('Error delete screen get details', error)
       appsnackbar.showErrMsg('Something went wrong!')
     } finally {
       props.setModalVisible(false)
@@ -72,7 +73,12 @@ export default function GeneralSettingScreenUI(props) {
         visible={props.modalVisible}
         onClose={() => props.setModalVisible(false)}
         title="Delete Account">
-        <Text style={{ fontSize: 18, marginBottom: 10 }}>
+        <Text
+          style={{
+            fontSize: fontSize.normal,
+            marginBottom: 10,
+            fontFamily: Fonts.Regular
+          }}>
           Are you sure you want to delete your account?
         </Text>
 
@@ -86,7 +92,14 @@ export default function GeneralSettingScreenUI(props) {
           }}>
           <View style={{ flex: 1, alignItems: 'center' }}>
             <TouchableOpacity onPress={() => props.setModalVisible(false)}>
-              <Text style={{ fontSize: 16, color: 'black' }}>Cancel</Text>
+              <Text
+                style={{
+                  fontSize: fontSize.m,
+                  color: 'black',
+                  fontFamily: Fonts.Regular
+                }}>
+                Cancel
+              </Text>
             </TouchableOpacity>
           </View>
 
@@ -96,7 +109,11 @@ export default function GeneralSettingScreenUI(props) {
                 handleDelete()
               }}>
               <Text
-                style={{ fontSize: 16, color: '#F55346', fontWeight: 'bold' }}>
+                style={{
+                  fontSize: fontSize.m,
+                  color: '#F55346',
+                  fontFamily: Fonts.Regular
+                }}>
                 Yes, Delete
               </Text>
             </TouchableOpacity>
@@ -123,9 +140,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSize.m,
-    fontWeight: 600
+    fontFamily: Fonts.Medium
   },
   subtitle: {
-    color: Colors.gray_06
+    color: Colors.gray_06,
+    fontSize: fontSize.normal,
+    fontWeight: Fonts.Regular
   }
 })

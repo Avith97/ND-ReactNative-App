@@ -5,6 +5,7 @@ import UserReducer from './UserReducer'
 import ThemeReducer from './ThemeReducer'
 import OnBoardingReducer from './OnBoardingReducer'
 import eventReducer from './EventReducer'
+import OnGoingEventsReducer from './OnGoingEventsReducer'
 
 export const allReducers = combineReducers({
   auth: AuthReducer,
@@ -12,5 +13,6 @@ export const allReducers = combineReducers({
   settings: SettingReducer,
   theme: ThemeReducer,
   onboard: OnBoardingReducer,
-  eventData: eventReducer
+  eventData: eventReducer,
+  onGoingEvents: OnGoingEventsReducer
 })

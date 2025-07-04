@@ -7,27 +7,32 @@ import Icons from '../../../assets/icons/Icons'
 // Centralized labels object
 import { en as labels } from '../../../utils/labels/en'
 import { useSelector } from 'react-redux'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 
 export default function ListSlideTabUI(props) {
   const onboard = useSelector(state => state.onboard)
 
+  const [selectedListAnswer, setSelectedListAnswer] = useState(null)
   function onClick(option) {
-    console.log('global --->', global.OnboardingData)
-
     // setkey(nkey)
-    props.handleChange?.('list', {
+    props.handleChange?.(`list`, {
       option_id: option.id,
-      runnerId: 3675,
-      // "runnerId": props.runnerId,
-      eventId: props.eventId,
-      onboardingQuestionId: props.id,
-      response: option?.text
+      onboardingQuestionId: props.id
+      // response: option?.text
     })
   }
 
+  // useEffect(() => {
+  //   console.log('list update --->', props.list)
+  // }, [props.list])
+
   useEffect(() => {
-    console.log('list update --->', props.list)
-  }, [props.list])
+    if (onboard.hasOwnProperty('list')) {
+      let x = onboard['list']
+      x = x.find(item => item.onboardingQuestionId === props?.id)
+      setSelectedListAnswer(x)
+    }
+  }, [onboard])
 
   return (
     <View style={props.childContainerStyle}>
@@ -36,59 +41,67 @@ export default function ListSlideTabUI(props) {
         {props.question && (
           <Text style={styles.heading}>{props?.question}</Text>
         )}
-        {props?.sub_text && (
-          <Text style={styles.subText}>{props?.sub_text}</Text>
-        )}
+        {props?.subText && <Text style={styles.subText}>{props?.subText}</Text>}
 
-        {props?.options &&
-          props?.options?.map((option, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => onClick(option)}
-              style={[
-                styles.activityBox,
-                // props?.list?.option_id === option.id && styles.activitySelected,
-                onboard?.list?.option_id === option.id &&
-                  styles.activitySelected
-                // props.selectedActivity?.title === option.title &&
-                //   styles.activitySelected,
-              ]}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  width: wp(100),
-                  gap: 10
-                }}>
-                {/* left icon */}
-                {option?.icon && option?.iconPosition === 'left' && (
-                  <View style={{ width: wp(10) }}>
-                    <Icons name={option.icon} size={30} color="#000" />
-                  </View>
-                )}
+        <View style={{ paddingTop: hp(2) }}>
+          {props?.options &&
+            props?.options?.map((option, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => onClick(option)}
+                style={[
+                  styles.activityBox,
+                  // props?.list?.option_id === option.id && styles.activitySelected,
+                  // onboard?.list?.option_id === option.id &&
+                  //   styles.activitySelected
+                  selectedListAnswer?.option_id === option.id &&
+                    styles.activitySelected
+                  // props.selectedActivity?.title === option.title &&
+                  //   styles.activitySelected,
+                ]}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    width: wp(100),
+                    gap: 10
+                  }}>
+                  {console.log(option.icon.trim())}
 
-                <View style={{ width: wp(55) }}>
-                  {option?.text && (
-                    <Text numberOfLines={2} style={styles.activityTitle}>
-                      {option?.text}
-                    </Text>
+                  {/* left icon */}
+                  {option?.icon && option?.iconPosition === 'left' && (
+                    <View style={{ width: wp(10) }}>
+                      <Icons
+                        name={option.icon?.trim()}
+                        size={30}
+                        color="#000"
+                      />
+                    </View>
                   )}
-                  {option?.subText && (
-                    <Text numberOfLines={2} style={styles.activityDesc}>
-                      {option?.subText}
-                    </Text>
+
+                  <View style={{ width: wp(55) }}>
+                    {option?.text && (
+                      <Text numberOfLines={2} style={styles.activityTitle}>
+                        {option?.text}
+                      </Text>
+                    )}
+                    {option?.subText && (
+                      <Text numberOfLines={2} style={styles.activityDesc}>
+                        {option?.subText}
+                      </Text>
+                    )}
+                  </View>
+
+                  {/* right icon */}
+                  {option?.icon && option?.iconPosition === 'right' && (
+                    <View style={{ width: wp(10), marginLeft: wp(10) }}>
+                      <Icons name={option.icon} size={30} color="#000" />
+                    </View>
                   )}
                 </View>
-
-                {/* right icon */}
-                {option?.icon && option?.iconPosition === 'right' && (
-                  <View style={{ width: wp(10), marginLeft: wp(10) }}>
-                    <Icons name={option.icon} size={30} color="#000" />
-                  </View>
-                )}
-              </View>
-            </TouchableOpacity>
-          ))}
+              </TouchableOpacity>
+            ))}
+        </View>
       </View>
     </View>
   )
@@ -97,10 +110,10 @@ export default function ListSlideTabUI(props) {
 const styles = StyleSheet.create({
   ContentContainer: {
     flex: 1,
-    paddingTop: 20
+    paddingVertical: hp(3)
   },
-  heading: { fontSize: 20, fontWeight: 'bold', marginTop: 20 },
-  subText: { fontSize: 14, color: '#666', marginBottom: 15 },
+  heading: { fontSize: fontSize.m, fontFamily: Fonts.Bold },
+  subText: { fontSize: fontSize.normal, fontFamily: Fonts.Regular },
   activityBox: {
     borderWidth: 1,
     borderColor: '#ccc',
@@ -113,6 +126,6 @@ const styles = StyleSheet.create({
     borderColor: '#00cc00',
     backgroundColor: '#eaffea'
   },
-  activityTitle: { fontWeight: 'bold', fontSize: 16 },
-  activityDesc: { fontSize: 14, color: '#666', marginTop: 5 }
+  activityTitle: { fontSize: fontSize.normal, fontFamily: Fonts.SemiBold },
+  activityDesc: { fontSize: fontSize.s, fontFamily: Fonts.Regular }
 })

@@ -1,17 +1,9 @@
 // react native imports
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
 // common components
-import TabSelector from '../../common/components/tabselector/TabSelector'
 import UserLeaderBoardCard from '../../common/components/userleaderboardcard/UserLeaderBoardCard'
-import CustomTextInput from '../../common/components/textInput/CustomTextInput'
 import CustomDropdown from '../../common/components/dropdown/CustomDropdown'
 import DialogBox from '../../common/components/Modal/DialogBox'
 import CustomButton from '../../common/components/buttons/CustomButton'
@@ -21,7 +13,6 @@ import { Image } from 'react-native'
 import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import { hp, wp } from '../../common/functions/dimensions'
 import Icons, { iconType } from '../../assets/icons/Icons'
-import { open_logout_bottom_sheet } from '../../common/components/toasts/handleToasts'
 import IndividualLeaderBoard from './IndividualTab/IndividualLeaderBoard'
 import TeamTab from './teamtab/TeamTab'
 import AgeGroupTab from './agegrouptab/AgeGroupTab'
@@ -35,51 +26,12 @@ export default function ProgramLeaderBoardScreenUI({
   filters,
   ...props
 }) {
-  const TrophyIcon = () => (
-    <Image
-      source={{ uri: 'https://img.icons8.com/3d-fluency/94/prize.png' }}
-      style={{ width: 24, height: 24 }}
-    />
-  )
-
-  const LeaderboardItem = ({ item }) => (
-    <View
-      style={[styles.itemContainer, { backgroundColor: item.backgroundColor }]}>
-      <Image source={{ uri: item.avatar }} style={styles.avatar} />
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.score}>{item.score}</Text>
-      <TrophyIcon />
-    </View>
-  )
-
-  const searchListItem = ({ item }) => {
-    return (
-      <TouchableOpacity
-        style={styles.resultRow}
-        onPress={() => props?.handleSearchedItemPress(item)}
-        activeOpacity={0.7}>
-        {/* Step Icon */}
-        <View style={{ marginRight: wp(2) }}>
-          <Icons name="Step" size={30} color={Colors.gray_01} />
-        </View>
-
-        {/* Name and Bib */}
-        <View style={styles.textContainer}>
-          <Text style={styles.nameText}>
-            {item.firstName} {item.lastName}
-          </Text>
-          <Text style={styles.bibText}>Bib: {item.bibNumber}</Text>
-        </View>
-      </TouchableOpacity>
-    )
-  }
-
   return (
     <>
       <View style={{ flex: 1 }}>
         {/* title and filter icon */}
         <View style={styles.headerIconTitle}>
-          <Text style={{ fontSize: fontSize.m, fontWeight: 700 }}>
+          <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.SemiBold }}>
             Leaderboard
           </Text>
 
@@ -108,31 +60,9 @@ export default function ProgramLeaderBoardScreenUI({
             // label="Search Participants"
             onChangeText={(name, value) => props?.handleChange(name, value)}
           />
-
-          {/* search result  */}
-          {/* {props?.searchResultData?.length > 0 && (
-            <View style={{
-              backgroundColor:"#dccbf8",
-              maxHeight:hp(40) , 
-              minHeight:hp(21),
-              // position:"absolute",
-              // top:hp
-              }} >
-              <View style={{ marginTop: hp(2), zIndex: 1 }}>
-                <FlatList
-                  data={props.searchResultData}
-                  keyExtractor={(item, index) =>
-                    item.runnerId?.toString() || index.toString()
-                  }
-                  ItemSeparatorComponent={()=><View style={{  height:hp(1)}} />}
-                  contentContainerStyle={{paddingHorizontal:wp(1.5) }}
-                  renderItem={searchListItem}
-                />
-              </View>
-            </View>
-          )} */}
         </View>
 
+        {/* user card */}
         <UserLeaderBoardCard
           runnerActivityDetail={props?.runnerActivityDetail}
         />
@@ -156,6 +86,8 @@ export default function ProgramLeaderBoardScreenUI({
             eventID={props?.eventID}
           />
         )}
+
+        {/* age group */}
         {filters?.selectedParticipated?.value === 'ageGroup' && (
           <AgeGroupTab
             eventData={props?.eventData}
@@ -164,6 +96,7 @@ export default function ProgramLeaderBoardScreenUI({
           />
         )}
 
+        {/* runner group */}
         {filters?.selectedParticipated?.value === 'runnerGroup' && (
           <RunnerGroupTab
             eventData={props?.eventData}
@@ -173,7 +106,8 @@ export default function ProgramLeaderBoardScreenUI({
         )}
       </View>
 
-      {/* filter box */}
+      {/* filter box modal */}
+
       <DialogBox
         visible={props?.showModal}
         onClose={() => props.handleChange('showModal', !props?.showModal)}>
@@ -193,7 +127,7 @@ export default function ProgramLeaderBoardScreenUI({
               justifyContent: 'space-between',
               alignContent: 'center'
             }}>
-            <Text>Participated</Text>
+            <Text style={styles.filterlable}>Participated</Text>
             <View style={styles.dropdownStyle}>
               <CustomDropdown
                 name="selectedParticipated"
@@ -217,20 +151,23 @@ export default function ProgramLeaderBoardScreenUI({
                 justifyContent: 'space-between',
                 alignContent: 'center'
               }}>
-              <Text>Week Filter</Text>
+              <Text style={styles.filterlable}>Week Filter</Text>
+
               <View style={styles.dropdownStyle}>
                 <CustomDropdown
                   name="selectedWeekRange"
                   label="Select Week"
                   data={
-                    props.weekDropdowns || [
+                    props?.weekDropdowns || [
                       {
-                        label: 'Overall',
-                        value: ''
+                        label: 'OverAll',
+                        value: 'OverAll',
+                        toDate: null,
+                        fromDate: null
                       }
                     ]
                   }
-                  value={props.selectedWeekRange}
+                  value={props?.selectedWeekRange}
                   onChangeText={(name, value, data) => {
                     props.handleChange(name, value)
                   }}
@@ -252,7 +189,7 @@ export default function ProgramLeaderBoardScreenUI({
                   justifyContent: 'space-between',
                   alignContent: 'center'
                 }}>
-                <Text>Activity Types</Text>
+                <Text style={styles.filterlable}>Activity Types</Text>
                 <View style={styles.dropdownStyle}>
                   <CustomDropdown
                     name="selectedActivity"
@@ -280,7 +217,7 @@ export default function ProgramLeaderBoardScreenUI({
                   justifyContent: 'space-between',
                   alignContent: 'center'
                 }}>
-                <Text>Category Types</Text>
+                <Text style={styles.filterlable}>Category Types</Text>
                 <View style={styles.dropdownStyle}>
                   <CustomDropdown
                     name="selectedCategory"
@@ -308,7 +245,7 @@ export default function ProgramLeaderBoardScreenUI({
                 justifyContent: 'space-between'
                 // alignContent: 'center',
               }}>
-              <Text>Top Participant</Text>
+              <Text style={styles.filterlable}>Top Participant</Text>
               <View style={styles.dropdownStyle}>
                 <CustomDropdown
                   name="selectedLimit"
@@ -380,7 +317,7 @@ const styles = StyleSheet.create({
     width: wp(90),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: hp(2)
+    marginVertical: hp(1.2)
   },
   avatar: {
     width: 40,
@@ -391,7 +328,8 @@ const styles = StyleSheet.create({
   name: {
     flex: 1,
     fontSize: fontSize.md,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: Fonts.SemiBold,
     color: '#333'
   },
   score: {
@@ -401,7 +339,7 @@ const styles = StyleSheet.create({
     color: '#333'
   },
   textStyle: {
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.Medium,
     color: 'black'
   },
   btnStyles: {
@@ -436,5 +374,9 @@ const styles = StyleSheet.create({
     width: '62%',
     right: wp(2)
     // left:
+  },
+  filterlable: {
+    fontSize: fontSize.normal,
+    fontFamily: Fonts.Regular
   }
 })

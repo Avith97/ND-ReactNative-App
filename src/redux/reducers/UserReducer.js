@@ -3,7 +3,8 @@ import actions from '../action_types/actions'
 const initialState = {
   username: null,
   email: null,
-  mobileNo: null,
+  contactNumber: null,
+  firstName: null,
   fullName: null,
   pan: null
 }
@@ -16,7 +17,8 @@ export default UserReducer = (state = initialState, { type, payload }) => {
       return {
         username: null,
         email: null,
-        mobileNo: null,
+        contactNumber: null,
+        firstName: null,
         fullName: null,
         pan: null
       }

@@ -33,12 +33,10 @@ const PinCodeTextInput = props => {
         restrictToNumbers
         mask="﹡"
         onTextChange={text => {
-          console.log('new pin -->', text)
           setpin(text)
           props.handleChange && props.handleChange(props.name, text)
         }}
         onFulfill={pin => {
-          console.log('submit pin -->', pin)
           Keyboard.dismiss()
           props.onPinSubmit?.(props.name, pin)
           // setTimeout(() => {

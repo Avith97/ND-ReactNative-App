@@ -1,6 +1,13 @@
 // react native components
 import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Clipboard
+} from 'react-native'
 
 // common components
 import CustomButton from '../../common/components/buttons/CustomButton'
@@ -15,6 +22,10 @@ import { Images } from '../../utils/constants/Images'
 // Labels object for all static text
 import { en as labels } from '../../utils/labels/en'
 import { show_web_view_toast } from '../../common/components/toasts/handleToasts'
+import { appsnackbar } from '../../common/functions/snackbar_actions'
+import { healthService } from '../../common/functions/healthfunctions/HealthService'
+import AsyncStore from '../../data/async/AsyncStore'
+import Strings from '../../utils/constants/Strings'
 
 const LoginUI = props => {
   function seeFaq() {
@@ -25,15 +36,21 @@ const LoginUI = props => {
       {/* <CustomImageBackground> */}
 
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ top: -hp(4), fontSize: fontSize.l, fontWeight: 600 }}>
+        <Text
+          style={{
+            top: -hp(4),
+            fontSize: fontSize.l,
+            fontWeight: 600,
+            fontFamily: Fonts.Bold
+          }}>
           {labels?.joinCommunity}
         </Text>
         <View
           style={{
-            width: wp(35),
-            height: hp(15),
+            width: wp(30),
+            height: hp(13),
             // backgroundColor: 'pink',
-            marginBottom: hp(2),
+            // marginBottom: hp(2),
             top: -hp(4)
           }}>
           <Image
@@ -46,7 +63,7 @@ const LoginUI = props => {
         <CustomButton
           title={labels?.signUpWithGoogle}
           name={'sign_in_google'}
-          // onPress={props?.handleSubmit}
+          onPress={props?.signUpWithGoogle}
           // isLoading={store.getState().settings.isLoading}
           btnStyles={{
             ...styles.btnStyles,
@@ -89,21 +106,55 @@ const LoginUI = props => {
             marginLeft: wp(5)
           }}
         />
+        {/* <CustomButton
+          title={'Copy FCM Token'}
+          name={'signup'}
+          onPress={async () => {
+            Clipboard.setString(global.fcm_token)
+            appsnackbar.showSuccessMsg('FCM Token copied to clipboard')
+            let x = await healthService.getData()
+            console.log('final health data --->>', x)
+            // AsyncStore.clearData(Strings.ASYNC_KEY.offline, { username: "vinit@anssoft.in" })
+          }}
+          // isLoading={store.getState().settings.isLoading}
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 1,
+            backgroundColor: Colors.white,
+            borderWidth: 1,
+            borderColor: `#1D1D1DB2`,
+            borderRadius: 8
+          }}
+          btnTitleStyles={{
+            ...styles.textStyle,
+            marginLeft: wp(5)
+          }}
+        /> */}
 
         <View style={{ flexDirection: 'row' }}>
-          <Text>{labels?.alreadyRegistered}</Text>{' '}
+          <Text style={{ fontFamily: Fonts.medium, fontSize: fontSize.normal }}>
+            {labels?.alreadyRegistered}
+          </Text>{' '}
           <TouchableOpacity onPress={() => props?.handleNavigate('login')}>
-            <Text style={{ color: Colors.targetColor }}> {labels?.login}</Text>
+            <Text
+              style={{
+                color: Colors.targetColor,
+                fontFamily: Fonts.SemiBold,
+                fontSize: fontSize.normal
+              }}>
+              {' '}
+              {labels?.login}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+      {/* <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
         <Text>SEE FAQ</Text>{' '}
         <TouchableOpacity onPress={() => seeFaq()}>
           <Text style={{ color: Colors.targetColor }}> Click here</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       {/* </CustomImageBackground> */}
     </View>
   )
@@ -119,7 +170,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: fontSize.normal,
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.Medium,
     color: 'black'
   },
   loginBtn: {
