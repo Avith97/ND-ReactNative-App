@@ -1,50 +1,74 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Fonts, { fontSize } from '../../utils/constants/Fonts'
+import Colors from '../../utils/constants/Colors'
+import CustomButton from '../../common/components/buttons/CustomButton'
+import Strings from '../../utils/constants/Strings'
+import { useNavigation } from '@react-navigation/native'
 
 export default function BMICardScreenUI({ BMISummery, ...props }) {
+  const hasBMI = !!BMISummery?.bmi
+  let navigation = useNavigation()
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.title}>Your BMI:</Text>
-        {BMISummery?.bmi && (
-          <Text style={styles.bmiValue}>{BMISummery?.bmi}</Text>
-        )}
-
-        {/* Color Scale + Label */}
-        <View style={styles.progressWrapper}>
-          {BMISummery?.category && (
-            <Text style={styles.bmiLabel}>{BMISummery?.category}</Text>
-          )}
-          <View style={styles.barRow}>{generateBars(30)}</View>
-        </View>
-
-        {/* Details Row */}
-        <View style={styles.detailsRow}>
-          {BMISummery?.weight && (
-            <InfoItem label="Weight" value={`${BMISummery?.weight} KG`} />
-          )}
-
-          {BMISummery?.height && (
-            <InfoItem label="Height" value={`${BMISummery?.height} CM`} />
-          )}
-          {BMISummery?.height && (
-            <InfoItem label="age" value={`${BMISummery?.age} `} />
-          )}
-
-          {BMISummery?.gender && (
-            <InfoItem label="Gender" value={`${BMISummery?.gender}`} />
-          )}
-        </View>
-
-        {/* Normal Weight Range */}
-        {BMISummery?.normalWeightRange && (
-          <View style={styles.rangeBox}>
-            <Text style={styles.rangeText}>Normal weight for the height</Text>
-            <Text style={styles.rangeHighlight}>
-              {BMISummery?.normalWeightRange?.min} kg –{' '}
-              {BMISummery?.normalWeightRange?.max} kg
+        {hasBMI ? (
+          <>
+            <Text style={styles.bmiValue}>{BMISummery.bmi}</Text>
+            {/* Color Scale + Label */}
+            <View style={styles.progressWrapper}>
+              {BMISummery.category && (
+                <Text style={styles.bmiLabel}>{BMISummery.category}</Text>
+              )}
+              <View style={styles.barRow}>{generateBars(30)}</View>
+            </View>
+            {/* Details Row */}
+            <View style={styles.detailsRow}>
+              <InfoItem
+                label="Weight"
+                value={BMISummery.weight ? `${BMISummery.weight} KG` : '-'}
+              />
+              <InfoItem
+                label="Height"
+                value={BMISummery.height ? `${BMISummery.height} CM` : '-'}
+              />
+              <InfoItem
+                label="Age"
+                value={BMISummery.age ? `${BMISummery.age}` : '-'}
+              />
+              <InfoItem label="Gender" value={BMISummery.gender || '-'} />
+            </View>
+            {/* Normal Weight Range */}
+            {BMISummery.normalWeightRange && (
+              <View style={styles.rangeBox}>
+                <Text style={styles.rangeText}>
+                  Normal weight for the height
+                </Text>
+                <Text style={styles.rangeHighlight}>
+                  {BMISummery.normalWeightRange.min} kg –{' '}
+                  {BMISummery.normalWeightRange.max} kg
+                </Text>
+              </View>
+            )}
+          </>
+        ) : (
+          <View>
+            <Text style={styles.missingText}>
+              Oops! Looks like we’re missing your height, weight, or age. Tap
+              below to update your profile
             </Text>
+            <CustomButton
+              title="Update Profile"
+              btnStyles={{
+                ...props.btnStyles,
+                backgroundColor: Colors.backgroundLight
+              }}
+              onPress={() =>
+                navigation.navigate(Strings.NAVIGATION.editprofile)
+              }
+            />
           </View>
         )}
       </View>
@@ -66,7 +90,6 @@ const generateBars = count => {
     ...Array(10).fill('#FFDD57'), // yellow
     ...Array(10).fill('#F45B69') // red
   ]
-
   return Array.from({ length: count }, (_, index) => (
     <View
       key={index}
@@ -74,10 +97,6 @@ const generateBars = count => {
         styles.bar,
         {
           backgroundColor: barColors[index] || '#ccc',
-          // borderTopLeftRadius: index === 0 ? 10 : 0,
-          // borderBottomLeftRadius: index === 0 ? 10 : 0,
-          // borderTopRightRadius: index === count - 1 ? 10 : 0,
-          // borderBottomRightRadius: index === count - 1 ? 10 : 0,
           borderRadius: 10
         }
       ]}
@@ -88,9 +107,6 @@ const generateBars = count => {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-    // backgroundColor: '#fff',
-    // paddingTop: 40,
-    // paddingHorizontal: 16,
   },
   card: {
     backgroundColor: '#f4fbea',
@@ -106,7 +122,7 @@ const styles = StyleSheet.create({
   bmiValue: {
     fontSize: fontSize.xl,
     color: '#91c12f',
-    fontWeight: 900,
+    fontWeight: '900',
     marginVertical: 8,
     fontFamily: Fonts.SemiBold
   },
@@ -128,7 +144,6 @@ const styles = StyleSheet.create({
   },
   barRow: {
     flexDirection: 'row',
-    flexWrap: 'nowrap',
     gap: 2
   },
   bar: {
@@ -167,7 +182,7 @@ const styles = StyleSheet.create({
   },
   rangeText: {
     textAlign: 'center',
-    fontFamily: Fonts?.SemiBold,
+    fontFamily: Fonts.SemiBold,
     color: '#222',
     fontSize: fontSize.normal
   },
@@ -176,5 +191,12 @@ const styles = StyleSheet.create({
     fontSize: fontSize.m,
     textAlign: 'center',
     fontFamily: Fonts.SemiBold
+  },
+  missingText: {
+    color: Colors.background_transperant_dark,
+    fontSize: fontSize.normal,
+    marginVertical: 16,
+    textAlign: 'center',
+    fontFamily: Fonts.Regular
   }
 })

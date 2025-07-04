@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '28%',
     left: wp(3),
-    zIndex: 1
+    zIndex: 0
   },
 
   /// search result list view

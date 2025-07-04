@@ -26,53 +26,12 @@ export default function ProgramLeaderBoardScreenUI({
   filters,
   ...props
 }) {
-  const TrophyIcon = () => (
-    <Image
-      source={{ uri: 'https://img.icons8.com/3d-fluency/94/prize.png' }}
-      style={{ width: 24, height: 24 }}
-    />
-  )
-
-  const LeaderboardItem = ({ item }) => (
-    <View
-      style={[styles.itemContainer, { backgroundColor: item.backgroundColor }]}>
-      <Image source={{ uri: item.avatar }} style={styles.avatar} />
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.score}>{item.score}</Text>
-      <TrophyIcon />
-    </View>
-  )
-
-  const searchListItem = ({ item }) => {
-    return (
-      <TouchableOpacity
-        style={styles.resultRow}
-        onPress={() => props?.handleSearchedItemPress(item)}
-        activeOpacity={0.7}>
-        {/* Step Icon */}
-        <View style={{ marginRight: wp(2) }}>
-          <Icons name="Step" size={30} color={Colors.gray_01} />
-        </View>
-
-        {/* Name and Bib */}
-        <View style={styles.textContainer}>
-          <Text style={{ ...styles.nameText, fontFamily: Fonts.SemiBold }}>
-            {item.firstName} {item.lastName}
-          </Text>
-          <Text style={{ ...styles.bibText, fontFamily: Fonts.SemiBold }}>
-            Bib: {item.bibNumber}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    )
-  }
-
   return (
     <>
       <View style={{ flex: 1 }}>
         {/* title and filter icon */}
         <View style={styles.headerIconTitle}>
-          <Text style={{ fontSize: fontSize.m, fontWeight: 700 }}>
+          <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.SemiBold }}>
             Leaderboard
           </Text>
 
@@ -101,31 +60,9 @@ export default function ProgramLeaderBoardScreenUI({
             // label="Search Participants"
             onChangeText={(name, value) => props?.handleChange(name, value)}
           />
-
-          {/* search result  */}
-          {/* {props?.searchResultData?.length > 0 && (
-            <View style={{
-              backgroundColor:"#dccbf8",
-              maxHeight:hp(40) , 
-              minHeight:hp(21),
-              // position:"absolute",
-              // top:hp
-              }} >
-              <View style={{ marginTop: hp(2), zIndex: 1 }}>
-                <FlatList
-                  data={props.searchResultData}
-                  keyExtractor={(item, index) =>
-                    item.runnerId?.toString() || index.toString()
-                  }
-                  ItemSeparatorComponent={()=><View style={{  height:hp(1)}} />}
-                  contentContainerStyle={{paddingHorizontal:wp(1.5) }}
-                  renderItem={searchListItem}
-                />
-              </View>
-            </View>
-          )} */}
         </View>
 
+        {/* user card */}
         <UserLeaderBoardCard
           runnerActivityDetail={props?.runnerActivityDetail}
         />
@@ -149,6 +86,8 @@ export default function ProgramLeaderBoardScreenUI({
             eventID={props?.eventID}
           />
         )}
+
+        {/* age group */}
         {filters?.selectedParticipated?.value === 'ageGroup' && (
           <AgeGroupTab
             eventData={props?.eventData}
@@ -157,6 +96,7 @@ export default function ProgramLeaderBoardScreenUI({
           />
         )}
 
+        {/* runner group */}
         {filters?.selectedParticipated?.value === 'runnerGroup' && (
           <RunnerGroupTab
             eventData={props?.eventData}
@@ -166,7 +106,8 @@ export default function ProgramLeaderBoardScreenUI({
         )}
       </View>
 
-      {/* filter box */}
+      {/* filter box modal */}
+
       <DialogBox
         visible={props?.showModal}
         onClose={() => props.handleChange('showModal', !props?.showModal)}>
@@ -376,7 +317,7 @@ const styles = StyleSheet.create({
     width: wp(90),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: hp(2)
+    marginVertical: hp(1.2)
   },
   avatar: {
     width: 40,

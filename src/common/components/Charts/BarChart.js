@@ -89,8 +89,10 @@ const BarChart = ({
             }
           }}
         />
+
         <VictoryAxis
           dependentAxis
+          // tickValues={yAxisLabel ? yAxisLabel : [5, 10, 15]}
           label={yAxisLabel}
           tickFormat={tick =>
             typeof tick === 'number' ? tick.toFixed(0) : tick
@@ -128,7 +130,7 @@ const BarChart = ({
                   <VictoryLabel
                     dy={-5}
                     style={{
-                      fontSize: fontSize.small,
+                      fontSize: 9,
                       fontFamily: Fonts.Regular,
                       fill: '#000'
                     }}
@@ -154,7 +156,7 @@ const BarChart = ({
               <VictoryLabel
                 dy={-5}
                 style={{
-                  fontSize: fontSize.small,
+                  fontSize: 9,
                   fontFamily: Fonts.Regular,
                   fill: '#000'
                 }}

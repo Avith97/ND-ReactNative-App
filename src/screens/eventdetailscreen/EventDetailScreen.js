@@ -1,83 +1,59 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import React, { useEffect, useState, useCallback } from 'react'
 import EventDetailScreenUI from './EventDetailScreenUI'
 import Strings from '../../utils/constants/Strings'
-import { TemplateService } from '../../services/templates/TemplateService'
-import { URL } from '../../utils/constants/Urls'
 import { services } from '../../services/axios/services'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import Loader from '../../common/components/loader/Loader'
-import { store } from '../../redux/store'
-import actions from '../../redux/action_types/actions'
 import { useIsFocused } from '@react-navigation/native'
-import moment from 'moment'
 
 export default function EventDetailScreen(props) {
-  let eventDistKey = props?.route?.params?.eventDistKey
-
+  const eventDistKey = props?.route?.params?.eventDistKey
   const [eventData, setEventData] = useState(null)
   const [loading, setLoading] = useState(false)
-
-  let isFocused = useIsFocused()
+  const isFocused = useIsFocused()
 
   useEffect(() => {
-    if (isFocused) {
+    let isMounted = true
+    const initiateScreen = async () => {
+      setLoading(true)
+      try {
+        const resp = await services._get('event', {
+          headers: {
+            distKey: encodeURIComponent(eventDistKey),
+            timezone: 'Asia/Calcutta'
+          }
+        })
+        if (isMounted) {
+          if (resp.type === 'success') {
+            setEventData(resp.data)
+          } else {
+            appsnackbar.showErrMsg('Something went wrong! Please try again')
+            handleNavigate()
+          }
+        }
+      } catch (error) {
+        appsnackbar.showErrMsg('Network error! Please try again')
+      } finally {
+        if (isMounted) setLoading(false)
+      }
+    }
+    if (isFocused && eventDistKey) {
       initiateScreen()
     }
-  }, [isFocused])
-
-  async function initiateScreen() {
-    setLoading(true)
-    let resp = await fetchEventDetails(eventDistKey)
-    if (resp) {
-      setEventData(resp)
-      setLoading(false)
+    return () => {
+      isMounted = false
     }
-  }
+    // eslint-disable-next-line
+  }, [isFocused, eventDistKey])
 
-  // async function getEventDetail() {
-  //   try {
-  //     let url = TemplateService?._eventID(URL.get_event, eventID)
-
-  //     let resp = await services?._get(url)
-
-  //     if (resp?.type === 'success') {
-  //       return resp?.data
-  //     } else {
-  //       appsnackbar.showErrMsg('Something went wrong')
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error)
-  //     return null
-  //   }
-  // }
-
-  async function fetchEventDetails(eventDistKey) {
-    console.log(moment().format('hh:mm:ss'))
-
-    let resp = await services._get('event', {
-      headers: {
-        distKey: encodeURIComponent(eventDistKey),
-        timezone: 'Asia/Calcutta'
-      }
-    })
-
-    if (resp.type !== 'success') {
-      appsnackbar.showErrMsg('Something went wrong!Please try again')
-      handleNavigate()
-      return
+  const handleNavigate = useCallback(() => {
+    if (eventData?.id) {
+      props.navigation.navigate(Strings.NAVIGATION.programleaderboard, {
+        eventID: eventData.id
+      })
     }
-
-    console.log(moment().format('hh:mm:ss'))
-
-    return resp?.data
-  }
-
-  const handleNavigate = () => {
-    props.navigation.navigate(Strings.NAVIGATION.programleaderboard, {
-      eventID: eventData.id
-    })
-  }
+  }, [props.navigation, eventData])
 
   return (
     <View style={{ flex: 1 }}>

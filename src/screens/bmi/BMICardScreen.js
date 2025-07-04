@@ -20,9 +20,9 @@ export default function BMICardScreen() {
 
   async function InitiateScreen(params) {
     let { weight, height, bmi, age, gender } = auth
+    setState({ ...state, loader: true })
     let resp = await calculateBMISummary(weight, height, age, gender, bmi)
 
-    setState({ ...state, loader: true })
     if (resp) {
       setState({ ...state, BMISummery: resp, loader: false })
     }
@@ -61,7 +61,7 @@ export default function BMICardScreen() {
 
   return (
     <View style={{ flex: 1, padding: 20, backgroundColor: '#fff' }}>
-      <Loader />
+      <Loader isLoading={state.loader} />
       <BMICardScreenUI BMISummery={state?.BMISummery} />
     </View>
   )

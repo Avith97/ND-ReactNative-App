@@ -40,7 +40,8 @@ export default function HomeScreenUI(props) {
           </Text>
         </View>
 
-        {props?.HomeScreenData && props?.HomeScreenData?.events?.length ? (
+        {props?.HomeScreenData?.events?.length ||
+        props?.HomeScreenData?.registeredEvents?.length ? (
           <>
             {/* progress card */}
             {props?.HomeScreenData?.events?.length && (
@@ -123,7 +124,7 @@ export default function HomeScreenUI(props) {
 
             {/* registered events but upcoming */}
             <View style={{ marginVertical: hp(0) }}>
-              {!props?.HomeScreenData?.events?.length &&
+              {props?.HomeScreenData?.events?.length === 0 &&
                 props?.HomeScreenData?.registeredEvents?.map((item, index) => {
                   let event = programCardFormattedData(item)
 
@@ -146,24 +147,6 @@ export default function HomeScreenUI(props) {
               }
             />
           </>
-          // <>
-          //   {/* ongoing  events  */}
-          //   <View style={{marginVertical: hp(1)}}>
-          //     {props?.events ||
-          //       [].map((item, index) => {
-          //         return (
-          //           <>
-          //             <ProgramCard
-          //               key={index}
-          //               {...item}
-          //               handleNavigate={props.handleNavigate}
-          //             />
-          //             {/* <View style={{position:"absolute",backgroundColor:"red" , height:0.5, width:wp(100), zIndex:1, top:hp(29.5)}} /> */}
-          //           </>
-          //         );
-          //       })}
-          //   </View>
-          // </>
         )}
       </ScrollView>
     </CustomImageBackground>
