@@ -89,9 +89,8 @@ const styles = StyleSheet.create({
   bellyGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-center',
-    // alignItems:"center",
-    gap: wp(5),
+    justifyContent: 'center',
+    gap: wp(4),
     paddingVertical: hp(2)
   },
   bellyBox: {

@@ -12,8 +12,6 @@ import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 export default function ListSlideTabUI(props) {
   const onboard = useSelector(state => state.onboard)
 
-  console.log(props)
-
   const [selectedListAnswer, setSelectedListAnswer] = useState(null)
   function onClick(option) {
     // setkey(nkey)
@@ -68,10 +66,16 @@ export default function ListSlideTabUI(props) {
                     width: wp(100),
                     gap: 10
                   }}>
+                  {console.log(option.icon.trim())}
+
                   {/* left icon */}
                   {option?.icon && option?.iconPosition === 'left' && (
                     <View style={{ width: wp(10) }}>
-                      <Icons name={option.icon} size={30} color="#000" />
+                      <Icons
+                        name={option.icon?.trim()}
+                        size={30}
+                        color="#000"
+                      />
                     </View>
                   )}
 
