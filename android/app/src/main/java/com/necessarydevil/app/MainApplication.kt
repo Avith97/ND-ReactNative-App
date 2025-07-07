@@ -1,4 +1,5 @@
-package com.events.necessarydevilapp
+// package com.events.necessarydevilapp
+package com.necessarydevil.app
 
 import android.app.Application
 import com.facebook.react.PackageList
