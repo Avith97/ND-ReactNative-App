@@ -64,7 +64,7 @@ export default function EditProfileScreen(props) {
     })
   }
 
-  async function validation(params) {
+  function Validation(params) {
     let isValid = true
 
     const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -102,13 +102,35 @@ export default function EditProfileScreen(props) {
       isValid = false
       err = { dobErr: true }
       appsnackbar.showErrMsg('Please select date of birth')
+    } else if (moment().diff(moment(formState.dob), 'years') < 16) {
+      isValid = false
+      // err = { dossbErr: true }
+      appsnackbar.showErrMsg('You must be at least 16 years old')
+    } else if (
+      !formState.height ||
+      isNaN(formState.height) ||
+      Number(formState.height) < 50 ||
+      Number(formState.height) > 300
+    ) {
+      isValid = false
+      // err = { heightErr: true }
+      appsnackbar.showErrMsg('Please enter a valid height in cm (50 - 300)')
+    } else if (
+      !formState.weight ||
+      isNaN(formState.weight) ||
+      Number(formState.weight) < 10 ||
+      Number(formState.weight) > 500
+    ) {
+      isValid = false
+      // err = { weightErr: true }
+      appsnackbar.showErrMsg('Please enter a valid weight in kg (10 - 500)')
     }
 
     return isValid
   }
 
   async function handleSubmit(params) {
-    let isValid = validation()
+    let isValid = Validation()
     if (!isValid) return
 
     try {

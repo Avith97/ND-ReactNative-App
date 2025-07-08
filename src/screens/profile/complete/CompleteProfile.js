@@ -96,7 +96,7 @@ export default function CompleteProfile(props) {
     } else if (moment().diff(moment(state.dob), 'years') < 16) {
       isValid = false
       err = { dobErr: true }
-      appsnackbar.showErrMsg('You must be at least 18 years old')
+      appsnackbar.showErrMsg('You must be at least 16 years old')
     } else if (!state.country?.label?.trim()?.length) {
       isValid = false
       err = { countryErr: true }

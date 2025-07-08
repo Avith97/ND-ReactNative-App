@@ -40,7 +40,7 @@ const CustomDropdown = (props = cd_default_props) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: fontSize.normal,
-    marginBottom: hp(0.5),
+    // marginBottom: hp(0.5),
     fontFamily: Fonts.Regular
   },
 
@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'cyan',
     borderWidth: 0.7,
     borderColor: 'grey',
-    borderRadius: 8
-    // minHeight: hp(5)
+    borderRadius: 8,
+    height: hp(5)
   },
   inputContainer: {
     borderBottomWidth: 0,

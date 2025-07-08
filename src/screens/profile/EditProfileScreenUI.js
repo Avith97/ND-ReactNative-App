@@ -12,12 +12,12 @@ import { hp, wp } from '../../common/functions/dimensions'
 import { maskNumber } from '../../common/functions/masknumber'
 import CustomTextInput from '../../common/components/textInput/CustomTextInput'
 import CustomDateTimePicker from '../../common/components/textInput/CustomDateTimePicker'
-import CustomDropdown from '../../common/components/dropdown/CustomDropdown'
 import Icons, { iconType } from '../../assets/icons/Icons'
 import Colors from '../../utils/constants/Colors'
 import { fontSize } from '../../utils/constants/Fonts'
 import { Countries } from '../../data/static_data/countries'
 import moment from 'moment'
+import CustomDropdown from '../../common/components/dropdown/CustomDropdown'
 
 export default function EditProfileScreenUI(props) {
   return (
@@ -86,6 +86,7 @@ export default function EditProfileScreenUI(props) {
               onChangeText={props.handleChange}
             />
           </View>
+
           <View style={styles.halfWidth}>
             <CustomTextInput
               label="Weight"
@@ -106,6 +107,7 @@ export default function EditProfileScreenUI(props) {
             <CustomDateTimePicker
               label="DOB"
               name="dob"
+              mandatory
               value={moment(props?.formState?.dob, 'DD/MM/YYYY')}
               onChangeText={props.handleChange}
             />
