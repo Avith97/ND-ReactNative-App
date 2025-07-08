@@ -1,4 +1,5 @@
-package com.events.necessarydevilapp
+// package com.events.necessarydevilapp
+package com.necessarydevil.app
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule

@@ -7,30 +7,30 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:752736423968:android:c48045d930753625c2ac45",
+        "mobilesdk_app_id": "1:752736423968:android:49b83281b6d2c776c2ac45",
         "android_client_info": {
-          "package_name": "com.events.necessarydevilapp"
+          "package_name": "com.necessarydevil.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "752736423968-f9h2h3odhsfvbqvbatbiqnjsqo47p865.apps.googleusercontent.com",
+          "client_id": "752736423968-607l77auafb8aefi8jv773dppt5khnkn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.events.necessarydevilapp",
+            "package_name": "com.necessarydevil.app",
             "certificate_hash": "42704189865c94c30a0e9a131211aa451d3e89c8"
           }
         },
         {
-          "client_id": "752736423968-pcof7jlhiudic2dd3p1er01l9qe6ja7n.apps.googleusercontent.com",
+          "client_id": "752736423968-fs8eci520fb2a218l1dk051746osplg1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.events.necessarydevilapp",
+            "package_name": "com.necessarydevil.app",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
         {
-          "client_id": "752736423968-ficpo66kkqe2clpg3lr9cq2ecu25fm2t.apps.googleusercontent.com",
+          "client_id": "752736423968-qp92tlhrt89ukonb3o6chfvkrbvnjt46.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

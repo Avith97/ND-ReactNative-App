@@ -1,4 +1,5 @@
-package com.events.necessarydevilapp
+// package com.events.necessarydevilapp
+package com.necessarydevil.app
 
 import com.facebook.react.modules.network.OkHttpClientFactory
 import com.facebook.react.modules.network.ReactCookieJarContainer
