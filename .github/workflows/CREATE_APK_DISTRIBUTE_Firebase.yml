@@ -33,7 +33,7 @@ jobs:
         run: java -version
 
       - name: Check Gradle
-        run: gradle -v
+        run: ./gradlew -v
 
       - name: Run JS Bundle Script
         run: npm run bundle
