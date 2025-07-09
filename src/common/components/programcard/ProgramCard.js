@@ -47,7 +47,7 @@ const ProgramCard = ({
                 : Colors.primary
           }}>
           <Text style={styles.statusText}>
-            {buttonName === 'Register' ? 'Not Register' : props.eventStatus}
+            {buttonName === 'Register' ? 'Not Registered' : props.eventStatus}
           </Text>
         </View>
 

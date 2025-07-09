@@ -13,6 +13,7 @@ import { services } from '../../services/axios/services'
 import Strings from '../../utils/constants/Strings'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import { useNavigation } from '@react-navigation/native'
+import AsyncStore from '../../data/async/AsyncStore'
 
 export default function GeneralSettingScreenUI(props) {
   const renderItem = ({ item }) => {
@@ -52,7 +53,7 @@ export default function GeneralSettingScreenUI(props) {
       if (resp?.type === 'success') {
         const message = resp?.data?.success?.verbose
         // console.log('User deleted successfully:', message)
-
+        await AsyncStore.clearData(Strings.ASYNC_KEY.offline)
         // ✅ Navigate to login screen
         handleNavigate()
       } else {

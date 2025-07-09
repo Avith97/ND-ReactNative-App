@@ -167,7 +167,10 @@ const AppStack = props => {
   const backAction = () => {
     const currentRoute = navigation.getCurrentRoute?.()?.name
 
-    if (currentRoute === Strings.NAVIGATION.home_tab_bottom_nav) {
+    if (
+      currentRoute === Strings.NAVIGATION.home_tab_bottom_nav ||
+      currentRoute === Strings.NAVIGATION.complete_profile
+    ) {
       // On Home screen: do nothing or disable back
       return true // do nothing (prevent exit modal)
     }

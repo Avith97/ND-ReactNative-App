@@ -70,7 +70,7 @@ export default function DashboardScreenUI(props) {
               }
               currentSteps={props?.dashboardData?.todaysStep} // 0
               totalSteps={props?.dashboardData?.totalSteps}
-              goalSteps={props?.dashboardData?.totalTarget || 0} //
+              goalSteps={props?.dashboardData?.totalTarget} //
               iconName="run"
               radius={wp(25)}
               // strokeWidth={10}

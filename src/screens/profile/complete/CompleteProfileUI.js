@@ -24,6 +24,7 @@ export default function CompleteProfileUI(props) {
             name={'email'}
             label={LABELS.email}
             disable
+            mandatory
             inputStyle={{ ...styles.textInputStyle }}
             onChangeText={props?.handleChange}
             inputProps={{

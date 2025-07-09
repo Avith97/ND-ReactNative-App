@@ -112,6 +112,7 @@ const SplashScreen = props => {
         let distKey
         if (!match) {
           const nameMatch = url.match(/https?:\/\/[^/]+\/([^/?#]+)/)
+
           const endpoint = nameMatch[1]
 
           distKey = await getDecodeDistKey(endpoint)
@@ -134,7 +135,7 @@ const SplashScreen = props => {
           })
         } else {
           handleNavigate({
-            screen: Strings.NAVIGATION.home
+            screen: Strings.NAVIGATION.home_tab_bottom_nav
           })
         }
       } catch (error) {

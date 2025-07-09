@@ -26,11 +26,14 @@ import { appsnackbar } from '../../common/functions/snackbar_actions'
 import { healthService } from '../../common/functions/healthfunctions/HealthService'
 import AsyncStore from '../../data/async/AsyncStore'
 import Strings from '../../utils/constants/Strings'
+import { useSelector } from 'react-redux'
 
 const LoginUI = props => {
+  const isLoading = useSelector(state => state.settings.isLoading)
   function seeFaq() {
     show_web_view_toast(true, { url: 'https://necessarydevil.com/faq' })
   }
+
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white }}>
       {/* <CustomImageBackground> */}
@@ -64,7 +67,8 @@ const LoginUI = props => {
           title={labels?.signUpWithGoogle}
           name={'sign_in_google'}
           onPress={props?.signUpWithGoogle}
-          // isLoading={store.getState().settings.isLoading}
+          isLoading={isLoading}
+          isLadingColor={Colors.gray_03}
           btnStyles={{
             ...styles.btnStyles,
             elevation: 1,
@@ -77,13 +81,17 @@ const LoginUI = props => {
             ...styles.textStyle,
             marginLeft: wp(5)
           }}
-          leftImg={{
-            source: Images.google_logo,
-            style: {
-              height: hp(3),
-              width: wp(6)
-            }
-          }}
+          leftImg={
+            !isLoading
+              ? {
+                  source: Images.google_logo,
+                  style: {
+                    height: hp(3),
+                    width: wp(6)
+                  }
+                }
+              : null
+          }
         />
 
         <OrContainerUI />

@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native'
 import React from 'react'
 import { Avatar, Icon } from 'react-native-elements'
 import { hp, wp } from '../../common/functions/dimensions'
@@ -10,6 +16,7 @@ import Strings from '../../utils/constants/Strings'
 import { BASE_URL } from '../../utils/constants/Urls'
 import { iconType } from '../../assets/icons/Icons'
 import { getFullImageUrl } from '../../common/functions/helper'
+import Colors from '../../utils/constants/Colors'
 
 export default function ProfileScreenUI(props) {
   const settingsData = [
@@ -99,9 +106,11 @@ export default function ProfileScreenUI(props) {
         <Avatar
           rounded
           size={120}
+          placeholderStyle={{ backgroundColor: '#ccc' }}
+          renderPlaceholderContent={
+            <ActivityIndicator size="large" color={Colors.primary} />
+          }
           source={{
-            // uri: "https://192.168.1.49:8443/Profile%20Photos/runner_3675/profilePhoto-20250619_125550-1-.jpeg"
-            // uri:"https://192.168.1.49:8443/Profile%20Photos/runner_3675/profilePhoto-20250620_035514-1-.jpeg"
             uri: getFullImageUrl(props?.userDetails?.profilePictureLink)
           }}
           avatarStyle={styles.avatarImage}
@@ -121,19 +130,19 @@ export default function ProfileScreenUI(props) {
         </Avatar>
 
         <Text style={styles.title}>{`${
-          props?.userDetails?.user?.firstName || ''
+          props?.userDetails?.user?.firstName || '-'
         } ${props?.userDetails?.user?.lastName || ''}`}</Text>
 
-        {props?.userDetails?.user?.contactNumber && (
-          <Text style={styles.numberText}>
-            {maskNumber(props?.userDetails?.user?.contactNumber)}
-          </Text>
-        )}
-        {props?.userDetails && (
-          <Text style={styles.emailText}>
-            {props?.userDetails?.user?.email}
-          </Text>
-        )}
+        <Text style={styles.numberText}>
+          {props?.userDetails?.user?.contactNumber
+            ? maskNumber(props?.userDetails?.user?.contactNumber)
+            : '****'}
+        </Text>
+
+        <Text style={styles.emailText}>
+          {props?.userDetails ? props?.userDetails?.user?.email : '-'}
+        </Text>
+
         <CustomButton title="Check BMI Score" onPress={props?.handleNavigate} />
       </View>
 

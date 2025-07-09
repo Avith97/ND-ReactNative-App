@@ -8,6 +8,7 @@ import {
 import { store } from '../../redux/store'
 import { services } from '../../services/axios/services'
 import Strings from '../../utils/constants/Strings'
+import actions from '../../redux/action_types/actions'
 
 // GoogleSignin.configure({
 //   webClientId:
@@ -30,17 +31,15 @@ export const perform_logout = async () => {
   let auth = store.getState().auth
 
   try {
-    if (auth?.googleSource) {
-      const isSignedIn = await GoogleSignin.signIn()
-      if (isSignedIn) {
-        await GoogleSignin.revokeAccess()
-        await GoogleSignin.signOut()
-      } // Ignore if not signed in
-    }
-    // removed google session
     await AsyncStore.clearData(Strings.ASYNC_KEY.offline)
 
     store.dispatch(logout_action())
+    store.dispatch({
+      type: actions.SET_EVENT_DETAILS,
+      // payload: resp?.data  // hide it because of data parsing like eventData?.program?.id
+      payload: null
+    })
+    global.distKey = null
 
     global.navigation.reset({
       index: 0,

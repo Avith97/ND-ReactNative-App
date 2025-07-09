@@ -57,6 +57,9 @@ export default function ProgramLeaderBoardScreen(props) {
         const [eventData, runnerData, runnerActivityDetail] = await Promise.all(
           [getEventDetail(), getAllRunnerData(), getRunnerDetail(runnerId)]
         )
+
+        // console.log(eventData , runnerData , runnerActivityDetail);
+
         const activityPriority =
           eventData?.activities?.[0]?.activityPriority || 'PRIMARY'
         const eventCategoryId = eventData?.eventRunCategories?.[0]?.id || null

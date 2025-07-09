@@ -194,7 +194,7 @@ export default function CreateProfileScreen(props) {
           })
         } else {
           handleNavigate({
-            screen: Strings.NAVIGATION.home,
+            screen: Strings.NAVIGATION.home_tab_bottom_nav,
             params: { isLoggedIn: true }
           })
         }

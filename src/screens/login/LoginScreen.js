@@ -160,6 +160,8 @@ const LoginScreen = props => {
     } catch (error) {
       console.error('Google Sign-in error', error)
       Alert.alert('Login failed', error.message)
+    } finally {
+      await GoogleSignin.revokeAccess()
     }
   }
 
@@ -185,8 +187,6 @@ const LoginScreen = props => {
   }
 
   async function performLogin(params) {
-    console.log(global.fcm_token, 'fcm token in login screen')
-
     let syncObj = {
       firstName: params.user.givenName,
       lastName: params.user.familyName,
@@ -282,13 +282,6 @@ const LoginScreen = props => {
 
   return (
     <View style={{ flex: 1 }}>
-      <ToastModal ref={actionRef}>
-        <UpdateForm
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          {...state}
-        />
-      </ToastModal>
       <LoginUI
         {...props}
         {...state}

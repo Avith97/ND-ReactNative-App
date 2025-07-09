@@ -36,7 +36,7 @@ export function eventDataSeparation(data) {
 }
 
 export function formatDistanceInKm(meters, decimals = 2) {
-  if (!meters || isNaN(meters)) return '0 km'
+  if (!meters || isNaN(meters)) return '0'
   const km = meters / 1000
   return km?.toFixed(decimals)
 }
@@ -64,18 +64,16 @@ export function parseHtmlDescription(string) {
 }
 
 export function getFullImageUrl(imagePath) {
-  if (!imagePath) {
-    // No image path provided
-    return 'https://img.icons8.com/3d-fluency/94/user-male-circle.png'
-  }
-
   const isFullUrl = imagePath?.startsWith('http')
 
   if (isFullUrl) {
     return imagePath.trim() // Return the URL as is
-  } else {
+  } else if (!isFullUrl && imagePath) {
     // If it's a relative path, use your base URL interpolation function
     return interPolate.base_url(decodeURIComponent(imagePath))
+  } else if (!imagePath && !isFullUrl) {
+    // No image path provided
+    return 'https://img.icons8.com/3d-fluency/94/user-male-circle.png'
   }
 }
 

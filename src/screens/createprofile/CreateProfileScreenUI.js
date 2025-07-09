@@ -71,6 +71,7 @@ export default function CreateProfileScreenUI(props) {
             <CustomTextInput
               name={'email'}
               label={LABELS.email}
+              mandatory
               inputStyle={{ ...styles.textInputStyle }}
               onChangeText={props?.handleChange}
               inputProps={{

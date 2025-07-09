@@ -32,7 +32,7 @@ const SignUpScreen = props => {
       appsnackbar.showErrMsg('Please enter Email or Mobile Number')
     } else if (!emailRegex.test(value)) {
       isValid = false
-      appsnackbar.showErrMsg('Please enter Email or Mobile Number')
+      appsnackbar.showErrMsg('Please enter valid Email or Mobile Number')
     }
 
     return isValid

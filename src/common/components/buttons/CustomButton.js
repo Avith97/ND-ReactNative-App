@@ -52,7 +52,7 @@ const CustomButton = props => {
         }}>
         {props.isLoading ? (
           <ActivityIndicator
-            color={Colors.white}
+            color={props.isLadingColor ? props.isLadingColor : Colors.white}
             size={hp(3.4)}
             visible={true}
           />

@@ -133,6 +133,7 @@ const SearchBar = props => {
               ItemSeparatorComponent={() => <View style={{ height: hp(1) }} />}
               contentContainerStyle={{ paddingHorizontal: wp(1.5) }}
               renderItem={searchListItem}
+              keyboardShouldPersistTaps="handled"
             />
           </View>
         </View>

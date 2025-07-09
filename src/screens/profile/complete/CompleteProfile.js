@@ -157,9 +157,9 @@ export default function CompleteProfile(props) {
 
       handleNavigate()
 
-      appsnackbar?.showSuccessMsg(
-        resp.data?.success.verbose || 'User updated successfully.'
-      )
+      // appsnackbar?.showSuccessMsg(
+      //   resp.data?.success.verbose || 'User reg successfully.'
+      // )
     } else {
       appsnackbar?.showErrMsg(labels.some_thing_went_wrong)
     }
@@ -194,7 +194,9 @@ export default function CompleteProfile(props) {
         isLoggedIn: true
       })
     } else {
-      props.navigation.replace(Strings.NAVIGATION.home, { isLoggedIn: true })
+      props.navigation.replace(Strings.NAVIGATION.home_tab_bottom_nav, {
+        isLoggedIn: true
+      })
     }
   }
 
