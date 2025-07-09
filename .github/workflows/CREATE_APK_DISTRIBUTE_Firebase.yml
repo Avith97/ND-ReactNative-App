@@ -11,25 +11,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      # Optional: Confirm preinstalled Node.js version (already installed for dev)
+      - name: Check Node.js
+        run: node -v
+
+      # Optional: Cache npm if needed (skip if node_modules persists)
+      - name: Cache npm
+        uses: actions/cache@v3
         with:
-          node-version: '18'
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
 
-      - name: Install dependencies
-        run: npm i
+      - name: Install Node Modules
+        run: npm ci
 
+      # Optional: Skip this if you don't need CI format check
       - name: Run Prettier Check
         run: npm run format -- --check
 
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+      - name: Check Java
+        run: java -version
 
-      - name: Set up Gradle
-        uses: gradle/gradle-build-action@v2
+      - name: Check Gradle
+        run: gradle -v
 
       - name: Run JS Bundle Script
         run: npm run bundle
