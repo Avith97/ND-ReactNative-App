@@ -17,7 +17,7 @@ import { BASE_URL } from '../../utils/constants/Urls'
 import { iconType } from '../../assets/icons/Icons'
 import { getFullImageUrl } from '../../common/functions/helper'
 import Colors from '../../utils/constants/Colors'
-import PlaceholderLine from '../../common/components/placeholderskelton/placeholderline'
+import PlaceHolderLine from '../../common/components/placeholderskelton/PlaceHolderLine'
 
 export default function ProfileScreenUI(props) {
   const settingsData = [
@@ -132,17 +132,17 @@ export default function ProfileScreenUI(props) {
 
         {!props?.userDetails?.user ? (
           <>
-            <PlaceholderLine
+            <PlaceHolderLine
               width={wp(30)}
               height={8}
               style={{ marginBottom: hp(2.7) }}
             />
-            <PlaceholderLine
+            <PlaceHolderLine
               width={wp(25)}
               height={5}
               style={{ marginBottom: hp(2.7) }}
             />
-            <PlaceholderLine
+            <PlaceHolderLine
               width={wp(40)}
               height={8}
               style={{ marginBottom: hp(2.7) }}

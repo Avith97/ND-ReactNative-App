@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Animated, View, StyleSheet } from 'react-native'
 
-const PlaceholderLine = ({ width = '80%', height = 16, style }) => {
+const PlaceHolderLine = ({ width = '80%', height = 16, style }) => {
   const opacity = useRef(new Animated.Value(0.3)).current
 
   useEffect(() => {
@@ -38,4 +38,4 @@ const PlaceholderLine = ({ width = '80%', height = 16, style }) => {
   )
 }
 
-export default PlaceholderLine
+export default PlaceHolderLine
