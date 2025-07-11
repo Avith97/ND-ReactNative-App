@@ -83,13 +83,25 @@ export default function AgeGroupTab({ ...props }) {
       <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.Medium }}>
         Age Group Leaderboard
       </Text>
-      <FlatList
-        data={state?.ageGroupData?.ageGroupDTOs || []}
-        renderItem={renderTeam}
-        keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: wp(1.5) }}
-      />
+      {state?.ageGroupData?.ageGroupDTOs?.length ? (
+        <FlatList
+          data={state?.ageGroupData?.ageGroupDTOs || []}
+          renderItem={renderTeam}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: wp(1.5) }}
+        />
+      ) : (
+        <Text
+          style={{
+            textAlign: 'center',
+            paddingVertical: hp(2),
+            color: Colors?.gray_05,
+            fontFamily: Fonts.Regular
+          }}>
+          No age group data found
+        </Text>
+      )}
     </>
   )
 }

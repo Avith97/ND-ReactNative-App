@@ -66,6 +66,8 @@ export default function DashboardScreenUI(props) {
               percentage={
                 props?.dashboardData?.totalTarget === 0
                   ? 100
+                  : props?.dashboardData?.progressBar > 100
+                  ? 100
                   : props?.dashboardData?.progressBar
               }
               currentSteps={props?.dashboardData?.todaysStep} // 0

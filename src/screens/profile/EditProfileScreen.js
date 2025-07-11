@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import EditProfileScreenUI from './EditProfileScreenUI'
 import { useSelector } from 'react-redux'
@@ -7,13 +7,10 @@ import { URL } from '../../utils/constants/Urls'
 import { services } from '../../services/axios/services'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import moment from 'moment'
-import { store } from '../../redux/store'
 import { useIsFocused } from '@react-navigation/native'
-import Strings from '../../utils/constants/Strings'
 
 export default function EditProfileScreen(props) {
-  const [err, seterr] = useState(null)
-
+  const [err, setErr] = useState(null)
   const [formState, setFormState] = useState({
     firstName: '',
     lastName: '',
@@ -27,116 +24,113 @@ export default function EditProfileScreen(props) {
     contactNumber: ''
   })
 
-  // user detail
   const user = useSelector(store => store?.user)
-
-  let isFocused = useIsFocused()
+  const isFocused = useIsFocused()
 
   useEffect(() => {
-    if (user || isFocused) {
+    if (user && isFocused) {
       const countryObj = {
         label: user.country,
-        value: ` ${user.countryCode?.trim()}`,
+        value: ` ${user.countryCode?.trim()}` || '',
         code: user.country?.slice(0, 2).toUpperCase() || ''
       }
-
       setFormState({
         firstName: user.firstName || '',
         lastName: user.lastName || '',
         dob: user?.dateOfBirth
           ? moment(user?.dateOfBirth, 'YYYY-MM-DD').toDate()
           : null,
-        country: countryObj || '',
+        country: countryObj,
         age: user.age?.toString() || '',
         weight: user.weight?.toString() || '',
-        gender: { label: user.gender, value: user.gender } || '',
+        gender: user.gender ? { label: user.gender, value: user.gender } : '',
         height: user.height?.toString() || '',
         email: user?.email || '',
         contactNumber: user.contactNumber || ''
       })
+      setErr(null)
     }
-  }, [isFocused])
+  }, [user, isFocused])
 
-  function handleChange(params, val) {
-    setFormState({
-      ...formState,
-      [params]: val
-    })
+  function handleChange(field, value) {
+    setFormState(prev => ({
+      ...prev,
+      [field]: value
+    }))
+    setErr(null)
   }
 
-  function Validation(params) {
-    let isValid = true
-
+  function validate(form) {
     const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const mobileRegex = /^[6-9]\d{9}$/
     const nameRegex = /^[A-Za-z]+$/
 
-    if (!formState.firstName?.length || !nameRegex.test(formState.firstName)) {
-      isValid = false
-      err = { firstNameErr: true }
+    if (!form.firstName?.length || !nameRegex.test(form.firstName)) {
+      setErr({ firstNameErr: true })
       appsnackbar.showErrMsg('Please enter valid first name')
-    } else if (
-      !formState.lastName?.length ||
-      !nameRegex.test(formState.lastName)
-    ) {
-      isValid = false
-      err = { lastNameErr: true }
+      return false
+    }
+    if (!form.lastName?.length || !nameRegex.test(form.lastName)) {
+      setErr({ lastNameErr: true })
       appsnackbar.showErrMsg('Please enter valid last name')
-    } else if (!checkEmail.test(formState.email)) {
-      isValid = false
-      err = { emailErr: true }
+      return false
+    }
+    if (!checkEmail.test(form.email)) {
+      setErr({ emailErr: true })
       appsnackbar.showErrMsg('Please enter valid email')
-    } else if (!formState.country?.label?.trim()?.length) {
-      isValid = false
-      err = { countryErr: true }
+      return false
+    }
+    if (!form.country?.label?.trim()?.length) {
+      setErr({ countryErr: true })
       appsnackbar.showErrMsg('Please select country')
-    } else if (!formState.gender?.label?.trim()?.length) {
-      isValid = false
-      err = { countryErr: true }
-      appsnackbar.showErrMsg('Please select country')
-    } else if (!mobileRegex.test(formState.contactNumber)) {
-      isValid = false
-      err = { contactNumberErr: true }
-      appsnackbar.showErrMsg('Please enter valid contact number')
-    } else if (!formState.dob) {
-      isValid = false
-      err = { dobErr: true }
-      appsnackbar.showErrMsg('Please select date of birth')
-    } else if (moment().diff(moment(formState.dob), 'years') < 16) {
-      isValid = false
-      // err = { dossbErr: true }
-      appsnackbar.showErrMsg('You must be at least 16 years old')
-    } else if (
-      !formState.height ||
-      isNaN(formState.height) ||
-      Number(formState.height) < 50 ||
-      Number(formState.height) > 300
-    ) {
-      isValid = false
-      // err = { heightErr: true }
-      appsnackbar.showErrMsg('Please enter a valid height in cm (50 - 300)')
-    } else if (
-      !formState.weight ||
-      isNaN(formState.weight) ||
-      Number(formState.weight) < 10 ||
-      Number(formState.weight) > 500
-    ) {
-      isValid = false
-      // err = { weightErr: true }
-      appsnackbar.showErrMsg('Please enter a valid weight in kg (10 - 500)')
+      return false
+    }
+    if (!form.gender?.label?.trim()?.length) {
+      setErr({ genderErr: true })
+      appsnackbar.showErrMsg('Please select gender')
+      return false
     }
 
-    return isValid
+    if (!form.dob) {
+      setErr({ dobErr: true })
+      appsnackbar.showErrMsg('Please select date of birth')
+      return false
+    }
+    if (moment().diff(moment(form.dob), 'years') < 16) {
+      setErr({ dobErr: true })
+      appsnackbar.showErrMsg('You must be at least 16 years old')
+      return false
+    }
+    if (
+      !form.height ||
+      isNaN(form.height) ||
+      Number(form.height) < 50 ||
+      Number(form.height) > 300
+    ) {
+      setErr({ heightErr: true })
+      appsnackbar.showErrMsg('Please enter a valid height in cm (50 - 300)')
+      return false
+    }
+    if (
+      !form.weight ||
+      isNaN(form.weight) ||
+      Number(form.weight) < 10 ||
+      Number(form.weight) > 500
+    ) {
+      setErr({ weightErr: true })
+      appsnackbar.showErrMsg('Please enter a valid weight in kg (10 - 500)')
+      return false
+    }
+    setErr(null)
+    return true
   }
 
-  async function handleSubmit(params) {
-    let isValid = Validation()
-    if (!isValid) return
+  async function handleSubmit() {
+    if (!validate(formState)) return
 
     try {
-      let url = TemplateService._userId(URL.update_profile, user?.id)
-
-      let resp = await services._put(url, {
+      const url = TemplateService._userId(URL.update_profile, user?.id)
+      const resp = await services._put(url, {
         ...formState,
         country: formState?.country?.label,
         countryCode: formState?.country?.value,
@@ -165,6 +159,7 @@ export default function EditProfileScreen(props) {
         handleChange={handleChange}
         formState={formState}
         handleSubmit={handleSubmit}
+        err={err}
       />
     </View>
   )

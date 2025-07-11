@@ -17,6 +17,7 @@ import { BASE_URL } from '../../utils/constants/Urls'
 import { iconType } from '../../assets/icons/Icons'
 import { getFullImageUrl } from '../../common/functions/helper'
 import Colors from '../../utils/constants/Colors'
+import PlaceholderLine from '../../common/components/placeholderskelton/placeholderline'
 
 export default function ProfileScreenUI(props) {
   const settingsData = [
@@ -129,19 +130,41 @@ export default function ProfileScreenUI(props) {
           />
         </Avatar>
 
-        <Text style={styles.title}>{`${
-          props?.userDetails?.user?.firstName || '-'
-        } ${props?.userDetails?.user?.lastName || ''}`}</Text>
+        {!props?.userDetails?.user ? (
+          <>
+            <PlaceholderLine
+              width={wp(30)}
+              height={8}
+              style={{ marginBottom: hp(2.7) }}
+            />
+            <PlaceholderLine
+              width={wp(25)}
+              height={5}
+              style={{ marginBottom: hp(2.7) }}
+            />
+            <PlaceholderLine
+              width={wp(40)}
+              height={8}
+              style={{ marginBottom: hp(2.7) }}
+            />
+          </>
+        ) : (
+          <>
+            <Text style={styles.title}>{`${
+              props?.userDetails?.user?.firstName || '-'
+            } ${props?.userDetails?.user?.lastName || ''}`}</Text>
 
-        <Text style={styles.numberText}>
-          {props?.userDetails?.user?.contactNumber
-            ? maskNumber(props?.userDetails?.user?.contactNumber)
-            : '****'}
-        </Text>
+            <Text style={styles.numberText}>
+              {props?.userDetails?.user?.contactNumber
+                ? maskNumber(props?.userDetails?.user?.contactNumber)
+                : '****'}
+            </Text>
 
-        <Text style={styles.emailText}>
-          {props?.userDetails ? props?.userDetails?.user?.email : '-'}
-        </Text>
+            <Text style={styles.emailText}>
+              {props?.userDetails ? props?.userDetails?.user?.email : '-'}
+            </Text>
+          </>
+        )}
 
         <CustomButton title="Check BMI Score" onPress={props?.handleNavigate} />
       </View>

@@ -116,7 +116,7 @@ export default function TeamTab({ ...props }) {
             color: Colors?.gray_05,
             fontFamily: Fonts.Regular
           }}>
-          No Teams data found
+          No teams data found
         </Text>
       )}
     </>
