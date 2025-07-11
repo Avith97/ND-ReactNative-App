@@ -1,74 +1,56 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import React from 'react'
 import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import Colors from '../../utils/constants/Colors'
-import CustomButton from '../../common/components/buttons/CustomButton'
-import Strings from '../../utils/constants/Strings'
-import { useNavigation } from '@react-navigation/native'
+import BMIProgressBar from '../../common/components/progressbar/BMIProgressBar'
+import { wp } from '../../common/functions/dimensions'
 
 export default function BMICardScreenUI({ BMISummery, ...props }) {
-  const hasBMI = !!BMISummery?.bmi
-  let navigation = useNavigation()
+  // Show loading if BMISummery is not ready
+  if (!BMISummery || typeof BMISummery.bmi !== 'number') {
+    return (
+      <View style={styles.container}>
+        <View style={styles.card}>
+          <ActivityIndicator size="large" color="#91c12f" />
+          <Text style={styles.missingText}>Loading BMI data...</Text>
+        </View>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.title}>Your BMI:</Text>
-        {hasBMI ? (
-          <>
-            <Text style={styles.bmiValue}>{BMISummery.bmi}</Text>
-            {/* Color Scale + Label */}
-            <View style={styles.progressWrapper}>
-              {BMISummery.category && (
-                <Text style={styles.bmiLabel}>{BMISummery.category}</Text>
-              )}
-              <View style={styles.barRow}>{generateBars(30)}</View>
-            </View>
-            {/* Details Row */}
-            <View style={styles.detailsRow}>
-              <InfoItem
-                label="Weight"
-                value={BMISummery.weight ? `${BMISummery.weight} KG` : '-'}
-              />
-              <InfoItem
-                label="Height"
-                value={BMISummery.height ? `${BMISummery.height} CM` : '-'}
-              />
-              <InfoItem
-                label="Age"
-                value={BMISummery.age ? `${BMISummery.age}` : '-'}
-              />
-              <InfoItem label="Gender" value={BMISummery.gender || '-'} />
-            </View>
-            {/* Normal Weight Range */}
-            {BMISummery.normalWeightRange && (
-              <View style={styles.rangeBox}>
-                <Text style={styles.rangeText}>
-                  Normal weight for the height
-                </Text>
-                <Text style={styles.rangeHighlight}>
-                  {BMISummery.normalWeightRange.min} kg –{' '}
-                  {BMISummery.normalWeightRange.max} kg
-                </Text>
-              </View>
-            )}
-          </>
-        ) : (
-          <View>
-            <Text style={styles.missingText}>
-              Oops! Looks like we’re missing your height, weight, or age. Tap
-              below to update your profile
+        <Text style={styles.bmiValue}>{BMISummery.bmi}</Text>
+        {/* Color Scale + Label */}
+        <View style={styles.progressWrapper}>
+          <BMIProgressBar bmi={BMISummery.bmi} />
+        </View>
+        {/* Details Row */}
+        <View style={styles.detailsRow}>
+          <InfoItem
+            label="Weight"
+            value={BMISummery.weight ? `${BMISummery.weight} KG` : '-'}
+          />
+          <InfoItem
+            label="Height"
+            value={BMISummery.height ? `${BMISummery.height} CM` : '-'}
+          />
+          <InfoItem
+            label="Age"
+            value={BMISummery.age ? `${BMISummery.age}` : '-'}
+          />
+          <InfoItem label="Gender" value={BMISummery.gender || '-'} />
+        </View>
+        {/* Normal Weight Range */}
+        {BMISummery.normalWeightRange && (
+          <View style={styles.rangeBox}>
+            <Text style={styles.rangeText}>Normal weight for the height</Text>
+            <Text style={styles.rangeHighlight}>
+              {BMISummery.normalWeightRange.min} kg –{' '}
+              {BMISummery.normalWeightRange.max} kg
             </Text>
-            <CustomButton
-              title="Update Profile"
-              btnStyles={{
-                ...props.btnStyles,
-                backgroundColor: Colors.backgroundLight
-              }}
-              onPress={() =>
-                navigation.navigate(Strings.NAVIGATION.editprofile)
-              }
-            />
           </View>
         )}
       </View>
@@ -76,35 +58,15 @@ export default function BMICardScreenUI({ BMISummery, ...props }) {
   )
 }
 
-const InfoItem = ({ label, value }) => (
+const InfoItem = React.memo(({ label, value }) => (
   <View style={styles.infoItem}>
     <Text style={styles.infoValue}>{value}</Text>
     <Text style={styles.infoLabel}>{label}</Text>
   </View>
-)
-
-const generateBars = count => {
-  const barColors = [
-    ...Array(6).fill('#7EC8E3'), // blue
-    ...Array(10).fill('#70C16B'), // green
-    ...Array(10).fill('#FFDD57'), // yellow
-    ...Array(10).fill('#F45B69') // red
-  ]
-  return Array.from({ length: count }, (_, index) => (
-    <View
-      key={index}
-      style={[
-        styles.bar,
-        {
-          backgroundColor: barColors[index] || '#ccc',
-          borderRadius: 10
-        }
-      ]}
-    />
-  ))
-}
+))
 
 const styles = StyleSheet.create({
+  // ... (same as before)
   container: {
     flex: 1
   },
@@ -131,25 +93,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingBottom: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0'
-  },
-  bmiLabel: {
-    backgroundColor: '#91c12f',
-    color: 'white',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 4,
-    marginBottom: 4,
-    fontWeight: '600'
-  },
-  barRow: {
-    flexDirection: 'row',
-    gap: 2
-  },
-  bar: {
-    width: 6,
-    height: 20,
-    marginHorizontal: 1
+    borderBottomColor: '#e0e0e0',
+    width: wp(90)
   },
   detailsRow: {
     flexDirection: 'row',

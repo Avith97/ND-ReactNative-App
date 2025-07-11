@@ -15,6 +15,7 @@ export default function ProgramLeaderBoardScreen(props) {
   const { eventID } = props?.route?.params
   const { auth } = useSelector(store => store)
   const isFocused = useIsFocused()
+  const eventData = useSelector(store => store.eventData)
 
   const [state, setState] = useState({
     selectedTab: 'Male',
@@ -37,6 +38,8 @@ export default function ProgramLeaderBoardScreen(props) {
     selectedActivity: null,
     selectedCategory: null
   })
+
+  console.log(eventData)
 
   const [filters, setFilters] = useState({
     selectedParticipated: { value: 'individual', label: 'Individual' },
@@ -262,7 +265,10 @@ export default function ProgramLeaderBoardScreen(props) {
 
   async function getAllRunnerData() {
     try {
-      let url = TemplateService._eventID(URL?.get_all_runners, eventID)
+      let url = TemplateService._eventID(
+        URL?.get_all_runners,
+        eventID || eventData?.id
+      )
       const resp = await services._get(url, { params: { searchString: '' } })
       if (resp?.type === 'success') {
         return resp?.data
@@ -279,7 +285,7 @@ export default function ProgramLeaderBoardScreen(props) {
       let url = TemplateService._userIDAndEventID(
         URL?.get_runner_detail,
         userId,
-        eventID
+        eventID || eventData?.id
       )
       const resp = await services._get(url)
       if (resp?.type === 'success') {
@@ -373,7 +379,7 @@ export default function ProgramLeaderBoardScreen(props) {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handleSearchedItemPress={handleSearchedItemPress}
-        eventID={eventID}
+        eventID={eventID || eventData?.id}
       />
     </View>
   )
