@@ -1,25 +1,21 @@
-// react native imports
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-
-// constants utils & assets
+import { Keyboard, StyleSheet, View } from 'react-native'
+import React, { useEffect, useState, useCallback } from 'react'
 import Colors from '../../utils/constants/Colors'
-
-// UI component
 import moment from 'moment'
-import axios from 'axios'
 import ProgramLeaderBoardScreenUI from './ProgramLeaderBoardScreenUI'
 import { URL } from '../../utils/constants/Urls'
 import { TemplateService } from '../../services/templates/TemplateService'
 import { services } from '../../services/axios/services'
 import { useSelector } from 'react-redux'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
+import { useIsFocused } from '@react-navigation/native'
 import Loader from '../../common/components/loader/Loader'
 
 export default function ProgramLeaderBoardScreen(props) {
-  let { eventID } = props?.route?.params
-
+  const { eventID } = props?.route?.params
   const { auth } = useSelector(store => store)
+  const isFocused = useIsFocused()
+  const eventData = useSelector(store => store.eventData)
 
   const [state, setState] = useState({
     selectedTab: 'Male',
@@ -29,129 +25,139 @@ export default function ProgramLeaderBoardScreen(props) {
       { label: '10', value: '10' },
       { label: '15', value: '15' }
     ],
-    selectedParticipated: {
-      value: 'individual',
-      label: 'Individual'
-    },
+    selectedParticipated: { value: 'individual', label: 'Individual' },
     selectedWeekRange: {
-      label: 'overAll',
-      value: 'overAll'
+      label: 'OverAll',
+      value: 'OverAll',
+      toDate: null,
+      fromDate: null
     },
     selectedLimit: { label: '5', value: '5' },
     showModal: false,
     searchResultData: null,
-
-    // activity
     selectedActivity: null,
     selectedCategory: null
   })
 
+  console.log(eventData)
+
   const [filters, setFilters] = useState({
-    selectedParticipated: {
-      value: 'individual',
-      label: 'Individual'
-    },
+    selectedParticipated: { value: 'individual', label: 'Individual' },
     selectLimit: { label: '5', value: '5' },
-    selectedWeek: {
-      label: 'overAll',
-      value: 'overAll'
-    },
+    selectedWeek: { label: 'overAll', value: 'overAll' },
     activity: null,
     category: null
   })
 
-  useEffect(() => {
-    InitiateScreen()
-  }, [])
+  const [loading, setLoading] = useState(true)
 
-  //  participated labels like , individual , team , age group
+  useEffect(() => {
+    let isMounted = true
+    async function fetchData() {
+      setLoading(true)
+      try {
+        const runnerId = auth?.runner?.id || auth?.runnerId
+        const [eventData, runnerData, runnerActivityDetail] = await Promise.all(
+          [getEventDetail(), getAllRunnerData(), getRunnerDetail(runnerId)]
+        )
+
+        // console.log(eventData , runnerData , runnerActivityDetail);
+
+        const activityPriority =
+          eventData?.activities?.[0]?.activityPriority || 'PRIMARY'
+        const eventCategoryId = eventData?.eventRunCategories?.[0]?.id || null
+        const [formattedParticipatedLabel, weekDropdowns, eventActivities] =
+          await Promise.all([
+            getParticipatedOptions(eventData),
+            generateWeekFilterOptions(eventData, eventID),
+            getActivityOptions(eventData)
+          ])
+        const selectedActivity = eventActivities?.activity?.[0] || null
+        const selectedCategory = eventActivities?.category?.[0] || null
+
+        if (isMounted) {
+          setState(prev => ({
+            ...prev,
+            eventData,
+            runnerData,
+            runnerActivityDetail,
+            activityPriority,
+            eventCategoryId,
+            weekDropdowns,
+            formattedParticipatedLabel,
+            eventActivities,
+            selectedActivity,
+            selectedCategory
+          }))
+        }
+      } catch (error) {
+        // Optionally handle error in state
+      } finally {
+        if (isMounted) setLoading(false)
+      }
+    }
+    if (isFocused) fetchData()
+    return () => {
+      isMounted = false
+    }
+    // eslint-disable-next-line
+  }, [isFocused])
+
+  // --- Helper functions (same as before, but remove console.logs) ---
+
   async function getParticipatedOptions(event) {
     const participated = []
+    const type = event?.challengeType
+    const showRunnerGroupGraph = event?.showRunnerGroupGraph
+    const showAgeGroup = event?.showAgeGroup
 
-    const type = event.challengeType
-    // const id = event.id
-    const showRunnerGroupGraph = event.showRunnerGroupGraph
-    const showAgeGroup = event.showAgeGroup
-
-    // ✅ Individual condition
     if (
+      !type ||
       type === 'BOTH' ||
       type === 'TEAM_RELAY' ||
       ['INDIVIDUAL', 'RELAY'].includes(type)
     ) {
-      participated.push({
-        value: 'individual',
-        label: 'Individual'
-      })
+      participated.push({ value: 'individual', label: 'Individual' })
     }
-
-    // ✅ Team condition
     if (
       type === 'BOTH' ||
       type === 'TEAM_RELAY' ||
       (type === 'TEAM' && showRunnerGroupGraph === true)
     ) {
-      participated.push({
-        value: 'team',
-        label: 'Team'
-      })
+      participated.push({ value: 'team', label: 'Team' })
     }
-
-    // ✅ Runner Group condition
     if (showRunnerGroupGraph) {
-      participated.push({
-        value: 'runnerGroup',
-        label: 'Runner Group'
-      })
+      participated.push({ value: 'runnerGroup', label: 'Runner Group' })
     }
-
-    // ✅ Age Group condition
     if (showAgeGroup) {
-      participated.push({
-        value: 'ageGroup',
-        label: 'Age Group'
-      })
+      participated.push({ value: 'ageGroup', label: 'Age Group' })
     }
-
     return participated
   }
 
   async function generateWeekFilterOptions(eventData, eventId) {
     const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
     const dropdownDates = [
-      {
-        label: 'OverAll',
-        value: ''
-      }
+      { label: 'OverAll', value: 'OverAll', toDate: null, fromDate: null }
     ]
-
     const now = moment()
-    const todayFormatted = now.format(DATE_FORMAT)
-
+    const todayFormatted = now.startOf('day').format(DATE_FORMAT)
+    const todayEndFormatted = now.endOf('day').format(DATE_FORMAT)
     const todaysDateOption = {
       label: "Today's Leaderboard",
-      value: `${todayFormatted} ${todayFormatted}`,
+      value: `${todayFormatted} ${todayEndFormatted}`,
       fromDate: todayFormatted,
-      toDate: todayFormatted
+      toDate: todayEndFormatted
     }
-
     const parseDate = (dateStr, format = 'YYYY-MM-DD') =>
       dateStr ? moment(dateStr, format) : null
-
-    // Correct parsing based on your data
-    const initialDate = parseDate(eventData?.localStartDate) // "2025-06-01"
-    const endDate = parseDate(eventData?.localEndDate) // "2025-06-21"
-
+    const initialDate = parseDate(eventData?.localStartDate)
+    const endDate = parseDate(eventData?.localEndDate)
     if (!initialDate || !endDate) return dropdownDates
-
     const totalDays = endDate.diff(initialDate, 'days')
     const totalWeeks = Math.ceil(totalDays / 7)
-
     let weekStart = initialDate.clone()
     const formattedWeeks = []
-
-    // const isLiveEvent = now.isBetween(initialDate, endDate, undefined, '[]')
-
     if (totalDays > 10) {
       for (let i = 1; i <= totalWeeks; i++) {
         const start = weekStart.clone()
@@ -159,61 +165,52 @@ export default function ProgramLeaderBoardScreen(props) {
         const end = endCandidate.isAfter(endDate)
           ? endDate.clone()
           : endCandidate
-
         const isCurrentWeek = now.isBetween(start, end, undefined, '[]')
         const checkDays = end.diff(start, 'days')
-
         if (checkDays <= 3 && formattedWeeks.length > 0) {
           const last = formattedWeeks[formattedWeeks.length - 1]
           last.label = `${moment(last.fromDate, DATE_FORMAT).format(
             'Do MMM'
           )} - ${end.format('Do MMM')}`
-          last.toDate = end.format(DATE_FORMAT)
+          last.toDate = end.endOf('day').format(DATE_FORMAT)
           last.value = `${last.fromDate} ${last.toDate}`
         } else {
-          const fromDateStr = start.format(DATE_FORMAT)
-          const toDateStr = end.format(DATE_FORMAT)
-
+          const fromDateStr = start.startOf('day').format(DATE_FORMAT)
+          const toDateStr = end.endOf('day').format(DATE_FORMAT)
           const weekOption = {
             label: `${start.format('Do MMM')} - ${end.format('Do MMM')}`,
             value: `${fromDateStr} ${toDateStr}`,
             fromDate: fromDateStr,
             toDate: toDateStr
           }
-
-          if (isCurrentWeek) break
+          if (isCurrentWeek) {
+            formattedWeeks.push(weekOption)
+            break
+          }
           formattedWeeks.push(weekOption)
         }
-
         weekStart = end.clone().add(1, 'days')
       }
-
       formattedWeeks.reverse()
       dropdownDates.push(...formattedWeeks)
-
       const isNonStepsEvent =
         eventId !== 530 &&
         eventId !== 1989 &&
         endDate.isSameOrAfter(now) &&
         eventData?.activities?.[0]?.challengeParams !== 'STEPS'
-
       if (isNonStepsEvent) {
         dropdownDates.unshift(todaysDateOption)
       }
     }
-
     return dropdownDates
   }
 
   async function getActivityOptions(eventData) {
     let actOptions = []
     let secOptions = []
-
     let categoryOptions = []
-
     if (eventData?.activities?.length) {
       eventData.activities.forEach(activity => {
-        // Only include if NOT DUATHLON or id NOT 3
         if (activity?.type !== 'DUATHLON' || activity?.id !== 3) {
           actOptions.push({
             label: activity?.displayName,
@@ -225,7 +222,6 @@ export default function ProgramLeaderBoardScreen(props) {
         }
       })
     }
-
     if (eventData?.secondaryActivities?.length) {
       eventData.secondaryActivities.forEach(secActivity => {
         secOptions.push({
@@ -237,7 +233,6 @@ export default function ProgramLeaderBoardScreen(props) {
         })
       })
     }
-
     if (eventData?.eventRunCategories) {
       eventData.eventRunCategories.forEach(category => {
         categoryOptions.push({
@@ -248,76 +243,33 @@ export default function ProgramLeaderBoardScreen(props) {
         })
       })
     }
-
     return {
       activity: [...actOptions, ...secOptions],
       category: categoryOptions
     }
   }
 
-  async function InitiateScreen() {
-    // getting Event Detail
-    let res = await getEventDetail()
-
-    // getting all Runners data, it will work like suggestion list
-    let runnerData = await getAllRunnerData()
-
-    // runner activity detail
-    let runnerActivityDetail = await getRunnerDetail(auth?.runner?.id)
-
-    let formattedParticipatedLabel = await getParticipatedOptions(res)
-
-    // formatted week data
-    let weeksData = await generateWeekFilterOptions(res, eventID)
-
-    // get activity option
-    let getActivities = await getActivityOptions(res) // activites not set how can I set
-
-    let activityPriority = res?.activities?.[0]?.activityPriority || 'PRIMARY'
-    let eventCategoryId = res?.eventRunCategories?.[0]?.id || null
-
-    setState({
-      ...state,
-      eventData: res,
-      weekDropdowns: weeksData,
-      formattedParticipatedLabel: formattedParticipatedLabel,
-      activityPriority: activityPriority,
-      eventCategoryId: eventCategoryId,
-      runnerData: runnerData,
-      runnerActivityDetail: runnerActivityDetail,
-      eventActivities: getActivities,
-      selectedActivity: getActivities?.activity?.[0],
-      selectedCategory: getActivities?.category?.[0]
-    })
-  }
-
   async function getEventDetail() {
     try {
       let url = TemplateService?._eventID(URL.get_event, eventID)
-
       let resp = await services?._get(url)
-
       if (resp?.type === 'success') {
         return resp?.data
       } else {
         appsnackbar.showErrMsg('Something went wrong')
       }
     } catch (error) {
-      console.error('Error fetching data:', error)
       return null
-    } finally {
-      console.log('fetch')
     }
   }
 
   async function getAllRunnerData() {
     try {
-      // /public/leaderboard
-
-      let url = TemplateService._eventID(URL?.get_all_runners, eventID)
-
+      let url = TemplateService._eventID(
+        URL?.get_all_runners,
+        eventID || eventData?.id
+      )
       const resp = await services._get(url, { params: { searchString: '' } })
-
       if (resp?.type === 'success') {
         return resp?.data
       } else
@@ -328,17 +280,14 @@ export default function ProgramLeaderBoardScreen(props) {
     }
   }
 
-  // get user activity
   async function getRunnerDetail(userId) {
     try {
       let url = TemplateService._userIDAndEventID(
         URL?.get_runner_detail,
         userId,
-        eventID
+        eventID || eventData?.id
       )
-
       const resp = await services._get(url)
-
       if (resp?.type === 'success') {
         return resp?.data
       } else
@@ -349,84 +298,47 @@ export default function ProgramLeaderBoardScreen(props) {
     }
   }
 
-  // searching Function
-  // async function searchResult(searchQuery) {
-  //   if (searchQuery === '') {
-  //     return []
-  //   }
-
-  //   const { runnerData } = state
-
-  //   // Convert search text to lowercase for case-insensitive search
-  //   const searchTerms = searchQuery?.trim()?.toLowerCase()?.split(' ')
-
-  //   // Filter array of objects based on search text
-  //   let x = runnerData.filter(obj => {
-  //     // Check if any property of the object contains relevant words
-  //     // for (let key in obj) {
-  //     if (obj.hasOwnProperty('firstName') || obj.hasOwnProperty('lastName')) {
-  //       if (obj['firstName'] !== null || obj['lastName'] !== null) {
-  //         const propertyValue = obj['firstName'].toString().toLowerCase()  || obj['lastName'].toString().toLowerCase()
-  //         //  const propertyValue = obj['lastName'].toString().toLowerCase()
-  //         // Check if any of the search terms is present in the property value
-  //         if (searchTerms.some(term => propertyValue.includes(term))) {
-  //           return true // Object matches the search criteria
-  //         }
-  //       }
-  //     }
-
-  //     return false // Object does not match the search criteria
-  //   })
-
-  //   return x
-  // }
-
-  async function searchResult(searchQuery) {
-    if (!searchQuery?.trim()) return []
-
-    const runnerData = state?.runnerData
-
-    const searchTerms = searchQuery.trim().toLowerCase().split(' ')
-
-    const filteredResults = runnerData?.filter(obj => {
-      const firstName = obj?.firstName?.toLowerCase() || ''
-      const lastName = obj?.lastName?.toLowerCase() || ''
-
-      const fullName = `${firstName} ${lastName}`
-
-      return searchTerms.every(term => fullName.includes(term))
-    })
-
-    return filteredResults
-  }
+  // Debounced search (basic, for demonstration)
+  const searchResult = useCallback(
+    async searchQuery => {
+      if (!searchQuery?.trim()) return []
+      const runnerData = state?.runnerData
+      const searchTerms = searchQuery.trim().toLowerCase().split(' ')
+      const filteredResults = runnerData?.filter(obj => {
+        const firstName = obj?.firstName?.toLowerCase() || ''
+        const lastName = obj?.lastName?.toLowerCase() || ''
+        const fullName = `${firstName} ${lastName}`
+        return searchTerms.every(term => fullName.includes(term))
+      })
+      return filteredResults
+    },
+    [state.runnerData]
+  )
 
   async function handleChange(params, val) {
     if (params === 'search') {
       let searchResultData = await searchResult(val)
-
-      // if (searchResultData?.length > 0) {
-      setState({
-        ...state,
-        searchResultData: searchResultData
-      })
-      // }
+      setState(prev => ({
+        ...prev,
+        searchResultData
+      }))
     } else {
-      setState({
-        ...state,
+      setState(prev => ({
+        ...prev,
         [params]: val
-      })
+      }))
     }
   }
 
   async function handleSubmit() {
-    setFilters({
-      ...filters,
+    setFilters(prev => ({
+      ...prev,
       selectedWeek: state?.selectedWeekRange,
       selectLimit: state?.selectedLimit,
       selectedParticipated: state?.selectedParticipated,
       activity: state?.selectedActivity,
       category: state?.selectedCategory
-    })
+    }))
     setState(prev => ({
       ...prev,
       showModal: false
@@ -434,22 +346,30 @@ export default function ProgramLeaderBoardScreen(props) {
   }
 
   async function handleSearchedItemPress(runnerID) {
-    // Your custom logic here, for example:
-
-    let runnerActivityDetail = await getRunnerDetail(runnerID?.runnerId)
-
-    setState({
-      ...state,
-      runnerActivityDetail: runnerActivityDetail,
+    Keyboard.dismiss()
+    setState(prev => ({
+      ...prev,
       searchResultData: []
-    })
+    }))
+    let runnerActivityDetail = await getRunnerDetail(runnerID?.runnerId)
+    setState(prev => ({
+      ...prev,
+      runnerActivityDetail,
+      searchResultData: []
+    }))
   }
+
+  // if (loading) {
+  //   return (
+  //     <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.08)', padding: 20 }}>
+  //     <Loader isLoading={loading} />
+  //     </View>
+  //   )
+  // }
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.white, padding: 20 }}>
-      {/* <Prg {...state}  /> */}
-      {/* <Loader /> */}
-
+      {loading && <Loader isLoading={loading} />}
       <ProgramLeaderBoardScreenUI
         {...state}
         runnerActivityDetail={state?.runnerActivityDetail}
@@ -459,7 +379,7 @@ export default function ProgramLeaderBoardScreen(props) {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handleSearchedItemPress={handleSearchedItemPress}
-        eventID={eventID}
+        eventID={eventID || eventData?.id}
       />
     </View>
   )

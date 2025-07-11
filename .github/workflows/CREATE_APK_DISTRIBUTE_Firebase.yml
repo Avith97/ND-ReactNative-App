@@ -1,0 +1,52 @@
+name: Create APK & Upload to Firebase Dist_v1
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Optional: Confirm preinstalled Node.js version (already installed for dev)
+      - name: Check Node.js
+        run: node -v
+
+      # Optional: Cache npm if needed (skip if node_modules persists)
+      - name: Cache npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Node Modules
+        run: npm ci
+
+      # Optional: Skip this if you don't need CI format check
+      - name: Run Prettier Check
+        run: npm run format -- --check
+
+      - name: Check Java
+        run: java -version
+
+      - name: Check Gradle Version
+        working-directory: android
+        run: ./gradlew -v
+
+      - name: Run JS Bundle Script
+        run: npm run bundle
+
+      - name: Build Android APK
+        working-directory: android
+        run: ./gradlew assembleRelease
+
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_APP_DISTRIBUTION }}
+          groups: nd-testers
+          file: android/app/build/outputs/apk/release/app-release.apk

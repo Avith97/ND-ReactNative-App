@@ -1,5 +1,6 @@
 import ImagePicker from 'react-native-image-crop-picker'
 import { toast_error } from '../components/toasts/handleToasts'
+import { appsnackbar } from './snackbar_actions'
 
 export const FilePicker = {
   openCamera: async params => {
@@ -8,15 +9,17 @@ export const FilePicker = {
         width: 300,
         height: 400,
         cropping: true,
-        includeBase64: true,
+        includeBase64: false,
         mediaType: 'photo'
       })
       if (['image/jpeg', 'image/png', 'image/jpg'].includes(resp.mime)) {
         // cropImageUpload(image.path, image.data)
         return resp
+      } else {
+        appsnackbar.showErrMsg('File type not supported')
       }
     } catch (error) {
-      console.log('Camera cancelled-->', error)
+      // console.log('Camera cancelled-->', error)
       toast_error('Camera Closed')
     }
 
@@ -28,16 +31,18 @@ export const FilePicker = {
         width: 300,
         height: 400,
         cropping: true,
-        includeBase64: true,
+        includeBase64: false,
         mediaType: 'photo'
       })
       if (['image/jpeg', 'image/png', 'image/jpg'].includes(resp.mime)) {
         // cropImageUpload(image.path, image.data)
         return resp
+      } else {
+        appsnackbar.showErrMsg('File type not supported')
       }
     } catch (error) {
       console.log('Picker cancelled-->', error)
-      toast_error('Image picker cancelled')
+      // toast_error('Image picker cancelled')
     }
 
     // return resp;
@@ -53,7 +58,7 @@ export const FilePicker = {
         return resp
       }
     } catch (error) {
-      console.log('Picker Video cancelled-->', error)
+      // console.log('Picker Video cancelled-->', error)
       toast_error('Video picker cancelled')
     }
   },
@@ -68,7 +73,7 @@ export const FilePicker = {
         return resp
       }
     } catch (error) {
-      console.log('Camera Video cancelled-->', error)
+      // console.log('Camera Video cancelled-->', error)
       toast_error('Camera Video Closed')
     }
   }

@@ -5,5 +5,6 @@ export const toast_types = {
   custom: 'custom',
   bottom_sheet: 'bottom_sheet',
   logout_bottomsheet: 'logout_bottomsheet',
-  web_view: 'web_view'
+  web_view: 'web_view',
+  exit_bottom_sheet: 'exit_bottom_sheet'
 }

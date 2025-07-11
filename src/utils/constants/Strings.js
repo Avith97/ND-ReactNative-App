@@ -1,6 +1,9 @@
 export default {
-  ASYNC_KEY: {},
+  ASYNC_KEY: {
+    offline: 'offline'
+  },
   NAVIGATION: {
+    home_tab_bottom_nav: 'home_tab_bottom_nav',
     auth: 'auth',
     app: 'app',
     health: 'sample',
@@ -10,7 +13,7 @@ export default {
     register: 'register',
     otp: 'otp',
     create_profile: 'createprofile',
-
+    about_us: 'About Us',
     // onboarding screens
     onboard: 'onboard',
     gender: 'gender',
@@ -37,7 +40,7 @@ export default {
     programdetail: 'programdetail',
     submitresponse: 'submitresponse',
     programleaderboard: 'programleaderboard',
-
+    home_tab_nav: 'home_tab_nav',
     // app screens
     home: 'home',
     profile: 'profile',
@@ -50,6 +53,11 @@ export default {
     notificationlist: 'notificationlist',
     generalsetting: 'generalsetting',
     languagesettings: 'languagesettings',
-    unitsettings: 'unitsettings'
+    unitsettings: 'unitsettings',
+
+    complete_profile: 'Complete Profile',
+    privacy_policy: 'Privacy Policy',
+    customer_support: 'Customer support',
+    terms_condition: 'Terms and Conditions'
   }
 }

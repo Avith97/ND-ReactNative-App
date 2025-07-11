@@ -49,8 +49,6 @@ export default function CalendarComponent({ children, mode = 'month' }) {
     '2025-05-26': { endingDay: true, color: '#84BAFF', textColor: 'black' }
   }
 
-  console.log(dateDisplay)
-
   // mode means tab   day | week | month
   const renderHeader = () => (
     <View style={styles.headerContainer}>

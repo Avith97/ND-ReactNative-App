@@ -8,13 +8,11 @@ const RegistrationScreen = props => {
   const [options, setoptions] = useState({})
   const [err, seterr] = useState(null)
 
-  useEffect(() => {
-    console.log('state render-->', state)
-  }, [state])
+  // useEffect(() => {
+  //   console.log('state render-->', state)
+  // }, [state])
 
   function handleChange(params, val) {
-    console.log('params', params)
-    console.log('val', val)
     setstate({
       ...state,
       [params]: val

@@ -1,7 +1,11 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+apply plugin: 'com.google.gms.google-services'
+// apply plugin: 'com.google.firebase.crashlytics'
+
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
+
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -58,7 +62,7 @@ react {
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
@@ -78,13 +82,13 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.events.necessarydevilapp"
+    namespace "com.necessarydevil.app"
     defaultConfig {
-        applicationId "com.events.necessarydevilapp"
+        applicationId "com.necessarydevil.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0.3"
+        versionCode 10
+        versionName "2.0.0"
     }
     signingConfigs {
         debug {
@@ -93,12 +97,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-        // release {
-        //     storeFile file(MYAPP_RELEASE_STORE_FILE)
-        //     storePassword MYAPP_RELEASE_STORE_PASSWORD
-        //     keyAlias MYAPP_RELEASE_KEY_ALIAS
-        //     keyPassword MYAPP_RELEASE_KEY_PASSWORD
-        // }
+        release {
+            storeFile file(nd_RELEASE_STORE_FILE)
+            storePassword nd_RELEASE_STORE_PASSWORD
+            keyAlias nd_RELEASE_KEY_ALIAS
+            keyPassword nd_RELEASE_KEY_PASSWORD
+        }
     }
     buildTypes {
         debug {
@@ -107,8 +111,9 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
+            shrinkResources true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -118,6 +123,12 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation("androidx.health.connect:connect-client:1.0.0-alpha10")
+    implementation platform('com.google.firebase:firebase-bom:33.14.0')
+    implementation "com.google.android.gms:play-services-auth:21.0.0"
+
+    // implementation 'com.google.firebase:firebase-analytics'
+    // implementation("com.google.firebase:firebase-crashlytics")
+    
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {

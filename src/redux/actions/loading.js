@@ -6,3 +6,16 @@ export const handleSync = payload => {
     payload
   }
 }
+export const handleInit = payload => {
+  return {
+    type: actions.HANDLE_INIT,
+    payload
+  }
+}
+
+export const handleSoftSync = payload => {
+  return {
+    type: actions.HANDLE_SOFT_SYNC,
+    payload
+  }
+}

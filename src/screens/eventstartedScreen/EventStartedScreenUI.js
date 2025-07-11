@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import CustomImageBackground from '../../common/components/background/CustomImageBackground'
 import { Images } from '../../utils/constants/Images'
-import Colors from '../../utils/constants/Colors'
 import { hp, wp } from '../../common/functions/dimensions'
 import CustomButton from '../../common/components/buttons/CustomButton'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
+import { parseHtmlDescription } from '../../common/functions/helper'
 
 export default function EventStartedScreenUI(props) {
   return (
@@ -14,18 +15,25 @@ export default function EventStartedScreenUI(props) {
         style={styles.bgImage}>
         {/* Top Right Badge */}
         <View style={styles.badgeContainer}>
-          <Text style={styles.badgeText}>Not Registered</Text>
+          {/* <Text style={styles.badgeText}>Not Registered</Text> */}
         </View>
 
+        {/* Overlay content */}
         <View style={styles.contentContainer}>
-          {/* Overlay content */}
+          {/* name */}
           <View style={styles.overlay}>
             {props?.eventDetail && (
-              <Text style={styles.title}>{props?.eventDetail?.title}</Text>
+              <Text style={styles.title}>
+                {props?.eventDetail?.name || props?.eventDetail?.title}
+              </Text>
             )}
-            {props?.eventDetail?.program && (
+
+            {/* description */}
+            {(props?.eventDetail?.program ||
+              props?.eventDetail?.description) && (
               <Text style={styles.subtitle}>
-                {props?.eventDetail?.program?.description}
+                {parseHtmlDescription(props?.eventDetail?.description) ||
+                  parseHtmlDescription(props?.eventDetail?.description)}
               </Text>
             )}
           </View>
@@ -53,7 +61,7 @@ const styles = StyleSheet.create({
   badgeContainer: {
     alignSelf: 'flex-end',
     margin: wp(4),
-    backgroundColor: 'orange',
+    // backgroundColor: 'orange',
     paddingHorizontal: wp(3),
     paddingVertical: hp(0.5),
     borderRadius: 15
@@ -75,15 +83,17 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: fontSize.m,
+    // fontWeight: 'bold',
+    fontFamily: Fonts.SemiBold,
     textAlign: 'center',
     marginBottom: hp(1)
   },
   subtitle: {
     color: 'white',
-    fontSize: 14,
-    textAlign: 'center'
+    fontSize: fontSize.normal,
+    textAlign: 'center',
+    fontFamily: Fonts.Regular
   },
   btnStyle: {
     width: wp(60)

@@ -7,6 +7,7 @@ import { handleSync } from '../../redux/actions/loading'
 import Strings from '../../utils/constants/Strings'
 import { BASE_URL } from '../../utils/constants/Urls'
 import { environment } from '../../../settings'
+import { appsnackbar } from '../../common/functions/snackbar_actions'
 
 const api = {
   //normal request
@@ -32,13 +33,22 @@ const api = {
   }),
 
   refreshInstance: token => {
-    console.log('access token --->', store.getState().auth.token)
+    // console.log('access token --->', store.getState().auth.token)
     api._axios = axios.create({
       baseURL: BASE_URL,
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': 'application/json'
+      },
+      timeout: 10000 // 10 seconds timeout
+    })
+    api._axiosFormData = axios.create({
+      baseURL: BASE_URL,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data'
       },
       timeout: 10000 // 10 seconds timeout
     })
@@ -88,7 +98,7 @@ const api = {
           })
           // console.log('new token from refreshed --->',refreshToken)
           const { accessToken } = refreshToken?.data || refreshToken
-          console.log('new token from refreshed --->', accessToken)
+          // console.log('new token from refreshed --->', accessToken)
 
           // await update_token(accessToken) //update token at redux &asyncstore
           if (__DEV__) {
@@ -150,7 +160,7 @@ const api = {
         error_config: { ...error }
       }
     }
-
+    appsnackbar.showErrMsg('Something went wrong!!!')
     return {
       type: 'error',
       error_data: error?.response?.data,

@@ -11,48 +11,46 @@ import { wp } from '../../../common/functions/dimensions'
 
 export default function AgeGroupTab({ ...props }) {
   const [state, setState] = useState({
-    ageGroupData:null
+    ageGroupData: null
   })
   const [expandedTeamId, setExpandedTeamId] = useState(null)
 
-  
-    useEffect(() => {
-      InitiateScreen()
-    }, [])
-  
-    async function InitiateScreen() {
-      let resp = await getAgeWiseData()
-  console.log(resp , "getting me dta");
-  
-      if (resp) {
-        setState({ ...state, ageGroupData: resp })
-      }
+  useEffect(() => {
+    InitiateScreen()
+  }, [])
+
+  async function InitiateScreen() {
+    let resp = await getAgeWiseData()
+    // console.log(resp, 'getting me dta')
+
+    if (resp) {
+      setState({ ...state, ageGroupData: resp })
     }
-  
-    async function getAgeWiseData(params) {
-      try {
-  
-        // url
-        let url = TemplateService?._eventID(
-          URL.get_age_wise_data,
-          props?.eventData?.id || 2477
-        )
-  
-        // API request for fetch ALl teams
-        const response = await services._get(url, { params: {view:"AGE_GROUPS"  } })
-        
-        if (response?.type === 'success') {
-          return response?.data
-        } else {
-          appsnackbar.showErrMsg("Something went wrong!")
-          
-        }
-      } catch (error) {
-        console.error('Error fetching teams:', error)
-        return []
+  }
+
+  async function getAgeWiseData(params) {
+    try {
+      // url
+      let url = TemplateService?._eventID(
+        URL.get_age_wise_data,
+        props?.eventData?.id || 2477
+      )
+
+      // API request for fetch ALl teams
+      const response = await services._get(url, {
+        params: { view: 'AGE_GROUPS' }
+      })
+
+      if (response?.type === 'success') {
+        return response?.data
+      } else {
+        appsnackbar.showErrMsg('Something went wrong!')
       }
+    } catch (error) {
+      console.error('Error fetching teams:', error)
+      return []
     }
-  
+  }
 
   //   here I getting me team details
   async function handleToggle(teamId) {
@@ -85,14 +83,25 @@ export default function AgeGroupTab({ ...props }) {
       <Text style={{ fontSize: fontSize.m, fontFamily: Fonts.Medium }}>
         Age Group Leaderboard
       </Text>
-      <FlatList
-        data={state?.ageGroupData?.ageGroupDTOs || []}
-        renderItem={renderTeam}
-        keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingHorizontal:wp(1.5)}}
-      />
-
+      {state?.ageGroupData?.ageGroupDTOs?.length ? (
+        <FlatList
+          data={state?.ageGroupData?.ageGroupDTOs || []}
+          renderItem={renderTeam}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: wp(1.5) }}
+        />
+      ) : (
+        <Text
+          style={{
+            textAlign: 'center',
+            paddingVertical: hp(2),
+            color: Colors?.gray_05,
+            fontFamily: Fonts.Regular
+          }}>
+          No age group data found
+        </Text>
+      )}
     </>
   )
 }

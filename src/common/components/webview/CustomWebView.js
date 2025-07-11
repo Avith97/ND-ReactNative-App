@@ -5,6 +5,9 @@ import { ActivityIndicator } from 'react-native'
 // import NetInfo from "@react-native-community/netinfo";
 import { hp, wp } from '../../functions/dimensions'
 import Colors from '../../../utils/constants/Colors'
+import { Image } from 'react-native'
+import { Images } from '../../../utils/constants/Images'
+import CustomButton from '../buttons/CustomButton'
 let ref
 
 const CustomWebView = props => {
@@ -19,35 +22,28 @@ const CustomWebView = props => {
   }, [])
 
   function renderError(e) {
-    console.log('error new ===>', e)
-    return props.login ? (
-      <>
-        <View
+    return (
+      <View style={{ flex: 1, ...StyleSheet.absoluteFillObject }}>
+        <Image
+          source={Images.err_boundary}
+          resizeMode="cover "
           style={{
-            ...styles.modalBackground,
-            opacity: props.login ? 0.8 : 0.6
-          }}>
-          <View style={styles.activityIndicatorWrapper}>
-            <ActivityIndicator
-              style={{ ...styles.indicator, paddingBottom: hp('20%') }}
-              size="large"
-              // color={MyColors.loadingColor}
-              color={colors.COLOR.loadingColor}
-              animating={true}
-            />
-          </View>
-        </View>
-        <View
-          style={{
-            // flex: 1,
-            height: '100%',
-            width: '100%',
-            position: 'absolute',
-            backgroundColor: 'white'
+            flex: 1,
+            // height: '',
+            width: wp(100),
+            // position:"absolute",
+            top: 0,
+            height: hp(100)
           }}
         />
-      </>
-    ) : null
+        <CustomButton
+          title="Cancel"
+          name="cancel"
+          btnStyles={{ bottom: 0 }}
+          onPress={() => global.navigation?.goBack?.()}
+        />
+      </View>
+    )
   }
 
   const loading = error => {
@@ -69,7 +65,6 @@ const CustomWebView = props => {
 
   function handleWebViewNavigationStateChange(params) {
     const { url } = params
-    console.log('web params -->', params)
   }
 
   return (

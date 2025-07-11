@@ -1,5 +1,5 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, BackHandler, Alert } from 'react-native'
+import React, { useEffect, useRef } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Strings from '../../utils/constants/Strings'
@@ -29,251 +29,327 @@ import GeneralSettingScreen from '../../screens/generalsettingscreen/GeneralSett
 import LanguageSettingScreen from '../../screens/generalsettingscreen/langaugesetting/LanguageSettingScreen'
 import UnitSettingsScreen from '../../screens/generalsettingscreen/unitsettingScreen/UnitSettingsScreen'
 import ProgramLeaderBoardScreen from '../../screens/progremleaderboard/ProgramLeaderBoardScreen'
+import { useSelector } from 'react-redux'
+import OnBoardScreen from '../../screens/onBoardScreens/OnBoardScreen'
+import HomeTabBottomNav from '../tab/HomeTabBottomNav'
+import CompleteProfile from '../../screens/profile/complete/CompleteProfile'
+import SupportScreen from '../../screens/support/SupportScreen'
+import TermsAndConditions from '../../screens/termsandconditions/TermsAndConditions'
+import PrivacyPolicy from '../../screens/privacypolicy/PrivacyPolicy'
+import { useNavigation } from '@react-navigation/native'
+import ExitAppBottomSheet from '../../common/components/bottomsheet/ExitAppBottomSheet'
+import ToastModal from '../../common/components/Modal/ToastModal'
+import { hp } from '../../common/functions/dimensions'
+import {
+  exit_bottom_sheet,
+  show_exit_bottom_sheet
+} from '../../common/components/toasts/handleToasts'
 
-const TabNavigator = props => {
-  const Tab = createBottomTabNavigator()
+// const TabNavigator = props => {
+//   const Tab = createBottomTabNavigator()
 
-  return (
-    <Tab.Navigator
-      initialRouteName={Strings.NAVIGATION.home}
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: Colors.primary,
-        tabBarInactiveTintColor: Colors.gray_03
-      }}>
-      {/* <Tab.Screen name={Strings.NAVIGATION.health} component={HealthScreen} /> */}
-      <Tab.Screen
-        name={Strings.NAVIGATION.home}
-        component={HomeScreen}
-        initialParams={{ isLoggedIn: true }}
-        options={{
-          title: 'Home',
-          headerTitleStyle: {
-            // fontSize: 20,
-            fontWeight: '600'
-            // color: 'black',
-          },
-          tabBarIcon: ({ color, size }) => (
-            <Icons
-              type={iconType.feather}
-              name="home"
-              color={color}
-              size={20}
-            />
-          )
-        }}
-      />
+//   return (
+//     <Tab.Navigator
+//       initialRouteName={Strings.NAVIGATION.home}
+//       screenOptions={{
+//         headerShown: false,
+//         tabBarActiveTintColor: Colors.primary,
+//         tabBarInactiveTintColor: Colors.gray_03
+//       }}>
+//       {/* <Tab.Screen name={Strings.NAVIGATION.health} component={HealthScreen} /> */}
+//       <Tab.Screen
+//         name={Strings.NAVIGATION.home}
+//         component={HomeScreen}
+//         initialParams={{ isLoggedIn: true }}
+//         options={{
+//           title: 'Home',
+//           headerTitleStyle: {
+//             // fontSize: 20,
+//             fontWeight: '600'
+//             // color: 'black',
+//           },
+//           tabBarIcon: ({ color, size }) => (
+//             <Icons
+//               type={iconType.feather}
+//               name="home"
+//               color={color}
+//               size={20}
+//             />
+//           )
+//         }}
+//       />
 
-      <Tab.Screen
-        name={Strings.NAVIGATION.program}
-        component={ProgramScreen}
-        options={{
-          title: 'Program',
-          headerTitleStyle: {
-            // fontSize: 20,
-            fontWeight: '600'
-            // color: 'black',
-          },
-          tabBarIcon: ({ color, size }) => (
-            <Icons
-              type={iconType.feather}
-              name="align-justify"
-              color={color}
-              size={20}
-            />
-          )
-        }}
-      />
+//       <Tab.Screen
+//         name={Strings.NAVIGATION.program}
+//         component={ProgramScreen}
+//         options={{
+//           title: 'Program',
+//           headerTitleStyle: {
+//             // fontSize: 20,
+//             fontWeight: '600'
+//             // color: 'black',
+//           },
+//           tabBarIcon: ({ color, size }) => (
+//             <Icons
+//               type={iconType.feather}
+//               name="align-justify"
+//               color={color}
+//               size={20}
+//             />
+//           )
+//         }}
+//       />
 
-      <Tab.Screen
-        name={Strings.NAVIGATION.dashboard}
-        component={DashboardScreen}
-        options={{
-          title: 'Dashboard',
-          headerTitleStyle: {
-            // fontSize: 20,
-            fontWeight: '600'
-            // color: 'black',
-          },
-          tabBarIcon: ({ color, size }) => (
-            <Icons
-              type={iconType.feather}
-              name="bar-chart-2"
-              color={color}
-              size={20}
-            />
-          )
-        }}
-      />
+//       <Tab.Screen
+//         name={Strings.NAVIGATION.dashboard}
+//         component={DashboardScreen}
+//         options={{
+//           title: 'Dashboard',
+//           headerTitleStyle: {
+//             // fontSize: 20,
+//             fontWeight: '600'
+//             // color: 'black',
+//           },
+//           tabBarIcon: ({ color, size }) => (
+//             <Icons
+//               type={iconType.feather}
+//               name="bar-chart-2"
+//               color={color}
+//               size={20}
+//             />
+//           )
+//         }}
+//       />
 
-      <Tab.Screen
-        name={Strings.NAVIGATION.calender}
-        component={CalenderScreen}
-        options={{
-          title: 'Calendar',
-          headerTitleStyle: {
-            // fontSize: 20,
-            fontWeight: '600'
-            // color: 'black',
-          },
-          tabBarIcon: ({ color, size }) => (
-            <Icons
-              type={iconType.feather}
-              name="calendar"
-              color={color}
-              size={20}
-            />
-          )
-        }}
-      />
-    </Tab.Navigator>
-  )
-}
+//       {/* <Tab.Screen
+//         name={Strings.NAVIGATION.calender}
+//         component={CalenderScreen}
+//         options={{
+//           title: 'Calendar',
+//           headerTitleStyle: {
+//             // fontSize: 20,
+//             fontWeight: '600'
+//             // color: 'black',
+//           },
+//           tabBarIcon: ({ color, size }) => (
+//             <Icons
+//               type={iconType.feather}
+//               name="calendar"
+//               color={color}
+//               size={20}
+//             />
+//           )
+//         }}
+//       /> */}
+//     </Tab.Navigator>
+//   )
+// }
 
 const AppStack = props => {
   // const Drawer = createDrawerNavigator();
 
+  let actionRef = useRef(null)
+
+  const navigation = global.navigation || useNavigation()
+
   const Stack = createStackNavigator()
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    )
+
+    return () => backHandler.remove()
+  }, [navigation])
+
+  const backAction = () => {
+    const currentRoute = navigation.getCurrentRoute?.()?.name
+
+    if (
+      currentRoute === Strings.NAVIGATION.home_tab_bottom_nav ||
+      currentRoute === Strings.NAVIGATION.complete_profile
+    ) {
+      // On Home screen: do nothing or disable back
+      return true // do nothing (prevent exit modal)
+    }
+
+    if (navigation.canGoBack()) {
+      navigation.goBack()
+    } else {
+      show_exit_bottom_sheet(false)
+    }
+    return true
+  }
 
   return (
-    <Stack.Navigator
-      screenOptions={({ navigation, route }) => {
-        const customHeaderScreens = [
-          Strings.NAVIGATION.home,
-          Strings.NAVIGATION.eventdetail,
-          Strings.NAVIGATION.eventstarted,
-          Strings.NAVIGATION.eventregister,
-          Strings.NAVIGATION.consent,
-          Strings.NAVIGATION.leaderboard,
-          Strings.NAVIGATION.programdetail
-        ]
+    <>
+      {/* <ToastModal  ref={actionRef}>
+        <ExitAppBottomSheet  />
+      </ToastModal> */}
 
-        if (customHeaderScreens.includes(route.name)) {
-          return {
-            header: () => (
-              <AppCustomHeader
-                isLoggedIn={{ isLoggedIn: props.route.params.isLoggedIn }}
-              />
-            )
-          }
-        }
+      <Stack.Navigator
+        initialRouteName={Strings.NAVIGATION.home_tab_bottom_nav}
+        screenOptions={{
+          headerShown: true,
+          header: props => (
+            <AppCustomHeader
+              {...props}
+              isLoggedIn={{
+                // isLoggedIn: props.route.params.isLoggedIn
+                isLoggedIn: isLoggedIn
+              }}
+            />
+          )
+        }}>
+        <Stack.Screen
+          name={Strings.NAVIGATION.onboard}
+          component={OnBoardScreen}
+          options={{ headerShown: false }} // Hide Header
+        />
 
-        return {
-          headerShown: true // default header for all other screens
-        }
-      }}>
-      <Stack.Screen
-        name={Strings.NAVIGATION.home}
-        component={TabNavigator}
-        initialParams={{ isLoggedIn: props.route.params.isLoggedIn }}
-      />
-      <Stack.Screen
-        name={Strings.NAVIGATION.profile}
-        component={ProfileScreen}
-        options={{ title: 'Profile' }}
-      />
+        <Stack.Screen
+          // name={Strings.NAVIGATION.home}
+          name={Strings.NAVIGATION.home_tab_bottom_nav}
+          component={HomeTabBottomNav}
+          initialParams={{
+            // isLoggedIn: props.route.params.isLoggedIn
+            isLoggedIn: isLoggedIn
+          }}
+        />
+        <Stack.Screen
+          name={Strings.NAVIGATION.profile}
+          component={ProfileScreen}
+          options={{ title: 'Profile' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.bmi}
-        component={BMICardScreen}
-        options={{ title: 'BMI' }}
-      />
-      <Stack.Screen
-        name={Strings.NAVIGATION.notificationsetting}
-        component={NotificationSettingScreen}
-        options={{ title: 'Notification Settings' }}
-      />
-      <Stack.Screen
-        name={Strings.NAVIGATION.editprofile}
-        component={EditProfileScreen}
-        options={{ title: 'Edit Profile' }}
-      />
-      <Stack.Screen
-        name={Strings.NAVIGATION.generalsetting}
-        component={GeneralSettingScreen}
-        options={{ title: 'General Settings' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.bmi}
+          component={BMICardScreen}
+          options={{ title: 'BMI' }}
+        />
+        <Stack.Screen
+          name={Strings.NAVIGATION.notificationsetting}
+          component={NotificationSettingScreen}
+          options={{ title: 'Notification Settings' }}
+        />
+        <Stack.Screen
+          name={Strings.NAVIGATION.editprofile}
+          component={EditProfileScreen}
+          options={{ title: 'Edit Profile' }}
+        />
+        <Stack.Screen
+          name={Strings.NAVIGATION.generalsetting}
+          component={GeneralSettingScreen}
+          options={{ title: 'General Settings' }}
+        />
 
-      {/* language setting */}
+        {/* language setting */}
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.languagesettings}
-        component={LanguageSettingScreen}
-        options={{ title: 'Select Language' }}
-      />
-      {/* unitsetting */}
+        <Stack.Screen
+          name={Strings.NAVIGATION.languagesettings}
+          component={LanguageSettingScreen}
+          options={{ title: 'Select Language' }}
+        />
+        {/* unitsetting */}
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.unitsettings}
-        component={UnitSettingsScreen}
-        options={{ title: 'Select Unit' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.unitsettings}
+          component={UnitSettingsScreen}
+          options={{ title: 'Select Unit' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.activitysync}
-        component={ActivitySyncScreen}
-        options={{ title: 'Activity Sync' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.activitysync}
+          component={ActivitySyncScreen}
+          options={{ title: 'Activity Sync' }}
+        />
 
-      {/* Event specific screen */}
+        {/* Event specific screen */}
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.eventstarted}
-        component={EventStartedScreen}
-        options={{ title: 'Get started' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.eventstarted}
+          component={EventStartedScreen}
+          options={{ title: 'Get started' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.eventdetail}
-        component={EventDetailScreen}
-        options={{ title: 'Event Detail' }}
-      />
+        {/* <Stack.Screen
+          name={Strings.NAVIGATION.eventdetail}
+          component={EventDetailScreen}
+          options={{ title: 'Event Detail' }}
+        /> */}
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.eventregister}
-        component={RegisterEventScreen}
-        options={{ title: 'Register Event' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.eventregister}
+          component={RegisterEventScreen}
+          options={{ title: 'Register Event' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.consent}
-        component={ConsentScreen}
-        options={{ title: 'Consent' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.consent}
+          component={ConsentScreen}
+          options={{ title: 'Consent' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.leaderboard}
-        component={LeaderBoardScreen}
-        options={{ title: 'Leaderboard' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.leaderboard}
+          component={LeaderBoardScreen}
+          options={{ title: 'Leaderboard' }}
+        />
 
-      {/* program */}
-      <Stack.Screen
-        name={Strings.NAVIGATION.programdetail}
-        component={ProgramDetailScreen}
-        options={{ title: 'Program Detail' }}
-      />
+        {/* program */}
+        <Stack.Screen
+          name={Strings.NAVIGATION.programdetail}
+          component={ProgramDetailScreen}
+          options={{ title: 'Program Detail' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.programleaderboard}
-        component={ProgramLeaderBoardScreen}
-        options={{ title: 'Program Leaderboard ' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.programleaderboard}
+          component={ProgramLeaderBoardScreen}
+          options={{ title: 'Program Leaderboard ' }}
+        />
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.submitresponse}
-        component={SubmitResponseScreen}
-        options={{ title: 'Response ' }}
-      />
+        <Stack.Screen
+          name={Strings.NAVIGATION.submitresponse}
+          component={SubmitResponseScreen}
+          options={{ title: 'Response ' }}
+        />
 
-      {/* notification list screen */}
+        {/* notification list screen */}
 
-      <Stack.Screen
-        name={Strings.NAVIGATION.notificationlist}
-        component={NotificationListScreen}
-        options={{ title: 'Notification ' }}
-      />
-    </Stack.Navigator>
+        <Stack.Screen
+          name={Strings.NAVIGATION.notificationlist}
+          component={NotificationListScreen}
+          options={{ title: 'Notification ' }}
+        />
+
+        <Stack.Screen
+          name={Strings.NAVIGATION.complete_profile}
+          component={CompleteProfile}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={Strings.NAVIGATION.privacy_policy}
+          component={PrivacyPolicy}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={Strings.NAVIGATION.terms_condition}
+          component={TermsAndConditions}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={Strings.NAVIGATION.customer_support}
+          component={SupportScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </>
 
     // <Drawer.Navigator initialRouteName={Strings.NAVIGATION.health}>
     //   <Drawer.Screen
@@ -286,3 +362,35 @@ const AppStack = props => {
 }
 
 export default AppStack
+
+// previous code
+//  <Stack.Navigator
+//       initialRouteName={Strings.NAVIGATION.home}
+//       screenOptions={({ navigation, route }) => {
+//         const customHeaderScreens = [
+//           Strings.NAVIGATION.home,
+//           Strings.NAVIGATION.eventdetail,
+//           Strings.NAVIGATION.eventstarted,
+//           Strings.NAVIGATION.eventregister,
+//           Strings.NAVIGATION.consent,
+//           Strings.NAVIGATION.leaderboard,
+//           Strings.NAVIGATION.programdetail
+//         ]
+
+//         if (customHeaderScreens.includes(route.name)) {
+//           return {
+//             header: () => (
+//               <AppCustomHeader
+//                 isLoggedIn={{
+//                   // isLoggedIn: props.route.params.isLoggedIn
+//                   isLoggedIn: isLoggedIn
+//                 }}
+//               />
+//             )
+//           }
+//         }
+
+//         return {
+//           headerShown: true // default header for all other screens
+//         }
+//       }}>

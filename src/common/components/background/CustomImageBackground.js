@@ -10,7 +10,7 @@ const CustomImageBackground = props => {
       style={{ ...styles.bgImage, ...props.style }}
       resizeMode="cover"
       imageStyle={{
-        opacity: 0.7
+        opacity: props.opacity || 0.8
       }}
       {...props.ImageBackgroundProps}>
       {/* <Loader /> */}

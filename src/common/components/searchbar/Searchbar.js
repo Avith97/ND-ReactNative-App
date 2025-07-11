@@ -9,7 +9,7 @@ import {
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import Colors from '../../../utils/constants/Colors'
 import { hp, wp } from '../../functions/dimensions'
-import { fontSize } from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import Icons, { iconType } from '../../../assets/icons/Icons'
 
 const SearchBar = props => {
@@ -76,7 +76,7 @@ const SearchBar = props => {
 
       <View
         ref={drpRef}
-        style={[ 
+        style={[
           styles.inputWrapper,
           focused && {
             borderColor: Colors.primary,
@@ -85,12 +85,13 @@ const SearchBar = props => {
           },
           // props.wrapperStyle,
           {
-          backgroundColor:"#FFFAEB"},
+            backgroundColor: '#FFFAEB'
+          }
         ]}>
         <Icons
           name="search"
           type={iconType?.material}
-          size={20}
+          size={23}
           color={Colors.gray}
           style={styles.searchIcon}
         />
@@ -112,18 +113,16 @@ const SearchBar = props => {
       {/* search result  */}
       {props?.searchResultData?.length > 0 && (
         <View
-        
           style={{
             backgroundColor: 'rgba(0,0,0,0.8)',
             maxHeight: hp(40),
             minHeight: hp(21),
-            width:wp(90),
-            position:"absolute",
+            width: wp(90),
+            position: 'absolute',
             // top:hp,
-             top: drpPosition.y + hp(6) ,
-                //   left: drpPosition.pageX / 1 ,
-                zIndex:1,
-
+            top: drpPosition.y + hp(6),
+            //   left: drpPosition.pageX / 1 ,
+            zIndex: 1
           }}>
           <View style={{ marginTop: hp(2), zIndex: 1 }}>
             <FlatList
@@ -134,6 +133,7 @@ const SearchBar = props => {
               ItemSeparatorComponent={() => <View style={{ height: hp(1) }} />}
               contentContainerStyle={{ paddingHorizontal: wp(1.5) }}
               renderItem={searchListItem}
+              keyboardShouldPersistTaps="handled"
             />
           </View>
         </View>
@@ -160,13 +160,14 @@ const styles = StyleSheet.create({
     paddingVertical: hp(1.3),
     paddingHorizontal: wp(3),
     fontSize: fontSize.normal,
+    fontFamily: Fonts.Regular,
     color: '#000'
   },
   searchIcon: {
     position: 'absolute',
-    top: '35%',
+    top: '28%',
     left: wp(3),
-    zIndex: 1
+    zIndex: 0
   },
 
   /// search result list view
@@ -182,12 +183,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   nameText: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: fontSize.normal,
+    // fontWeight: '600',
+    fontFamily: Fonts.Regular,
     color: '#333'
   },
   bibText: {
-    fontSize: 14,
+    fontSize: fontSize.s,
+    // fontWeight: '600',
+    fontFamily: Fonts.Regular,
     color: '#666'
   }
 })

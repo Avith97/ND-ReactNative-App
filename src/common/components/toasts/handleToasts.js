@@ -1,6 +1,7 @@
 import Toast from 'react-native-toast-message'
 import { toast_types } from './toast_types'
 import { toast_styles } from './toast_styles'
+import { hp } from '../../functions/dimensions'
 
 export const toast_success = params => {
   Toast.show({
@@ -70,9 +71,11 @@ export const open_logout_bottom_sheet = hide => {
   Toast.show({
     type: toast_types.logout_bottomsheet,
     autoHide: true,
+    visibilityTime: 1000 * 10,
     position: 'bottom',
-    bottomOffset: 20,
-    topOffset: 0
+    bottomOffset: -hp(0),
+    topOffset: 0,
+    swipeable: false
   })
 }
 
@@ -90,5 +93,24 @@ export const show_web_view_toast = (show, params = {}) => {
     // position: 'top',
     bottomOffset: 20,
     topOffset: 0
+  })
+}
+
+export const show_exit_bottom_sheet = hide => {
+  console.log('exit_bottom_sheet called', hide)
+
+  if (hide) {
+    Toast.hide()
+    return
+  }
+  Toast.show({
+    type: toast_types.exit_bottom_sheet,
+    // type: 'success',
+    autoHide: true,
+    visibilityTime: 1000 * 10,
+    position: 'bottom',
+    bottomOffset: -hp(0),
+    topOffset: 0,
+    swipeable: false
   })
 }

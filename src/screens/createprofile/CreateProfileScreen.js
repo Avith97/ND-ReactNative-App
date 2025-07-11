@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CreateProfileScreenUI from './CreateProfileScreenUI'
 import Strings from '../../utils/constants/Strings'
 import moment from 'moment'
@@ -7,9 +7,14 @@ import { services } from '../../services/axios/services'
 import { URL } from '../../utils/constants/Urls'
 import { appsnackbar } from '../../common/functions/snackbar_actions'
 import { useSelector } from 'react-redux'
+import { perform_login } from '../../common/functions/login'
 
 export default function CreateProfileScreen(props) {
+  let { userName, byEmail, byMobile } = props?.route?.params
   const { email, contactNumber } = useSelector(state => state.user)
+
+  let eventData = useSelector(store => store.eventData)
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
 
   const [state, setstate] = useState({
     firstName: null,
@@ -48,6 +53,14 @@ export default function CreateProfileScreen(props) {
   })
 
   const [err, seterr] = useState(null)
+
+  useEffect(() => {
+    if (byEmail) {
+      setstate({ ...state, email: userName })
+    } else {
+      setstate({ ...state, contactNumber: userName })
+    }
+  }, [userName])
 
   async function handleChange(params, val) {
     if (params === 'country') {
@@ -96,6 +109,10 @@ export default function CreateProfileScreen(props) {
       isValid = false
       err = { dobErr: true }
       appsnackbar.showErrMsg('Please select date of birth')
+    } else if (moment().diff(moment(state.DOB), 'years') < 16) {
+      isValid = false
+      err = { dobErr: true }
+      appsnackbar.showErrMsg('You must be at least 16 years old')
     } else if (!state.gender) {
       isValid = false
       err = { genderErr: true }
@@ -139,7 +156,9 @@ export default function CreateProfileScreen(props) {
           timezone: 'Asia/Calcutta',
           height: parseFloat(state.height).toFixed(1),
           weight: parseFloat(state.weight).toFixed(1),
-          gender: state.gender
+          gender: state.gender,
+          fcmToken: global.fcm_token,
+          deviceId: null
         },
         profilePicture: null // or a File object
       }
@@ -151,10 +170,8 @@ export default function CreateProfileScreen(props) {
       if (userObject.profilePicture) {
         syncObj.append('profilePicture', userObject.profilePicture)
       }
-      console.log(syncObj, 'syncObj')
 
       let resp = await services._postFormData(URL.create_profile, syncObj)
-      console.log(resp, 'resp')
 
       if (resp?.type !== 'success') {
         appsnackbar.showErrMsg(resp?.error_data || resp?.verbose)
@@ -167,18 +184,66 @@ export default function CreateProfileScreen(props) {
           appsnackbar.showErrMsg(message || 'Something went wrong')
           return
         }
-        props.navigation.navigate(Strings.NAVIGATION.onboard)
+
+        // checking event data is present or not
+        const isEventPresent = !!eventData?.id
+
+        if (isEventPresent) {
+          handleNavigate({
+            screen: Strings.NAVIGATION.eventstarted
+          })
+        } else {
+          handleNavigate({
+            screen: Strings.NAVIGATION.home_tab_bottom_nav,
+            params: { isLoggedIn: true }
+          })
+        }
+        await set_data_storage(resp?.data)
       }
     } catch (error) {
       console.log('Error in handleSubmit:', error)
     }
   }
+
+  async function data_separation(data) {
+    let auth = {
+      token: data?.token,
+      isLoggedIn: true,
+      contactNumber: data?.contactNumber,
+      email: data?.email,
+      user_id: data?.id,
+      runnerId: data?.runnerId,
+      isAuthorized: data?.isAuthorized,
+      googleSource: false
+    }
+    return auth
+  }
+
+  async function set_data_storage(data) {
+    // use to set data in storage
+    services?.refreshInstance(data?.token)
+    const auth = await data_separation(data)
+    await perform_login(auth, (user = { ...data }))
+  }
+
+  function handleNavigate(params) {
+    if (isLoggedIn) {
+      props.navigation.replace(Strings.NAVIGATION.app, params)
+    } else {
+      props.navigation.replace(Strings.NAVIGATION.app, params)
+    }
+  }
+
+  console.log(byMobile, byEmail, 'event')
+
   return (
     <View style={styles.container}>
       <CreateProfileScreenUI
         {...props}
         {...state}
         {...options}
+        byEmail={byEmail}
+        byMobile={byMobile}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
         handleConfirm={handleConfirm}

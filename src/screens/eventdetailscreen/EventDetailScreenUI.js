@@ -4,34 +4,39 @@ import { Images } from '../../utils/constants/Images'
 import Icons, { iconType } from '../../assets/icons/Icons'
 import CustomButton from '../../common/components/buttons/CustomButton'
 import { hp, wp } from '../../common/functions/dimensions'
-import { fontSize } from '../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../utils/constants/Fonts'
 import Colors from '../../utils/constants/Colors'
+import {
+  getFullEventBgImageUrl,
+  getFullImageUrl,
+  parseHtmlDescription
+} from '../../common/functions/helper'
 
 export default function EventDetailScreenUI(props) {
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.white }}>
+    <View
+      style={{ flex: 1, backgroundColor: Colors.white, position: 'relative' }}>
       {/* Image with Badge */}
       <View>
         <Image
-          source={Images.runner_bg_image}
+          source={
+            props?.eventData?.image?.url
+              ? { uri: getFullEventBgImageUrl(props?.eventData?.image?.url) }
+              : Images.program_card_bg_image
+          }
           resizeMode="cover"
           style={styles.bannerImage}
         />
-        {/* status see only registered=true */}
-        {!props.IsRegistered && (
-          <View style={styles.badgeContainer}>
-            <Text style={styles.badgeText}>Not Registered</Text>
-          </View>
-        )}
       </View>
 
       {/* Scrollable Content */}
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.title}>Step Challenge</Text>
+        <Text style={styles.title}>
+          {props?.eventData?.name || props?.eventData?.title}
+        </Text>
         <Text style={styles.description}>
-          Walking once a day, keeps the doctor away!!. Indeed walking helps you
-          in weight loss, relieving anxiety, fighting diabetes and so many other
-          health-related things. Lets "step with a smile" for next seven days.
+          {props?.eventData?.description &&
+            parseHtmlDescription(props?.eventData?.description)}
         </Text>
 
         {/* Date Section */}
@@ -39,47 +44,73 @@ export default function EventDetailScreenUI(props) {
           <Icons
             name="calendar"
             type={iconType.feather}
-            size={20}
+            size={15}
             color="black"
           />
-          <Text style={styles.dateText}> From 26-01-2025 To 30-02-2025</Text>
+          <Text style={styles.dateText}>
+            {' '}
+            {props?.eventData?.eventLocalStartDate} -{' '}
+            {props?.eventData?.eventLocalEndDate}{' '}
+          </Text>
         </View>
 
         {/* Organizer Section */}
-        <Text style={[styles.title, { marginTop: hp(2) }]}>Organized By</Text>
-        <View style={styles.orgContainer}>
-          <Image
-            source={Images.app_logo} // <-- Replace with organizer logo
-            style={styles.orgLogo}
-            resizeMode="contain"
-          />
-          <View style={{ flex: 1, marginLeft: wp(3) }}>
-            <Text style={styles.orgName}>Interface </Text>
-            <Text style={styles.orgSubtitle}>
-              Lorem ipsum dolor sit amet, consectetur
+        {props?.eventData?.organizers?.length && (
+          <View>
+            <Text style={[styles.title, { marginTop: hp(2) }]}>
+              Organized By
             </Text>
-          </View>
-        </View>
-      </ScrollView>
+            {props?.eventData?.organizers?.map(organizer => {
+              // removed first slash
+              let organizerURL =
+                organizer?.organizerLogo &&
+                organizer?.organizerLogo?.startsWith('/')
+                  ? organizer?.organizerLogo?.slice(1)
+                  : organizer?.organizerLogo
 
-      {/* Floating Button */}
-      {!props.IsRegistered && (
-        <View style={styles.buttonWrapper}>
-          <CustomButton
-            title={'Register Now'}
-            btnStyles={styles.btnStyle}
-            onPress={props.handleNavigate}
-          />
-        </View>
-      )}
+              return (
+                <View style={styles.orgContainer}>
+                  <Image
+                    source={{ uri: getFullImageUrl(organizerURL) }} // <-- Replace with organizer logo
+                    style={styles.orgLogo}
+                    resizeMode="contain"
+                  />
+                  <View style={{ flex: 1, marginLeft: wp(3) }}>
+                    <Text style={styles.orgName}>
+                      {parseHtmlDescription(organizer?.name)}
+                    </Text>
+                  </View>
+                </View>
+              )
+            })}
+          </View>
+        )}
+      </ScrollView>
+      {/* <View style={styles?.viewResultBtnContainer}>
+        <CustomButton
+          title={'View Result'}
+          name={'navigate'}
+          onPress={() => props?.handleNavigate()}
+          btnStyles={{
+            ...styles.btnStyles,
+            elevation: 5,
+            backgroundColor: Colors.primary
+            // width:wp(40)
+          }}
+          btnTitleStyles={{
+            ...styles.textStyle,
+            color: Colors.gray_01
+          }}
+        />
+      </View> */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   bannerImage: {
-    width: '100%',
-    height: hp(35),
+    width: wp(100),
+    height: hp(30),
     opacity: 0.6
   },
   badgeContainer: {
@@ -101,42 +132,50 @@ const styles = StyleSheet.create({
     paddingBottom: hp(12) // space for floating button
   },
   title: {
-    fontSize: fontSize.l,
-    fontWeight: '600',
+    fontSize: fontSize.m,
+    fontFamily: Fonts.SemiBold,
     marginBottom: hp(1)
   },
   description: {
     fontSize: fontSize.normal,
+    fontFamily: Fonts.Regular,
     color: '#444',
     marginBottom: hp(2)
   },
   dateRangeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.app_primary,
     padding: hp(1.5),
     borderRadius: 10,
-    width: wp(65)
+    width: wp(55)
   },
   dateText: {
     marginLeft: wp(3),
-    fontSize: fontSize.normal
+    fontSize: fontSize.s,
+    fontFamily: Fonts.Medium
   },
   orgContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: hp(1.5)
+    // marginTop: hp(0.2),
+    elevation: 2
   },
   orgLogo: {
-    width: wp(15),
-    height: hp(6)
+    width: wp(19),
+    height: hp(7),
+    backgroundColor: '#f2f2f2',
+    borderRadius: 2
   },
   orgName: {
     fontSize: fontSize.m,
+    fontFamily: Fonts.Regular,
     fontWeight: '600'
   },
   orgSubtitle: {
     fontSize: fontSize.s,
+    fontFamily: Fonts.Regular,
     color: '#666'
   },
   buttonWrapper: {
@@ -144,10 +183,23 @@ const styles = StyleSheet.create({
     bottom: hp(3),
     left: wp(30)
   },
-  btnStyle: {
-    width: wp(40),
-    paddingVertical: hp(1.5),
-    backgroundColor: '#C3E458',
-    borderRadius: 10
+  viewResultBtnContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: wp(20),
+    right: wp(20),
+    padding: 16,
+    // backgroundColor: 'red', // Optional: make background white if button overlaps content
+    // borderTopWidth: 1,
+    borderColor: '#ddd'
+  },
+  btnStyles: {
+    paddingVertical: hp(1),
+    borderRadius: 15
+  },
+  textStyle: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 })

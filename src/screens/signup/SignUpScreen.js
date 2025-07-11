@@ -32,7 +32,7 @@ const SignUpScreen = props => {
       appsnackbar.showErrMsg('Please enter Email or Mobile Number')
     } else if (!emailRegex.test(value)) {
       isValid = false
-      appsnackbar.showErrMsg('Please enter Email or Mobile Number')
+      appsnackbar.showErrMsg('Please enter valid Email or Mobile Number')
     }
 
     return isValid
@@ -43,7 +43,7 @@ const SignUpScreen = props => {
     // props.navigation.navigate(Strings.NAVIGATION.create_profile);
     // return;
     try {
-      console.log('signup called with state -->', state)
+      // console.log('signup called with state -->', state)
       const checkEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
       let syncObj = {
@@ -62,7 +62,7 @@ const SignUpScreen = props => {
         })
       }
     } catch (error) {
-      console.log('sent otp request error -->', error)
+      // console.log('sent otp request error -->', error)
       appsnackbar.showErrMsg('Something went wrong, please try again later.')
     }
   }

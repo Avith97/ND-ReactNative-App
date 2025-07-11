@@ -19,7 +19,7 @@ const ProgramDetailUI = props => {
     <ScrollView style={styles.container}>
       {/* Banner */}
       <View style={styles.bannerWrapper}>
-        <Image source={Images.program_banner} style={styles.banner} />
+        {/* <Image source={Images.program_banner} style={styles.banner} /> */}
         <View style={styles.statusTag}>
           <Text style={styles.statusText}>Not Registered</Text>
         </View>

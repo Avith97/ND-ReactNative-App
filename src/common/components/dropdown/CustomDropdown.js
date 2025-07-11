@@ -2,19 +2,19 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { wp, hp } from '../../functions/dimensions'
 import Dropdown from './DropDown'
-import { fontSize } from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import Colors from '../../../utils/constants/Colors'
 
 const CustomDropdown = (props = cd_default_props) => {
   return (
     <View>
-      {props?.title && 
+      {props?.title && (
         <Text style={styles.title}>
-        {props.title}
-        {props?.mandatory && <Text style={{ color: 'red' }}> *</Text>}
-      </Text>
-      }
-    
+          {props.title}
+          {props?.mandatory && <Text style={{ color: 'red' }}> *</Text>}
+        </Text>
+      )}
+
       <Dropdown
         data={props.data}
         value={props.value}
@@ -40,7 +40,8 @@ const CustomDropdown = (props = cd_default_props) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: fontSize.normal,
-    marginBottom: hp(0.5)
+    // marginBottom: hp(0.5),
+    fontFamily: Fonts.Regular
   },
 
   container: {
@@ -49,8 +50,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'cyan',
     borderWidth: 0.7,
     borderColor: 'grey',
-    borderRadius: 8
-    // minHeight: hp(5)
+    borderRadius: 8,
+    height: hp(5)
   },
   inputContainer: {
     borderBottomWidth: 0,

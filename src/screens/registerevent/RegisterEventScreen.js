@@ -8,6 +8,7 @@ import { services } from '../../services/axios/services'
 import Loader from '../../common/components/loader/Loader'
 import { useSelector } from 'react-redux'
 import { TemplateService } from '../../services/templates/TemplateService'
+import { useIsFocused } from '@react-navigation/native'
 
 export default function RegisterEventScreen(props) {
   const [state, setState] = useState({
@@ -26,9 +27,13 @@ export default function RegisterEventScreen(props) {
 
   const { eventData, auth } = useSelector(store => store)
 
+  const isFocused = useIsFocused()
+
   useEffect(() => {
-    initiateScreen()
-  }, [])
+    if (isFocused) {
+      initiateScreen()
+    }
+  }, [isFocused])
 
   async function initiateScreen() {
     let resp = await getDetails()
@@ -43,7 +48,7 @@ export default function RegisterEventScreen(props) {
     try {
       // join like event/2481
 
-      let url = TemplateService?._eventID(URL.get_event, eventData?.program?.id)
+      let url = TemplateService?._eventID(URL.get_event, eventData?.id)
       let resp = await services?._get(url, {
         params: { requestView: 'REGISTER_EVENT' }
       })
@@ -220,7 +225,7 @@ export default function RegisterEventScreen(props) {
 
     let syncObj = {
       userId: auth?.id || null,
-      eventId: eventData?.program?.id || null,
+      eventId: eventData?.id || null,
       ...(state?.eventData?.showCategoryOnRegistration && {
         categoryId: state?.selectedEventCategory?.id || null
       }),
@@ -228,7 +233,7 @@ export default function RegisterEventScreen(props) {
       ...(state?.eventData?.fields?.customFields?.length > 0 && {
         fieldValues: {
           runnerId: auth?.runnerId || null,
-          eventId: eventData?.program?.id || null,
+          eventId: eventData?.id || null,
           fields: transformed || []
         }
       }),
@@ -260,9 +265,14 @@ export default function RegisterEventScreen(props) {
         appsnackbar.showSuccessMsg(
           resp?.data?.success?.verbose || 'Thank you for registering.'
         )
-        props.navigation.navigate(Strings.NAVIGATION.eventdetail, {
-          isRegistered: true
+
+        props.navigation.replace(Strings.NAVIGATION.home_tab_bottom_nav, {
+          screen: Strings.NAVIGATION.eventdetail,
+          params: { eventDistKey: eventData?.distKey }
         })
+        // props.navigation.replace(Strings.NAVIGATION.eventdetail, {
+        //   eventDistKey: eventData?.distKey
+        // })
 
         return resp.data
       } else {

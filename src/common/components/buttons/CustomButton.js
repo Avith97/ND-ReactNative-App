@@ -7,7 +7,7 @@ import {
   ActivityIndicator
 } from 'react-native'
 import React from 'react'
-import { fontSize } from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import Icons from '../../../assets/icons/Icons'
 import { wp, hp } from '../../functions/dimensions'
 import Colors from '../../../utils/constants/Colors'
@@ -52,7 +52,7 @@ const CustomButton = props => {
         }}>
         {props.isLoading ? (
           <ActivityIndicator
-            color={Colors.white}
+            color={props.isLadingColor ? props.isLadingColor : Colors.white}
             size={hp(3.4)}
             visible={true}
           />
@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     fontSize: fontSize.md,
-    fontWeight: '700'
+    fontFamily: Fonts.Medium
+    // fontWeight: '700',
   }
 })
 

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import StepsGraph from '../../../common/components/Charts/StepsGraph'
 import CustomButton from '../../../common/components/buttons/CustomButton'
 import { hp, wp } from '../../../common/functions/dimensions'
@@ -10,20 +10,34 @@ import PieProgressBar from '../../../common/components/progressbar/PieProgressBa
 import CustomWeekAndMonth from '../../../common/components/customweekandmonth/CustomWeekAndMonth'
 import BarChart from '../../../common/components/Charts/BarChart'
 import Colors from '../../../utils/constants/Colors'
-import { fontSize } from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
+import NoDataFound from '../../../common/components/nodatafound/NoDataFound'
+import CircularProgress from '../../../common/components/Charts/CircularProgress'
+import {
+  formatDistanceInKm,
+  formatToHHMMSS,
+  isEventStarted
+} from '../../../common/functions/helper'
+import moment from 'moment'
 
 export default function DashboardScreenUI(props) {
   const [weekIndex, setWeekIndex] = useState(0)
 
-  // const data = [
-  //   {day: 'Mon', steps: 4000},
-  //   {day: 'Tue', steps: 7000},
-  //   {day: 'Wen', steps: 5000},
-  //   {day: 'Thu', steps: 10000},
-  //   {day: 'Fri', steps: 5000},
-  //   {day: 'Sat', steps: 7000},
-  //   {day: 'Sun', steps: 7050},
-  // ];
+  useEffect(() => {
+    const today = moment()
+    const daysData = props?.eventGraphData?.daysData || []
+
+    const foundIndex = daysData?.findIndex(week => {
+      return week.days.some(day => moment(day.date).isSame(today, 'day'))
+    })
+
+    if (foundIndex !== -1) {
+      setWeekIndex(foundIndex)
+    } else {
+      setWeekIndex(0)
+    }
+  }, [props?.eventGraphData])
+
   const DescriptionDetailItem = ({ value, unit }) => (
     <View style={styles.centered}>
       <Text style={styles.metricValue}>{value}</Text>
@@ -32,73 +46,113 @@ export default function DashboardScreenUI(props) {
   )
 
   return (
-    <View>
-      <View style={styles.progressContainer}>
-        <Text
-          style={{
-            color: Colors.white,
-            paddingBottom: hp(1),
-            fontSize: fontSize.m,
-            fontWeight: 700
-          }}>
-          Personal Progress
-        </Text>
-        {props?.eventGraphData?.progressBar && (
-          <PieProgressBar
-            program
-            percentage={props?.eventGraphData?.progressBar}
-          />
-        )}
-      </View>
+    <View
+      style={{
+        padding: wp(5)
+      }}>
+      {props?.dashboardData?.graphDTO?.[0] && (
+        <View style={{ marginBottom: hp(1) }}>
+          <View style={styles.progressContainer}>
+            <Text style={styles.title}>Personal Progress</Text>
 
-      <View style={styles.detailSection}>
-        {/* Description Metrics */}
+            {/* <PieProgressBar
+              program
+              percentage={props?.dashboardData?.progressBar}
+              evenData={props?.dashboardData}
+            /> */}
 
-        <DescriptionDetailItem value={1088} unit="Kcal" />
-        <DescriptionDetailItem value={12} unit="KM" />
-        <DescriptionDetailItem value={204} unit="Move Min" />
-      </View>
+            <CircularProgress
+              // percentage={props?.dashboardData?.progressBar}
+              percentage={
+                props?.dashboardData?.totalTarget === 0
+                  ? 100
+                  : props?.dashboardData?.progressBar > 100
+                  ? 100
+                  : props?.dashboardData?.progressBar
+              }
+              currentSteps={props?.dashboardData?.todaysStep} // 0
+              totalSteps={props?.dashboardData?.totalSteps}
+              goalSteps={props?.dashboardData?.totalTarget} //
+              iconName="run"
+              radius={wp(25)}
+              // strokeWidth={10}
+            />
+          </View>
 
-      <View style={styles.buttonContainer}>
-        <CustomButton
-          title={'Show Leaderboard'}
-          name={'leaderboard'}
-          onPress={() =>
-            props.handleNavigate(props.eventGraphData?.graphDTO?.[0]?.eventId)
-          }
-          btnStyles={{
-            ...styles.btnStyles,
-            elevation: 5
-          }}
-          btnTitleStyles={{
-            ...styles.textStyle
-          }}
-        />
-      </View>
+          {/* Description Metrics */}
+          <View style={styles.detailSection}>
+            <DescriptionDetailItem
+              value={props?.dashboardData?.totalCalorie || 0}
+              unit="Kcal"
+            />
+            <DescriptionDetailItem
+              value={formatDistanceInKm(props?.dashboardData?.totalDistance)}
+              unit="Km"
+            />
+            <DescriptionDetailItem
+              value={formatToHHMMSS(props?.dashboardData?.totalTime)}
+              unit="Duration"
+            />
+          </View>
 
-      {/* progress section with bar chart */}
-      <View style={styles.barChartSection}>
-        {/* tabbar */}
+          {/* if event data ongoing then it will work  */}
+          {isEventStarted(
+            props.eventGraphData?.graphDTO?.[0].eventStartDate
+          ) && (
+            <View style={styles.buttonContainer}>
+              <CustomButton
+                title={'Show Leaderboard'}
+                name={'leaderboard'}
+                onPress={() =>
+                  props.handleNavigate(
+                    props.eventGraphData?.graphDTO?.[0]?.eventId
+                  )
+                }
+                btnStyles={{
+                  ...styles.btnStyles,
+                  elevation: 5
+                }}
+                btnTitleStyles={{
+                  ...styles.textStyle
+                }}
+              />
+            </View>
+          )}
+        </View>
+      )}
+      {props?.dashboardData?.graphDTO?.[0]?.runnerActivityDetails?.length ? (
+        <View>
+          {/* progress section with bar chart */}
 
-        {/* week and month View */}
-        <CustomWeekAndMonth
-          {...props}
-          weekIndex={weekIndex}
-          setWeekIndex={setWeekIndex}
-          currentWeek={props.eventGraphData?.daysData[weekIndex]}
-        />
+          {props?.dashboardData?.graphDTO?.[0]?.runnerActivityDetails
+            ?.length && (
+            <View style={styles.barChartSection}>
+              {/* tabbar */}
 
-        <BarChart
-          data={props.eventGraphData?.daysData[weekIndex]?.days || []}
-          yKeys={['steps']}
-          barWidth={22}
-          chartHeight={250}
-          xKey="day"
-          colorScale={[Colors.primary, Colors.secondary]}
-          // xAxisLabel="Days"
-          // yAxisLabel="Steps"
-        />
-      </View>
+              {/* week and month View */}
+              <CustomWeekAndMonth
+                {...props}
+                weekIndex={weekIndex}
+                setWeekIndex={setWeekIndex}
+                currentWeek={props.eventGraphData?.daysData[weekIndex]}
+              />
+
+              <BarChart
+                data={props.eventGraphData?.daysData[weekIndex]?.days || []}
+                yKeys={['steps']}
+                barWidth={22}
+                chartHeight={250}
+                xKey="day"
+                colorScale={[Colors.primary, Colors.secondary]}
+                // xAxisLabel="Days"
+                // yAxisLabel="Steps"
+              />
+            </View>
+          )}
+        </View>
+      ) : (
+        <NoDataFound subTitle=" event is not started yet " />
+      )}
     </View>
   )
 }
@@ -108,9 +162,15 @@ const styles = StyleSheet.create({
   progressContainer: {
     backgroundColor: Colors.gray_01,
     alignItems: 'center',
-    paddingVertical: hp(4),
+    paddingVertical: hp(3),
     borderRadius: 10,
     marginVertical: hp(1)
+  },
+  title: {
+    color: Colors.white,
+    marginBottom: hp(2),
+    fontSize: fontSize.m,
+    fontFamily: Fonts.Bold
   },
 
   //
@@ -132,8 +192,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   btnStyles: {
-    width: wp(90),
-    marginVertical: hp(1)
+    width: wp(90)
+    // marginVertical: hp(1)
   },
   plusbtnStyle: {
     width: wp(10)
@@ -150,13 +210,15 @@ const styles = StyleSheet.create({
   },
   metricValue: {
     fontSize: fontSize.m,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: Fonts.Bold,
     color: Colors.white,
     textAlign: 'center'
   },
   unitLabel: {
-    fontSize: fontSize.normal,
+    fontSize: fontSize.s,
     color: Colors.white,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: Fonts.Medium
   }
 })

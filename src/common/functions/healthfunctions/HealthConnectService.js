@@ -1,23 +1,39 @@
+import moment from 'moment'
+import { Linking } from 'react-native'
 import HealthConnect, {
   isAvailable,
   requestPermission,
   readRecords,
   getGrantedPermissions,
-  deleteRecords
+  deleteRecords,
+  aggregateRecord,
+  initialize,
+  getSdkStatus,
+  openHealthConnectSettings,
+  insertRecords,
+  aggregateGroupByPeriod,
+  aggregateGroupByDuration,
+  SdkAvailabilityStatus
 } from 'react-native-health-connect'
+import AndroidPermissions from '../permissions'
 
 const permissions = [
   { accessType: 'read', recordType: 'Steps' },
-  { accessType: 'read', recordType: 'HeartRate' },
-  { accessType: 'read', recordType: 'SleepSession' },
   { accessType: 'read', recordType: 'Distance' },
-  { accessType: 'read', recordType: 'ActiveCaloriesBurned' }
+  { accessType: 'read', recordType: 'TotalCaloriesBurned' }
 ]
 
 const HealthConnectService = {
-  /**
-   * Check if Health Connect is available on the device
-   */
+  init: async () => {
+    try {
+      const sdkStatus = await getSdkStatus()
+      await sort_status(sdkStatus)
+      return
+    } catch (error) {
+      console.error('HealthConnect initialization error:', error)
+    }
+  },
+
   checkAvailability: async () => {
     try {
       return await isAvailable()
@@ -52,18 +68,117 @@ const HealthConnectService = {
     }
   },
 
-  /**
-   * Read Steps data
-   */
-  getSteps: async (startDate, endDate) => {
+  // Read Steps dataOriginFilter
+  getSteps: async (startDate, endDate, format) => {
     try {
-      const data = await readRecords('Steps', {
-        startTime: startDate,
+      // await HealthConnectService.init()
+      // await HealthConnectService.requestPermissions()
+
+      const dates = {
+        startTime: startDate
+          ? moment(startDate, format).startOf('day').toISOString()
+          : moment().startOf('day').toISOString(),
         endTime: endDate
+          ? moment(endDate, format).endOf('day').toISOString()
+          : moment().endOf('day').toISOString()
+      }
+
+      const steps = await readRecords('Steps', {
+        timeRangeFilter: {
+          operator: 'between',
+          ...dates
+        },
+        dataOriginFilter: ['com.google.android.apps.fitness']
       })
-      return data
+
+      return steps.records
+
+      // const steps = await aggregateRecord({
+      //   recordType: 'Steps',
+      //   timeRangeFilter: {
+      //     operator: 'between',
+      //     ...dates
+      //   },
+      //   dataOriginFilter: ['com.google.android.apps.fitness']
+      // })
+      //
+      // return steps?.COUNT_TOTAL
     } catch (error) {
       console.error('getSteps error:', error)
+      return []
+    }
+  },
+
+  // Read Distance dataOriginFilter
+  getDistance: async (startDate, endDate, format) => {
+    try {
+      // await HealthConnectService.requestPermissions()
+
+      const dates = {
+        startTime: startDate
+          ? moment(startDate, format).startOf('day').toISOString()
+          : moment().startOf('day').toISOString(),
+        endTime: endDate
+          ? moment(endDate, format).endOf('day').toISOString()
+          : moment().endOf('day').toISOString()
+      }
+      const distance = await readRecords('Distance', {
+        timeRangeFilter: {
+          operator: 'between',
+          ...dates
+        },
+        dataOriginFilter: ['com.google.android.apps.fitness']
+      })
+      return distance?.records
+      // const distance = await aggregateRecord({
+      //   recordType: 'Distance',
+      //   timeRangeFilter: {
+      //     operator: 'between',
+      //     ...dates
+      //   },
+      //   dataOriginFilter: ['com.google.android.apps.fitness']
+      // })
+      // return distance.DISTANCE.inMeters
+    } catch (error) {
+      console.error('getDistance error:', error)
+      return []
+    }
+  },
+
+  // Read Active Calories dataOriginFilter
+  getCaloriesBurned: async (startDate, endDate, format) => {
+    try {
+      // await HealthConnectService.requestPermissions()
+
+      const dates = {
+        startTime: startDate
+          ? moment(startDate, format).startOf('day').toISOString()
+          : moment().startOf('day').toISOString(),
+        endTime: endDate
+          ? moment(endDate, format).endOf('day').toISOString()
+          : moment().endOf('day').toISOString()
+      }
+
+      const Calories = await readRecords('TotalCaloriesBurned', {
+        timeRangeFilter: {
+          operator: 'between',
+          ...dates
+        },
+        dataOriginFilter: ['com.google.android.apps.fitness']
+      })
+      return Calories?.records
+      // const calories = await aggregateRecord({
+      //   recordType: 'TotalCaloriesBurned',
+      //   timeRangeFilter: {
+      //     operator: 'between',
+      //     ...dates
+      //   },
+      //   dataOriginFilter: ['com.google.android.apps.fitness']
+      // })
+
+      // return calories.ENERGY_TOTAL.inKilocalories
+    } catch (error) {
+      console.error('getCaloriesBurned error:', error)
       return []
     }
   },
@@ -101,38 +216,6 @@ const HealthConnectService = {
   },
 
   /**
-   * Read Distance data
-   */
-  getDistance: async (startDate, endDate) => {
-    try {
-      const data = await readRecords('Distance', {
-        startTime: startDate,
-        endTime: endDate
-      })
-      return data
-    } catch (error) {
-      console.error('getDistance error:', error)
-      return []
-    }
-  },
-
-  /**
-   * Read Active Calories Burned
-   */
-  getActiveCaloriesBurned: async (startDate, endDate) => {
-    try {
-      const data = await readRecords('ActiveCaloriesBurned', {
-        startTime: startDate,
-        endTime: endDate
-      })
-      return data
-    } catch (error) {
-      console.error('getActiveCaloriesBurned error:', error)
-      return []
-    }
-  },
-
-  /**
    * Optionally, delete records (useful for dev/test apps)
    */
   deleteRecordsByTimeRange: async (recordType, startDate, endDate) => {
@@ -150,3 +233,59 @@ const HealthConnectService = {
 }
 
 export default HealthConnectService
+
+const sort_status = async sdkStatus => {
+  try {
+    switch (sdkStatus) {
+      case SdkAvailabilityStatus.SDK_AVAILABLE:
+        console.log('✅ Health Connect is available!')
+        initialize()
+        await HealthConnectService.requestPermissions()
+        setTimeout(() => {
+          AndroidPermissions.requestPermission(
+            AndroidPermissions.HEALTH_CONNECT_READ_BACKGROUND,
+            'Health Connect Background access'
+          )
+        }, 1000)
+
+        return
+
+      case SdkAvailabilityStatus.SDK_UNAVAILABLE:
+        console.log('⚠️ Health Connect is not installed.')
+        Linking.openURL(
+          'https://play.google.com/store/apps/details?id=com.google.android.apps.healthdata'
+        )
+        return
+
+      case SdkAvailabilityStatus.SDK_UNAVAILABLE_PROVIDER_UPDATE_REQUIRED:
+        console.log('⚠️ Health Connect is not up to date.')
+        Linking.openURL(
+          'https://play.google.com/store/apps/details?id=com.google.android.apps.healthdata'
+        )
+        return
+
+      case SdkAvailabilityStatus.SDK_UNAVAILABLE_NO_PERMISSIONS:
+        // openHealthConnectSettings();
+        AndroidPermissions.requestPermission(
+          AndroidPermissions.HEALTH_CONNECT
+        ).then(granted => {
+          AndroidPermissions.requestPermission(
+            AndroidPermissions.HEALTH_CONNECT_READ_BACKGROUND
+          )
+          // if (!granted) openHealthConnectSettings();
+        })
+        console.log('🚨 No permission to use Health Connect.')
+        return
+
+      case SdkAvailabilityStatus.SDK_UNSUPPORTED:
+        console.log('⚠️ Health Connect not supported on this device.')
+        return
+
+      default:
+        console.log('❌ Unknown Health Connect status.')
+        return
+    }
+  } catch (error) {
+    console.error('Error handling Health Connect SDK status:', error)
+  }
+}

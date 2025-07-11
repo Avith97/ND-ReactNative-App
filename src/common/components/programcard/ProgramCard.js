@@ -6,10 +6,12 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native'
-import { fontSize } from '../../../utils/constants/Fonts'
+import Fonts, { fontSize } from '../../../utils/constants/Fonts'
 import CustomButton from '../buttons/CustomButton'
 import { hp, wp } from '../../functions/dimensions'
 import Colors from '../../../utils/constants/Colors'
+import Icons, { iconType } from '../../../assets/icons/Icons'
+import { Images } from '../../../utils/constants/Images'
 
 const ProgramCard = ({
   title,
@@ -24,19 +26,29 @@ const ProgramCard = ({
   ...props
 }) => {
   return (
-    <TouchableOpacity style={{ ...styles.card, width: minWidth }}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={{ ...styles.card, width: minWidth }}>
       <ImageBackground
-        source={image}
+        source={image || Images.program_card_bg_image}
         style={styles.image}
-        imageStyle={styles.imageStyle}>
+        imageStyle={styles.imageStyle}
+        resizeMode="cover">
         <View style={styles.gradientOverlay} />
         <View
           style={{
             ...styles.statusTag,
             backgroundColor:
-              props.eventStatus == 'completed' ? '#EC6B47AB' : Colors.primary
+              // props.eventStatus === 'Not Started Yet'
+              //   ? '#AFEA0DB2'
+              // :
+              props.eventStatus === 'Completed' || buttonName === 'Register'
+                ? '#EC6B47AB'
+                : Colors.primary
           }}>
-          <Text style={styles.statusText}>{props.eventStatus}</Text>
+          <Text style={styles.statusText}>
+            {buttonName === 'Register' ? 'Not Registered' : props.eventStatus}
+          </Text>
         </View>
 
         <Text style={styles.title}>{title}</Text>
@@ -55,9 +67,21 @@ const ProgramCard = ({
           }}
         />
 
-        <View>
-          <Text style={{ color: Colors.white }}>
-            🗓️ {props.localStartDate} - {props.localEndDate}{' '}
+        <View
+          style={{
+            flexDirection: 'row',
+            width: wp(90),
+            gap: 10,
+            alignItems: 'center'
+          }}>
+          <Icons
+            name={'calendar-o'}
+            type={iconType.fa}
+            size={14}
+            color="#D9D9D9"
+          />
+          <Text style={{ color: '#D9D9D9', fontFamily: Fonts.Italic }}>
+            {props.localStartDate} - {props.localEndDate}{' '}
           </Text>
         </View>
 
@@ -81,7 +105,7 @@ const styles = StyleSheet.create({
     height: hp(20),
     padding: 10,
     justifyContent: 'space-between',
-    resizeMode: 'contain'
+    resizeMode: 'cover'
   },
   gradientOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -99,14 +123,15 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   statusText: {
-    fontSize: fontSize.normal,
-    color: '#000',
-    fontWeight: 'bold'
+    fontSize: fontSize.s,
+    color: Colors.gray_01,
+    fontFamily: Fonts.Regular
   },
   title: {
     color: '#fff',
     fontSize: fontSize.m,
-    fontWeight: 'bold'
+    // fontWeight: 'bold'
+    fontFamily: Fonts.Medium
   },
   btnStyles: {
     width: wp(4),
@@ -122,7 +147,8 @@ const styles = StyleSheet.create({
   },
   detailText: {
     color: '#fff',
-    fontSize: fontSize.normal
+    fontSize: fontSize.normal,
+    fontFamily: Fonts.Regular
   }
 })
 

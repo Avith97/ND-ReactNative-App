@@ -6,17 +6,20 @@ import AuthStack from './stack/AuthStack'
 import Strings from '../utils/constants/Strings'
 import SplashScreen from '../screens/splash/SplashScreen'
 import AppStack from './stack/AppStack'
-import OnBoardScreen from '../screens/onBoardScreens/OnBoardScreen'
 
 const Navigator = props => {
   const Stack = createStackNavigator()
-
+  // const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
   return (
     <NavigationContainer
       ref={r => {
         global.navigation = r
       }}
-      linking={[]}>
+      linking={[]}
+      // fallback={<Loader isLoading={true} />}
+      onReady={() => {
+        global.navready = true
+      }}>
       <Stack.Navigator
         initialRouteName={Strings.NAVIGATION.splash}
         screenOptions={{
@@ -28,11 +31,8 @@ const Navigator = props => {
           name={Strings.NAVIGATION.splash}
           component={SplashScreen}
         />
+
         <Stack.Screen name={Strings.NAVIGATION.auth} component={AuthStack} />
-        <Stack.Screen
-          name={Strings.NAVIGATION.onboard}
-          component={OnBoardScreen}
-        />
         <Stack.Screen name={Strings.NAVIGATION.app} component={AppStack} />
       </Stack.Navigator>
     </NavigationContainer>

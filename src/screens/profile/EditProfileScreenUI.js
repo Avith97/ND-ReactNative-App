@@ -3,80 +3,27 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {Avatar} from 'react-native-elements';
-import CustomButton from '../../common/components/buttons/CustomButton';
-import {hp, wp} from '../../common/functions/dimensions';
-import {maskNumber} from '../../common/functions/masknumber';
-import CustomTextInput from '../../common/components/textInput/CustomTextInput';
-import CustomDateTimePicker from '../../common/components/datepicker/CustomDateTimePicker';
-import CustomDropdown from '../../common/components/dropdown/CustomDropdown';
-import Icons, {iconType} from '../../assets/icons/Icons';
-import Colors from '../../utils/constants/Colors';
-import {fontSize} from '../../utils/constants/Fonts';
-import { Countries } from '../../data/static_data/countries';
+  View
+} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Avatar } from 'react-native-elements'
+import CustomButton from '../../common/components/buttons/CustomButton'
+import { hp, wp } from '../../common/functions/dimensions'
+import { maskNumber } from '../../common/functions/masknumber'
+import CustomTextInput from '../../common/components/textInput/CustomTextInput'
+import CustomDateTimePicker from '../../common/components/textInput/CustomDateTimePicker'
+import Icons, { iconType } from '../../assets/icons/Icons'
+import Colors from '../../utils/constants/Colors'
+import { fontSize } from '../../utils/constants/Fonts'
+import { Countries } from '../../data/static_data/countries'
+import moment from 'moment'
+import CustomDropdown from '../../common/components/dropdown/CustomDropdown'
 
 export default function EditProfileScreenUI(props) {
-
-
   return (
     <ScrollView
       contentContainerStyle={styles.scrollContainer}
       showsVerticalScrollIndicator={false}>
-      <View style={{ alignItems: 'center' }}>
-        <Avatar
-          rounded
-          size={'xlarge'}
-          source={{
-            uri: 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp'
-          }}
-          avatarStyle={styles.avatarImage}>
-          <Avatar.Accessory
-            size={hp(4)}
-            onPress={() => console.log('clicked on profile pic')}
-            iconProps={{
-              name: 'edit',
-              size: hp(2),
-              color: 'black',
-              backgroundColor: 'red'
-            }}
-            style={styles.accessoryStyle}
-          />
-        </Avatar>
-
-        <Text style={styles.title}>Lakhan Nemane</Text>
-        <Text style={styles.numberText}>{maskNumber(9834201623)}</Text>
-        <Text style={styles.emailText}>lnemane7@gmail.com</Text>
-
-        <CustomButton
-          title={'Google fit'}
-          name={'consent'}
-          minWidth={wp(30)}
-          // onPress={props?.handleSubmit}
-          // isLoading={store.getState().settings.isLoading}
-          btnStyles={{
-            ...styles.btnConsentStyles,
-            backgroundColor: Colors.dayBackground,
-            height: 'auto',
-            minWidth: wp('20'),
-            borderRadius: 20
-          }}
-          btnTitleStyles={{
-            ...styles.textStyle,
-            marginLeft: wp(1.5),
-            color: Colors.gray_02
-          }}
-          leftIcon={{
-            type: iconType.feather,
-            name: 'link',
-            size: fontSize.md,
-            color: Colors.gray_02
-          }}
-        />
-      </View>
-
       {/* Form */}
       <View style={styles.formContainer}>
         {/* First name & last name */}
@@ -88,7 +35,7 @@ export default function EditProfileScreenUI(props) {
               mandatory
               inputStyle={styles.textInputStyle}
               inputProps={{
-                value: props?.formState?.firstName,
+                value: props?.formState?.firstName
               }}
               onChangeText={props.handleChange}
             />
@@ -99,7 +46,54 @@ export default function EditProfileScreenUI(props) {
               name="lastName"
               mandatory
               inputProps={{
-                value: props?.formState?.lastName,
+                value: props?.formState?.lastName
+              }}
+              inputStyle={styles.textInputStyle}
+              onChangeText={props.handleChange}
+            />
+          </View>
+        </View>
+
+        {/* email */}
+
+        <View style={styles.row}>
+          <View style={styles.fullWidth}>
+            <CustomTextInput
+              label="Email"
+              name="email"
+              disabled
+              inputProps={{
+                editable: false,
+                value: props?.formState?.email
+              }}
+              inputStyle={styles.textInputStyle}
+              onChangeText={props.handleChange}
+            />
+          </View>
+        </View>
+
+        {/* Age & Weight */}
+        <View style={styles.row}>
+          <View style={styles.halfWidth}>
+            <CustomTextInput
+              label="Age"
+              name="age"
+              mandatory
+              inputProps={{
+                value: props?.formState?.age
+              }}
+              inputStyle={styles.textInputStyle}
+              onChangeText={props.handleChange}
+            />
+          </View>
+
+          <View style={styles.halfWidth}>
+            <CustomTextInput
+              label="Weight"
+              name="weight"
+              mandatory
+              inputProps={{
+                value: props?.formState?.weight
               }}
               inputStyle={styles.textInputStyle}
               onChangeText={props.handleChange}
@@ -113,7 +107,8 @@ export default function EditProfileScreenUI(props) {
             <CustomDateTimePicker
               label="DOB"
               name="dob"
-              value={props?.formState?.dob}
+              mandatory
+              value={moment(props?.formState?.dob, 'DD/MM/YYYY')}
               onChangeText={props.handleChange}
             />
           </View>
@@ -123,39 +118,11 @@ export default function EditProfileScreenUI(props) {
               title="Country"
               label="Select"
               mandatory
-              value= {"91"}
+              value={props?.formState?.country}
               data={Countries}
               onChangeText={props.handleChange}
-              valueExtractor={item => item.value}
+              valueExtractor={item => item}
               labelExtractor={item => item.label}
-            />
-          </View>
-        </View>
-
-        {/* Age & Weight */}
-        <View style={styles.row}>
-          <View style={styles.halfWidth}>
-            <CustomTextInput
-              label="Age"
-              name="age"
-              mandatory
-              inputProps={{
-                value: props?.formState?.age,
-              }}
-              inputStyle={styles.textInputStyle}
-              onChangeText={props.handleChange}
-            />
-          </View>
-          <View style={styles.halfWidth}>
-            <CustomTextInput
-              label="Weight"
-              name="weight"
-              mandatory
-              inputProps={{
-                value: props?.formState?.weight,
-              }}
-              inputStyle={styles.textInputStyle}
-              onChangeText={props.handleChange}
             />
           </View>
         </View>
@@ -169,10 +136,14 @@ export default function EditProfileScreenUI(props) {
             label="Select"
             mandatory
             value={props?.formState?.gender}
-            data={[{gender: 'Male'}, {gender: 'Female'}, {gender: 'Other'}]}
+            data={[
+              { label: 'MALE', value: 'MALE' },
+              { label: 'FEMALE', value: 'FEMALE' },
+              { label: 'OTHER', value: 'OTHER' }
+            ]}
             onChangeText={props.handleChange}
-            valueExtractor={item => item.gender}
-            labelExtractor={item => item.gender}
+            valueExtractor={item => item}
+            labelExtractor={item => item.label}
           />
         </View>
 
@@ -182,14 +153,18 @@ export default function EditProfileScreenUI(props) {
             name="height"
             mandatory
             inputProps={{
-              value: props?.formState?.height,
+              value: props?.formState?.height
             }}
             inputStyle={styles.textInputStyle}
             onChangeText={props.handleChange}
           />
         </View>
 
-        <CustomButton title={'Save Changes'} btnStyles={styles.btnStyles} onPress={props?.handleSubmit} />
+        <CustomButton
+          title={'Save Changes'}
+          btnStyles={styles.btnStyles}
+          onPress={props?.handleSubmit}
+        />
       </View>
     </ScrollView>
   )
@@ -207,7 +182,7 @@ const styles = StyleSheet.create({
     width: wp(89),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: hp(1)
+    marginVertical: hp(0.6)
   },
   halfWidth: {
     width: wp(42)
